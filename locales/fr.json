@@ -1,0 +1,134 @@
+{
+  "brand_greeting": "Bienvenue au Centre de Commande",
+  "greetings": {
+    "morning": "Bonjour, HaDeS !",
+    "afternoon": "Bon après-midi, HaDeS !",
+    "night": "Bonsoir, HaDeS !"
+  },
+  "controls": {
+    "sound_title": "Effets sonores (Activé/Désactivé)",
+    "theme_title": "Changer de Thème Visuel",
+    "lang_title": "Changer de Langue",
+    "cmdk_btn": "Rechercher",
+    "cmdk_badge": "Ctrl K"
+  },
+  "search": {
+    "placeholder": "Rechercher avec {engine} ou filtrer les raccourcis...",
+    "clear": "Effacer la recherche"
+  },
+  "filters": {
+    "all": "Tous",
+    "ia_creativa": "IA & 3D",
+    "arte_media": "Art & Multimédia",
+    "productividad": "Google & Outils",
+    "social_compras": "Social & Achats"
+  },
+  "categories": {
+    "cat_3d": "Modélisation 3D & IA",
+    "cat_ai": "Intelligence Artificielle",
+    "cat_art": "Art Numérique & Modèles",
+    "cat_audio": "Génération Audio",
+    "cat_google": "Google Workspace & IA",
+    "cat_tools": "Outils & Développeur",
+    "cat_social": "Communauté & Réseaux",
+    "cat_shopping": "Achats & Paiements",
+    "cat_video": "Vidéo & Génération IA"
+  },
+  "badges": {
+    "apps": "apps"
+  },
+  "shortcuts": {
+    "meshy": "Génération de modèles 3D et textures par IA à partir de texte ou image",
+    "tripo3d": "Studio rapide pour générer des modèles 3D prêts pour la production",
+    "ludoai": "Plateforme d'IA pour l'idéation et l'analyse de marché des jeux vidéo",
+    "chatgpt": "Assistant conversationnel avancé et raisonnement avec GPT-4o",
+    "deepseek": "Modèle d'IA de raisonnement profond et génération de code de haute précision",
+    "claude": "Modèle d'IA d'Anthropic avec grande fenêtre de contexte et analyse de code",
+    "qwen": "Modèles fondateurs et chat d'Alibaba Cloud (Qwen 2.5)",
+    "seaverse": "Outils et générateurs d'IA pour mondes virtuels et multimédia",
+    "civitai": "Dépôt communautaire de modèles, Checkpoints et LoRAs pour Stable Diffusion",
+    "shakker": "Plateforme de génération et de fusion d'images haute définition par IA",
+    "tensorart": "Générateur d'art en ligne avec crédits de création quotidiens gratuits",
+    "seaart": "Studio de création et de rendu artistique assisté par IA",
+    "shadertoy": "Plateforme pour programmer et partager des shaders GLSL en WebGL",
+    "minimax": "Génération et clonage de voix ultra-réalistes par IA",
+    "suno": "Composition musicale complète avec paroles et mélodie générées par IA",
+    "elevenlabs": "Synthèse vocale de pointe et traduction audio multilingue",
+    "google": "Moteur de recherche mondial et services intégrés de Google",
+    "gmail": "Service de messagerie électronique sécurisé et synchronisé",
+    "googledrive": "Stockage cloud et gestion collaborative de fichiers",
+    "gemini": "Modèle multimodal de Google intégré à son écosystème",
+    "googleaistudio": "Environnement de prototypage rapide avec les API Gemini",
+    "notebooklm": "Carnet de notes intelligent avec résumés audio générés par IA",
+    "birme": "Outil de redimensionnement et recadrage d'images par lots flexible",
+    "photoroom": "Suppression professionnelle d'arrière-plan et retouche photo rapide",
+    "github": "Plateforme de développement collaboratif et dépôts Git",
+    "itchio": "Marché indépendant de jeux vidéo, assets, musique et sprites",
+    "optimizeglb": "Compression Draco et optimisation de fichiers 3D GLB/glTF",
+    "translate": "Traduction instantanée de textes et pages web en plusieurs langues",
+    "instagram": "Réseau social pour partager photos, vidéos, stories et reels",
+    "facebook": "Réseau social pour connecter avec amis, groupes et communautés",
+    "x": "Réseau de microblogging pour actualités et tendances en temps réel",
+    "tiktok": "Plateforme de vidéos courtes au format vertical",
+    "threads": "Plateforme de microblogging et débat liée à Instagram",
+    "patreon": "Abonnements et soutien participatif pour créateurs de contenu",
+    "discord": "Serveurs de discussion textuelle, vocale et vidéo pour communautés",
+    "linkedin": "Réseau social professionnel pour l'emploi et le networking",
+    "exophase": "Suivi des succès, trophées et profils multi-plateformes de jeu",
+    "amazon": "Boutique en ligne mondiale de produits avec livraison rapide",
+    "aliexpress": "Plateforme d'achats en ligne avec prix directs d'usine",
+    "pccomponentes": "Boutique spécialisée en informatique, hardware et technologie",
+    "paypal": "Portefeuille numérique sécurisé et plateforme de paiement",
+    "wallapop": "Plateforme d'achat et vente de produits d'occasion",
+    "youtube": "Plateforme de streaming vidéo, tutoriels et diffusions en direct",
+    "kling": "Génération de vidéos cinématographiques avec mouvements réalistes",
+    "hedra": "Création d'avatars expressifs parlants et de personnages animés par IA"
+  },
+  "no_results": {
+    "title": "Aucun raccourci trouvé",
+    "desc": "Essayez d'autres termes ou recherchez directement sur le Web en appuyant sur Entrée."
+  },
+  "weather": {
+    "title": "Configurer la Ville Météo",
+    "desc": "Saisissez le nom de votre ville pour voir les prévisions en direct :",
+    "input_placeholder": "Ex : Paris, Lyon, Montréal, Madrid...",
+    "search_btn": "Chercher",
+    "auto_btn": "Détecter automatiquement par IP",
+    "loading": "Chargement...",
+    "offline": "Hors ligne",
+    "conditions": {
+      "clear": "Ciel dégagé",
+      "mostly_clear": "Généralement dégagé",
+      "partly_cloudy": "Partiellement nuageux",
+      "cloudy": "Couvert",
+      "fog": "Brouillard",
+      "drizzle": "Bruine légère",
+      "rain": "Pluie",
+      "heavy_rain": "Pluie battante",
+      "snow": "Neige",
+      "showers": "Averses de pluie",
+      "snow_showers": "Averses de neige",
+      "thunderstorm": "Orage",
+      "hail_thunderstorm": "Orage avec grêle"
+    }
+  },
+  "cmdk": {
+    "placeholder": "Rechercher un raccourci, un outil ou une commande rapide...",
+    "direct_search_prefix": "Rechercher sur {engine} :",
+    "direct_search_cat": "Recherche Web Directe",
+    "action_open": "Ouvrir",
+    "action_search": "Chercher",
+    "tip_nav": "Naviguer",
+    "tip_open": "Ouvrir le lien",
+    "tip_close": "Fermer"
+  },
+  "user_modal": {
+    "title": "Changer de Nom d'Utilisateur",
+    "desc": "Personnalisez le nom affiché dans le titre et les salutations de votre Centre de Commande :",
+    "input_placeholder": "Votre nom ou pseudo...",
+    "save_btn": "Enregistrer",
+    "preview_label": "Aperçu :",
+    "tooltip_title": "Cliquez pour changer votre nom d'utilisateur",
+    "doc_title_suffix": "· Centre de Commande"
+  }
+}

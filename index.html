@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="cyber">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaDeS' Shortcuts · Command Center</title>
+    <meta name="description" content="Centro de mando de productividad y lanzador web para HaDeS con diseño Bento Liquid Glass y búsqueda CMDK.">
+    <meta name="theme-color" content="#07090e">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Open Graph & Social Cards -->
+    <meta property="og:title" content="HaDeS' Shortcuts · Command Center">
+    <meta property="og:description" content="Centro de mando de productividad y lanzador web con diseño Bento Grid y búsqueda rápida.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="HaDeS' Shortcuts · Command Center">
+    <meta name="twitter:description" content="Centro de mando de productividad y lanzador web con diseño Bento Grid.">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Ambient Glow & Texture -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+    <div class="noise-overlay"></div>
+
+    <!-- Top Navigation Bar & Widgets -->
+    <header class="top-nav">
+        <!-- Left Widgets: Clock & Weather -->
+        <div class="nav-widgets-left">
+            <!-- Live Clock Widget -->
+            <div class="nav-widget widget-clock" id="clock-widget">
+                <span class="pulse-dot"></span>
+                <div class="clock-details">
+                    <span class="clock-time" id="live-time">19:45</span>
+                    <span class="clock-date" id="live-date">Cargando fecha...</span>
+                </div>
+            </div>
+
+            <!-- Weather Widget -->
+            <div class="nav-widget widget-weather" id="weather-widget" title="Haz clic para cambiar o buscar tu ciudad" role="button" tabindex="0">
+                <span class="weather-icon" id="weather-icon">⛅</span>
+                <div class="weather-details">
+                    <div class="weather-temp-row">
+                        <span class="weather-temp" id="weather-temp">--°C</span>
+                        <span class="weather-city" id="weather-city">Cargando...</span>
+                    </div>
+                    <span class="weather-condition" id="weather-condition">Detectando clima...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Brand / Title -->
+        <div class="brand-center">
+            <h1 class="brand-title"><span class="brand-user-name" id="brand-user-name" title="Haz clic para cambiar tu nombre de usuario" role="button" tabindex="0">HaDeS</span><span class="brand-user-suffix" id="brand-user-suffix">'</span> <span class="accent-text">SHORTCUTS</span></h1>
+            <p class="brand-greeting" id="greeting-text">Bienvenido al Centro de Mando</p>
+        </div>
+
+        <!-- Top Right Controls (Theme, Sound, CMDK Hint) -->
+        <div class="nav-controls">
+            <!-- Sound FX Toggle Button -->
+            <button class="control-btn" id="sound-toggle" title="Efectos de sonido (Activado/Desactivado)" aria-label="Sonido">
+                <svg id="sound-icon-on" class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+                <svg id="sound-icon-off" class="icon-svg hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+            </button>
+
+            <!-- Theme Palette Switcher -->
+            <div class="theme-dropdown-wrapper">
+                <button class="control-btn" id="theme-btn" title="Cambiar Tema Visual" aria-label="Cambiar tema" aria-haspopup="true" aria-expanded="false">
+                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                    </svg>
+                </button>
+                <div class="theme-menu" id="theme-menu">
+                    <button class="theme-opt active" data-set-theme="cyber">
+                        <span class="theme-preview cyber-preview"></span> Cyber Neon
+                    </button>
+                    <button class="theme-opt" data-set-theme="nebula">
+                        <span class="theme-preview nebula-preview"></span> Deep Nebula
+                    </button>
+                    <button class="theme-opt" data-set-theme="sunset">
+                        <span class="theme-preview sunset-preview"></span> Sunset Amber
+                    </button>
+                    <button class="theme-opt" data-set-theme="light">
+                        <span class="theme-preview light-preview"></span> Crystal Light
+                    </button>
+                </div>
+            </div>
+
+            <!-- Language Switcher -->
+            <div class="lang-dropdown-wrapper">
+                <button class="control-btn" id="lang-btn" title="Cambiar Idioma" aria-label="Cambiar idioma" aria-haspopup="true" aria-expanded="false">
+                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                </button>
+                <div class="lang-menu" id="lang-menu">
+                    <button class="lang-opt active" data-set-lang="es">
+                        <span class="lang-flag">🇪🇸</span> Español
+                    </button>
+                    <button class="lang-opt" data-set-lang="en">
+                        <span class="lang-flag">🇬🇧</span> English
+                    </button>
+                    <button class="lang-opt" data-set-lang="fr">
+                        <span class="lang-flag">🇫🇷</span> Français
+                    </button>
+                    <button class="lang-opt" data-set-lang="de">
+                        <span class="lang-flag">🇩🇪</span> Deutsch
+                    </button>
+                </div>
+            </div>
+
+            
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="dashboard-wrapper">
+        
+        <!-- Search & Filter Bar Section -->
+        <section class="search-section">
+            <div class="search-box-wrapper">
+                <!-- Search Engine Selector Dropdown -->
+                <div class="engine-dropdown-wrapper">
+                    <button class="engine-selector-btn" id="engine-btn" title="Cambiar motor de búsqueda" aria-label="Cambiar motor de búsqueda" aria-haspopup="true" aria-expanded="false">
+                        <span class="engine-icon-current" id="engine-icon-current"><img src="iconos/google.webp" class="engine-icon-img" alt="Google"></span>
+                        <span class="engine-name-current" id="engine-name-current">Google</span>
+                        <svg class="engine-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                                        <div class="engine-menu" id="engine-menu">
+                        <button class="engine-opt active" data-engine="google" data-name="Google" data-icon="iconos/google.webp" data-url="https://www.google.com/search?q=">
+                            <img src="iconos/google.webp" class="engine-opt-img" alt="Google"> Google
+                        </button>
+                        <button class="engine-opt" data-engine="duckduckgo" data-name="DuckDuckGo" data-icon="iconos/duckduckgo.webp" data-url="https://duckduckgo.com/?q=">
+                            <img src="iconos/duckduckgo.webp" class="engine-opt-img" alt="DuckDuckGo"> DuckDuckGo
+                        </button>
+                        <button class="engine-opt" data-engine="perplexity" data-name="Perplexity" data-icon="iconos/perplexity.webp" data-url="https://www.perplexity.ai/search?q=">
+                            <img src="iconos/perplexity.webp" class="engine-opt-img" alt="Perplexity"> Perplexity AI
+                        </button>
+                        <button class="engine-opt" data-engine="bing" data-name="Bing" data-icon="iconos/bing.webp" data-url="https://www.bing.com/search?q=">
+                            <img src="iconos/bing.webp" class="engine-opt-img" alt="Bing"> Bing
+                        </button>
+                        <button class="engine-opt" data-engine="youtube" data-name="YouTube" data-icon="iconos/youtube.webp" data-url="https://www.youtube.com/results?search_query=">
+                            <img src="iconos/youtube.webp" class="engine-opt-img" alt="YouTube"> YouTube
+                        </button>
+                        <button class="engine-opt" data-engine="github" data-name="GitHub" data-icon="iconos/github.webp" data-url="https://github.com/search?q=">
+                            <img src="iconos/github.webp" class="engine-opt-img" alt="GitHub"> GitHub
+                        </button>
+                    </div>
+                </div>
+
+                <input type="text" id="main-search" placeholder="Buscar en la web o filtrar atajos..." autocomplete="off">
+                <button class="clear-search-btn hidden" id="clear-search" aria-label="Limpiar búsqueda">✕</button>
+                <kbd class="search-key-badge">/</kbd>
+            </div>
+
+            <!-- Quick Filter Tags / Pills -->
+            <div class="filter-pills-container" id="filter-pills">
+                <button class="pill-btn active" data-filter="all">Todos <span class="pill-count">45</span></button>
+                <button class="pill-btn" data-filter="ia-creativa">IA & 3D</button>
+                <button class="pill-btn" data-filter="arte-media">Arte & Multimedia</button>
+                <button class="pill-btn" data-filter="productividad">Google & Herramientas</button>
+                <button class="pill-btn" data-filter="social-compras">Social & Compras</button>
+            </div>
+        </section>
+
+        <!-- Bento Grid System -->
+        <div class="categorias-contenedor" id="shortcuts-grid">
+            
+            <!-- Category 1: 3D -->
+            <section class="categoria" data-group="ia-creativa">
+                <div class="categoria-header">
+                    <div class="cat-tag-indicator tag-cyan"></div>
+                    <h2 data-cat-key="cat_3d">3D Modeling & AI</h2>
+                    <span class="cat-badge">3 apps</span>
+                </div>
+                <div class="iconos-grupo">
+                    <a href="https://www.meshy.ai/discover" target="_blank" class="enlace-icono" data-title="Meshy AI" data-app-key="meshy" data-desc="Generación de modelos 3D y texturas con IA a partir de texto o imagen" data-tags="3d ia generador modelado" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/meshy.webp" alt="Meshy AI" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Meshy AI</span>
+                    </a>
+                    <a href="https://studio.tripo3d.ai/" target="_blank" class="enlace-icono" data-title="Tripo 3D" data-app-key="tripo3d" data-desc="Estudio rápido para generar modelos 3D listos para producción" data-tags="3d studio tripo ia modelado" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/tripo3d.webp" alt="Tripo 3D" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Tripo 3D</span>
+                    </a>
+                    <a href="https://ludo.ai" target="_blank" class="enlace-icono" data-title="Ludo.ai" data-app-key="ludoai" data-desc="Plataforma de IA para ideación, análisis de mercado e investigación de videojuegos" data-tags="3d ludo ai juegos generador" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/ludoai.webp" alt="Ludo.ai" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Ludo.ai</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Category 2: AI -->
+            <section class="categoria categoria-featured" data-group="ia-creativa">
+                <div class="categoria-header">
+                    <div class="cat-tag-indicator tag-purple"></div>
+                    <h2 data-cat-key="cat_ai">Inteligencia Artificial</h2>
+                    <span class="cat-badge">5 apps</span>
+                </div>
+                <div class="iconos-grupo">
+                    <a href="https://chatgpt.com/" target="_blank" class="enlace-icono" data-title="ChatGPT" data-app-key="chatgpt" data-desc="Asistente conversacional avanzado y razonamiento con GPT-4o" data-tags="chatgpt openai gpt4 ia chatbot" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/chatgpt.webp" alt="ChatGPT" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">ChatGPT</span>
+                    </a>
+                    <a href="https://deepseek.com/" target="_blank" class="enlace-icono" data-title="DeepSeek" data-app-key="deepseek" data-desc="Modelo de razonamiento profundo y generación de código de alta precisión" data-tags="deepseek ia razonamiento r1 code" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/deepseek.webp" alt="DeepSeek" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">DeepSeek</span>
+                    </a>
+                    <a href="https://claude.ai/" target="_blank" class="enlace-icono" data-title="Claude" data-app-key="claude" data-desc="Modelo de IA de Anthropic con gran ventana de contexto y análisis de código" data-tags="claude anthropic sonnet ia chat" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/claude.webp" alt="Claude" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Claude</span>
+                    </a>
+                    <a href="https://qwen.ai/home" target="_blank" class="enlace-icono" data-title="Qwen" data-app-key="qwen" data-desc="Modelos fundacionales y chat de Alibaba Cloud (Qwen 2.5)" data-tags="qwen alibaba ia llm chat qwen2 ai razonamiento" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/qwen.webp" alt="Qwen" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Qwen</span>
+                    </a>
+                    <a href="https://seaverse.ai/" target="_blank" class="enlace-icono" data-title="SeaVerse" data-app-key="seaverse" data-desc="Herramientas y generadores de IA para mundos virtuales y multimedia" data-tags="seaverse ai generacion" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/seaverse.webp" alt="SeaVerse" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">SeaVerse</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Category 3: Arte Digital -->
+            <section class="categoria" data-group="arte-media">
+                <div class="categoria-header">
+                    <div class="cat-tag-indicator tag-pink"></div>
+                    <h2 data-cat-key="cat_art">Arte Digital & Modelos</h2>
+                    <span class="cat-badge">5 apps</span>
+                </div>
+                <div class="iconos-grupo">
+                    <a href="https://civitai.red/" target="_blank" class="enlace-icono" data-title="Civitai" data-app-key="civitai" data-desc="Comunidad y repositorio de modelos, Checkpoints y LoRAs para Stable Diffusion" data-tags="civitai stable diffusion lora checkpoints modelos" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/civitai.webp" alt="Civitai" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Civitai</span>
+                    </a>
+                    <a href="https://www.shakker.ai/" target="_blank" class="enlace-icono" data-title="Shakker" data-app-key="shakker" data-desc="Plataforma de generación y mezcla de imágenes de alta definición con IA" data-tags="shakker ia arte generacion" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/shakkerai.webp" alt="Shakker" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Shakker</span>
+                    </a>
+                    <a href="https://tensor.art/" target="_blank" class="enlace-icono" data-title="Tensor Art" data-app-key="tensorart" data-desc="Generador online de arte y modelos con créditos diarios gratuitos" data-tags="tensor art modelos generador" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/tensorart.webp" alt="Tensor Art" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Tensor Art</span>
+                    </a>
+                    <a href="https://www.seaart.ai/" target="_blank" class="enlace-icono" data-title="Sea Art" data-app-key="seaart" data-desc="Estudio de creación y renderizado artístico asistido por IA" data-tags="seaart ai imagen pintura arte" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/seaartai.webp" alt="Sea Art" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Sea Art</span>
+                    </a>
+                    <a href="https://www.shadertoy.com/" target="_blank" class="enlace-icono" data-title="Shadertoy" data-app-key="shadertoy" data-desc="Plataforma para programar, visualizar y compartir shaders GLSL en WebGL" data-tags="shadertoy shaders glsl webgl render arte codigo visual" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/shadertoy.webp" alt="Shadertoy" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Shadertoy</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Category 4: Audio -->
+            <section class="categoria" data-group="arte-media">
+                <div class="categoria-header">
+                    <div class="cat-tag-indicator tag-amber"></div>
+                    <h2 data-cat-key="cat_audio">Generación de Audio</h2>
+                    <span class="cat-badge">3 apps</span>
+                </div>
+                <div class="iconos-grupo">
+                    <a href="https://www.minimax.io/audio/voices" target="_blank" class="enlace-icono" data-title="Minimax" data-app-key="minimax" data-desc="Generación y clonación de voces ultrarrealistas con IA" data-tags="minimax voz audio ia tts" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/MiniMax.webp" alt="Minimax" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Minimax</span>
+                    </a>
+                    <a href="https://app.suno.ai/" target="_blank" class="enlace-icono" data-title="Suno" data-app-key="suno" data-desc="Composición y generación de canciones completas con música y letra por IA" data-tags="suno musica canciones ia generador" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/suno.webp" alt="Suno" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Suno</span>
+                    </a>
+                    <a href="https://elevenlabs.io/es" target="_blank" class="enlace-icono" data-title="Eleven Labs" data-app-key="elevenlabs" data-desc="Síntesis de voz líder en el sector y traducción de audio" data-tags="elevenlabs voces sintesis tts clonar voz" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/elevenlabs.webp" alt="Eleven Labs" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Eleven Labs</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Category 5: Google Suite -->
+            <section class="categoria categoria-featured" data-group="productividad">
+                <div class="categoria-header">
+                    <div class="cat-tag-indicator tag-blue"></div>
+                    <h2 data-cat-key="cat_google">Google Workspace & AI</h2>
+                    <span class="cat-badge">6 apps</span>
+                </div>
+                <div class="iconos-grupo">
+                    <a href="https://www.google.es/" target="_blank" class="enlace-icono" data-title="Google" data-app-key="google" data-desc="Motor de búsqueda web global y servicios integrados" data-tags="google buscador search web" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/google.webp" alt="Google" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Google</span>
+                    </a>
+                    <a href="https://mail.google.com/" target="_blank" class="enlace-icono" data-title="Gmail" data-app-key="gmail" data-desc="Servicio de correo electrónico seguro y sincronizado" data-tags="gmail correo email google mail" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/gmail.webp" alt="Gmail" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Gmail</span>
+                    </a>
+                    <a href="https://workspace.google.com/intl/es/products/drive/" target="_blank" class="enlace-icono" data-title="Google Drive" data-app-key="googledrive" data-desc="Almacenamiento en la nube y gestión de archivos colaborativa" data-tags="google drive nube archivos cloud" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/googledrive.webp" alt="Google Drive" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Drive</span>
+                    </a>
+                    <a href="https://gemini.google.com/" target="_blank" class="enlace-icono" data-title="Gemini" data-app-key="gemini" data-desc="Modelo multimodal de Google integrado en su ecosistema" data-tags="gemini google ia chatbot deepmind" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/gemini.webp" alt="Gemini" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Gemini</span>
+                    </a>
+                    <a href="https://aistudio.google.com/" target="_blank" class="enlace-icono" data-title="AI Studio" data-app-key="googleaistudio" data-desc="Entorno de desarrollo y prototipado rápido con APIs de Gemini" data-tags="google ai studio api llm tokens" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/googleaistudio.webp" alt="AI Studio" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">AI Studio</span>
+                    </a>
+                    <a href="https://notebooklm.google.com/" target="_blank" class="enlace-icono" data-title="NotebookLM" data-app-key="notebooklm" data-desc="Cuaderno inteligente de notas y resúmenes de audio con IA" data-tags="notebooklm google notas podcast audio ia" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/notebooklm.webp" alt="NotebookLM" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">NotebookLM</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Category 6: Tools & Utilidades -->
+            <section class="categoria" data-group="productividad">
+                <div class="categoria-header">
+                    <div class="cat-tag-indicator tag-emerald"></div>
+                    <h2 data-cat-key="cat_tools">Herramientas & Dev</h2>
+                    <span class="cat-badge">6 apps</span>
+                </div>
+                <div class="iconos-grupo">
+                    <a href="https://birme.net" target="_blank" class="enlace-icono" data-title="Birme" data-app-key="birme" data-desc="Redimensionador y recortador por lotes flexible de imágenes" data-tags="birme redimensionar imagenes recortar fotos lote" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/birme.webp" alt="Birme" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Birme</span>
+                    </a>
+                    <a href="https://www.photoroom.com/es/herramientas/eliminador-de-fondos" target="_blank" class="enlace-icono" data-title="Photoroom" data-app-key="photoroom" data-desc="Eliminador de fondos profesional y edición rápida de fotos" data-tags="photoroom fondo quitar transparent cutout" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/photoroom.webp" alt="Photoroom" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Photoroom</span>
+                    </a>
+                    <a href="https://github.com/Devildonia" target="_blank" class="enlace-icono" data-title="GitHub" data-app-key="github" data-desc="Plataforma de desarrollo colaborativo y repositorios Git" data-tags="github codigo repositorios git devildonia dev" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/github.webp" alt="GitHub" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">GitHub</span>
+                    </a>
+                    <a href="https://itch.io/" target="_blank" class="enlace-icono" data-title="itch.io" data-app-key="itchio" data-desc="Mercado indie de videojuegos, assets, música y sprites" data-tags="itchio juegos assets indie sprites dev gamedev" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/itchio.webp" alt="itch.io" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">itch.io</span>
+                    </a>
+                    <a href="https://optimizeglb.com/dashboard" target="_blank" class="enlace-icono" data-title="OptimizeGLB" data-app-key="optimizeglb" data-desc="Compresión Draco y optimización de archivos 3D GLB/glTF" data-tags="optimizeglb glb gltf 3d optimizador compresion dev 3dmodel" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/OptimizeGLB.webp" alt="OptimizeGLB" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">OptimizeGLB</span>
+                    </a>
+                    <a href="https://translate.google.com/" target="_blank" class="enlace-icono" data-title="Traductor" data-app-key="translate" data-desc="Traducción instantánea de textos y páginas web en múltiples idiomas" data-tags="traductor google translate idiomas" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/translate.webp" alt="Traductor" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Traductor</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Category 7: Redes Sociales -->
+            <section class="categoria" data-group="social-compras">
+                <div class="categoria-header">
+                    <div class="cat-tag-indicator tag-violet"></div>
+                    <h2 data-cat-key="cat_social">Comunidad & Redes</h2>
+                    <span class="cat-badge">9 apps</span>
+                </div>
+                <div class="iconos-grupo">
+                    <a href="https://www.instagram.com/" target="_blank" class="enlace-icono" data-title="Instagram" data-app-key="instagram" data-desc="Red social para compartir fotos, vídeos, historias y reels" data-tags="instagram fotos social meta ig" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/instagram.webp" alt="Instagram" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Instagram</span>
+                    </a>
+                    <a href="https://www.facebook.com/" target="_blank" class="enlace-icono" data-title="Facebook" data-app-key="facebook" data-desc="Red social para conectar con amigos, grupos y comunidades" data-tags="facebook fb social meta" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/facebook.webp" alt="Facebook" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Facebook</span>
+                    </a>
+                    <a href="https://x.com/" target="_blank" class="enlace-icono" data-title="X (Twitter)" data-app-key="x" data-desc="Red de microblogging para noticias y tendencias en tiempo real" data-tags="x twitter tweets social noticias" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/x.webp" alt="X" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">X</span>
+                    </a>
+                    <a href="https://www.tiktok.com/" target="_blank" class="enlace-icono" data-title="TikTok" data-app-key="tiktok" data-desc="Plataforma de vídeos cortos en formato vertical" data-tags="tiktok videos cortos clips" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/tiktok.webp" alt="TikTok" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">TikTok</span>
+                    </a>
+                    <a href="https://www.threads.net/?hl=es" target="_blank" class="enlace-icono" data-title="Threads" data-app-key="threads" data-desc="Plataforma de microblogging y debate vinculada a Instagram" data-tags="threads meta instagram posts" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/threads.webp" alt="Threads" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Threads</span>
+                    </a>
+                    <a href="https://www.patreon.com/home" target="_blank" class="enlace-icono" data-title="Patreon" data-app-key="patreon" data-desc="Membresías y suscripciones para creadores de contenido" data-tags="patreon creadores suscripcion donaciones" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/patreon.webp" alt="Patreon" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Patreon</span>
+                    </a>
+                    <a href="https://discord.com/channels/@me" target="_blank" class="enlace-icono" data-title="Discord" data-app-key="discord" data-desc="Servidores de chat de texto, voz y vídeo para comunidades" data-tags="discord chat voz servidores canales" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/discord.webp" alt="Discord" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Discord</span>
+                    </a>
+                    <a href="https://es.linkedin.com" target="_blank" class="enlace-icono" data-title="LinkedIn" data-app-key="linkedin" data-desc="Red social profesional para networking y empleo" data-tags="linkedin profesional empleo trabajo networking" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/linkedin.webp" alt="LinkedIn" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">LinkedIn</span>
+                    </a>
+                    <a href="https://www.exophase.com" target="_blank" class="enlace-icono" data-title="Exophase" data-app-key="exophase" data-desc="Seguimiento de logros, trofeos y estadísticas de perfiles gaming" data-tags="exophase logros gaming trofeos stats perfil videojuegos" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/exophase.webp" alt="Exophase" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Exophase</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Category 8: Compras -->
+            <section class="categoria" data-group="social-compras">
+                <div class="categoria-header">
+                    <div class="cat-tag-indicator tag-orange"></div>
+                    <h2 data-cat-key="cat_shopping">Compras & Pagos</h2>
+                    <span class="cat-badge">5 apps</span>
+                </div>
+                <div class="iconos-grupo">
+                    <a href="https://www.amazon.es/" target="_blank" class="enlace-icono" data-title="Amazon" data-app-key="amazon" data-desc="Tienda online global de productos con entrega rápida" data-tags="amazon compras tienda online prime" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/amazon.webp" alt="Amazon" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Amazon</span>
+                    </a>
+                    <a href="https://www.aliexpress.com/" target="_blank" class="enlace-icono" data-title="AliExpress" data-app-key="aliexpress" data-desc="Plataforma de compras online con variedad y precios de fábrica" data-tags="aliexpress compras ofertas importacion" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/aliexpress.webp" alt="AliExpress" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">AliExpress</span>
+                    </a>
+                    <a href="https://www.pccomponentes.com" target="_blank" class="enlace-icono" data-title="PcComponentes" data-app-key="pccomponentes" data-desc="Tienda especializada en informática, hardware y tecnología" data-tags="pccomponentes hardware informatica pc tecnologia" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/pccomponentes.webp" alt="PcComponentes" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">PcComponentes</span>
+                    </a>
+                    <a href="https://www.paypal.com" target="_blank" class="enlace-icono" data-title="PayPal" data-app-key="paypal" data-desc="Pasarela de pagos en línea segura y transferencias" data-tags="paypal pagos dinero transferencias billetera" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/paypal.webp" alt="PayPal" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">PayPal</span>
+                    </a>
+                    <a href="https://es.wallapop.com/wall" target="_blank" class="enlace-icono" data-title="Wallapop" data-app-key="wallapop" data-desc="Plataforma de compraventa de productos de segunda mano" data-tags="wallapop segunda mano venta compras" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/wallapop.webp" alt="Wallapop" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Wallapop</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Category 9: Vídeos & Generación -->
+            <section class="categoria" data-group="arte-media">
+                <div class="categoria-header">
+                    <div class="cat-tag-indicator tag-red"></div>
+                    <h2 data-cat-key="cat_video">Vídeo & Generación IA</h2>
+                    <span class="cat-badge">3 apps</span>
+                </div>
+                <div class="iconos-grupo">
+                    <a href="https://www.youtube.com/" target="_blank" class="enlace-icono" data-title="YouTube" data-app-key="youtube" data-desc="Plataforma de vídeo en streaming, tutoriales y directos" data-tags="youtube streaming videos clips musica" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/youtube.webp" alt="YouTube" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">YouTube</span>
+                    </a>
+                    <a href="https://app.klingai.com/global/" target="_blank" class="enlace-icono" data-title="Kling" data-app-key="kling" data-desc="Generación de vídeo cinemático con movimiento realista por IA" data-tags="kling ia generador videos clips" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/kling.webp" alt="Kling" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Kling</span>
+                    </a>
+                    <a href="https://hedra.com/" target="_blank" class="enlace-icono" data-title="Hedra" data-app-key="hedra" data-desc="Creación de avatares hablantes y personajes animados con IA" data-tags="hedra avatar video ia animacion" rel="noopener noreferrer">
+                        <div class="icon-img-wrapper">
+                            <img src="iconos/hedra.webp" alt="Hedra" loading="lazy" width="60" height="60">
+                        </div>
+                        <span class="icon-title">Hedra</span>
+                    </a>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- No Results Fallback Indicator -->
+        <div class="no-results-box hidden" id="no-results-msg">
+            <svg class="no-results-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+            <h3>No se encontraron accesos directos</h3>
+            <p>Prueba con otros términos o busca directamente en la web pulsando Enter.</p>
+        </div>
+
+    </main>
+
+    <!-- Global Smart Liquid Tooltip -->
+    <div class="smart-tooltip hidden" id="smart-tooltip" role="tooltip" aria-hidden="true">
+        <div class="tooltip-header">
+            <span class="tooltip-title" id="tooltip-title">App Name</span>
+            <span class="tooltip-badge" id="tooltip-domain">domain.com</span>
+        </div>
+        <p class="tooltip-desc" id="tooltip-desc">Descripción detallada de la aplicación...</p>
+    </div>
+
+
+    <!-- Weather City Configuration Modal -->
+    <div class="weather-modal-backdrop hidden" id="weather-modal" role="dialog" aria-modal="true" aria-label="Configurar Ciudad del Clima">
+        <div class="weather-modal-card">
+            <div class="weather-modal-header">
+                <div class="weather-modal-title-row">
+                    <h3>Configurar Ciudad del Clima</h3>
+                </div>
+                <button class="weather-modal-close" id="close-weather-modal" aria-label="Cerrar modal">✕</button>
+            </div>
+            <p class="weather-modal-desc">Escribe el nombre de tu ciudad para ver el pronóstico meteorológico en vivo:</p>
+            <div class="weather-modal-input-wrapper">
+                <input type="text" id="weather-city-input" placeholder="Ej: Vigo, Madrid, Barcelona, Valencia..." autocomplete="off">
+                <button class="weather-search-btn" id="weather-search-btn">Buscar</button>
+            </div>
+            <div class="weather-city-results hidden" id="weather-city-results"></div>
+            <div class="weather-modal-footer">
+                <button class="weather-auto-btn" id="weather-auto-btn">Detectar automáticamente por IP</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Edit Username Modal -->
+    <div class="user-modal-backdrop hidden" id="user-modal" role="dialog" aria-modal="true" aria-label="Cambiar Nombre de Usuario">
+        <div class="user-modal-card">
+            <div class="user-modal-header">
+                <h3>Cambiar Nombre de Usuario</h3>
+                <button class="user-modal-close" id="close-user-modal" aria-label="Cerrar modal">✕</button>
+            </div>
+            <p class="user-modal-desc">Personaliza el nombre que aparece en el título y en los saludos de tu Centro de Mando:</p>
+            <div class="user-modal-input-wrapper">
+                <input type="text" id="user-name-input" placeholder="Tu nombre o alias..." maxlength="25" autocomplete="off">
+                <button class="user-save-btn" id="user-save-btn">Guardar</button>
+            </div>
+            <div class="user-modal-preview">
+                Vista previa: <strong id="user-preview-text">HaDeS' SHORTCUTS</strong>
+            </div>
+        </div>
+    </div>
+
+    
+    </div>
+
+</body>
+</html>
