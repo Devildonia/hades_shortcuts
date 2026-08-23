@@ -1,7 +1,7 @@
 // js/app.js - Master Orchestrator for HaDeS' Shortcuts
 
 import { state } from './state.js';
-import { updateDocumentLocalization } from './i18n.js';
+import { updateDocumentLocalization, loadLocaleAsync } from './i18n.js';
 import { WeatherEngine } from './weather.js';
 import { SearchEngineManager } from './search.js';
 import { DashboardRenderer } from './render.js';
@@ -34,7 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
     shortcutManager.init();
     backupManager.init();
     settingsHub.init();
-    updateDocumentLocalization();
+    loadLocaleAsync(state.language).then(() => {
+        updateDocumentLocalization();
+        renderer.render();
+    });
 
     // 4. User Name Interactive Modal
     initUserNameModal(weather);

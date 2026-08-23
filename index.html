@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HaDeS' Shortcuts · Command Center</title>
-    <meta name="description" content="Centro de mando de productividad y lanzador web para HaDeS con diseño Bento Liquid Glass y búsqueda CMDK.">
+    <meta name="description" content="Centro de mando de productividad y lanzador web para HaDeS con diseño Bento Liquid Glass y búsqueda multi-motor.">
     <meta name="theme-color" content="#07090e">
     <meta name="robots" content="noindex, nofollow">
     
@@ -12,15 +12,23 @@
     <meta property="og:title" content="HaDeS' Shortcuts · Command Center">
     <meta property="og:description" content="Centro de mando de productividad y lanzador web con diseño Bento Grid y búsqueda rápida.">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="favicon.ico">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="HaDeS' Shortcuts · Command Center">
     <meta name="twitter:description" content="Centro de mando de productividad y lanzador web con diseño Bento Grid.">
-    <link rel="stylesheet" href="style.css">
-    <script type="module" src="js/app.js"></script>
+    <meta name="twitter:image" content="favicon.ico">
+
+    <!-- Favicon & Fonts -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Master Script Module -->
+    <script type="module" src="js/app.js"></script>
 </head>
 <body>
 
@@ -172,7 +180,7 @@
                         </div>
                         <span class="icon-title">ChatGPT</span>
                     </a>
-                    <a href="https://deepseek.com/" target="_blank" class="enlace-icono" data-title="DeepSeek" data-app-key="deepseek" data-desc="Modelo de razonamiento profundo y generación de código de alta precisión" data-tags="deepseek ia razonamiento r1 code" rel="noopener noreferrer">
+                    <a href="https://chat.deepseek.com/" target="_blank" class="enlace-icono" data-title="DeepSeek" data-app-key="deepseek" data-desc="Modelo de razonamiento profundo y generación de código de alta precisión" data-tags="deepseek ia razonamiento r1 code" rel="noopener noreferrer">
                         <div class="icon-img-wrapper">
                             <img src="iconos/deepseek.webp" alt="DeepSeek" loading="lazy" width="60" height="60">
                         </div>
@@ -562,10 +570,6 @@
             </div>
         </div>
     </div>
-
-    
-    </div>
-
 
     <!-- Settings Slide-Over Glass Drawer -->
     <div class="settings-drawer-backdrop hidden" id="settings-drawer" role="dialog" aria-modal="true" aria-label="Ajustes">
