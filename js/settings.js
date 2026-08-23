@@ -19,6 +19,7 @@ export class SettingsHub {
         this.langSelect = document.getElementById('setting-lang-select');
         this.editModeToggle = document.getElementById('setting-edit-mode-toggle');
         this.addShortcutBtn = document.getElementById('drawer-add-shortcut-btn');
+        this.layoutResetBtn = document.getElementById('layout-reset-defaults-btn');
     }
 
     init() {
@@ -108,6 +109,12 @@ export class SettingsHub {
         if (this.editModeToggle) {
             this.editModeToggle.addEventListener('change', () => {
                 state.setEditMode(this.editModeToggle.checked);
+            });
+        }
+
+        if (this.layoutResetBtn) {
+            this.layoutResetBtn.addEventListener('click', () => {
+                this.backupManager.resetDefaults();
             });
         }
 

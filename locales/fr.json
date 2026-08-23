@@ -158,7 +158,10 @@
       "edit_mode_desc": "Activez pour glisser les catégories, réorganiser les icônes, les modifier ou les supprimer.",
       "edit_mode_toggle": "Activer le Mode Édition",
       "add_shortcut_btn": "➕ Ajouter un Nouveau Raccourci",
-      "editing_active_badge": "Mode Édition Activé"
+      "editing_active_badge": "Mode Édition Activé",
+      "reset_layout_title": "Réinitialiser la Disposition",
+      "reset_layout_desc": "Vous avez beaucoup personnalisé votre tableau ? Repartez de zéro avec la disposition et les raccourcis d'usine.",
+      "reset_layout_btn": "🔄 Restaurer la Disposition d'Usine"
     },
     "backup": {
       "export_title": "Exporter la Configuration",

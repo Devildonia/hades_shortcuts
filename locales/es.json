@@ -158,7 +158,10 @@
       "edit_mode_desc": "Activa para arrastrar cajones, reordenar iconos, editarlos o eliminarlos.",
       "edit_mode_toggle": "Activar Modo Edición",
       "add_shortcut_btn": "➕ Añadir Nuevo Acceso Directo",
-      "editing_active_badge": "Modo Edición Activado"
+      "editing_active_badge": "Modo Edición Activado",
+      "reset_layout_title": "Restablecer Diseño Original",
+      "reset_layout_desc": "¿Has modificado mucho el tablero? Vuelve a empezar de cero con la disposición y accesos directos originales de fábrica.",
+      "reset_layout_btn": "🔄 Restaurar Diseño de Fábrica"
     },
     "backup": {
       "export_title": "Exportar Configuración",

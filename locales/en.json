@@ -158,7 +158,10 @@
       "edit_mode_desc": "Enable to drag categories, reorder icons, edit or delete them.",
       "edit_mode_toggle": "Enable Edit Mode",
       "add_shortcut_btn": "➕ Add New Shortcut",
-      "editing_active_badge": "Edit Mode Active"
+      "editing_active_badge": "Edit Mode Active",
+      "reset_layout_title": "Reset Original Layout",
+      "reset_layout_desc": "Extensively customized your dashboard? Start fresh anytime with the original factory layout and default shortcuts.",
+      "reset_layout_btn": "🔄 Restore Factory Layout"
     },
     "backup": {
       "export_title": "Export Configuration",
