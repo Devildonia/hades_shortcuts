@@ -35,6 +35,20 @@
 - **Instant Search Switcher**: Toggle seamlessly between **Google, DuckDuckGo, Perplexity AI, Bing, YouTube, and GitHub** with official crisp WebP logos.
 - **Live Fuzzy Filtering**: Real-time shortcut filtering across titles, tags, and descriptions as you type.
 
+### ⚙️ Unified Settings Hub & Slide-Over Drawer
+- **All-in-One Settings**: Dedicated glass drawer (<svg>⚙️</svg>) with 5 categorized tabs (*Appearance, Language, Weather, Layout & Shortcuts, Backup*).
+- **Theme & Sound Controls**: Switch between 4 visual themes, toggle tactile sound effects, and control ambient Aurora glow.
+
+### 🧩 Drag & Drop Customization & Shortcut Manager
+- **Bento Grid Customization**: Reorder entire category blocks or rearrange individual icons with native HTML5 Drag & Drop.
+- **Add / Edit / Delete**: Add custom shortcuts with custom URLs, bundled or custom WebP icons, descriptions, and tags.
+- **Zero Idle Overhead**: The Drag & Drop engine only runs when *Edit Mode* is explicitly enabled.
+
+### 💾 JSON Backup & Instant Restore
+- **One-Click Export**: Download a full `shortcuts-backup.json` configuration file.
+- **One-Click Restore**: Seamlessly import your setup across any browser or computer.
+- **Factory Reset**: Revert back to the default 45 shortcuts at any time.
+
 ### 👤 Interactive Username & Saxon Genitive Engine
 - **Customizable Name**: Click the title in the header to change your name on the fly.
 - **Intelligent Suffix Grammar**: Automatically applies the single apostrophe `'` for names ending in `s/S` (*HaDeS' Shortcuts*, *Carlos' Shortcuts*) or `'s` for others (*Alex's Shortcuts*, *Elena's Shortcuts*).
@@ -116,8 +130,18 @@ HaDeS' Shortcuts includes 4 built-in aesthetic themes with persistent storage in
 hades_shortcuts/
 ├── index.html          # Semantic HTML5 Bento layout & widgets
 ├── style.css           # CSS custom properties, Liquid Glass 2.0 & responsive rules
-├── script.js           # Multi-engine search, weather, clock, i18n & storage engine
 ├── favicon.ico         # Multi-resolution optimized favicon (11.2 KB)
+├── js/                 # Modular Anti-God File Architecture (ES6 Modules)
+│   ├── app.js          # Master initialization orchestrator
+│   ├── state.js        # Central state manager & localStorage synchronization
+│   ├── i18n.js         # Multi-language dictionary & localization engine
+│   ├── weather.js      # Precision minute clock & Open-Meteo weather
+│   ├── search.js       # Multi-engine search & live fuzzy filtering
+│   ├── render.js       # Dynamic Bento Grid & card renderer
+│   ├── settings.js     # Slide-over Settings Drawer UI & tab controller
+│   ├── dragdrop.js     # High-performance Drag & Drop for categories and icons
+│   ├── shortcut-manager.js # Add / Edit / Delete shortcut modal
+│   └── backup.js       # JSON configuration export & import engine
 ├── .gitattributes      # Enforces LF line endings across platforms
 ├── local server.bat    # Windows 1-click local web server
 │

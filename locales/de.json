@@ -130,5 +130,68 @@
     "preview_label": "Vorschau:",
     "tooltip_title": "Klicken, um Ihren Benutzernamen zu ändern",
     "doc_title_suffix": "· Kontrollzentrum"
+  },
+  "settings_hub": {
+    "title": "Kontrollzentrum Einstellungen",
+    "btn_title": "Konfiguration & Anpassung",
+    "tabs": {
+      "appearance": "Erscheinungsbild",
+      "language": "Sprache",
+      "weather": "Wetter",
+      "layout": "Layout & Verknüpfungen",
+      "backup": "Sicherung & Wiederherstellung"
+    },
+    "appearance": {
+      "themes_label": "Visuelles Design",
+      "sound_label": "Haptische Soundeffekte",
+      "glow_label": "Ambientes Aurora-Leuchten",
+      "themes": {
+        "cyber": "Cyber Neon",
+        "nebula": "Deep Nebula",
+        "amber": "Sunset Amber",
+        "light": "Crystal Light"
+      }
+    },
+    "layout": {
+      "edit_mode_title": "Dashboard-Bearbeitungsmodus",
+      "edit_mode_desc": "Aktivieren, um Kategorien zu ziehen, Symbole neu anzuordnen, zu bearbeiten oder zu löschen.",
+      "edit_mode_toggle": "Bearbeitungsmodus aktivieren",
+      "add_shortcut_btn": "➕ Neue Verknüpfung hinzufügen",
+      "editing_active_badge": "Bearbeitungsmodus Aktiv"
+    },
+    "backup": {
+      "export_title": "Konfiguration exportieren",
+      "export_desc": "Laden Sie eine JSON-Datei mit all Ihren Verknüpfungen und Einstellungen herunter.",
+      "export_btn": "📥 Sicherung herunterladen (*.json)",
+      "import_title": "Konfiguration wiederherstellen",
+      "import_desc": "Laden Sie eine zuvor exportierte JSON-Sicherungsdatei.",
+      "import_btn": "📤 Aus Datei wiederherstellen",
+      "reset_title": "Werkseinstellungen",
+      "reset_desc": "Stellt die ursprünglichen 45 Standard-Verknüpfungen wieder her.",
+      "reset_btn": "⚠️ Auf Standard zurücksetzen",
+      "reset_confirm": "Möchten Sie wirklich die Werkseinstellungen wiederherstellen?",
+      "import_success": "Sicherung erfolgreich wiederhergestellt!",
+      "import_error": "Die Sicherungsdatei ist ungültig oder beschädigt."
+    }
+  },
+  "shortcut_editor": {
+    "add_title": "Neue Verknüpfung hinzufügen",
+    "edit_title": "Verknüpfung bearbeiten",
+    "title_label": "Name der Verknüpfung",
+    "title_placeholder": "z. B. Notion, Figma, Spotify...",
+    "url_label": "Ziel-URL",
+    "url_placeholder": "https://beispiel.com",
+    "category_label": "Bento-Kategorie",
+    "icon_label": "Anwendungssymbol",
+    "icon_preset": "Enthaltenes Symbol wählen:",
+    "icon_custom": "Oder benutzerdefinierte Symbol-URL:",
+    "desc_label": "Beschreibung (für Tooltip)",
+    "desc_placeholder": "Kurze Übersicht über das Tool...",
+    "tags_label": "Suchbegriffe",
+    "tags_placeholder": "kommagetrennt (z. B. Musik, Streaming)",
+    "save_btn": "Verknüpfung speichern",
+    "delete_btn": "Verknüpfung löschen",
+    "delete_confirm": "Möchten Sie diese Verknüpfung wirklich löschen?",
+    "cancel_btn": "Abbrechen"
   }
 }

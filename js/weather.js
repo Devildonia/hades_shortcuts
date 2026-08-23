@@ -1,0 +1,164 @@
+// js/weather.js - Clock & Weather Engine
+
+import { state } from './state.js';
+import { i18nDictionaries } from './i18n.js';
+
+export class WeatherEngine {
+    constructor() {
+        this.liveTimeEl = document.getElementById('live-time');
+        this.liveDateEl = document.getElementById('live-date');
+        this.greetingTextEl = document.getElementById('greeting-text');
+        this.weatherWidget = document.getElementById('weather-widget');
+        this.weatherTempEl = document.getElementById('weather-temp');
+        this.weatherCityEl = document.getElementById('weather-city');
+        this.weatherIconEl = document.getElementById('weather-icon');
+        this.weatherConditionEl = document.getElementById('weather-condition');
+        this.lastWeather = null;
+    }
+
+    init() {
+        this.updateClockAndGreeting();
+        this.scheduleMinuteSync();
+        this.detectLocationAndWeather();
+        setInterval(() => this.detectLocationAndWeather(), 15 * 60 * 1000);
+
+        state.on('language:changed', () => {
+            this.updateClockAndGreeting();
+            if (this.lastWeather) {
+                this.renderWeatherUI(this.lastWeather.city, this.lastWeather.temp, this.lastWeather.code, this.lastWeather.isDay);
+            }
+        });
+        state.on('username:changed', () => this.updateClockAndGreeting());
+    }
+
+    updateClockAndGreeting() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        if (this.liveTimeEl) this.liveTimeEl.textContent = `${hours}:${minutes}`;
+
+        // Localized Date Format
+        const options = { weekday: 'long', day: 'numeric', month: 'long' };
+        const localeMap = { es: 'es-ES', en: 'en-US', fr: 'fr-FR', de: 'de-DE' };
+        if (this.liveDateEl) {
+            const dateStr = now.toLocaleDateString(localeMap[state.language] || 'es-ES', options);
+            this.liveDateEl.textContent = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+        }
+
+        // Localized Contextual Greeting
+        const t = i18nDictionaries[state.language] || i18nDictionaries.es;
+        const hour = now.getHours();
+        let greeting = t.brand_greeting;
+        const uName = state.userName || 'HaDeS';
+        if (hour >= 6 && hour < 13) {
+            greeting = t.greetings.morning.replace('HaDeS', uName);
+        } else if (hour >= 13 && hour < 21) {
+            greeting = t.greetings.afternoon.replace('HaDeS', uName);
+        } else {
+            greeting = t.greetings.night.replace('HaDeS', uName);
+        }
+        if (this.greetingTextEl) this.greetingTextEl.textContent = greeting;
+    }
+
+    scheduleMinuteSync() {
+        const now = new Date();
+        const msToNext = (60 - now.getSeconds()) * 1000 - now.getMilliseconds() + 50;
+        setTimeout(() => {
+            this.updateClockAndGreeting();
+            this.scheduleMinuteSync();
+        }, msToNext);
+    }
+
+    getWeatherInfo(code, isDay) {
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).weather.conditions;
+        switch (code) {
+            case 0: return { desc: t.clear, icon: isDay ? '☀️' : '🌙' };
+            case 1: return { desc: t.mostly_clear, icon: isDay ? '🌤️' : '🌙' };
+            case 2: return { desc: t.partly_cloudy, icon: isDay ? '⛅' : '☁️' };
+            case 3: return { desc: t.cloudy, icon: '☁️' };
+            case 45: case 48: return { desc: t.fog, icon: '🌫️' };
+            case 51: case 53: case 55: return { desc: t.drizzle, icon: '🌦️' };
+            case 61: case 63: return { desc: t.rain, icon: '🌧️' };
+            case 65: return { desc: t.heavy_rain, icon: '🌧️' };
+            case 71: case 73: case 75: case 77: return { desc: t.snow, icon: '❄️' };
+            case 80: case 81: case 82: return { desc: t.showers, icon: '🌧️' };
+            case 85: case 86: return { desc: t.snow_showers, icon: '🌨️' };
+            case 95: return { desc: t.thunderstorm, icon: '⛈️' };
+            case 96: case 99: return { desc: t.hail_thunderstorm, icon: '⛈️' };
+            default: return { desc: t.clear, icon: isDay ? '☀️' : '🌙' };
+        }
+    }
+
+    renderWeatherUI(city, temp, code, isDay) {
+        this.lastWeather = { city, temp, code, isDay };
+        if (this.weatherCityEl) this.weatherCityEl.textContent = city;
+        if (this.weatherTempEl) this.weatherTempEl.textContent = `${Math.round(temp)}°C`;
+        const info = this.getWeatherInfo(code, isDay);
+        if (this.weatherIconEl) this.weatherIconEl.textContent = info.icon;
+        if (this.weatherConditionEl) this.weatherConditionEl.textContent = info.desc;
+    }
+
+    async fetchWeatherForCoords(lat, lon, cityName) {
+        try {
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,is_day&timezone=auto`;
+            const res = await fetch(url);
+            const data = await res.json();
+            if (data && data.current) {
+                const temp = data.current.temperature_2m;
+                const code = data.current.weather_code;
+                const isDay = data.current.is_day === 1;
+                this.renderWeatherUI(cityName, temp, code, isDay);
+                localStorage.setItem('weather_cache_v2', JSON.stringify({
+                    city: cityName, temp, code, isDay, timestamp: Date.now()
+                }));
+            }
+        } catch (e) {}
+    }
+
+    async detectLocationAndWeather() {
+        const manualCity = localStorage.getItem('weather_manual_city');
+        if (manualCity) {
+            try {
+                const parsed = JSON.parse(manualCity);
+                if (parsed.lat && parsed.lon) {
+                    await this.fetchWeatherForCoords(parsed.lat, parsed.lon, parsed.name || 'Mi Ciudad');
+                    return;
+                }
+            } catch (e) {}
+        }
+
+        let detectedCity = 'Vigo';
+        let detectedLat = 42.2328;
+        let detectedLon = -8.7226;
+        let resolved = false;
+
+        try {
+            const ipRes = await fetch('https://ipwho.is/');
+            const ipData = await ipRes.json();
+            if (ipData && ipData.success !== false && ipData.latitude) {
+                detectedCity = ipData.city || 'Tu Zona';
+                detectedLat = ipData.latitude;
+                detectedLon = ipData.longitude;
+                resolved = true;
+            }
+        } catch (e) {}
+
+        if (!resolved) {
+            try {
+                const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Madrid';
+                const parts = tz.split('/');
+                const tzCity = (parts[1] || 'Madrid').replace(/_/g, ' ');
+                const geoSearchRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(tzCity)}&count=1&language=es&format=json`);
+                const geoSearchData = await geoSearchRes.json();
+                if (geoSearchData.results && geoSearchData.results.length > 0) {
+                    detectedCity = geoSearchData.results[0].name;
+                    detectedLat = geoSearchData.results[0].latitude;
+                    detectedLon = geoSearchData.results[0].longitude;
+                    resolved = true;
+                }
+            } catch (e) {}
+        }
+
+        await this.fetchWeatherForCoords(detectedLat, detectedLon, detectedCity);
+    }
+}

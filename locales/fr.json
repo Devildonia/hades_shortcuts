@@ -130,5 +130,68 @@
     "preview_label": "Aperçu :",
     "tooltip_title": "Cliquez pour changer votre nom d'utilisateur",
     "doc_title_suffix": "· Centre de Commande"
+  },
+  "settings_hub": {
+    "title": "Paramètres du Centre de Commande",
+    "btn_title": "Configuration & Personnalisation",
+    "tabs": {
+      "appearance": "Apparence",
+      "language": "Langue",
+      "weather": "Météo",
+      "layout": "Mise en page & Raccourcis",
+      "backup": "Sauvegarde"
+    },
+    "appearance": {
+      "themes_label": "Thème Visuel",
+      "sound_label": "Effets Sonores Haptiques",
+      "glow_label": "Lueur Ambiante Aurora",
+      "themes": {
+        "cyber": "Cyber Neon",
+        "nebula": "Deep Nebula",
+        "amber": "Sunset Amber",
+        "light": "Crystal Light"
+      }
+    },
+    "layout": {
+      "edit_mode_title": "Mode Édition du Tableau",
+      "edit_mode_desc": "Activez pour glisser les catégories, réorganiser les icônes, les modifier ou les supprimer.",
+      "edit_mode_toggle": "Activer le Mode Édition",
+      "add_shortcut_btn": "➕ Ajouter un Nouveau Raccourci",
+      "editing_active_badge": "Mode Édition Activé"
+    },
+    "backup": {
+      "export_title": "Exporter la Configuration",
+      "export_desc": "Téléchargez un fichier JSON avec tous vos raccourcis et préférences.",
+      "export_btn": "📥 Télécharger la Sauvegarde (*.json)",
+      "import_title": "Restaurer la Configuration",
+      "import_desc": "Chargez un fichier de sauvegarde JSON préalablement exporté.",
+      "import_btn": "📤 Restaurer depuis le Fichier",
+      "reset_title": "Réinitialisation d'Usine",
+      "reset_desc": "Restaure les 45 raccourcis originaux par défaut.",
+      "reset_btn": "⚠️ Réinitialiser par Défaut",
+      "reset_confirm": "Êtes-vous sûr de vouloir réinitialiser ? Les personnalisations seront perdues.",
+      "import_success": "Sauvegarde restaurée avec succès !",
+      "import_error": "Le fichier de sauvegarde est invalide ou corrompu."
+    }
+  },
+  "shortcut_editor": {
+    "add_title": "Ajouter un Nouveau Raccourci",
+    "edit_title": "Modifier le Raccourci",
+    "title_label": "Nom du Raccourci",
+    "title_placeholder": "Ex : Notion, Figma, Spotify...",
+    "url_label": "URL de Destination",
+    "url_placeholder": "https://exemple.com",
+    "category_label": "Catégorie Bento",
+    "icon_label": "Icône de l'Application",
+    "icon_preset": "Choisir une icône incluse :",
+    "icon_custom": "Ou URL d'icône personnalisée :",
+    "desc_label": "Description (pour le Tooltip)",
+    "desc_placeholder": "Bref résumé de l'outil...",
+    "tags_label": "Mots-clés de Recherche",
+    "tags_placeholder": "séparés par des virgules (ex : musique, streaming)",
+    "save_btn": "Enregistrer le Raccourci",
+    "delete_btn": "Supprimer le Raccourci",
+    "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce raccourci ?",
+    "cancel_btn": "Annuler"
   }
 }

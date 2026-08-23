@@ -16,7 +16,7 @@
     <meta name="twitter:title" content="HaDeS' Shortcuts · Command Center">
     <meta name="twitter:description" content="Centro de mando de productividad y lanzador web con diseño Bento Grid.">
     <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
+    <script type="module" src="js/app.js"></script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,71 +62,15 @@
             <p class="brand-greeting" id="greeting-text">Bienvenido al Centro de Mando</p>
         </div>
 
-        <!-- Top Right Controls (Theme, Sound, CMDK Hint) -->
+                <!-- Top Right Controls (Unified Settings Hub) -->
         <div class="nav-controls">
-            <!-- Sound FX Toggle Button -->
-            <button class="control-btn" id="sound-toggle" title="Efectos de sonido (Activado/Desactivado)" aria-label="Sonido">
-                <svg id="sound-icon-on" class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                </svg>
-                <svg id="sound-icon-off" class="icon-svg hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                    <line x1="23" y1="9" x2="17" y2="15"></line>
-                    <line x1="17" y1="9" x2="23" y2="15"></line>
+            <!-- Settings Hub Button -->
+            <button class="control-btn settings-main-btn" id="settings-btn" title="Configuración y Personalización" aria-label="Ajustes" data-i18n-title="settings_hub.btn_title">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                 </svg>
             </button>
-
-            <!-- Theme Palette Switcher -->
-            <div class="theme-dropdown-wrapper">
-                <button class="control-btn" id="theme-btn" title="Cambiar Tema Visual" aria-label="Cambiar tema" aria-haspopup="true" aria-expanded="false">
-                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
-                    </svg>
-                </button>
-                <div class="theme-menu" id="theme-menu">
-                    <button class="theme-opt active" data-set-theme="cyber">
-                        <span class="theme-preview cyber-preview"></span> Cyber Neon
-                    </button>
-                    <button class="theme-opt" data-set-theme="nebula">
-                        <span class="theme-preview nebula-preview"></span> Deep Nebula
-                    </button>
-                    <button class="theme-opt" data-set-theme="sunset">
-                        <span class="theme-preview sunset-preview"></span> Sunset Amber
-                    </button>
-                    <button class="theme-opt" data-set-theme="light">
-                        <span class="theme-preview light-preview"></span> Crystal Light
-                    </button>
-                </div>
-            </div>
-
-            <!-- Language Switcher -->
-            <div class="lang-dropdown-wrapper">
-                <button class="control-btn" id="lang-btn" title="Cambiar Idioma" aria-label="Cambiar idioma" aria-haspopup="true" aria-expanded="false">
-                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="2" y1="12" x2="22" y2="12"></line>
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                    </svg>
-                </button>
-                <div class="lang-menu" id="lang-menu">
-                    <button class="lang-opt active" data-set-lang="es">
-                        <span class="lang-flag">🇪🇸</span> Español
-                    </button>
-                    <button class="lang-opt" data-set-lang="en">
-                        <span class="lang-flag">🇬🇧</span> English
-                    </button>
-                    <button class="lang-opt" data-set-lang="fr">
-                        <span class="lang-flag">🇫🇷</span> Français
-                    </button>
-                    <button class="lang-opt" data-set-lang="de">
-                        <span class="lang-flag">🇩🇪</span> Deutsch
-                    </button>
-                </div>
-            </div>
-
-            
         </div>
     </header>
 
@@ -620,6 +564,192 @@
     </div>
 
     
+    </div>
+
+
+    <!-- Settings Slide-Over Glass Drawer -->
+    <div class="settings-drawer-backdrop hidden" id="settings-drawer" role="dialog" aria-modal="true" aria-label="Ajustes">
+        <div class="settings-drawer-card">
+            <div class="settings-drawer-header">
+                <div class="settings-drawer-title-row">
+                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    <h3 data-i18n="settings_hub.title">Ajustes del Centro de Mando</h3>
+                </div>
+                <button class="settings-drawer-close" id="close-settings-drawer" aria-label="Cerrar">✕</button>
+            </div>
+
+            <!-- Settings Tab Navigation -->
+            <div class="settings-tabs">
+                <button class="settings-tab-btn active" data-tab="appearance" data-i18n="settings_hub.tabs.appearance">Apariencia</button>
+                <button class="settings-tab-btn" data-tab="language" data-i18n="settings_hub.tabs.language">Idioma</button>
+                <button class="settings-tab-btn" data-tab="layout" data-i18n="settings_hub.tabs.layout">Diseño & Atajos</button>
+                <button class="settings-tab-btn" data-tab="backup" data-i18n="settings_hub.tabs.backup">Copia de Seguridad</button>
+            </div>
+
+            <!-- Tab 1: Appearance -->
+            <div class="settings-tab-pane active" id="tab-pane-appearance">
+                <div class="settings-section">
+                    <h4 data-i18n="settings_hub.appearance.themes_label">Tema Visual</h4>
+                    <div class="theme-grid-selector">
+                        <label class="theme-choice-card">
+                            <input type="radio" name="setting-theme" value="cyber" checked>
+                            <span class="theme-choice-preview cyber-preview"></span>
+                            <span class="theme-choice-name">Cyber Neon</span>
+                        </label>
+                        <label class="theme-choice-card">
+                            <input type="radio" name="setting-theme" value="nebula">
+                            <span class="theme-choice-preview nebula-preview"></span>
+                            <span class="theme-choice-name">Deep Nebula</span>
+                        </label>
+                        <label class="theme-choice-card">
+                            <input type="radio" name="setting-theme" value="amber">
+                            <span class="theme-choice-preview amber-preview"></span>
+                            <span class="theme-choice-name">Sunset Amber</span>
+                        </label>
+                        <label class="theme-choice-card">
+                            <input type="radio" name="setting-theme" value="light">
+                            <span class="theme-choice-preview light-preview"></span>
+                            <span class="theme-choice-name">Crystal Light</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-toggle-row">
+                        <div>
+                            <span class="settings-toggle-title" data-i18n="settings_hub.appearance.sound_label">Efectos de Sonido Hápticos</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="setting-sound-toggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle-row">
+                        <div>
+                            <span class="settings-toggle-title" data-i18n="settings_hub.appearance.glow_label">Resplandor Ambiental (Aurora)</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="setting-glow-toggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Language -->
+            <div class="settings-tab-pane" id="tab-pane-language">
+                <div class="settings-section">
+                    <h4 data-i18n="settings_hub.tabs.language">Idioma de la Interfaz</h4>
+                    <select class="settings-select" id="setting-lang-select">
+                        <option value="es">🇪🇸 Español</option>
+                        <option value="en">🇬🇧 English</option>
+                        <option value="fr">🇫🇷 Français</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tab 3: Layout & Shortcuts -->
+            <div class="settings-tab-pane" id="tab-pane-layout">
+                <div class="settings-section">
+                    <h4 data-i18n="settings_hub.layout.edit_mode_title">Modo Edición del Tablero</h4>
+                    <p class="settings-hint" data-i18n="settings_hub.layout.edit_mode_desc">Activa para arrastrar cajones, reordenar iconos, editarlos o eliminarlos.</p>
+                    <div class="settings-toggle-row">
+                        <span class="settings-toggle-title" data-i18n="settings_hub.layout.edit_mode_toggle">Activar Modo Edición</span>
+                        <label class="switch">
+                            <input type="checkbox" id="setting-edit-mode-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <button class="settings-action-btn primary" id="drawer-add-shortcut-btn" data-i18n="settings_hub.layout.add_shortcut_btn">➕ Añadir Nuevo Acceso Directo</button>
+                </div>
+            </div>
+
+            <!-- Tab 4: Backup -->
+            <div class="settings-tab-pane" id="tab-pane-backup">
+                <div class="settings-section">
+                    <h4 data-i18n="settings_hub.backup.export_title">Exportar Configuración</h4>
+                    <p class="settings-hint" data-i18n="settings_hub.backup.export_desc">Descarga un archivo JSON con todos tus atajos y preferencias.</p>
+                    <button class="settings-action-btn secondary" id="export-backup-btn" data-i18n="settings_hub.backup.export_btn">📥 Descargar Copia (*.json)</button>
+                </div>
+
+                <div class="settings-section">
+                    <h4 data-i18n="settings_hub.backup.import_title">Restaurar Configuración</h4>
+                    <p class="settings-hint" data-i18n="settings_hub.backup.import_desc">Carga un archivo de respaldo JSON previamente exportado.</p>
+                    <label class="settings-file-label">
+                        <span data-i18n="settings_hub.backup.import_btn">📤 Restaurar desde Archivo</span>
+                        <input type="file" id="import-backup-file" accept=".json" class="hidden">
+                    </label>
+                </div>
+
+                <div class="settings-section danger-section">
+                    <h4 data-i18n="settings_hub.backup.reset_title">Restablecer de Fábrica</h4>
+                    <p class="settings-hint" data-i18n="settings_hub.backup.reset_desc">Restaura los 45 accesos directos originales predeterminados.</p>
+                    <button class="settings-action-btn danger" id="reset-defaults-btn" data-i18n="settings_hub.backup.reset_btn">⚠️ Restablecer Valores</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add / Edit Shortcut Modal -->
+    <div class="shortcut-modal-backdrop hidden" id="shortcut-modal" role="dialog" aria-modal="true" aria-label="Gestionar Atajo">
+        <div class="shortcut-modal-card">
+            <div class="shortcut-modal-header">
+                <h3 id="sc-modal-title" data-i18n="shortcut_editor.add_title">Añadir Nuevo Acceso Directo</h3>
+                <button class="shortcut-modal-close" id="close-sc-modal" aria-label="Cerrar">✕</button>
+            </div>
+
+            <div class="shortcut-form">
+                <div class="form-group">
+                    <label data-i18n="shortcut_editor.title_label">Nombre del Atajo</label>
+                    <input type="text" id="sc-title-input" placeholder="Ej: Notion, Figma, Spotify..." autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="shortcut_editor.url_label">URL de Destino</label>
+                    <input type="url" id="sc-url-input" placeholder="https://ejemplo.com" autocomplete="off">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label data-i18n="shortcut_editor.category_label">Categoría Bento</label>
+                        <select id="sc-category-select" class="form-select"></select>
+                    </div>
+
+                    <div class="form-group flex-1">
+                        <label data-i18n="shortcut_editor.icon_preset">Icono de la Aplicación</label>
+                        <select id="sc-icon-select" class="form-select"></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="shortcut_editor.icon_custom">O URL de icono personalizada</label>
+                    <input type="text" id="sc-custom-icon" placeholder="https://... o icono local" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="shortcut_editor.desc_label">Descripción (para el Tooltip)</label>
+                    <input type="text" id="sc-desc-input" placeholder="Breve resumen de la herramienta..." autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="shortcut_editor.tags_label">Etiquetas de Búsqueda</label>
+                    <input type="text" id="sc-tags-input" placeholder="separadas por comas (ej: musica, streaming)" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="shortcut-modal-footer">
+                <button class="settings-action-btn danger hidden" id="sc-delete-btn" data-i18n="shortcut_editor.delete_btn">Eliminar Atajo</button>
+                <div class="modal-footer-right">
+                    <button class="settings-action-btn primary" id="sc-save-btn" data-i18n="shortcut_editor.save_btn">Guardar Atajo</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>

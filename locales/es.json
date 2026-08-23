@@ -130,5 +130,68 @@
     "preview_label": "Vista previa:",
     "tooltip_title": "Haz clic para cambiar tu nombre de usuario",
     "doc_title_suffix": "· Centro de Mando"
+  },
+  "settings_hub": {
+    "title": "Ajustes del Centro de Mando",
+    "btn_title": "Configuración y Personalización",
+    "tabs": {
+      "appearance": "Apariencia",
+      "language": "Idioma",
+      "weather": "Clima",
+      "layout": "Diseño & Atajos",
+      "backup": "Copia de Seguridad"
+    },
+    "appearance": {
+      "themes_label": "Tema Visual",
+      "sound_label": "Efectos de Sonido Hápticos",
+      "glow_label": "Resplandor Ambiental (Aurora)",
+      "themes": {
+        "cyber": "Cyber Neon",
+        "nebula": "Deep Nebula",
+        "amber": "Sunset Amber",
+        "light": "Crystal Light"
+      }
+    },
+    "layout": {
+      "edit_mode_title": "Modo Edición del Tablero",
+      "edit_mode_desc": "Activa para arrastrar cajones, reordenar iconos, editarlos o eliminarlos.",
+      "edit_mode_toggle": "Activar Modo Edición",
+      "add_shortcut_btn": "➕ Añadir Nuevo Acceso Directo",
+      "editing_active_badge": "Modo Edición Activado"
+    },
+    "backup": {
+      "export_title": "Exportar Configuración",
+      "export_desc": "Descarga un archivo JSON con todos tus atajos, orden personalizado y preferencias.",
+      "export_btn": "📥 Descargar Copia (*.json)",
+      "import_title": "Restaurar Configuración",
+      "import_desc": "Carga un archivo de respaldo JSON previamente exportado.",
+      "import_btn": "📤 Restaurar desde Archivo",
+      "reset_title": "Restablecer de Fábrica",
+      "reset_desc": "Restaura los 45 accesos directos originales predeterminados.",
+      "reset_btn": "⚠️ Restablecer Valores",
+      "reset_confirm": "¿Estás seguro de que deseas restablecer los valores de fábrica? Se perderán las personalizaciones.",
+      "import_success": "¡Copia de seguridad restaurada con éxito!",
+      "import_error": "El archivo de respaldo no es válido o está dañado."
+    }
+  },
+  "shortcut_editor": {
+    "add_title": "Añadir Nuevo Acceso Directo",
+    "edit_title": "Editar Acceso Directo",
+    "title_label": "Nombre del Atajo",
+    "title_placeholder": "Ej: Notion, Figma, Spotify...",
+    "url_label": "URL de Destino",
+    "url_placeholder": "https://ejemplo.com",
+    "category_label": "Categoría Bento",
+    "icon_label": "Icono de la Aplicación",
+    "icon_preset": "Elegir icono incluido:",
+    "icon_custom": "O URL de icono personalizada:",
+    "desc_label": "Descripción (para el Tooltip)",
+    "desc_placeholder": "Breve resumen de la herramienta...",
+    "tags_label": "Etiquetas de Búsqueda",
+    "tags_placeholder": "separadas por comas (ej: musica, streaming)",
+    "save_btn": "Guardar Atajo",
+    "delete_btn": "Eliminar Atajo",
+    "delete_confirm": "¿Seguro que deseas eliminar este acceso directo?",
+    "cancel_btn": "Cancelar"
   }
 }
