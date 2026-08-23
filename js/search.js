@@ -16,12 +16,13 @@ export class SearchEngineManager {
     constructor() {
         this.engineBtn = document.getElementById('engine-btn');
         this.engineMenu = document.getElementById('engine-menu');
-        this.engineIcon = document.getElementById('current-engine-icon');
+        this.engineIcon = document.querySelector('#engine-icon-current img') || document.getElementById('engine-icon-current');
+        this.engineName = document.getElementById('engine-name-current');
         this.engineOptions = document.querySelectorAll('.engine-opt');
         this.searchInput = document.getElementById('main-search');
         this.clearSearchBtn = document.getElementById('clear-search');
         this.pillButtons = document.querySelectorAll('.pill-btn');
-        this.noResultsMsg = document.getElementById('no-results');
+        this.noResultsMsg = document.getElementById('no-results-msg') || document.getElementById('no-results');
         this.currentEngineKey = state.searchEngine;
     }
 
@@ -43,7 +44,15 @@ export class SearchEngineManager {
         localStorage.setItem('app_search_engine', key);
 
         const engine = SEARCH_ENGINES[key];
-        if (this.engineIcon) this.engineIcon.src = engine.icon;
+        if (this.engineIcon) {
+            if (this.engineIcon.tagName === 'IMG') {
+                this.engineIcon.src = engine.icon;
+                this.engineIcon.alt = engine.name;
+            } else {
+                this.engineIcon.innerHTML = `<img src="${engine.icon}" class="engine-icon-img" alt="${engine.name}">`;
+            }
+        }
+        if (this.engineName) this.engineName.textContent = engine.name;
         this.updatePlaceholders();
 
         this.engineOptions.forEach(opt => {
@@ -123,6 +132,13 @@ export class SearchEngineManager {
                 this.setEngine(opt.getAttribute('data-engine'));
                 this.engineMenu.classList.remove('active');
             });
+        });
+
+        // Close engine menu on outside click
+        document.addEventListener('click', (e) => {
+            if (this.engineMenu && this.engineMenu.classList.contains('active') && !this.engineMenu.contains(e.target) && !this.engineBtn.contains(e.target)) {
+                this.engineMenu.classList.remove('active');
+            }
         });
 
         if (this.searchInput) {

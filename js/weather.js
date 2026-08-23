@@ -13,6 +13,12 @@ export class WeatherEngine {
         this.weatherCityEl = document.getElementById('weather-city');
         this.weatherIconEl = document.getElementById('weather-icon');
         this.weatherConditionEl = document.getElementById('weather-condition');
+        this.weatherModal = document.getElementById('weather-modal');
+        this.closeWeatherModalBtn = document.getElementById('close-weather-modal');
+        this.weatherCityInput = document.getElementById('weather-city-input');
+        this.weatherSearchBtn = document.getElementById('weather-search-btn');
+        this.weatherCityResults = document.getElementById('weather-city-results');
+        this.weatherAutoBtn = document.getElementById('weather-auto-btn');
         this.lastWeather = null;
     }
 
@@ -20,6 +26,7 @@ export class WeatherEngine {
         this.updateClockAndGreeting();
         this.scheduleMinuteSync();
         this.detectLocationAndWeather();
+        this.bindModalEvents();
         setInterval(() => this.detectLocationAndWeather(), 15 * 60 * 1000);
 
         state.on('language:changed', () => {
@@ -161,4 +168,111 @@ export class WeatherEngine {
 
         await this.fetchWeatherForCoords(detectedLat, detectedLon, detectedCity);
     }
+
+    bindModalEvents() {
+        const openModal = () => {
+            if (!this.weatherModal) return;
+            this.weatherModal.classList.remove('hidden');
+            if (this.weatherCityInput) {
+                this.weatherCityInput.value = '';
+                this.weatherCityInput.focus();
+            }
+            if (this.weatherCityResults) {
+                this.weatherCityResults.classList.add('hidden');
+                this.weatherCityResults.innerHTML = '';
+            }
+        };
+
+        const closeModal = () => {
+            if (this.weatherModal) this.weatherModal.classList.add('hidden');
+        };
+
+        if (this.weatherWidget) {
+            this.weatherWidget.addEventListener('click', openModal);
+            this.weatherWidget.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openModal();
+                }
+            });
+        }
+
+        if (this.closeWeatherModalBtn) this.closeWeatherModalBtn.addEventListener('click', closeModal);
+        if (this.weatherModal) {
+            this.weatherModal.addEventListener('click', (e) => {
+                if (e.target === this.weatherModal) closeModal();
+            });
+        }
+
+        const searchCity = async () => {
+            if (!this.weatherCityInput) return;
+            const query = this.weatherCityInput.value.trim();
+            if (!query) return;
+
+            if (this.weatherSearchBtn) this.weatherSearchBtn.textContent = '...';
+            try {
+                const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=es&format=json`);
+                const data = await res.json();
+                if (this.weatherCityResults) {
+                    this.weatherCityResults.innerHTML = '';
+                    if (data.results && data.results.length > 0) {
+                        data.results.forEach(loc => {
+                            const item = document.createElement('div');
+                            item.className = 'weather-city-item';
+                            const admin = loc.admin1 ? `${loc.admin1}, ` : '';
+                            item.innerHTML = `
+                                <span>📍 <strong>${escapeHtml(loc.name)}</strong></span>
+                                <span class="weather-city-country">${escapeHtml(admin)}${escapeHtml(loc.country || '')}</span>
+                            `;
+                            item.addEventListener('click', async () => {
+                                localStorage.setItem('weather_manual_city', JSON.stringify({
+                                    name: loc.name,
+                                    lat: loc.latitude,
+                                    lon: loc.longitude
+                                }));
+                                localStorage.removeItem('weather_cache_v2');
+                                await this.fetchWeatherForCoords(loc.latitude, loc.longitude, loc.name);
+                                closeModal();
+                            });
+                            this.weatherCityResults.appendChild(item);
+                        });
+                        this.weatherCityResults.classList.remove('hidden');
+                    } else {
+                        this.weatherCityResults.innerHTML = '<div style="padding: 8px 12px; font-size: 0.82rem; color: var(--text-muted); text-align: center;">No se encontraron ciudades.</div>';
+                        this.weatherCityResults.classList.remove('hidden');
+                    }
+                }
+            } catch (err) {
+                if (this.weatherCityResults) {
+                    this.weatherCityResults.innerHTML = '<div style="padding: 8px 12px; font-size: 0.82rem; color: #ff6b6b; text-align: center;">Error al buscar ciudad.</div>';
+                    this.weatherCityResults.classList.remove('hidden');
+                }
+            } finally {
+                if (this.weatherSearchBtn) this.weatherSearchBtn.textContent = 'Buscar';
+            }
+        };
+
+        if (this.weatherSearchBtn) this.weatherSearchBtn.addEventListener('click', searchCity);
+        if (this.weatherCityInput) {
+            this.weatherCityInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    searchCity();
+                }
+            });
+        }
+
+        if (this.weatherAutoBtn) {
+            this.weatherAutoBtn.addEventListener('click', async () => {
+                localStorage.removeItem('weather_manual_city');
+                localStorage.removeItem('weather_cache_v2');
+                await this.detectLocationAndWeather();
+                closeModal();
+            });
+        }
+    }
 }
+
+const escapeHtml = (str) => {
+    return String(str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+};
