@@ -204,9 +204,7 @@ body {
     gap: 20px;
 }
 
-/* Clock Widget */
-.nav-widget
-/* Left Widgets Container */
+/* Clock & Left Widgets Container */
 .nav-widgets-left {
     display: inline-flex;
     align-items: center;
@@ -2202,3 +2200,40 @@ input:checked + .slider:before {
 .nebula-preview { background: #d946ef; box-shadow: 0 0 8px #d946ef; }
 .sunset-preview, .amber-preview { background: #f97316; box-shadow: 0 0 8px #f97316; }
 .light-preview { background: #0284c7; box-shadow: 0 0 8px #0284c7; }
+
+
+/* Settings Main Button */
+.settings-main-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-pill);
+    background: var(--card-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    position: relative;
+    z-index: 10;
+}
+
+.settings-main-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+    transform: translateY(-2px) rotate(45deg);
+    box-shadow: 0 6px 20px var(--accent-glow);
+}
+
+.settings-main-btn .icon-svg {
+    width: 22px;
+    height: 22px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.settings-main-btn:hover .icon-svg {
+    transform: rotate(90deg);
+}
