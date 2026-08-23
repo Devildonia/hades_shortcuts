@@ -32,7 +32,8 @@ export class DashboardRenderer {
         state.categories.forEach(cat => {
             const shortcutsInCat = state.shortcuts.filter(s => s.category === cat.id);
             const section = document.createElement('section');
-            section.className = 'categoria';
+            const isFeatured = shortcutsInCat.length > 6 || cat.featured;
+            section.className = `categoria ${isFeatured ? 'categoria-featured' : ''}`;
             section.setAttribute('data-group', cat.group);
             section.setAttribute('data-cat-id', cat.id);
 
@@ -43,17 +44,15 @@ export class DashboardRenderer {
 
             section.innerHTML = `
                 <div class="categoria-header">
-                    <div class="cat-header-left">
-                        ${dragHandle}
-                        <div class="cat-tag-indicator ${cat.color}"></div>
-                        <h2 data-cat-key="${cat.id}">${escapeHtml(catTitle)}</h2>
-                    </div>
+                    ${dragHandle}
+                    <div class="cat-tag-indicator ${cat.color}"></div>
+                    <h2 data-cat-key="${cat.id}">${escapeHtml(catTitle)}</h2>
                     <span class="cat-badge">${badgeText}</span>
                 </div>
-                <div class="iconos-grid" data-cat-id="${cat.id}"></div>
+                <div class="iconos-grupo" data-cat-id="${cat.id}"></div>
             `;
 
-            const grid = section.querySelector('.iconos-grid');
+            const grid = section.querySelector('.iconos-grupo');
 
             shortcutsInCat.forEach(shortcut => {
                 const card = document.createElement('a');
@@ -79,10 +78,10 @@ export class DashboardRenderer {
 
                 card.innerHTML = `
                     ${editButtons}
-                    <div class="icono-wrapper">
+                    <div class="icon-img-wrapper">
                         <img src="${shortcut.icon}" alt="${escapeHtml(shortcut.title)}" width="60" height="60" loading="lazy">
                     </div>
-                    <span class="nombre-icono">${escapeHtml(shortcut.title)}</span>
+                    <span class="icon-title">${escapeHtml(shortcut.title)}</span>
                 `;
 
                 this.bindCardInteractions(card, shortcut);

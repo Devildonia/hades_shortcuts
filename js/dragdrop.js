@@ -65,7 +65,7 @@ export class DragDropManager {
             });
         });
 
-        const grids = document.querySelectorAll('.iconos-grid');
+        const grids = document.querySelectorAll('.iconos-grupo');
         grids.forEach(grid => {
             grid.addEventListener('dragover', (e) => {
                 if (!this.draggedCard) return;
