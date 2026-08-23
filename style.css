@@ -72,7 +72,7 @@
 }
 
 /* Theme: Sunset Amber */
-[data-theme="sunset"] {
+[data-theme="sunset"], [data-theme="amber"] {
     --bg-primary: #0e0707;
     --bg-secondary: #1a0d0d;
     --card-bg: rgba(35, 16, 16, 0.5);
@@ -2190,3 +2190,15 @@ input:checked + .slider:before {
     gap: 8px;
     margin-left: auto;
 }
+
+
+.theme-choice-preview {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.cyber-preview { background: #00f2fe; box-shadow: 0 0 8px #00f2fe; }
+.nebula-preview { background: #d946ef; box-shadow: 0 0 8px #d946ef; }
+.sunset-preview, .amber-preview { background: #f97316; box-shadow: 0 0 8px #f97316; }
+.light-preview { background: #0284c7; box-shadow: 0 0 8px #0284c7; }
