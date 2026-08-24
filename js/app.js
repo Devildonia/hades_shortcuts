@@ -1,3 +1,4 @@
+import { ambientAudio } from './ambient-audio.js';
 import { devTools } from './devtools.js';
 // js/app.js - Master Orchestrator for HaDeS' Shortcuts Next-Gen
 
@@ -190,6 +191,7 @@ export function initApp() {
     search.init();
     widgets.init();
     devTools.init();
+    ambientAudio.init();
     postits.init();
     dragDropManager.init();
     shortcutManager.init();

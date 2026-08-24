@@ -220,7 +220,10 @@
     "toggle_widgets_title": "Mini-Widgets Bento",
     "toggle_scratchpad": "Afficher le Bloc-notes",
     "toggle_pomodoro": "Afficher le Minuteur Pomodoro",
-    "scratchpad_pin": "Épingler Post-it"
+    "scratchpad_pin": "Épingler Post-it",
+    "ambient_title": "Audio Ambiant Focus",
+    "ambient_play": "Lire",
+    "ambient_pause": "Pause"
   },
   "audio": {
     "preset_label": "Effet Sonore Haptique",

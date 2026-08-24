@@ -28,10 +28,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=5.0.0">
+    <link rel="stylesheet" href="style.css?v=5.1.0">
 
     <!-- Master Script Module -->
-    <script defer src="js/bundle.js?v=5.0.0"></script>
+    <script defer src="js/bundle.js?v=5.1.0"></script>
 </head>
 <body>
 
@@ -162,6 +162,33 @@
                 <div class="scratchpad-footer">
                     <span class="widget-status" data-i18n="widgets.scratchpad_saved">Auto-guardado</span>
                     <span class="scratchpad-tip">Tip: <strong>Ctrl+Enter</strong> para fijar</span>
+                </div>
+            </div>
+
+            
+            <!-- Widget 3: Ambient Focus Audio Generator (0 KB Procedural Web Audio API) -->
+            <div class="mini-widget-card widget-ambient" id="widget-ambient-card" data-tile-id="tile-ambient">
+                <div class="widget-header">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="widget-icon">🎧</span>
+                        <h3 data-i18n="widgets.ambient_title">Audio Ambiental Focus</h3>
+                    </div>
+                    <button class="ambient-toggle-play-btn" id="ambient-play-btn" title="Reproducir / Pausar">
+                        <span id="ambient-play-icon">▶</span> <span id="ambient-play-text" data-i18n="widgets.ambient_play">Reproducir</span>
+                    </button>
+                </div>
+                <div class="ambient-body">
+                    <div class="ambient-presets-grid">
+                        <button class="ambient-chip active" data-preset="rain" title="Lluvia Cyberpunk">🌧️ Lluvia</button>
+                        <button class="ambient-chip" data-preset="space" title="Ruido Marrón Espacial">🚀 Espacio</button>
+                        <button class="ambient-chip" data-preset="binaural" title="Ondas Alfa 432 Hz">☕ 432Hz</button>
+                        <button class="ambient-chip" data-preset="waves" title="Oleaje Cósmico">🌊 Olas</button>
+                    </div>
+                    <div class="ambient-volume-row">
+                        <span class="ambient-vol-icon">🔉</span>
+                        <input type="range" id="ambient-volume-slider" min="0" max="100" value="50" class="ambient-slider" aria-label="Volumen ambiental">
+                        <span class="ambient-vol-val" id="ambient-vol-val">50%</span>
+                    </div>
                 </div>
             </div>
 

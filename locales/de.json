@@ -220,7 +220,10 @@
     "toggle_widgets_title": "Bento Mini-Widgets",
     "toggle_scratchpad": "Notizblock anzeigen",
     "toggle_pomodoro": "Pomodoro-Timer anzeigen",
-    "scratchpad_pin": "Post-it anheften"
+    "scratchpad_pin": "Post-it anheften",
+    "ambient_title": "Fokus-Umgebungs-Audio",
+    "ambient_play": "Abspielen",
+    "ambient_pause": "Pause"
   },
   "audio": {
     "preset_label": "Haptischer Sound-Effekt",

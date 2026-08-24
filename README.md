@@ -81,6 +81,7 @@ Transform your search bar into an instant utility suite:
 ### 📝 Bento Mini-Widgets ("Liquid Cards")
 - **Glass Scratchpad**: Fast persistent notepad with auto-save in `localStorage` for ideas, checklists, and tasks.
 - **Pomodoro Focus Timer**: 25 min focus / 5 min break timer with SVG circular progress ring and gentle acoustic alarm chimes.
+- **Ambient Focus Audio Generator**: 4 procedural soundscapes (🌧️ Cyber Rain, 🚀 Deep Space Brown Noise, ☕ Binaural 432 Hz, 🌊 Cosmic Waves) synthesized mathematically via Web Audio API (0 KB external files, 100% offline).
 - **Configurable Visibility**: Toggle widgets on/off anytime from the *Layout & Shortcuts* settings tab.
 
 ### 🔊 Procedural Web Audio API Synthesizer (0 KB)
@@ -184,6 +185,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── app.js               # Main orchestrator & lifecycle manager
 │   ├── state.js             # Reactive central state & localStorage sync
 │   ├── audio.js             # Procedural Web Audio API synthesizer (0 KB)
+│   ├── ambient-audio.js     # Procedural focus ambient soundscapes (0 KB)
 │   ├── bangs.js             # Bang commands parser & safe math calculator
 │   ├── devtools.js          # Built-in DevTools Omnibox & QR Code Generator
 │   ├── postits.js           # Floating Glass Post-its manager
