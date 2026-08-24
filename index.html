@@ -28,10 +28,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=4.10.0">
+    <link rel="stylesheet" href="style.css?v=4.11.0">
 
     <!-- Master Script Module -->
-    <script defer src="js/bundle.js?v=4.10.0"></script>
+    <script defer src="js/bundle.js?v=4.11.0"></script>
 </head>
 <body>
 
@@ -43,7 +43,7 @@
 
     <!-- Top Navigation Bar & Widgets -->
     <header class="top-nav">
-        <!-- Left Widgets: Clock & Weather -->
+        <!-- Left Widgets: Clock -->
         <div class="nav-widgets-left modular-dropzone" id="zone-header-left">
             <!-- Live Clock Widget -->
             <div class="nav-widget widget-clock" id="clock-widget" data-tile-id="tile-clock">
@@ -53,8 +53,21 @@
                     <span class="clock-date" id="live-date">Cargando fecha...</span>
                 </div>
             </div>
+        </div>
 
-            <!-- Weather Widget -->
+        <!-- Center Brand / Title + Subtitle Greeting -->
+        <div class="brand-center modular-dropzone" id="zone-header-center">
+            <div class="brand-tile-wrapper" data-tile-id="tile-brand">
+                <h1 class="brand-title" style="cursor: pointer;" title="Haz clic para cambiar tu nombre de usuario">
+                    <span class="brand-user-name" id="brand-user-name" title="Haz clic para cambiar tu nombre de usuario" role="button" tabindex="0">HaDeS</span><span class="brand-user-suffix" id="brand-user-suffix">'</span> <span class="accent-text">SHORTCUTS</span>
+                </h1>
+                <p class="brand-greeting" id="greeting-text">Bienvenido al Centro de Mando</p>
+            </div>
+        </div>
+
+        <!-- Top Right Controls: Weather + Settings Button -->
+        <div class="nav-controls modular-dropzone" id="zone-header-right">
+            <!-- Weather Widget (Placed to the right of title) -->
             <div class="nav-widget widget-weather" id="weather-widget" data-tile-id="tile-weather" title="Haz clic para cambiar o buscar tu ciudad" role="button" tabindex="0">
                 <span class="weather-icon" id="weather-icon">⛅</span>
                 <div class="weather-details">
@@ -65,23 +78,16 @@
                     <span class="weather-condition" id="weather-condition">Detectando clima...</span>
                 </div>
             </div>
-        </div>
 
-        <!-- Center Brand / Title -->
-        <div class="brand-center modular-dropzone" id="zone-header-center">
-            <div class="brand-tile-wrapper" data-tile-id="tile-brand"><h1 class="brand-title" style="cursor: pointer;" title="Haz clic para cambiar tu nombre de usuario"><span class="brand-user-name" id="brand-user-name" title="Haz clic para cambiar tu nombre de usuario" role="button" tabindex="0">HaDeS</span><span class="brand-user-suffix" id="brand-user-suffix">'</span> <span class="accent-text">SHORTCUTS</span></h1>
-            <p class="brand-greeting" id="greeting-text">Bienvenido al Centro de Mando</p></div>
-        </div>
-
-                <!-- Top Right Controls (Unified Settings Hub) -->
-        <div class="nav-controls modular-dropzone" id="zone-header-right">
             <!-- Settings Hub Button -->
-            <div class="settings-btn-tile" data-tile-id="tile-settings-btn"><button class="control-btn settings-main-btn" id="settings-btn" title="Configuración y Personalización" aria-label="Ajustes" data-i18n-title="settings_hub.btn_title">
-                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                </svg>
-            </button></div>
+            <div class="settings-btn-tile" data-tile-id="tile-settings-btn">
+                <button class="control-btn settings-main-btn" id="settings-btn" title="Configuración y Personalización" aria-label="Ajustes" data-i18n-title="settings_hub.btn_title">
+                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
     </header>
 
