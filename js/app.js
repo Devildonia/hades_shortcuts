@@ -14,7 +14,7 @@ import { WidgetsManager } from './widgets.js';
 import { ThemeStudio } from './theme-studio.js';
 import { BookmarksImporter } from './importer.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+const initApp = () => {
     // 1. Initialize Visual Theme & Custom Theme Studio
     document.documentElement.setAttribute('data-theme', state.theme);
     state.on('theme:changed', (theme) => {
@@ -56,11 +56,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Global Keyboard Shortcuts
     initGlobalKeybindings(search, settingsHub);
 
-    // 6. Register Service Worker for PWA
+    // 6. User Interaction Audio Unlock (Browser Autoplay Compliance)
+    const unlockAudio = () => {
+        soundFx.getAudioContext();
+        document.removeEventListener('pointerdown', unlockAudio);
+        document.removeEventListener('keydown', unlockAudio);
+    };
+    document.addEventListener('pointerdown', unlockAudio);
+    document.addEventListener('keydown', unlockAudio);
+
+    // 7. Register Service Worker for PWA
     if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
-});
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
 
 const initUserNameModal = (weather) => {
     const brandName = document.getElementById('brand-user-name');
