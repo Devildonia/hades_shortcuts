@@ -1,12 +1,13 @@
-// sw.js - Service Worker for HaDeS' Shortcuts PWA
+// sw.js - Service Worker for HaDeS' Shortcuts PWA (Offline Support)
 
-const CACHE_NAME = 'hades-shortcuts-v2-cache';
+const CACHE_NAME = 'hades-shortcuts-v3-cache';
 const STATIC_ASSETS = [
     './',
     './index.html',
     './style.css',
     './favicon.ico',
     './manifest.json',
+    './js/bundle.js',
     './js/app.js',
     './js/state.js',
     './js/i18n.js',
@@ -22,6 +23,8 @@ const STATIC_ASSETS = [
     './js/widgets.js',
     './js/theme-studio.js',
     './js/importer.js',
+    './iconos/pwa-192.png',
+    './iconos/pwa-512.png',
     './locales/es.json',
     './locales/en.json',
     './locales/fr.json',
@@ -49,7 +52,7 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-    // Cache-first strategy for static assets
+    // Cache-first strategy for static assets, network fallback
     e.respondWith(
         caches.match(e.request).then((cached) => {
             if (cached) return cached;

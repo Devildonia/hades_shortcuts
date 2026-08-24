@@ -24,7 +24,7 @@ export const DEFAULT_SHORTCUTS = [
     { id: 'qwen', title: 'Qwen', url: 'https://chat.qwen.ai/', icon: 'iconos/qwen.webp', category: 'cat_ai', tags: 'ai, alibaba, qwen, chat' },
     { id: 'seaverse', title: 'SeaVerse', url: 'https://seaverse.ai/', icon: 'iconos/seaverse.webp', category: 'cat_ai', tags: 'ai, 3d, tools, virtual' },
     // Arte
-    { id: 'civitai', title: 'Civitai', url: 'https://civitai.red/', icon: 'iconos/civitai.webp', category: 'cat_art', tags: 'arte, models, lora, checkpoints' },
+    { id: 'civitai', title: 'Civitai', url: 'https://civitai.com/', icon: 'iconos/civitai.webp', category: 'cat_art', tags: 'arte, models, lora, checkpoints' },
     { id: 'shakker', title: 'Shakker', url: 'https://www.shakker.ai/', icon: 'iconos/shakkerai.webp', category: 'cat_art', tags: 'arte, ai, image, hd' },
     { id: 'tensorart', title: 'Tensor Art', url: 'https://tensor.art/', icon: 'iconos/tensorart.webp', category: 'cat_art', tags: 'arte, ai, image, generation' },
     { id: 'seaart', title: 'Sea Art', url: 'https://www.seaart.ai/', icon: 'iconos/seaartai.webp', category: 'cat_art', tags: 'arte, ai, renderer, studio' },
@@ -89,9 +89,13 @@ export class AppState {
             if (saved) {
                 const list = JSON.parse(saved);
                 let modified = false;
-                list.forEach(s => {
+                                list.forEach(s => {
                     if (s.id === 'seaverse' && (s.url === 'https://seaverse.net/' || s.url === 'https://seaverse.net')) {
                         s.url = 'https://seaverse.ai/';
+                        modified = true;
+                    }
+                    if (s.id === 'civitai' && (s.url === 'https://civitai.red/' || s.url === 'https://civitai.red')) {
+                        s.url = 'https://civitai.com/';
                         modified = true;
                     }
                 });
