@@ -152,7 +152,8 @@
         "amber": "Sunset Amber",
         "light": "Crystal Light",
         "sunset": "Sunset Amber"
-      }
+      },
+      "aurora_toggle": "Reactive Aurora Mesh Effect"
     },
     "layout": {
       "edit_mode_title": "Dashboard Edit Mode",

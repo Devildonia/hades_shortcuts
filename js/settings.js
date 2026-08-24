@@ -1,3 +1,4 @@
+import { auroraCanvas } from './aurora-canvas.js';
 import { macroEngine } from './macros.js';
 // js/settings.js - Slide-Over Settings Drawer Hub
 
@@ -26,6 +27,7 @@ export class SettingsHub {
         this.layoutResetBtn = document.getElementById('layout-reset-defaults-btn');
         this.toggleScratchpad = document.getElementById('toggle-widget-scratchpad');
         this.togglePomodoro = document.getElementById('toggle-widget-pomodoro');
+        this.auroraToggle = document.getElementById('setting-aurora-toggle');
     }
 
     init() {
@@ -42,6 +44,13 @@ export class SettingsHub {
                 }
             });
         });
+                if (this.auroraToggle) {
+            this.auroraToggle.checked = auroraCanvas.enabled;
+            this.auroraToggle.addEventListener('change', () => {
+                soundFx.play('click');
+                auroraCanvas.toggle(this.auroraToggle.checked);
+            });
+        }
         if (this.importer) this.importer.init();
         if (this.themeStudio) this.themeStudio.init();
     }

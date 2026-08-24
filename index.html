@@ -28,12 +28,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=5.3.0">
+    <link rel="stylesheet" href="style.css?v=5.0.0">
 
     <!-- Master Script Module -->
-    <script defer src="js/bundle.js?v=5.3.0"></script>
+    <script defer src="js/bundle.js?v=5.0.0"></script>
 </head>
 <body>
+    <canvas id="aurora-bg-canvas" class="aurora-canvas"></canvas>
 
     <!-- Ambient Glow & Texture -->
     <div class="ambient-glow glow-1"></div>
@@ -757,6 +758,13 @@
                             <span class="slider round"></span>
                         </label>
                     </div>
+                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                        <span class="settings-toggle-title" data-i18n="settings_hub.appearance.aurora_toggle">Efecto Malla Aurora Reactiva</span>
+                        <label class="switch">
+                            <input type="checkbox" id="setting-aurora-toggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
                 </div>
 
                 <!-- Custom Theme Studio Section -->
@@ -1025,6 +1033,23 @@
                 <button class="settings-action-btn secondary" id="qr-copy-btn">📋 Copiar Imagen</button>
                 <button class="settings-action-btn primary" id="qr-download-btn">⬇️ Descargar PNG</button>
             </div>
+        </div>
+    </div>
+
+
+    <!-- Mini HUD Launcher Overlay (Phase 5) -->
+    <div id="mini-hud-modal" class="modal-overlay hidden" role="dialog" aria-labelledby="hud-title" aria-modal="true">
+        <div class="hud-modal-card">
+            <div class="hud-header">
+                <span class="hud-logo">⚡ HaDeS HUD Launcher</span>
+                <span class="hud-badge">Alt + Space</span>
+                <button class="close-btn" id="close-hud-modal" aria-label="Cerrar HUD">&times;</button>
+            </div>
+            <div class="hud-search-row">
+                <span class="hud-search-icon">🔍</span>
+                <input type="text" id="hud-search-input" placeholder="Lanzar aplicación o atajo rápido..." autocomplete="off">
+            </div>
+            <div class="hud-results-grid" id="hud-results-grid"></div>
         </div>
     </div>
 

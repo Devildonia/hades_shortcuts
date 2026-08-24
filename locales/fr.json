@@ -152,7 +152,8 @@
         "amber": "Sunset Amber",
         "light": "Crystal Light",
         "sunset": "Sunset Amber"
-      }
+      },
+      "aurora_toggle": "Effet de Maillage Aurora Réactif"
     },
     "layout": {
       "edit_mode_title": "Mode Édition du Tableau",

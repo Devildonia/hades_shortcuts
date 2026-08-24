@@ -152,7 +152,8 @@
         "amber": "Sunset Amber",
         "light": "Crystal Light",
         "sunset": "Sunset Amber"
-      }
+      },
+      "aurora_toggle": "Efecto Malla Aurora Reactiva"
     },
     "layout": {
       "edit_mode_title": "Modo Edición del Tablero",

@@ -8,7 +8,7 @@
 [![PWA Ready](https://img.shields.io/badge/PWA-Installable%20Desktop-orange?logo=pwa)](https://devildonia.github.io/hades_shortcuts/)
 [![Pure Vanilla](https://img.shields.io/badge/Stack-Vanilla%20HTML%20%2F%20CSS%20%2F%20JS-yellow.svg)](https://developer.mozilla.org/en-US/)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20Zero-brightgreen.svg)]()
-[![Bundle Size](https://img.shields.io/badge/Total%20Size-~200%20KB-success.svg)]()
+[![Bundle Size](https://img.shields.io/badge/Total%20Size-~250%20KB-success.svg)]()
 [![i18n](https://img.shields.io/badge/i18n-ES%20%7C%20EN%20%7C%20FR%20%7C%20DE-purple.svg)]()
 
 <br />
@@ -29,12 +29,15 @@
 [Live Demo](https://devildonia.github.io/hades_shortcuts/) •
 [Features](#-key-features) •
 [DevTools & Bangs](#-devtools-omnibox--bang-commands) •
-[Freeform & Post-its](#-freeform-canvas--floating-post-its) •
-[Widgets](#-bento-mini-widgets) •
+[Freeform & Post-its](#-freeform-canvas--floating-glass-post-its) •
+[Ambient Audio](#-procedural-ambient-focus-sound-engine-0-kb-100-offline) •
+[Macros](#-contextual-multi-action-macros-work-chill-3d-social) •
+[E2EE Cloud Sync](#-zero-knowledge-encrypted-cloud-sync-e2ee) •
+[Mini HUD Launcher](#-mini-hud-launcher-alt--space) •
 [Gallery](#-visual-showcase) •
 [Quick Start](#-quick-start) •
 [Keyboard Shortcuts](#-keyboard-shortcuts) •
-[Architecture](#-project-architecture)
+[Architecture](#-project-architecture-anti-god-file-modular-design)
 
 <br />
 
@@ -78,12 +81,6 @@ Transform your search bar into an instant utility suite:
   - Official platform title (`Figma`).
   - High-Definition 128×128 px official favicon (`Google S2 / IconHorse HD API`).
 
-### 📝 Bento Mini-Widgets ("Liquid Cards")
-- **Glass Scratchpad**: Fast persistent notepad with auto-save in `localStorage` for ideas, checklists, and tasks.
-- **Pomodoro Focus Timer**: 25 min focus / 5 min break timer with SVG circular progress ring and gentle acoustic alarm chimes.
-- **Ambient Focus Audio Generator**: 4 procedural soundscapes (🌧️ Cyber Rain, 🚀 Deep Space Brown Noise, ☕ Binaural 432 Hz, 🌊 Cosmic Waves) synthesized mathematically via Web Audio API (0 KB external files, 100% offline).
-- **Configurable Visibility**: Toggle widgets on/off anytime from the *Layout & Shortcuts* settings tab.
-
 ### 🎧 Procedural Ambient Focus Sound Engine (0 KB, 100% Offline)
 Pure mathematical acoustic synthesis using modern **Web Audio API** nodes (`AudioContext`, `BiquadFilterNode`, `BufferSourceNode`, `OscillatorNode`) with **0 KB external MP3s, zero streaming and 0% data consumption**:
 - 🌧️ **Cyber Rain**: Algorithmic white/pink noise filtered through a 900 Hz low-pass filter with simulated randomized rainfall gusts.
@@ -91,12 +88,6 @@ Pure mathematical acoustic synthesis using modern **Web Audio API** nodes (`Audi
 - ☕ **Binaural Alpha Waves (432 Hz)**: Dual stereo sine wave oscillators (432 Hz left / 440 Hz right) producing a soothing 8 Hz Alpha brainwave beat for sustained creative flow.
 - 🌊 **Cosmic Waves**: Low-frequency oscillator (0.1 Hz) slowly sweeping a resonant bandpass filter across pink noise to create a 10-second rhythmic ocean wave breathing cycle.
 - 🎚️ **Smooth Linear Gain**: Prevents acoustic clicks on start/stop with progressive audio envelope ramping.
-
-### 🎨 Custom Theme Studio
-- Live color picker in *Settings > Appearance* to customize primary accent and secondary glow colors with instant CSS variable re-calculation.
-
-### 📥 Universal Browser Bookmarks Importer
-- Import `bookmarks.html` exported from **Google Chrome, Mozilla Firefox, Microsoft Edge, Brave, or Safari** with one click.
 
 ### ⚡ Contextual Multi-Action Macros (`!work`, `!chill`, `!3d`, `!social`)
 Execute complete productivity routines with a single compound command:
@@ -108,6 +99,22 @@ Execute complete productivity routines with a single compound command:
 ### 🔒 Zero-Knowledge Encrypted Cloud Sync (E2EE)
 - **Client-Side PBKDF2 + AES-256-GCM**: Derive 256-bit encryption keys from your master password with 100,000 PBKDF2 iterations using native `window.crypto.subtle`.
 - **Private GitHub Gist Backup**: Safely synchronize all your custom shortcuts, 360° canvas positions, glass post-its, and theme settings across multiple devices with zero server tracking.
+
+### 🌌 Reactive Aurora Canvas Mesh & Mini-HUD Launcher
+- **Pointer-Reactive Fluid Mesh**: Generates multi-layer organic gradient wave curtains that subtly gravitate towards your mouse pointer.
+- **Mini-HUD Launcher (<kbd>Alt</kbd> + <kbd>Space</kbd>)**: Compact glass launcher overlay with instant fuzzy search and quick app launch chips for ultra-minimalist workflows.
+
+### 📝 Bento Mini-Widgets ("Liquid Cards")
+- **Glass Scratchpad**: Fast persistent notepad with auto-save in `localStorage` for ideas, checklists, and tasks.
+- **Pomodoro Focus Timer**: 25 min focus / 5 min break timer with SVG circular progress ring and gentle acoustic alarm chimes.
+- **Ambient Audio Widget**: Integrated audio panel with 1-click sound presets and smooth volume control.
+- **Configurable Visibility**: Toggle widgets on/off anytime from the *Layout & Shortcuts* settings tab.
+
+### 🎨 Custom Theme Studio
+- Live color picker in *Settings > Appearance* to customize primary accent and secondary glow colors with instant CSS variable re-calculation.
+
+### 📥 Universal Browser Bookmarks Importer
+- Import `bookmarks.html` exported from **Google Chrome, Mozilla Firefox, Microsoft Edge, Brave, or Safari** with one click.
 
 ### 📱 PWA & Offline Support
 - Fully installable Progressive Web App (`manifest.json` + `sw.js`) for a distraction-free standalone desktop experience on Windows, macOS, and Linux.
@@ -145,13 +152,14 @@ Execute complete productivity routines with a single compound command:
 
 | Shortcut | Action |
 | :--- | :--- |
+| <kbd>Alt</kbd> + <kbd>Space</kbd> / <kbd>Ctrl</kbd> + <kbd>Space</kbd> | Open / Close Mini-HUD Launcher Overlay |
 | <kbd>Ctrl</kbd> + <kbd>K</kbd> / <kbd>Cmd</kbd> + <kbd>K</kbd> | Focus the main search bar instantly |
 | <kbd>/</kbd> | Focus search bar (when not typing in an input/textarea) |
 | <kbd>Ctrl</kbd> + <kbd>,</kbd> | Open Settings Drawer |
 | <kbd>Ctrl</kbd> + <kbd>Enter</kbd> | Pin note as floating Glass Post-it (in Scratchpad) |
 | <kbd>Arrow Keys</kbd> (<kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd>) | Navigate visible Bento cards |
 | <kbd>Enter</kbd> | Launch highlighted shortcut, execute bang, or search engine |
-| <kbd>ESC</kbd> | Clear search / Exit Edit Mode / Close open modals |
+| <kbd>ESC</kbd> | Clear search / Exit Edit Mode / Close open modals & HUD |
 
 ---
 
@@ -190,7 +198,7 @@ locales/
 
 ## 🏛️ Project Architecture (Anti-God File Modular Design)
 
-The project enforces a strict Single Responsibility Principle (SRP) with native ES6 modules under `/js/` (~50–250 lines each, 0 god files):
+The project enforces a strict Single Responsibility Principle (SRP) with native ES6 modules under `/js/` (~50–270 lines each, 0 god files):
 
 ```
 ├── manifest.json            # PWA manifest for desktop installation
@@ -205,6 +213,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── state.js             # Reactive central state & localStorage sync
 │   ├── audio.js             # Procedural Web Audio API synthesizer (0 KB)
 │   ├── ambient-audio.js     # Procedural focus ambient soundscapes (0 KB)
+│   ├── aurora-canvas.js     # Reactive Aurora Canvas mesh & Mini-HUD launcher
 │   ├── macros.js            # Compound multi-action macro & routine engine
 │   ├── crypto-sync.js       # Zero-knowledge AES-256-GCM + GitHub Gist sync
 │   ├── bangs.js             # Bang commands parser & safe math calculator

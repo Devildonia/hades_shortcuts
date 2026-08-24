@@ -1,3 +1,4 @@
+import { auroraCanvas, miniHud } from './aurora-canvas.js';
 import { CryptoSyncEngine } from './crypto-sync.js';
 import { ambientAudio } from './ambient-audio.js';
 import { devTools } from './devtools.js';
@@ -200,6 +201,8 @@ export function initApp() {
     backupManager.init();
     settingsHub.init();
     cryptoSync.init();
+    auroraCanvas.init();
+    miniHud.init();
 
     loadLocaleAsync(state.language).then(() => {
         updateDocumentLocalization();
