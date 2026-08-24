@@ -34,10 +34,24 @@ export class SearchEngineManager {
         this.setEngine(this.currentEngineKey);
         this.bindEvents();
         this.updatePillCounts();
+        
+        // Sync active pill visually with state.activeFilter
+        this.syncPillUI();
+        this.filterShortcuts();
+
         state.on('language:changed', () => this.updatePlaceholders());
         state.on('shortcuts:changed', () => {
             this.filterShortcuts();
             this.updatePillCounts();
+        });
+        state.on('dashboard:rendered', () => {
+            this.filterShortcuts();
+        });
+    }
+
+    syncPillUI() {
+        this.pillButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-filter') === state.activeFilter);
         });
     }
 
@@ -80,7 +94,6 @@ export class SearchEngineManager {
 
     filterShortcuts() {
         const query = this.searchInput ? this.searchInput.value.toLowerCase().trim() : '';
-        const allCards = document.querySelectorAll('.enlace-icono');
         const categories = document.querySelectorAll('.categoria');
         let totalVisible = 0;
 
@@ -119,11 +132,16 @@ export class SearchEngineManager {
                 }
             });
 
-            if (visibleInCat > 0) {
+            if (matchesPill && visibleInCat > 0) {
                 cat.classList.remove('hidden-by-pill', 'hidden-by-search');
             } else {
-                if (!matchesPill) cat.classList.add('hidden-by-pill');
-                else cat.classList.add('hidden-by-search');
+                if (!matchesPill) {
+                    cat.classList.add('hidden-by-pill');
+                    cat.classList.remove('hidden-by-search');
+                } else {
+                    cat.classList.add('hidden-by-search');
+                    cat.classList.remove('hidden-by-pill');
+                }
             }
         });
 

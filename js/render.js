@@ -90,6 +90,7 @@ export class DashboardRenderer {
         });
 
         this.initSpotlight();
+        state.emit('dashboard:rendered');
     }
 
     bindCardInteractions(card, shortcut) {

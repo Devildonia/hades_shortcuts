@@ -1,28 +1,14 @@
-// sw.js - Service Worker for HaDeS' Shortcuts PWA (Offline Support)
+// sw.js - Service Worker for HaDeS' Shortcuts PWA (Network-First with Offline Cache Fallback)
 
-const CACHE_NAME = 'hades-shortcuts-v3-cache';
+const CACHE_NAME = 'hades-shortcuts-v4-cache';
 const STATIC_ASSETS = [
     './',
     './index.html',
     './style.css',
+    './og-preview.png',
     './favicon.ico',
     './manifest.json',
     './js/bundle.js',
-    './js/app.js',
-    './js/state.js',
-    './js/i18n.js',
-    './js/weather.js',
-    './js/search.js',
-    './js/render.js',
-    './js/dragdrop.js',
-    './js/shortcut-manager.js',
-    './js/backup.js',
-    './js/settings.js',
-    './js/audio.js',
-    './js/bangs.js',
-    './js/widgets.js',
-    './js/theme-studio.js',
-    './js/importer.js',
     './iconos/pwa-192.png',
     './iconos/pwa-512.png',
     './locales/es.json',
@@ -32,35 +18,39 @@ const STATIC_ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
+    self.skipWaiting();
     e.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return cache.addAll(STATIC_ASSETS).catch(() => {});
         })
     );
-    self.skipWaiting();
 });
 
 self.addEventListener('activate', (e) => {
     e.waitUntil(
         caches.keys().then((keys) => {
             return Promise.all(
-                keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))
+                keys.map((k) => {
+                    if (k !== CACHE_NAME) {
+                        return caches.delete(k);
+                    }
+                })
             );
-        })
+        }).then(() => self.clients.claim())
     );
-    self.clients.claim();
 });
 
 self.addEventListener('fetch', (e) => {
-    // Cache-first strategy for static assets, network fallback
+    // Network-first strategy: always get latest from server, fallback to cache if offline
     e.respondWith(
-        caches.match(e.request).then((cached) => {
-            if (cached) return cached;
-            return fetch(e.request).then((res) => {
+        fetch(e.request)
+            .then((res) => {
+                if (res && res.status === 200 && e.request.method === 'GET') {
+                    const clone = res.clone();
+                    caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
+                }
                 return res;
-            }).catch(() => {
-                return cached;
-            });
-        })
+            })
+            .catch(() => caches.match(e.request))
     );
 });
