@@ -11,14 +11,35 @@
 
 <br />
 
+<img src="docs/screenshots/demo.gif" alt="HaDeS' Shortcuts Live Demo" width="850" style="border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.6);" />
+
+<br />
+<br />
+
 [Features](#-key-features) •
+[Gallery](#-visual-showcase) •
 [Quick Start](#-quick-start) •
 [Keyboard Shortcuts](#-keyboard-shortcuts) •
 [Localization (i18n)](#-internationalization-i18n) •
-[Customization](#-customization) •
 [Architecture](#-project-architecture)
 
 <br />
+
+</div>
+
+---
+
+## 📸 Visual Showcase
+
+<div align="center">
+
+| 🌌 **Deep Nebula Theme** | 🌅 **Sunset Amber Theme** |
+| :---: | :---: |
+| <img src="docs/screenshots/theme-nebula.png" width="420" alt="Deep Nebula Theme" /> | <img src="docs/screenshots/theme-sunset.png" width="420" alt="Sunset Amber Theme" /> |
+
+| 💎 **Crystal Light Theme** | ⚙️ **Unified Settings Drawer** |
+| :---: | :---: |
+| <img src="docs/screenshots/theme-light.png" width="420" alt="Crystal Light Theme" /> | <img src="docs/screenshots/settings-drawer.png" width="420" alt="Settings Drawer" /> |
 
 </div>
 
@@ -29,7 +50,7 @@
 ### 💎 Liquid Glass 2.0 & Bento Grid Layout
 - **Dynamic Aurora Backdrops**: Multi-layer ambient glow animations with subtle tactile grain overlay.
 - **Spotlight Cursor Glow**: Real-time cursor tracking on Bento cards accelerated with `requestAnimationFrame` (60/144/240 FPS with 0% CPU overhead).
-- **Smart Liquid Tooltips**: Contextual floating glass tooltips with viewport boundary collision detection (anti-clipping).
+- **Smart Liquid Tooltips**: Contextual floating glass tooltips with viewport boundary collision detection (anti-clipping) and dynamic `aria-hidden` states (WCAG 2.2 AA).
 
 ### 🔍 Multi-Engine Web Search
 - **Instant Search Switcher**: Toggle seamlessly between **Google, DuckDuckGo, Perplexity AI, Bing, YouTube, and GitHub** with official crisp WebP logos.
@@ -43,6 +64,7 @@
 - **Bento Grid Customization**: Reorder entire category blocks or rearrange individual icons with native HTML5 Drag & Drop.
 - **Add / Edit / Delete**: Add custom shortcuts with custom URLs, bundled or custom WebP icons, descriptions, and tags.
 - **Zero Idle Overhead**: The Drag & Drop engine only runs when *Edit Mode* is explicitly enabled.
+- **Emergency Layout Reset**: Dedicated "🔄 Restore Factory Layout" button in the Layout tab.
 
 ### 💾 JSON Backup & Instant Restore
 - **One-Click Export**: Download a full `shortcuts-backup.json` configuration file.
@@ -61,7 +83,7 @@
 ### 🌍 Full 4-Language Localization (i18n)
 - Seamless 100% native translations across **Spanish (🇪🇸), English (🇬🇧), French (🇫🇷), and German (🇩🇪)**.
 - Localizes greetings, date formats (`toLocaleDateString`), category titles, weather states, and all 45 shortcut descriptions.
-- Auto-detects browser language with instant dropdown selector in the header.
+- Auto-detects browser language and actively loads external `/locales/*.json` files with embedded fallback.
 
 ### 🛡️ Enterprise-Grade Security & Performance
 - **Zero Dependencies**: Pure vanilla HTML5, CSS3, and ES6 JavaScript. No Node.js runtime, no npm packages, no bundlers required.
@@ -98,78 +120,47 @@ Then visit `http://localhost:8080` in your favorite browser.
 
 ---
 
-## 🌐 Internationalization (i18n)
+## 🌍 Internationalization (i18n)
 
-Translations are organized in modular JSON files inside `/locales/`:
+All interface strings, category titles, greetings, and shortcut tooltips are fully localized:
 
 ```
 locales/
-├── es.json   # Spanish (Base)
-├── en.json   # English
-├── fr.json   # French
-└── de.json   # German
+├── es.json   # Español 🇪🇸
+├── en.json   # English 🇬🇧
+├── fr.json   # Français 🇫🇷
+└── de.json   # Deutsch 🇩🇪
 ```
-
-To add a new language (e.g. Italian `it.json` or Japanese `ja.json`), simply create the corresponding JSON file with the same key structure.
 
 ---
 
-## 🎨 Visual Themes
+## 🏛️ Project Architecture (Anti-God File Modular Design)
 
-HaDeS' Shortcuts includes 4 built-in aesthetic themes with persistent storage in `localStorage`:
-- 🌌 **Cyber Neon** (Cyan & Magenta high contrast)
-- 🪐 **Deep Nebula** (Deep Violet & Indigo glow)
-- 🌅 **Sunset Amber** (Warm Orange & Gold gradient)
-- ☀️ **Crystal Light** (Clean, high-visibility daylight glass)
-
----
-
-## 📁 Project Architecture
+The project enforces a strict Single Responsibility Principle (SRP) with native ES6 modules under `/js/` (~50–185 lines each):
 
 ```
-hades_shortcuts/
-├── index.html          # Semantic HTML5 Bento layout & widgets
-├── style.css           # CSS custom properties, Liquid Glass 2.0 & responsive rules
-├── favicon.ico         # Multi-resolution optimized favicon (11.2 KB)
-├── js/                 # Modular Anti-God File Architecture (ES6 Modules)
-│   ├── app.js          # Master initialization orchestrator
-│   ├── state.js        # Central state manager & localStorage synchronization
-│   ├── i18n.js         # Multi-language dictionary & localization engine
-│   ├── weather.js      # Precision minute clock & Open-Meteo weather
-│   ├── search.js       # Multi-engine search & live fuzzy filtering
-│   ├── render.js       # Dynamic Bento Grid & card renderer
-│   ├── settings.js     # Slide-over Settings Drawer UI & tab controller
-│   ├── dragdrop.js     # High-performance Drag & Drop for categories and icons
-│   ├── shortcut-manager.js # Add / Edit / Delete shortcut modal
-│   └── backup.js       # JSON configuration export & import engine
-├── .gitattributes      # Enforces LF line endings across platforms
-├── local server.bat    # Windows 1-click local web server
-│
-├── locales/            # i18n JSON dictionaries
-│   ├── es.json
-│   ├── en.json
-│   ├── fr.json
-│   └── de.json
-│
-├── iconos/             # 48 optimized WebP icons (1-4 KB each, ~105 KB total)
-│   ├── chatgpt.webp
-│   ├── claude.webp
-│   ├── github.webp
-│   └── ...
-│
-└── sounds/             # Subtle haptic feedback audio files
-    ├── hover.mp3
-    └── click.mp3
+├── index.html               # Clean, accessible semantic DOM structure
+├── style.css                # Fluid CSS design tokens, themes & animations
+├── locales/                 # i18n translation dictionaries (ES, EN, FR, DE)
+├── docs/
+│   └── screenshots/         # High-res previews & animated demo GIF
+├── js/
+│   ├── app.js               # Main orchestrator & lifecycle manager
+│   ├── state.js             # Reactive central state & localStorage sync
+│   ├── i18n.js              # Localization engine & dynamic loader
+│   ├── weather.js           # Precision clock & Open-Meteo weather geocoder
+│   ├── search.js            # Multi-engine search & fuzzy shortcut filter
+│   ├── render.js            # Dynamic Bento grid, cards & smart tooltips
+│   ├── dragdrop.js          # Native HTML5 Drag & Drop manager
+│   ├── shortcut-manager.js  # Add / Edit / Delete modal controller
+│   ├── backup.js            # JSON export, import & factory reset
+│   └── settings.js          # Slide-over settings drawer controller
+├── iconos/                  # 48 optimized WebP icon assets (60x60)
+└── sounds/                  # Haptic feedback audio effects (click & hover)
 ```
 
 ---
 
 ## 📄 License
 
-Distributed under the **MIT License**. Feel free to customize, modify, and make it your own!
-
----
-
-<div align="center">
-  <sub>Crafted with precision & passion by <a href="https://github.com/Devildonia">Devildonia</a></sub>
-</div>
+This project is open-source and licensed under the [MIT License](LICENSE).
