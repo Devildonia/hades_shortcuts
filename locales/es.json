@@ -176,6 +176,10 @@
       "reset_confirm": "¿Estás seguro de que deseas restablecer los valores de fábrica? Se perderán las personalizaciones.",
       "import_success": "¡Copia de seguridad restaurada con éxito!",
       "import_error": "El archivo de respaldo no es válido o está dañado."
+    },
+    "profile": {
+      "title": "Perfil de Usuario",
+      "desc": "Personaliza tu nombre o alias para el Centro de Mando y saludos:"
     }
   },
   "shortcut_editor": {

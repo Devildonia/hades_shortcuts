@@ -176,6 +176,10 @@
       "reset_confirm": "Êtes-vous sûr de vouloir réinitialiser ? Les personnalisations seront perdues.",
       "import_success": "Sauvegarde restaurée avec succès !",
       "import_error": "Le fichier de sauvegarde est invalide ou corrompu."
+    },
+    "profile": {
+      "title": "Profil Utilisateur",
+      "desc": "Personnalisez votre nom ou pseudo pour le Centre de Commande et les salutations :"
     }
   },
   "shortcut_editor": {

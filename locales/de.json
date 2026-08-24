@@ -176,6 +176,10 @@
       "reset_confirm": "Möchten Sie wirklich die Werkseinstellungen wiederherstellen?",
       "import_success": "Sicherung erfolgreich wiederhergestellt!",
       "import_error": "Die Sicherungsdatei ist ungültig oder beschädigt."
+    },
+    "profile": {
+      "title": "Benutzerprofil",
+      "desc": "Passen Sie Ihren Namen oder Alias für das Command Center und die Begrüßungen an:"
     }
   },
   "shortcut_editor": {

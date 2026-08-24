@@ -69,7 +69,7 @@
 
         <!-- Center Brand / Title -->
         <div class="brand-center">
-            <h1 class="brand-title"><span class="brand-user-name" id="brand-user-name" title="Haz clic para cambiar tu nombre de usuario" role="button" tabindex="0">HaDeS</span><span class="brand-user-suffix" id="brand-user-suffix">'</span> <span class="accent-text">SHORTCUTS</span></h1>
+            <h1 class="brand-title" style="cursor: pointer;" title="Haz clic para cambiar tu nombre de usuario"><span class="brand-user-name" id="brand-user-name" title="Haz clic para cambiar tu nombre de usuario" role="button" tabindex="0">HaDeS</span><span class="brand-user-suffix" id="brand-user-suffix">'</span> <span class="accent-text">SHORTCUTS</span></h1>
             <p class="brand-greeting" id="greeting-text">Bienvenido al Centro de Mando</p>
         </div>
 
@@ -653,6 +653,15 @@
 
             <!-- Tab 1: Appearance -->
             <div class="settings-tab-pane active" id="tab-pane-appearance">
+                <!-- User Profile Section -->
+                <div class="settings-section">
+                    <h4 data-i18n="settings_hub.profile.title">Perfil de Usuario</h4>
+                    <p class="settings-hint" data-i18n="settings_hub.profile.desc">Personaliza tu nombre o alias para el Centro de Mando y saludos:</p>
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                        <input type="text" id="drawer-user-name-input" class="settings-select" placeholder="Tu nombre..." maxlength="25" style="flex: 1;">
+                        <button class="settings-action-btn primary" id="drawer-user-save-btn" style="width: auto; padding: 0 16px;">Guardar</button>
+                    </div>
+                </div>
                 <div class="settings-section">
                     <h4 data-i18n="settings_hub.appearance.themes_label">Tema Visual</h4>
                     <div class="theme-grid-selector">

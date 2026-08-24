@@ -176,6 +176,10 @@
       "reset_confirm": "Are you sure you want to restore factory defaults? Customizations will be lost.",
       "import_success": "Backup successfully restored!",
       "import_error": "The backup file is invalid or corrupted."
+    },
+    "profile": {
+      "title": "User Profile",
+      "desc": "Customize your name or alias for the Command Center and greetings:"
     }
   },
   "shortcut_editor": {
