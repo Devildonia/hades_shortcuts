@@ -12,7 +12,9 @@ export const SEARCH_ENGINES = {
     google: { name: 'Google', url: 'https://www.google.com/search?q=', icon: 'iconos/google.webp' },
     duckduckgo: { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=', icon: 'iconos/duckduckgo.webp' },
     perplexity: { name: 'Perplexity', url: 'https://www.perplexity.ai/search?q=', icon: 'iconos/perplexity.webp' },
-    bing: { name: 'Bing', url: 'https://www.bing.com/search?q=', icon: 'iconos/bing.webp' }
+    bing: { name: 'Bing', url: 'https://www.bing.com/search?q=', icon: 'iconos/bing.webp' },
+    youtube: { name: 'YouTube', url: 'https://www.youtube.com/results?search_query=', icon: 'iconos/youtube.webp' },
+    github: { name: 'GitHub', url: 'https://github.com/search?q=', icon: 'iconos/github.webp' }
 };
 
 export class SearchEngineManager {
@@ -237,13 +239,13 @@ export class SearchEngineManager {
             this.engineBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 soundFx.play('click');
-                const isOpen = !this.engineMenu.classList.contains('hidden');
-                this.engineMenu.classList.toggle('hidden', isOpen);
-                this.engineBtn.setAttribute('aria-expanded', !isOpen);
+                const isOpen = this.engineMenu.classList.contains('active');
+                this.engineMenu.classList.toggle('active', !isOpen);
+                this.engineBtn.setAttribute('aria-expanded', String(!isOpen));
             });
 
             document.addEventListener('click', () => {
-                this.engineMenu.classList.add('hidden');
+                this.engineMenu.classList.remove('active');
                 this.engineBtn.setAttribute('aria-expanded', 'false');
             });
         }
@@ -254,7 +256,7 @@ export class SearchEngineManager {
                 soundFx.play('click');
                 const key = opt.getAttribute('data-engine');
                 this.setEngine(key);
-                this.engineMenu.classList.add('hidden');
+                this.engineMenu.classList.remove('active');
                 this.engineBtn.setAttribute('aria-expanded', 'false');
             });
         });
