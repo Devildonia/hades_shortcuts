@@ -4,10 +4,19 @@
 ### *A high-performance, ultra-aesthetic browser startpage & command center*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Online%20Preview-brightgreen?logo=github)](https://devildonia.github.io/hades_shortcuts/)
 [![Pure Vanilla](https://img.shields.io/badge/Stack-Vanilla%20HTML%20%2F%20CSS%20%2F%20JS-yellow.svg)](https://developer.mozilla.org/en-US/)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20Zero-brightgreen.svg)]()
 [![Bundle Size](https://img.shields.io/badge/Total%20Size-~200%20KB-success.svg)]()
 [![i18n](https://img.shields.io/badge/i18n-ES%20%7C%20EN%20%7C%20FR%20%7C%20DE-purple.svg)]()
+
+<br />
+
+<p align="center">
+  <a href="https://devildonia.github.io/hades_shortcuts/">
+    <img src="https://img.shields.io/badge/%F0%9F%8C%90%20Open%20Live%20Demo-https%3A%2F%2Fdevildonia.github.io%2Fhades__shortcuts%2F-blue?style=for-the-badge" alt="Try Live Demo" />
+  </a>
+</p>
 
 <br />
 
@@ -16,6 +25,7 @@
 <br />
 <br />
 
+[Live Demo](https://devildonia.github.io/hades_shortcuts/) •
 [Features](#-key-features) •
 [Gallery](#-visual-showcase) •
 [Quick Start](#-quick-start) •
@@ -107,10 +117,14 @@
 
 ## 🚀 Quick Start
 
-### Option 1: Direct Local File (Easiest)
-Simply double-click [`index.html`](index.html) in your browser. All assets and dictionaries are self-contained and run offline without any server setup.
+### Option 1: 🌐 Live Demo (Instant Web Preview)
+Test and use the production dashboard directly in your browser without any installation:
+👉 **[https://devildonia.github.io/hades_shortcuts/](https://devildonia.github.io/hades_shortcuts/)**
 
-### Option 2: Local HTTP Server
+### Option 2: Direct Local File (Offline)
+Simply clone the repository and double-click [`index.html`](index.html) in your browser. All assets, sounds, and dictionaries are self-contained and run offline without any server setup.
+
+### Option 3: Local HTTP Server
 Run the included `local server.bat` script or launch a simple Python server:
 ```bash
 # Launch a lightweight local server
