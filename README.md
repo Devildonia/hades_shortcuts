@@ -84,9 +84,13 @@ Transform your search bar into an instant utility suite:
 - **Ambient Focus Audio Generator**: 4 procedural soundscapes (🌧️ Cyber Rain, 🚀 Deep Space Brown Noise, ☕ Binaural 432 Hz, 🌊 Cosmic Waves) synthesized mathematically via Web Audio API (0 KB external files, 100% offline).
 - **Configurable Visibility**: Toggle widgets on/off anytime from the *Layout & Shortcuts* settings tab.
 
-### 🔊 Procedural Web Audio API Synthesizer (0 KB)
-- Zero external MP3 dependencies with real-time mathematical audio synthesis.
-- 3 selectable haptic sound presets: **Sci-Fi Soft Pop**, **Mechanical Switch**, and **Acoustic Bubble**.
+### 🎧 Procedural Ambient Focus Sound Engine (0 KB, 100% Offline)
+Pure mathematical acoustic synthesis using modern **Web Audio API** nodes (`AudioContext`, `BiquadFilterNode`, `BufferSourceNode`, `OscillatorNode`) with **0 KB external MP3s, zero streaming and 0% data consumption**:
+- 🌧️ **Cyber Rain**: Algorithmic white/pink noise filtered through a 900 Hz low-pass filter with simulated randomized rainfall gusts.
+- 🚀 **Deep Space (Brown Noise)**: Ultra-low frequency integration (200 Hz cutoff) designed for deep focus, sensory calming, and ADHD symptom relief.
+- ☕ **Binaural Alpha Waves (432 Hz)**: Dual stereo sine wave oscillators (432 Hz left / 440 Hz right) producing a soothing 8 Hz Alpha brainwave beat for sustained creative flow.
+- 🌊 **Cosmic Waves**: Low-frequency oscillator (0.1 Hz) slowly sweeping a resonant bandpass filter across pink noise to create a 10-second rhythmic ocean wave breathing cycle.
+- 🎚️ **Smooth Linear Gain**: Prevents acoustic clicks on start/stop with progressive audio envelope ramping.
 
 ### 🎨 Custom Theme Studio
 - Live color picker in *Settings > Appearance* to customize primary accent and secondary glow colors with instant CSS variable re-calculation.
