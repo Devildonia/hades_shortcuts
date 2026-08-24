@@ -59,6 +59,13 @@ export class DashboardRenderer {
                 card.target = '_blank';
                 card.rel = 'noopener noreferrer';
                 card.className = 'enlace-icono';
+                card.addEventListener('click', () => {
+                    try {
+                        const stats = JSON.parse(localStorage.getItem('shortcut_usage_stats_v1') || '{}');
+                        stats[shortcut.id] = (stats[shortcut.id] || 0) + 1;
+                        localStorage.setItem('shortcut_usage_stats_v1', JSON.stringify(stats));
+                    } catch (e) {}
+                });
                 card.setAttribute('data-id', shortcut.id);
                 card.setAttribute('data-title', shortcut.title);
                 card.setAttribute('data-app-key', shortcut.id);

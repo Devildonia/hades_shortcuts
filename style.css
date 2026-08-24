@@ -4468,21 +4468,30 @@ input:checked + .slider:before {
 }
 
 
-/* Favorites Sub-Orbital Menu on Hover */
+/* Favorites Sub-Orbital Menu on Hover with Continuous Hit-box Bridge */
 .radial-node-favs {
     position: relative;
 }
 
 .radial-sub-favs {
     position: absolute;
-    inset: 0;
+    top: -95px;
+    left: -70px;
+    right: -70px;
+    bottom: -15px;
     pointer-events: none;
     opacity: 0;
     transform: scale(0.6);
-    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: 50% 90%;
+    transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 25;
 }
 
-.radial-node-favs:hover .radial-sub-favs {
+.radial-node-favs:hover .radial-sub-favs,
+.radial-sub-favs:hover {
     opacity: 1;
     pointer-events: auto;
     transform: scale(1);

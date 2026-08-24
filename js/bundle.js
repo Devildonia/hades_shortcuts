@@ -998,11 +998,52 @@ class RadialHUDEngine {
         });
     }
 
+    getMostUsedShortcuts() {
+        let stats = {};
+        try {
+            stats = JSON.parse(localStorage.getItem('shortcut_usage_stats_v1') || '{}');
+        } catch (e) {}
+
+        const all = [...(state.shortcuts || [])];
+        
+        // Sort by recorded click count descending
+        all.sort((a, b) => {
+            const countA = stats[a.id] || 0;
+            const countB = stats[b.id] || 0;
+            return countB - countA;
+        });
+
+        // If no usage recorded yet, pick the most universally popular icons
+        const popularIds = ['google', 'youtube', 'chatgpt', 'github', 'claude'];
+        const top3 = [];
+        
+        // Check if we have user clicks
+        const hasClicks = Object.values(stats).some(v => v > 0);
+        if (hasClicks) {
+            return all.slice(0, 3);
+        }
+
+        // Fresh default popular items
+        popularIds.forEach(id => {
+            if (top3.length < 3) {
+                const found = all.find(s => s.id === id || s.title.toLowerCase().includes(id));
+                if (found && !top3.includes(found)) top3.push(found);
+            }
+        });
+
+        while (top3.length < 3 && all.length > top3.length) {
+            const next = all.find(s => !top3.includes(s));
+            if (next) top3.push(next);
+        }
+
+        return top3.slice(0, 3);
+    }
+
     renderFavoritesSubOrbit(parentBtn) {
         const subContainer = document.createElement('div');
         subContainer.className = 'radial-sub-favs';
         
-        const top3 = (state.shortcuts || []).slice(0, 3);
+        const top3 = this.getMostUsedShortcuts();
         const offsets = [
             { x: -44, y: -58 },
             { x: 0, y: -74 },
@@ -3071,6 +3112,13 @@ class DashboardRenderer {
                 card.target = '_blank';
                 card.rel = 'noopener noreferrer';
                 card.className = 'enlace-icono';
+                card.addEventListener('click', () => {
+                    try {
+                        const stats = JSON.parse(localStorage.getItem('shortcut_usage_stats_v1') || '{}');
+                        stats[shortcut.id] = (stats[shortcut.id] || 0) + 1;
+                        localStorage.setItem('shortcut_usage_stats_v1', JSON.stringify(stats));
+                    } catch (e) {}
+                });
                 card.setAttribute('data-id', shortcut.id);
                 card.setAttribute('data-title', shortcut.title);
                 card.setAttribute('data-app-key', shortcut.id);
