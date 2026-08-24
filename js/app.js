@@ -50,8 +50,8 @@ const initApp = () => {
         renderer.render();
     });
 
-    // 4. User Name Interactive Modal
-    initUserNameModal(weather);
+    // 4. User Name Interactive Modal & Drawer Sync
+    initUserNameSystem(weather, settingsHub);
 
     // 5. Global Keyboard Shortcuts
     initGlobalKeybindings(search, settingsHub);
@@ -77,31 +77,46 @@ if (document.readyState === 'loading') {
     initApp();
 }
 
-const initUserNameModal = (weather) => {
+const initUserNameSystem = (weather, settingsHub) => {
     const brandName = document.getElementById('brand-user-name');
     const brandSuffix = document.getElementById('brand-user-suffix');
+    const brandTitle = document.querySelector('.brand-title');
     const modal = document.getElementById('user-modal');
     const input = document.getElementById('user-name-input');
     const saveBtn = document.getElementById('user-save-btn');
     const closeBtn = document.getElementById('close-user-modal');
     const preview = document.getElementById('user-preview-text');
+    const drawerInput = document.getElementById('drawer-user-name-input');
+    const drawerSaveBtn = document.getElementById('drawer-user-save-btn');
 
-    const updateSuffix = (name) => {
+    const updateDisplay = (name) => {
         const trimmed = (name || 'HaDeS').trim();
         const suffix = trimmed.toLowerCase().endsWith('s') ? "'" : "'s";
         if (brandName) brandName.textContent = trimmed;
         if (brandSuffix) brandSuffix.textContent = suffix;
+        if (drawerInput) drawerInput.value = trimmed;
+        if (input) input.value = trimmed;
         document.title = `${trimmed}${suffix} Shortcuts · Command Center`;
+        if (weather && weather.updateClockAndGreeting) {
+            weather.updateClockAndGreeting();
+        }
     };
 
-    updateSuffix(state.userName);
+    // Listen to reactive state changes
+    state.on('username:changed', (name) => updateDisplay(name));
+
+    // Initial render
+    updateDisplay(state.userName);
 
     const openModal = () => {
         soundFx.play('click');
         if (modal) modal.classList.remove('hidden');
         if (input) {
             input.value = state.userName;
-            input.focus();
+            setTimeout(() => {
+                input.focus();
+                input.select();
+            }, 50);
         }
         updatePreview();
     };
@@ -118,24 +133,65 @@ const initUserNameModal = (weather) => {
         preview.textContent = `${val}${suffix} SHORTCUTS`;
     };
 
-    const saveName = () => {
+    const applyNewName = (rawName) => {
         soundFx.play('click');
-        const newName = input ? input.value.trim() || 'HaDeS' : 'HaDeS';
+        const newName = (rawName || 'HaDeS').trim();
         state.setUserName(newName);
-        updateSuffix(newName);
-        closeModal();
     };
 
     if (brandName) brandName.addEventListener('click', openModal);
+    if (brandTitle) brandTitle.addEventListener('click', openModal);
+    if (brandName) {
+        brandName.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openModal();
+            }
+        });
+    }
+
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    if (saveBtn) saveBtn.addEventListener('click', saveName);
+    if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+            applyNewName(input ? input.value : 'HaDeS');
+            closeModal();
+        });
+    }
+
+    if (drawerSaveBtn) {
+        drawerSaveBtn.addEventListener('click', () => {
+            applyNewName(drawerInput ? drawerInput.value : 'HaDeS');
+            drawerSaveBtn.textContent = '✓ Guardado';
+            setTimeout(() => {
+                drawerSaveBtn.textContent = 'Guardar';
+            }, 2000);
+        });
+    }
+    if (drawerInput) {
+        drawerInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                applyNewName(drawerInput.value);
+                if (drawerSaveBtn) {
+                    drawerSaveBtn.textContent = '✓ Guardado';
+                    setTimeout(() => {
+                        drawerSaveBtn.textContent = 'Guardar';
+                    }, 2000);
+                }
+            }
+        });
+    }
+
     if (input) {
         input.addEventListener('input', updatePreview);
         input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') saveName();
+            if (e.key === 'Enter') {
+                applyNewName(input.value);
+                closeModal();
+            }
             if (e.key === 'Escape') closeModal();
         });
     }
+
     if (modal) {
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
