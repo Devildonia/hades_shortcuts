@@ -277,5 +277,15 @@
     "hint": "Drag modules by their handles ⠿ to reorder canvas",
     "reset": "🔄 Reset",
     "save": "✓ Save & Exit"
+  },
+  "radial_hud": {
+    "favs": "Favorites",
+    "audio": "Audio",
+    "pomodoro": "Pomodoro",
+    "postit": "Post-it",
+    "theme": "Theme",
+    "qr": "QR Code",
+    "search": "Search",
+    "settings": "Settings"
   }
 }

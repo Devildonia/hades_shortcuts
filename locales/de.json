@@ -277,5 +277,15 @@
     "hint": "Ziehen Sie Module an den Griffen ⠿, um sie neu anzuordnen",
     "reset": "🔄 Zurücksetzen",
     "save": "✓ Speichern & Beenden"
+  },
+  "radial_hud": {
+    "favs": "Favoriten",
+    "audio": "Audio",
+    "pomodoro": "Pomodoro",
+    "postit": "Post-it",
+    "theme": "Design",
+    "qr": "QR-Code",
+    "search": "Suchen",
+    "settings": "Optionen"
   }
 }

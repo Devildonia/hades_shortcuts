@@ -4018,3 +4018,151 @@ input:checked + .slider:before {
     color: var(--text-primary);
     border-color: var(--accent-primary);
 }
+
+
+/* ==========================================================================
+   Phase 1: Radial HUD Action Wheel Styles (360° Gestural Quick Access)
+   ========================================================================== */
+.radial-hud-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10005;
+    background: rgba(5, 10, 20, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: fadeIn 0.15s ease;
+}
+
+.radial-hud-overlay.hidden {
+    display: none !important;
+}
+
+.radial-hud-wheel {
+    position: absolute;
+    width: 0;
+    height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: radialSpring 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes radialSpring {
+    from {
+        transform: scale(0.6) rotate(-25deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.radial-hud-center-ring {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 1px dashed rgba(0, 242, 254, 0.4);
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.15), inset 0 0 25px rgba(0, 242, 254, 0.1);
+    pointer-events: none;
+    animation: spinSlow 30s linear infinite;
+}
+
+@keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.radial-hud-center-btn {
+    position: absolute;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--bg-secondary) 0%, rgba(10, 15, 29, 0.95) 100%);
+    border: 2px solid var(--accent-primary);
+    box-shadow: 0 0 20px var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform var(--transition-fast);
+}
+
+.radial-hud-center-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px var(--accent-primary);
+}
+
+.radial-hud-core-icon {
+    font-size: 1.25rem;
+    color: var(--accent-primary);
+    filter: drop-shadow(0 0 6px var(--accent-glow));
+}
+
+.radial-node-btn {
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(11, 19, 43, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border-hover);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 242, 254, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    cursor: pointer;
+    margin-left: -28px;
+    margin-top: -28px;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, border-color 0.2s ease;
+    user-select: none;
+    z-index: 5;
+}
+
+.radial-node-btn:hover {
+    background: rgba(0, 242, 254, 0.25);
+    border-color: var(--accent-primary);
+    transform: scale(1.18) !important;
+    box-shadow: 0 0 22px var(--accent-glow);
+}
+
+.radial-node-icon {
+    font-size: 1.15rem;
+}
+
+.radial-node-label {
+    font-size: 0.65rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Light Theme Radial HUD */
+[data-theme="light"] .radial-node-btn {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1), 0 0 15px rgba(2, 132, 199, 0.15);
+}
+
+[data-theme="light"] .radial-node-btn:hover {
+    background: #e0f2fe;
+    border-color: #0284c7;
+}
+
+[data-theme="light"] .radial-hud-center-btn {
+    background: #ffffff;
+    border-color: #0284c7;
+    box-shadow: 0 0 20px rgba(2, 132, 199, 0.25);
+}
+
+[data-theme="light"] .radial-hud-center-ring {
+    border-color: rgba(2, 132, 199, 0.4);
+    box-shadow: 0 0 20px rgba(2, 132, 199, 0.1);
+}

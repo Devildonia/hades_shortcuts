@@ -1,3 +1,4 @@
+import { radialHUD } from './radial-hud.js';
 import { auroraCanvas, miniHud } from './aurora-canvas.js';
 import { CryptoSyncEngine } from './crypto-sync.js';
 import { ambientAudio } from './ambient-audio.js';
@@ -202,6 +203,7 @@ export function initApp() {
     settingsHub.init();
     cryptoSync.init();
     auroraCanvas.init();
+        radialHUD.init();
     miniHud.init();
 
     loadLocaleAsync(state.language).then(() => {

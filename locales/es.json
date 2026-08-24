@@ -277,5 +277,15 @@
     "hint": "Arrastra los módulos por sus tiradores ⠿ para reorganizarlos",
     "reset": "🔄 Restablecer",
     "save": "✓ Guardar y Salir"
+  },
+  "radial_hud": {
+    "favs": "Favoritos",
+    "audio": "Audio",
+    "pomodoro": "Pomodoro",
+    "postit": "Post-it",
+    "theme": "Tema",
+    "qr": "Código QR",
+    "search": "Buscar",
+    "settings": "Ajustes"
   }
 }
