@@ -3211,21 +3211,36 @@ class SearchEngineManager {
         this.engineIcon = document.getElementById('engine-icon-current');
         this.engineName = document.getElementById('engine-name-current');
         this.engineOptions = document.querySelectorAll('.engine-opt');
-        this.filterPills = document.querySelectorAll('.filter-pill');
+        this.filterPills = document.querySelectorAll('.pill-btn, .filter-pill');
         this.calcBanner = document.getElementById('search-calc-banner');
         this.currentEngineKey = state.searchEngine || 'google';
     }
 
     init() {
         this.setEngine(this.currentEngineKey);
+        this.syncActiveFilterPill();
         this.bindEvents();
         this.updatePillCounts();
+        this.filterShortcuts();
 
-        state.on('shortcuts:changed', () => this.updatePillCounts());
-        state.on('categories:changed', () => this.updatePillCounts());
+        state.on('shortcuts:changed', () => {
+            this.updatePillCounts();
+            this.filterShortcuts();
+        });
+        state.on('categories:changed', () => {
+            this.updatePillCounts();
+            this.filterShortcuts();
+        });
         state.on('language:changed', () => {
             this.updatePlaceholders();
             this.updatePillCounts();
+        });
+    }
+
+    syncActiveFilterPill() {
+        if (!this.filterPills) return;
+        this.filterPills.forEach(pill => {
+            pill.classList.toggle('active', pill.getAttribute('data-filter') === state.activeFilter);
         });
     }
 

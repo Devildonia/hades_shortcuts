@@ -819,24 +819,32 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     gap: 10px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .pill-btn {
     background: var(--card-bg);
     backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--card-border);
     color: var(--text-secondary);
     font-family: var(--font-body);
     font-size: 0.84rem;
     font-weight: 600;
-    padding: 8px 18px;
+    padding: 7px 16px;
     border-radius: var(--radius-pill);
     cursor: pointer;
     transition: var(--transition-smooth);
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
+    white-space: nowrap;
+    user-select: none;
 }
 
 .pill-btn:hover {
