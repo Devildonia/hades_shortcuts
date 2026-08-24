@@ -4166,3 +4166,41 @@ input:checked + .slider:before {
     border-color: rgba(2, 132, 199, 0.4);
     box-shadow: 0 0 20px rgba(2, 132, 199, 0.1);
 }
+
+
+/* ==========================================================================
+   Phase 2: Dynamic Solar Lighting & Circadian Rhythm Engine
+   ========================================================================== */
+[data-solar-phase="dawn"] {
+    --accent-glow: rgba(245, 158, 11, 0.35);
+    --card-border-hover: rgba(245, 158, 11, 0.45);
+}
+
+[data-solar-phase="dawn"] .ambient-glow {
+    background: radial-gradient(circle at 20% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.12) 0%, transparent 60%);
+}
+
+[data-solar-phase="noon"] {
+    --accent-glow: rgba(0, 242, 254, 0.35);
+}
+
+[data-solar-phase="twilight"] {
+    --accent-glow: rgba(217, 70, 239, 0.35);
+    --card-border-hover: rgba(217, 70, 239, 0.45);
+}
+
+[data-solar-phase="twilight"] .ambient-glow {
+    background: radial-gradient(circle at 50% 10%, rgba(217, 70, 239, 0.18) 0%, transparent 60%),
+                radial-gradient(circle at 90% 90%, rgba(249, 115, 22, 0.15) 0%, transparent 60%);
+}
+
+[data-solar-phase="midnight"] {
+    --accent-glow: rgba(99, 102, 241, 0.25);
+    --card-border-hover: rgba(99, 102, 241, 0.35);
+}
+
+[data-solar-phase="midnight"] .ambient-glow {
+    background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.2) 0%, transparent 70%),
+                radial-gradient(circle at 80% 80%, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
+}

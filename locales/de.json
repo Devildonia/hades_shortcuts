@@ -153,7 +153,9 @@
         "light": "Crystal Light",
         "sunset": "Sunset Amber"
       },
-      "aurora_toggle": "Reaktiver Aurora-Mesh-Effekt"
+      "aurora_toggle": "Reaktiver Aurora-Mesh-Effekt",
+      "solar_label": "Zirkadiane Solarbeleuchtung",
+      "solar_desc": "Passt das Umgebungslicht dynamisch an den Sonnenzyklus an (Dämmerung, Mittag, Abend, Nacht)."
     },
     "layout": {
       "edit_mode_title": "Dashboard-Bearbeitungsmodus",
@@ -287,5 +289,11 @@
     "qr": "QR-Code",
     "search": "Suchen",
     "settings": "Optionen"
+  },
+  "solar": {
+    "dawn": "Goldene Dämmerung",
+    "noon": "Mittagssonne",
+    "twilight": "Cyber-Abenddämmerung",
+    "midnight": "Tiefste Nacht"
   }
 }

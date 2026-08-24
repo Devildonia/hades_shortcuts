@@ -153,7 +153,9 @@
         "light": "Crystal Light",
         "sunset": "Sunset Amber"
       },
-      "aurora_toggle": "Effet de Maillage Aurora Réactif"
+      "aurora_toggle": "Effet de Maillage Aurora Réactif",
+      "solar_label": "Éclairage Solaire Circadien",
+      "solar_desc": "Adapte l'éclairage ambiant selon le cycle solaire réel (Aube, Zénith, Crépuscule, Nuit)."
     },
     "layout": {
       "edit_mode_title": "Mode Édition du Tableau",
@@ -287,5 +289,11 @@
     "qr": "Code QR",
     "search": "Chercher",
     "settings": "Paramètres"
+  },
+  "solar": {
+    "dawn": "Aube Dorée",
+    "noon": "Zénith Solaire",
+    "twilight": "Crépuscule Cyber",
+    "midnight": "Nuit Abyssale"
   }
 }

@@ -1,3 +1,4 @@
+import { solarEngine } from './solar-engine.js';
 import { radialHUD } from './radial-hud.js';
 import { auroraCanvas, miniHud } from './aurora-canvas.js';
 import { CryptoSyncEngine } from './crypto-sync.js';
@@ -204,6 +205,7 @@ export function initApp() {
     cryptoSync.init();
     auroraCanvas.init();
         radialHUD.init();
+        solarEngine.init();
     miniHud.init();
 
     loadLocaleAsync(state.language).then(() => {

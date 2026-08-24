@@ -153,7 +153,9 @@
         "light": "Crystal Light",
         "sunset": "Sunset Amber"
       },
-      "aurora_toggle": "Efecto Malla Aurora Reactiva"
+      "aurora_toggle": "Efecto Malla Aurora Reactiva",
+      "solar_label": "Iluminación Solar Circadiana",
+      "solar_desc": "Adapta el resplandor ambiental según la posición real del sol (Amanecer, Cenit, Crepúsculo, Noche)."
     },
     "layout": {
       "edit_mode_title": "Modo Edición del Tablero",
@@ -287,5 +289,11 @@
     "qr": "Código QR",
     "search": "Buscar",
     "settings": "Ajustes"
+  },
+  "solar": {
+    "dawn": "Amanecer Dorado",
+    "noon": "Cenit Solar",
+    "twilight": "Crepúsculo Cyber",
+    "midnight": "Noche Abisal"
   }
 }
