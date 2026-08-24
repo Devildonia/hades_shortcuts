@@ -970,7 +970,14 @@
 
                     <div class="form-group flex-1">
                         <label data-i18n="shortcut_editor.icon_preset">Elegir icono incluido:</label>
-                        <select id="sc-icon-select" class="form-select custom-themed-select"></select>
+                        <div class="custom-dropdown-container" id="sc-icon-dropdown">
+                            <button type="button" class="custom-dropdown-trigger" id="sc-icon-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                <img id="sc-dropdown-current-icon" src="iconos/aliexpress.webp" class="dropdown-thumb-img" alt="Icono">
+                                <span id="sc-dropdown-current-text" class="dropdown-thumb-text">aliexpress</span>
+                                <span class="dropdown-caret">▾</span>
+                            </button>
+                            <div class="custom-dropdown-list hidden" id="sc-icon-dropdown-list" role="listbox"></div>
+                        </div>
                     </div>
                 </div>
 

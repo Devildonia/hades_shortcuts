@@ -2915,18 +2915,20 @@ class DragDropManager {
 
 
 // --- Module: js/shortcut-manager.js ---
-// js/shortcut-manager.js - Add / Edit / Delete Shortcut Modal with Custom Themed Select & Smart Favicon HD
+// js/shortcut-manager.js - Add / Edit / Delete Shortcut Modal with Alphabetical Icon Dropdown (A-Z with Left Thumbnails)
 
 
-const PRESET_ICONS = [
-    'chatgpt.webp', 'claude.webp', 'deepseek.webp', 'qwen.webp', 'gemini.webp', 'google.webp',
-    'gmail.webp', 'googledrive.webp', 'github.webp', 'discord.webp', 'youtube.webp', 'amazon.webp',
-    'aliexpress.webp', 'paypal.webp', 'instagram.webp', 'x.webp', 'tiktok.webp', 'threads.webp',
-    'patreon.webp', 'linkedin.webp', 'exophase.webp', 'meshy.webp', 'tripo3d.webp', 'ludoai.webp',
-    'civitai.webp', 'shakkerai.webp', 'tensorart.webp', 'seaartai.webp', 'shadertoy.webp', 'MiniMax.webp',
-    'suno.webp', 'elevenlabs.webp', 'birme.webp', 'photoroom.webp', 'itchio.webp', 'OptimizeGLB.webp',
-    'translate.webp', 'pccomponentes.webp', 'wallapop.webp', 'kling.webp', 'hedra.webp', 'bing.webp',
-    'duckduckgo.webp', 'perplexity.webp', 'notebooklm.webp', 'googleaistudio.webp', 'seaverse.webp'
+const SORTED_PRESET_ICONS = [
+    'aliexpress.webp', 'amazon.webp', 'bing.webp', 'birme.webp', 'chatgpt.webp',
+    'civitai.webp', 'claude.webp', 'deepseek.webp', 'discord.webp', 'duckduckgo.webp',
+    'elevenlabs.webp', 'exophase.webp', 'facebook.webp', 'gemini.webp', 'github.webp',
+    'gmail.webp', 'google.webp', 'googleaistudio.webp', 'googledrive.webp', 'hedra.webp',
+    'instagram.webp', 'itchio.webp', 'kling.webp', 'linkedin.webp', 'ludoai.webp',
+    'meshy.webp', 'MiniMax.webp', 'notebooklm.webp', 'OptimizeGLB.webp', 'patreon.webp',
+    'paypal.webp', 'pccomponentes.webp', 'perplexity.webp', 'photoroom.webp', 'qwen.webp',
+    'seaartai.webp', 'seaverse.webp', 'shadertoy.webp', 'shakkerai.webp', 'suno.webp',
+    'tensorart.webp', 'threads.webp', 'tiktok.webp', 'translate.webp', 'tripo3d.webp',
+    'wallapop.webp', 'x.webp', 'youtube.webp'
 ];
 
 class ShortcutManager {
@@ -2936,7 +2938,10 @@ class ShortcutManager {
         this.titleInput = document.getElementById('sc-title-input');
         this.urlInput = document.getElementById('sc-url-input');
         this.catSelect = document.getElementById('sc-category-select');
-        this.iconSelect = document.getElementById('sc-icon-select');
+        this.dropdownTrigger = document.getElementById('sc-icon-dropdown-trigger');
+        this.dropdownList = document.getElementById('sc-icon-dropdown-list');
+        this.currentIconImg = document.getElementById('sc-dropdown-current-icon');
+        this.currentIconText = document.getElementById('sc-dropdown-current-text');
         this.customIconInput = document.getElementById('sc-custom-icon');
         this.descInput = document.getElementById('sc-desc-input');
         this.tagsInput = document.getElementById('sc-tags-input');
@@ -2944,11 +2949,12 @@ class ShortcutManager {
         this.deleteBtn = document.getElementById('sc-delete-btn');
         this.closeBtn = document.getElementById('close-sc-modal');
         this.editingShortcutId = null;
+        this.selectedIcon = 'iconos/aliexpress.webp';
     }
 
     init() {
         this.populateCategorySelect();
-        this.populateIconPresets();
+        this.buildAlphabeticalIconList();
         this.bindEvents();
         this.bindSmartFaviconAutoDerive();
 
@@ -2968,15 +2974,60 @@ class ShortcutManager {
         });
     }
 
-    populateIconPresets() {
-        if (!this.iconSelect) return;
-        this.iconSelect.innerHTML = '';
-        PRESET_ICONS.forEach(ic => {
-            const opt = document.createElement('option');
-            opt.value = `iconos/${ic}`;
-            opt.textContent = ic.replace('.webp', '');
-            this.iconSelect.appendChild(opt);
+    buildAlphabeticalIconList() {
+        if (!this.dropdownList) return;
+        this.dropdownList.innerHTML = '';
+        SORTED_PRESET_ICONS.forEach(ic => {
+            const path = `iconos/${ic}`;
+            const label = ic.replace('.webp', '');
+            const opt = document.createElement('div');
+            opt.className = `custom-dropdown-opt ${this.selectedIcon === path ? 'active' : ''}`;
+            opt.setAttribute('data-icon-path', path);
+            opt.setAttribute('role', 'option');
+            opt.innerHTML = `
+                <img src="${path}" class="dropdown-opt-thumb" alt="${label}" loading="lazy">
+                <span class="dropdown-opt-text">${label}</span>
+            `;
+            opt.addEventListener('click', (e) => {
+                e.stopPropagation();
+                soundFx.play('click');
+                this.selectIcon(path, label);
+                this.closeDropdown();
+                if (this.customIconInput) this.customIconInput.value = '';
+            });
+            this.dropdownList.appendChild(opt);
         });
+    }
+
+    selectIcon(path, label) {
+        this.selectedIcon = path;
+        const name = label || path.replace('iconos/', '').replace('.webp', '');
+        if (this.currentIconImg) this.currentIconImg.src = path;
+        if (this.currentIconText) this.currentIconText.textContent = name;
+        if (this.dropdownList) {
+            this.dropdownList.querySelectorAll('.custom-dropdown-opt').forEach(opt => {
+                opt.classList.toggle('active', opt.getAttribute('data-icon-path') === path);
+            });
+        }
+    }
+
+    toggleDropdown() {
+        soundFx.play('click');
+        const isClosed = this.dropdownList.classList.contains('hidden');
+        if (isClosed) {
+            this.dropdownList.classList.remove('hidden');
+            this.dropdownTrigger.setAttribute('aria-expanded', 'true');
+            // Scroll to active option
+            const activeOpt = this.dropdownList.querySelector('.custom-dropdown-opt.active');
+            if (activeOpt) activeOpt.scrollIntoView({ block: 'nearest' });
+        } else {
+            this.closeDropdown();
+        }
+    }
+
+    closeDropdown() {
+        if (this.dropdownList) this.dropdownList.classList.add('hidden');
+        if (this.dropdownTrigger) this.dropdownTrigger.setAttribute('aria-expanded', 'false');
     }
 
     openAddModal() {
@@ -2987,7 +3038,8 @@ class ShortcutManager {
         this.customIconInput.value = '';
         this.descInput.value = '';
         this.tagsInput.value = '';
-        if (this.iconSelect) this.iconSelect.value = 'iconos/chatgpt.webp';
+        this.selectIcon('iconos/aliexpress.webp', 'aliexpress');
+        this.closeDropdown();
         if (this.deleteBtn) this.deleteBtn.classList.add('hidden');
         document.getElementById('sc-modal-title').textContent = (i18nDictionaries[state.language] || i18nDictionaries.es).shortcut_editor.add_title;
         this.modal.classList.remove('hidden');
@@ -3001,11 +3053,15 @@ class ShortcutManager {
         this.catSelect.value = sc.category;
         this.descInput.value = sc.desc || '';
         this.tagsInput.value = sc.tags || '';
+        this.closeDropdown();
 
         if (sc.icon.startsWith('iconos/')) {
-            if (this.iconSelect) this.iconSelect.value = sc.icon;
+            this.selectIcon(sc.icon);
             this.customIconInput.value = '';
         } else {
+            this.selectedIcon = sc.icon;
+            if (this.currentIconImg) this.currentIconImg.src = sc.icon;
+            if (this.currentIconText) this.currentIconText.textContent = sc.title || 'Personalizado';
             this.customIconInput.value = sc.icon;
         }
 
@@ -3016,6 +3072,7 @@ class ShortcutManager {
 
     closeModal() {
         this.modal.classList.add('hidden');
+        this.closeDropdown();
         this.editingShortcutId = null;
     }
 
@@ -3024,7 +3081,7 @@ class ShortcutManager {
         const url = this.urlInput.value.trim();
         if (!title || !url) return;
 
-        let icon = this.customIconInput.value.trim() || (this.iconSelect ? this.iconSelect.value : 'iconos/google.webp');
+        let icon = this.customIconInput.value.trim() || this.selectedIcon;
         const category = this.catSelect.value;
         const desc = this.descInput.value.trim();
         const tags = this.tagsInput.value.trim();
@@ -3076,12 +3133,27 @@ class ShortcutManager {
                     if (this.customIconInput) {
                         this.customIconInput.value = hdFavicon;
                     }
+                    if (this.currentIconImg) this.currentIconImg.src = hdFavicon;
+                    if (this.currentIconText) this.currentIconText.textContent = domain;
                 } catch (e) {}
             });
         }
     }
 
     bindEvents() {
+        if (this.dropdownTrigger) {
+            this.dropdownTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleDropdown();
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (this.dropdownList && !e.target.closest('#sc-icon-dropdown')) {
+                this.closeDropdown();
+            }
+        });
+
         if (this.saveBtn) this.saveBtn.addEventListener('click', () => this.saveShortcut());
         if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.closeModal());
         if (this.deleteBtn) this.deleteBtn.addEventListener('click', () => {
