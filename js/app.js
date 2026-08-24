@@ -212,6 +212,7 @@ export function initApp() {
         telemetry.init();
         techRadar.init();
         neuralSearch.init();
+    window.ambientAudio = ambientAudio;
     window.radialHUD = radialHUD;
     window.solarEngine = solarEngine;
     window.telemetry = telemetry;

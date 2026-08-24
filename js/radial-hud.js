@@ -13,7 +13,7 @@ export class RadialHUDEngine {
         this.isOpen = false;
         this.cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
         this.actions = [
-            { id: 'favs', icon: '⭐', labelKey: 'favs', action: () => this.triggerFavs() },
+            { id: 'favs', icon: '⭐', labelKey: 'favs', action: () => this.toggleFavsSubOrbit() },
             { id: 'audio', icon: '🎧', labelKey: 'audio', action: () => this.toggleAudio() },
             { id: 'pomodoro', icon: '⏳', labelKey: 'pomodoro', action: () => this.togglePomodoro() },
             { id: 'postit', icon: '📌', labelKey: 'postit', action: () => this.createPostitUnderCursor() },
@@ -41,23 +41,63 @@ export class RadialHUDEngine {
             const x = Math.round(radius * Math.cos(angle));
             const y = Math.round(radius * Math.sin(angle));
 
-            const btn = document.createElement('button');
-            btn.className = 'radial-node-btn';
+            const btn = document.createElement('div');
+            btn.className = `radial-node-btn radial-node-${act.id}`;
             btn.setAttribute('data-action', act.id);
             btn.setAttribute('title', t[act.labelKey] || act.id);
             btn.style.setProperty('--node-x', `${x}px`);
             btn.style.setProperty('--node-y', `${y}px`);
             btn.innerHTML = `<span class="radial-node-icon">${act.icon}</span><span class="radial-node-label">${t[act.labelKey] || act.id}</span>`;
 
+            if (act.id === 'favs') {
+                this.renderFavoritesSubOrbit(btn);
+            }
+
             btn.addEventListener('click', (e) => {
+                if (e.target.closest('.radial-sub-fav-item')) return;
                 e.stopPropagation();
                 soundFx.play('click');
                 act.action();
-                this.close();
+                if (act.id !== 'favs') this.close();
             });
 
             this.hudWheel.appendChild(btn);
         });
+    }
+
+    renderFavoritesSubOrbit(parentBtn) {
+        const subContainer = document.createElement('div');
+        subContainer.className = 'radial-sub-favs';
+        
+        const top3 = (state.shortcuts || []).slice(0, 3);
+        const offsets = [
+            { x: -44, y: -58 },
+            { x: 0, y: -74 },
+            { x: 44, y: -58 }
+        ];
+
+        top3.forEach((sc, i) => {
+            const pos = offsets[i] || { x: 0, y: -50 };
+            const subBtn = document.createElement('button');
+            subBtn.className = 'radial-sub-fav-item';
+            subBtn.title = sc.title || 'Favorito';
+            subBtn.style.setProperty('--sub-x', `${pos.x}px`);
+            subBtn.style.setProperty('--sub-y', `${pos.y}px`);
+
+            const iconSrc = sc.icon || `https://www.google.com/s2/favicons?domain=${encodeURIComponent(sc.url)}&sz=64`;
+            subBtn.innerHTML = `<img src="${iconSrc}" class="radial-sub-icon-img" alt="${sc.title}" onerror="this.src='iconos/google.webp'"><span class="radial-sub-fav-tooltip">${sc.title}</span>`;
+
+            subBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                soundFx.play('click');
+                window.open(sc.url, '_blank');
+                this.close();
+            });
+
+            subContainer.appendChild(subBtn);
+        });
+
+        parentBtn.appendChild(subContainer);
     }
 
     open(x, y) {
@@ -65,7 +105,7 @@ export class RadialHUDEngine {
         this.isOpen = true;
         this.cursorPos = { x, y };
 
-        const pad = 140;
+        const pad = 150;
         const clampedX = Math.max(pad, Math.min(window.innerWidth - pad, x));
         const clampedY = Math.max(pad, Math.min(window.innerHeight - pad, y));
 
@@ -95,13 +135,14 @@ export class RadialHUDEngine {
         else this.open(x, y);
     }
 
-    triggerFavs() {
+    toggleFavsSubOrbit() {
         const topSc = state.shortcuts[0];
         if (topSc && topSc.url) window.open(topSc.url, '_blank');
+        this.close();
     }
 
     toggleAudio() {
-        ambientAudio.togglePlay();
+        ambientAudio.toggle();
     }
 
     togglePomodoro() {
@@ -124,9 +165,11 @@ export class RadialHUDEngine {
 
     openQRQuick() {
         const omnibox = document.getElementById('main-search') || document.getElementById('search-input');
-        const query = omnibox ? omnibox.value.trim() : '';
-        const url = query.startsWith('http') ? query : window.location.href;
-        window.dispatchEvent(new CustomEvent('devtools:qr', { detail: { text: url } }));
+        if (omnibox) {
+            omnibox.value = '!qr ';
+            omnibox.focus();
+            omnibox.dispatchEvent(new Event('input', { bubbles: true }));
+        }
     }
 
     focusOmnibox() {
@@ -171,6 +214,7 @@ export class RadialHUDEngine {
         }
 
         state.on('language:changed', () => this.renderRadialNodes());
+        state.on('shortcuts:changed', () => this.renderRadialNodes());
     }
 }
 

@@ -4466,3 +4466,81 @@ input:checked + .slider:before {
     background: #f0f7ff;
     border-color: #0284c7;
 }
+
+
+/* Favorites Sub-Orbital Menu on Hover */
+.radial-node-favs {
+    position: relative;
+}
+
+.radial-sub-favs {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.radial-node-favs:hover .radial-sub-favs {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+}
+
+.radial-sub-fav-item {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(10, 18, 38, 0.95);
+    border: 2px solid var(--accent-primary);
+    box-shadow: 0 0 18px var(--accent-glow), 0 8px 16px rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: -22px;
+    margin-top: -22px;
+    transform: translate(var(--sub-x, 0px), var(--sub-y, 0px)) scale(1);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.2s, box-shadow 0.2s;
+    z-index: 20;
+    padding: 0;
+}
+
+.radial-sub-fav-item:hover {
+    transform: translate(var(--sub-x, 0px), var(--sub-y, 0px)) scale(1.25) !important;
+    border-color: #ffffff;
+    box-shadow: 0 0 25px #00f2fe;
+}
+
+.radial-sub-icon-img {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
+.radial-sub-fav-tooltip {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(5, 10, 20, 0.92);
+    border: 1px solid var(--accent-primary);
+    color: #ffffff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+}
+
+.radial-sub-fav-item:hover .radial-sub-fav-tooltip {
+    opacity: 1;
+}
