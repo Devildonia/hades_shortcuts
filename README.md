@@ -53,9 +53,13 @@
 | :---: | :---: |
 | <img src="docs/screenshots/theme-nebula.png" width="420" alt="Deep Nebula Theme" /> | <img src="docs/screenshots/theme-sunset.png" width="420" alt="Sunset Amber Theme" /> |
 
-| 💎 **Crystal Light Theme** | ⚙️ **Unified Settings Drawer** |
+| 💎 **Crystal Light Theme** | ⚙️ **Floating Glass Settings Modal** |
 | :---: | :---: |
-| <img src="docs/screenshots/theme-light.png" width="420" alt="Crystal Light Theme" /> | <img src="docs/screenshots/settings-drawer.png" width="420" alt="Settings Drawer" /> |
+| <img src="docs/screenshots/theme-light.png" width="420" alt="Crystal Light Theme" /> | <img src="docs/screenshots/settings-drawer.png" width="420" alt="Floating Settings Modal" /> |
+
+| 📱 **Interactive Glass QR Modal** | ⚡ **Cyber Neon Dashboard & Bento** |
+| :---: | :---: |
+| <img src="docs/screenshots/devtools-qr-preview.png" width="420" alt="Interactive QR Modal" /> | <img src="docs/screenshots/theme-cyber.png" width="420" alt="Cyber Neon Dashboard" /> |
 
 </div>
 
