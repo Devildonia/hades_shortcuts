@@ -3150,3 +3150,62 @@ input:checked + .slider:before {
 .mini-widgets-section {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
 }
+
+
+/* ==========================================================================
+   Macros & Contextual Routines (Phase 3)
+   ========================================================================== */
+.macros-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.macro-item-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: var(--transition-fast);
+}
+
+.macro-item-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+}
+
+.macro-item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.macro-badge {
+    font-family: var(--font-mono);
+    background: rgba(0, 242, 254, 0.15);
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    color: var(--accent-primary);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.macro-item-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.macro-run-btn {
+    align-self: flex-start;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    margin-top: 4px;
+}

@@ -1,3 +1,4 @@
+import { macroEngine } from './macros.js';
 // js/settings.js - Slide-Over Settings Drawer Hub
 
 import { state } from './state.js';
@@ -30,6 +31,17 @@ export class SettingsHub {
     init() {
         this.bindEvents();
         this.syncUIState();
+                // Macro test run buttons in settings
+        const macroRunBtns = document.querySelectorAll('.macro-run-btn');
+        macroRunBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const trigger = btn.getAttribute('data-macro');
+                if (trigger) {
+                    this.close();
+                    macroEngine.executeMacro(trigger);
+                }
+            });
+        });
         if (this.importer) this.importer.init();
         if (this.themeStudio) this.themeStudio.init();
     }

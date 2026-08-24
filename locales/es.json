@@ -139,7 +139,8 @@
       "language": "Idioma",
       "weather": "Clima",
       "layout": "Diseño & Atajos",
-      "backup": "Copia de Seguridad"
+      "backup": "Copia de Seguridad",
+      "macros": "Macros & Rutinas"
     },
     "appearance": {
       "themes_label": "Tema Visual",
@@ -180,6 +181,10 @@
     "profile": {
       "title": "Perfil de Usuario",
       "desc": "Personaliza tu nombre o alias para el Centro de Mando y saludos:"
+    },
+    "macros": {
+      "title": "Rutinas & Disparadores Rápidos",
+      "desc": "Escribe estos comandos en la barra de búsqueda para ejecutar múltiples acciones en 1 segundo:"
     }
   },
   "shortcut_editor": {

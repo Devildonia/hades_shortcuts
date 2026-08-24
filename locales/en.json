@@ -139,7 +139,8 @@
       "language": "Language",
       "weather": "Weather",
       "layout": "Layout & Shortcuts",
-      "backup": "Backup & Restore"
+      "backup": "Backup & Restore",
+      "macros": "Macros & Routines"
     },
     "appearance": {
       "themes_label": "Visual Theme",
@@ -180,6 +181,10 @@
     "profile": {
       "title": "User Profile",
       "desc": "Customize your name or alias for the Command Center and greetings:"
+    },
+    "macros": {
+      "title": "Routines & Quick Triggers",
+      "desc": "Type these commands in the search bar to run multi-action routines instantly:"
     }
   },
   "shortcut_editor": {

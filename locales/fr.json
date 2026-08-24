@@ -139,7 +139,8 @@
       "language": "Langue",
       "weather": "Météo",
       "layout": "Mise en page & Raccourcis",
-      "backup": "Sauvegarde"
+      "backup": "Sauvegarde",
+      "macros": "Macros & Routines"
     },
     "appearance": {
       "themes_label": "Thème Visuel",
@@ -180,6 +181,10 @@
     "profile": {
       "title": "Profil Utilisateur",
       "desc": "Personnalisez votre nom ou pseudo pour le Centre de Commande et les salutations :"
+    },
+    "macros": {
+      "title": "Routines & Déclencheurs Rapides",
+      "desc": "Tapez ces commandes dans la recherche pour exécuter des routines multi-actions :"
     }
   },
   "shortcut_editor": {

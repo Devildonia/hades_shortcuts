@@ -98,6 +98,13 @@ Pure mathematical acoustic synthesis using modern **Web Audio API** nodes (`Audi
 ### 📥 Universal Browser Bookmarks Importer
 - Import `bookmarks.html` exported from **Google Chrome, Mozilla Firefox, Microsoft Edge, Brave, or Safari** with one click.
 
+### ⚡ Contextual Multi-Action Macros (`!work`, `!chill`, `!3d`, `!social`)
+Execute complete productivity routines with a single compound command:
+- **`!work`**: Launches your dev apps (**GitHub + Claude + ChatGPT**), starts 25-min Pomodoro timer, and turns on 🌧️ Cyber Rain focus audio.
+- **`!chill`**: Opens **YouTube + Suno**, resets timers, and engages 🌊 Cosmic Waves ambient sound.
+- **`!3d`**: Launches **Meshy AI + Tripo 3D + Civitai** with 🚀 Deep Space Brown Noise.
+- **`!social`**: Launches **Discord + X (Twitter) + Instagram** in background tabs.
+
 ### 📱 PWA & Offline Support
 - Fully installable Progressive Web App (`manifest.json` + `sw.js`) for a distraction-free standalone desktop experience on Windows, macOS, and Linux.
 
@@ -107,6 +114,10 @@ Pure mathematical acoustic synthesis using modern **Web Audio API** nodes (`Audi
 
 | Command | Action / Destination Service | Example |
 | :--- | :--- | :--- |
+| `!work` | Routine: Open Dev Apps + Start Pomodoro + Rain Audio | `!work` |
+| `!chill` | Routine: Open Media + Cosmic Waves Audio | `!chill` |
+| `!3d` | Routine: Open 3D AI Apps + Space Audio | `!3d` |
+| `!social` | Routine: Open Community & Social Apps | `!social` |
 | `!uuid` | Generate UUIDv4 with 1-click copy | `!uuid` |
 | `!color <val>` | Color converter & visual preview swatch | `!color #00f2fe` or `!color rgb(0,242,254)` |
 | `!b64 <text>` | Real-time UTF-8 Base64 Encoder | `!b64 Cyberpunk 2077` |
@@ -190,6 +201,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── state.js             # Reactive central state & localStorage sync
 │   ├── audio.js             # Procedural Web Audio API synthesizer (0 KB)
 │   ├── ambient-audio.js     # Procedural focus ambient soundscapes (0 KB)
+│   ├── macros.js            # Compound multi-action macro & routine engine
 │   ├── bangs.js             # Bang commands parser & safe math calculator
 │   ├── devtools.js          # Built-in DevTools Omnibox & QR Code Generator
 │   ├── postits.js           # Floating Glass Post-its manager

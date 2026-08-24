@@ -28,10 +28,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=5.1.0">
+    <link rel="stylesheet" href="style.css?v=5.2.0">
 
     <!-- Master Script Module -->
-    <script defer src="js/bundle.js?v=5.1.0"></script>
+    <script defer src="js/bundle.js?v=5.2.0"></script>
 </head>
 <body>
 
@@ -689,6 +689,7 @@
                 <button class="settings-tab-btn active" data-tab="appearance" data-i18n="settings_hub.tabs.appearance">Apariencia</button>
                 <button class="settings-tab-btn" data-tab="language" data-i18n="settings_hub.tabs.language">Idioma</button>
                 <button class="settings-tab-btn" data-tab="layout" data-i18n="settings_hub.tabs.layout">Diseño & Atajos</button>
+                <button class="settings-tab-btn" data-tab="macros" data-i18n="settings_hub.tabs.macros">Macros & Rutinas</button>
                 <button class="settings-tab-btn" data-tab="backup" data-i18n="settings_hub.tabs.backup">Copia de Seguridad</button>
             </div>
 
@@ -827,6 +828,48 @@
                     <h4 data-i18n="settings_hub.layout.reset_layout_title">Restablecer Diseño Original</h4>
                     <p class="settings-hint" data-i18n="settings_hub.layout.reset_layout_desc">¿Has modificado mucho el tablero? Vuelve a empezar de cero con la disposición y accesos directos originales de fábrica.</p>
                     <button class="settings-action-btn secondary" id="layout-reset-defaults-btn" data-i18n="settings_hub.layout.reset_layout_btn">🔄 Restaurar Diseño de Fábrica</button>
+                </div>
+            </div>
+
+            <!-- Tab: Macros & Contextual Routines -->
+            <div class="settings-tab-pane" id="tab-pane-macros">
+                <div class="settings-section">
+                    <h4 data-i18n="settings_hub.macros.title">Rutinas & Disparadores Rápidos</h4>
+                    <p class="settings-hint" data-i18n="settings_hub.macros.desc">Escribe estos comandos en la barra de búsqueda para ejecutar múltiples acciones en 1 segundo:</p>
+                    <div class="macros-list-container" id="macros-list-container">
+                        <div class="macro-item-card">
+                            <div class="macro-item-header">
+                                <span class="macro-badge">!work</span>
+                                <strong>Modo Trabajo & Dev</strong>
+                            </div>
+                            <p class="macro-item-desc">Abre GitHub + Claude + ChatGPT, inicia Pomodoro 25m y activa sonido de lluvia.</p>
+                            <button class="settings-action-btn secondary macro-run-btn" data-macro="!work">▶ Probar</button>
+                        </div>
+                        <div class="macro-item-card">
+                            <div class="macro-item-header">
+                                <span class="macro-badge">!chill</span>
+                                <strong>Modo Relax & Audio</strong>
+                            </div>
+                            <p class="macro-item-desc">Abre YouTube y Suno, reinicia el temporizador y activa oleaje cósmico.</p>
+                            <button class="settings-action-btn secondary macro-run-btn" data-macro="!chill">▶ Probar</button>
+                        </div>
+                        <div class="macro-item-card">
+                            <div class="macro-item-header">
+                                <span class="macro-badge">!3d</span>
+                                <strong>Modo 3D & Generación IA</strong>
+                            </div>
+                            <p class="macro-item-desc">Abre Meshy AI, Tripo 3D y Civitai con sonido de espacio profundo.</p>
+                            <button class="settings-action-btn secondary macro-run-btn" data-macro="!3d">▶ Probar</button>
+                        </div>
+                        <div class="macro-item-card">
+                            <div class="macro-item-header">
+                                <span class="macro-badge">!social</span>
+                                <strong>Modo Comunidad & Redes</strong>
+                            </div>
+                            <p class="macro-item-desc">Abre Discord, X (Twitter) e Instagram en pestañas secundarias.</p>
+                            <button class="settings-action-btn secondary macro-run-btn" data-macro="!social">▶ Probar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -139,7 +139,8 @@
       "language": "Sprache",
       "weather": "Wetter",
       "layout": "Layout & Verknüpfungen",
-      "backup": "Sicherung & Wiederherstellung"
+      "backup": "Sicherung & Wiederherstellung",
+      "macros": "Makros & Routinen"
     },
     "appearance": {
       "themes_label": "Visuelles Design",
@@ -180,6 +181,10 @@
     "profile": {
       "title": "Benutzerprofil",
       "desc": "Passen Sie Ihren Namen oder Alias für das Command Center und die Begrüßungen an:"
+    },
+    "macros": {
+      "title": "Routinen & Schnell-Trigger",
+      "desc": "Geben Sie diese Befehle in die Suchleiste ein, um Multi-Aktions-Routinen auszuführen:"
     }
   },
   "shortcut_editor": {

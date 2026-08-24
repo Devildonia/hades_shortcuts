@@ -1,3 +1,4 @@
+import { macroEngine } from './macros.js';
 // js/search.js - Multi-Engine Omnibox, Category Filters, Bangs & DevTools
 
 import { state } from './state.js';
@@ -84,6 +85,18 @@ export class SearchEngineManager {
         const categories = document.querySelectorAll('.categoria');
         let totalVisible = 0;
 
+                // Check Macro Triggers
+        const macro = macroEngine.getMacro(query);
+        if (macro) {
+            if (this.calcBanner) {
+                this.calcBanner.innerHTML = `<div class="devtool-result-row"><span>⚡ <strong>Macro detectada:</strong> ${macro.icon} ${macro.name}</span> <button class="devtool-action-btn" id="run-macro-trigger">🚀 Ejecutar Rutina</button></div>`;
+                this.calcBanner.classList.remove('hidden');
+                const trigger = document.getElementById('run-macro-trigger');
+                if (trigger) trigger.onclick = () => macroEngine.executeMacro(query);
+            }
+            return;
+        }
+
         // 1. Check DevTools Omnibox Banner (case-sensitive)
         const handledByDevTools = devTools.renderBanner(rawQuery, this.calcBanner);
         if (handledByDevTools) {
@@ -144,6 +157,12 @@ export class SearchEngineManager {
     executeSearch(query) {
         const trimmed = query.trim();
         if (!trimmed) return;
+
+                // Check Macro Query
+        if (macroEngine.getMacro(trimmed)) {
+            macroEngine.executeMacro(trimmed);
+            return;
+        }
 
         // Check Bang Query
         const bangInfo = parseBangQuery(trimmed);
