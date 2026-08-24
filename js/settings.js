@@ -108,7 +108,6 @@ export class SettingsHub {
             this.editModeToggle.addEventListener('change', (e) => {
                 soundFx.play('click');
                 state.setEditMode(e.target.checked);
-                this.renderer.render();
             });
         }
 

@@ -6,7 +6,7 @@ import { soundFx } from './audio.js';
 
 export class DashboardRenderer {
     constructor() {
-        this.gridContainer = document.getElementById('shortcuts-grid');
+        this.gridContainer = document.getElementById('zone-grid') || document.getElementById('shortcuts-grid');
         this.smartTooltip = document.getElementById('smart-tooltip');
         this.tooltipTitle = document.getElementById('tooltip-title');
         this.tooltipDomain = document.getElementById('tooltip-domain');
@@ -34,9 +34,10 @@ export class DashboardRenderer {
             section.className = `categoria ${isFeatured ? 'categoria-featured' : ''}`;
             section.setAttribute('data-group', cat.group);
             section.setAttribute('data-cat-id', cat.id);
+            section.setAttribute('data-tile-id', `tile-${cat.id}`);
 
             // Drag handle for Edit Mode
-            const dragHandle = state.editMode ? `<span class="cat-drag-handle" title="Arrastrar cajón">⠿</span>` : '';
+            const dragHandle = '';
             const catTitle = t.categories[cat.id] || cat.defaultTitle;
             const badgeText = `${shortcutsInCat.length} ${t.badges.apps}`;
 

@@ -219,7 +219,8 @@
     "pomodoro_reset": "Réinitialiser",
     "toggle_widgets_title": "Mini-Widgets Bento",
     "toggle_scratchpad": "Afficher le Bloc-notes",
-    "toggle_pomodoro": "Afficher le Minuteur Pomodoro"
+    "toggle_pomodoro": "Afficher le Minuteur Pomodoro",
+    "scratchpad_pin": "Épingler Post-it"
   },
   "audio": {
     "preset_label": "Effet Sonore Haptique",

@@ -14,9 +14,9 @@ export const DEFAULT_CATEGORIES = [
 
 export const DEFAULT_SHORTCUTS = [
     // 3D
-    { id: 'meshy', title: 'Meshy AI', url: 'https://www.meshy.ai/', icon: 'iconos/meshy.webp', category: 'cat_3d', tags: '3d, ai, modelado, mesh' },
-    { id: 'tripo3d', title: 'Tripo 3D', url: 'https://www.tripo3d.ai/', icon: 'iconos/tripo3d.webp', category: 'cat_3d', tags: '3d, ai, studio, mesh' },
-    { id: 'ludoai', title: 'Ludo.ai', url: 'https://ludo.ai/', icon: 'iconos/ludoai.webp', category: 'cat_3d', tags: '3d, gamedev, ai, research' },
+    { id: 'meshy', title: 'Meshy AI', url: 'https://www.meshy.ai/discover', icon: 'iconos/meshy.webp', category: 'cat_3d', tags: '3d, ai, modelado, mesh' },
+    { id: 'tripo3d', title: 'Tripo 3D', url: 'https://studio.tripo3d.ai/', icon: 'iconos/tripo3d.webp', category: 'cat_3d', tags: '3d, ai, studio, mesh' },
+    { id: 'ludoai', title: 'Ludo.ai', url: 'https://ludo.ai', icon: 'iconos/ludoai.webp', category: 'cat_3d', tags: '3d, gamedev, ai, research' },
     // AI
     { id: 'chatgpt', title: 'ChatGPT', url: 'https://chatgpt.com/', icon: 'iconos/chatgpt.webp', category: 'cat_ai', tags: 'ai, openai, gpt4, chat' },
     { id: 'deepseek', title: 'DeepSeek', url: 'https://chat.deepseek.com/', icon: 'iconos/deepseek.webp', category: 'cat_ai', tags: 'ai, code, reasoning, llm' },
@@ -30,25 +30,23 @@ export const DEFAULT_SHORTCUTS = [
     { id: 'seaart', title: 'Sea Art', url: 'https://www.seaart.ai/', icon: 'iconos/seaartai.webp', category: 'cat_art', tags: 'arte, ai, renderer, studio' },
     { id: 'shadertoy', title: 'Shadertoy', url: 'https://www.shadertoy.com/', icon: 'iconos/shadertoy.webp', category: 'cat_art', tags: 'glsl, shader, webgl, code' },
     // Audio
-    { id: 'minimax', title: 'Minimax', url: 'https://intl.minimaxi.com/', icon: 'iconos/MiniMax.webp', category: 'cat_audio', tags: 'audio, voice, tts, clone' },
-    { id: 'suno', title: 'Suno', url: 'https://suno.com/', icon: 'iconos/suno.webp', category: 'cat_audio', tags: 'audio, music, ai, songs' },
-    { id: 'elevenlabs', title: 'Eleven Labs', url: 'https://elevenlabs.io/', icon: 'iconos/elevenlabs.webp', category: 'cat_audio', tags: 'audio, voice, tts, speech' },
+    { id: 'minimax', title: 'Minimax', url: 'https://www.minimax.io/audio/voices', icon: 'iconos/MiniMax.webp', category: 'cat_audio', tags: 'audio, voice, tts, clone' },
+    { id: 'suno', title: 'Suno', url: 'https://app.suno.ai/', icon: 'iconos/suno.webp', category: 'cat_audio', tags: 'audio, music, ai, songs' },
+    { id: 'elevenlabs', title: 'Eleven Labs', url: 'https://elevenlabs.io/es', icon: 'iconos/elevenlabs.webp', category: 'cat_audio', tags: 'audio, voice, tts, speech' },
     // Google
-    { id: 'google', title: 'Google', url: 'https://www.google.com/', icon: 'iconos/google.webp', category: 'cat_google', tags: 'search, web, google' },
+    { id: 'google', title: 'Google', url: 'https://www.google.es/', icon: 'iconos/google.webp', category: 'cat_google', tags: 'search, web, google' },
     { id: 'gmail', title: 'Gmail', url: 'https://mail.google.com/', icon: 'iconos/gmail.webp', category: 'cat_google', tags: 'email, mail, google' },
-    { id: 'googledrive', title: 'Google Drive', url: 'https://drive.google.com/', icon: 'iconos/googledrive.webp', category: 'cat_google', tags: 'cloud, storage, files' },
+    { id: 'googledrive', title: 'Google Drive', url: 'https://workspace.google.com/intl/es/products/drive/', icon: 'iconos/googledrive.webp', category: 'cat_google', tags: 'cloud, storage, files' },
     { id: 'gemini', title: 'Gemini', url: 'https://gemini.google.com/', icon: 'iconos/gemini.webp', category: 'cat_google', tags: 'ai, google, gemini, multimodal' },
     { id: 'googleaistudio', title: 'AI Studio', url: 'https://aistudio.google.com/', icon: 'iconos/googleaistudio.webp', category: 'cat_google', tags: 'ai, api, gemini, dev' },
     { id: 'notebooklm', title: 'NotebookLM', url: 'https://notebooklm.google.com/', icon: 'iconos/notebooklm.webp', category: 'cat_google', tags: 'notes, ai, audio, summary' },
-    // Tools
-    { id: 'birme', title: 'Birme', url: 'https://www.birme.net/', icon: 'iconos/birme.webp', category: 'cat_tools', tags: 'tools, images, resize, batch' },
-    { id: 'photoroom', title: 'Photoroom', url: 'https://www.photoroom.com/', icon: 'iconos/photoroom.webp', category: 'cat_tools', tags: 'tools, remove bg, photo' },
-    { id: 'iloveimg', title: 'iLoveIMG', url: 'https://www.iloveimg.com/es', icon: 'iconos/iloveimg.webp', category: 'cat_tools', tags: 'tools, images, compress, crop' },
-    { id: 'tinypng', title: 'TinyPNG', url: 'https://tinypng.com/', icon: 'iconos/tinypng.webp', category: 'cat_tools', tags: 'tools, images, compress, webp' },
-    { id: 'ezgif', title: 'EZGIF', url: 'https://ezgif.com/', icon: 'iconos/ezgif.webp', category: 'cat_tools', tags: 'tools, gif, video, convert' },
-    { id: 'svgminify', title: 'SVG Minify', url: 'https://www.svgminify.com/', icon: 'iconos/svgminify.webp', category: 'cat_tools', tags: 'tools, svg, code, optimize' },
-    { id: 'vectorizer', title: 'Vectorizer AI', url: 'https://vectorizer.ai/', icon: 'iconos/vectorizer.webp', category: 'cat_tools', tags: 'tools, vector, svg, convert' },
-    { id: 'github', title: 'GitHub', url: 'https://github.com/', icon: 'iconos/github.webp', category: 'cat_tools', tags: 'code, git, dev, repo' },
+    // Tools & Dev (Original 6)
+    { id: 'birme', title: 'Birme', url: 'https://birme.net', icon: 'iconos/birme.webp', category: 'cat_tools', tags: 'birme redimensionar imagenes recortar fotos lote' },
+    { id: 'photoroom', title: 'Photoroom', url: 'https://www.photoroom.com/es/herramientas/eliminador-de-fondos', icon: 'iconos/photoroom.webp', category: 'cat_tools', tags: 'photoroom fondo quitar transparent cutout' },
+    { id: 'github', title: 'GitHub', url: 'https://github.com/Devildonia', icon: 'iconos/github.webp', category: 'cat_tools', tags: 'github codigo repositorios git devildonia dev' },
+    { id: 'itchio', title: 'itch.io', url: 'https://itch.io/', icon: 'iconos/itchio.webp', category: 'cat_tools', tags: 'itchio juegos assets indie sprites dev gamedev' },
+    { id: 'optimizeglb', title: 'OptimizeGLB', url: 'https://optimizeglb.com/dashboard', icon: 'iconos/OptimizeGLB.webp', category: 'cat_tools', tags: 'optimizeglb glb gltf 3d optimizador compresion dev 3dmodel' },
+    { id: 'translate', title: 'Traductor', url: 'https://translate.google.com/', icon: 'iconos/translate.webp', category: 'cat_tools', tags: 'traductor google translate idiomas' },
     // Social
     { id: 'instagram', title: 'Instagram', url: 'https://www.instagram.com/', icon: 'iconos/instagram.webp', category: 'cat_social', tags: 'social, fotos, meta, feed' },
     { id: 'facebook', title: 'Facebook', url: 'https://www.facebook.com/', icon: 'iconos/facebook.webp', category: 'cat_social', tags: 'social, amigos, meta' },
@@ -82,6 +80,7 @@ export class AppState {
         this.activeFilter = this.getItem('active_pill_filter', 'all');
         this.searchEngine = this.getItem('app_search_engine', 'google');
         this.editMode = false;
+        this.layoutMatrix = this.loadLayoutMatrix();
         this.listeners = new Map();
     }
 
@@ -110,19 +109,11 @@ export class AppState {
             const saved = this.getItem('custom_shortcuts_v2', null);
             if (saved) {
                 const list = JSON.parse(saved);
-                let modified = false;
-                list.forEach(s => {
-                    if (s.id === 'seaverse' && (s.url === 'https://seaverse.net/' || s.url === 'https://seaverse.net')) {
-                        s.url = 'https://seaverse.ai/';
-                        modified = true;
-                    }
-                    if (s.id === 'civitai' && (!s.url.includes('civitai.com'))) {
-                        s.url = 'https://civitai.com/';
-                        modified = true;
-                    }
-                });
-                if (modified) {
-                    this.setItem('custom_shortcuts_v2', JSON.stringify(list));
+                // Clean invalid tool shortcuts regression
+                const hasInvalidIcons = list.some(s => s.id === 'iloveimg' || s.id === 'tinypng' || s.id === 'ezgif' || s.id === 'svgminify' || s.id === 'vectorizer');
+                if (hasInvalidIcons) {
+                    this.setItem('custom_shortcuts_v2', JSON.stringify(DEFAULT_SHORTCUTS));
+                    return [...DEFAULT_SHORTCUTS];
                 }
                 return list;
             }
@@ -139,6 +130,20 @@ export class AppState {
             }
         } catch (e) {}
         return [...DEFAULT_CATEGORIES];
+    }
+
+    loadLayoutMatrix() {
+        try {
+            const saved = this.getItem('dashboard_layout_v3', null);
+            if (saved) return JSON.parse(saved);
+        } catch (e) {}
+        return null;
+    }
+
+    saveLayoutMatrix(matrix) {
+        this.layoutMatrix = matrix;
+        this.setItem('dashboard_layout_v3', JSON.stringify(matrix));
+        this.emit('layout:changed', matrix);
     }
 
     detectLanguage() {
@@ -198,6 +203,9 @@ export class AppState {
     resetToDefaults() {
         this.removeItem('custom_shortcuts_v2');
         this.removeItem('category_order_v2');
+        this.removeItem('dashboard_layout_v3');
+        this.removeItem('canvas_positions_v1');
+        this.layoutMatrix = null;
         this.shortcuts = [...DEFAULT_SHORTCUTS];
         this.categories = [...DEFAULT_CATEGORIES];
         this.emit('shortcuts:changed', this.shortcuts);

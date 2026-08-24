@@ -18,9 +18,9 @@ const DEFAULT_CATEGORIES = [
 
 const DEFAULT_SHORTCUTS = [
     // 3D
-    { id: 'meshy', title: 'Meshy AI', url: 'https://www.meshy.ai/', icon: 'iconos/meshy.webp', category: 'cat_3d', tags: '3d, ai, modelado, mesh' },
-    { id: 'tripo3d', title: 'Tripo 3D', url: 'https://www.tripo3d.ai/', icon: 'iconos/tripo3d.webp', category: 'cat_3d', tags: '3d, ai, studio, mesh' },
-    { id: 'ludoai', title: 'Ludo.ai', url: 'https://ludo.ai/', icon: 'iconos/ludoai.webp', category: 'cat_3d', tags: '3d, gamedev, ai, research' },
+    { id: 'meshy', title: 'Meshy AI', url: 'https://www.meshy.ai/discover', icon: 'iconos/meshy.webp', category: 'cat_3d', tags: '3d, ai, modelado, mesh' },
+    { id: 'tripo3d', title: 'Tripo 3D', url: 'https://studio.tripo3d.ai/', icon: 'iconos/tripo3d.webp', category: 'cat_3d', tags: '3d, ai, studio, mesh' },
+    { id: 'ludoai', title: 'Ludo.ai', url: 'https://ludo.ai', icon: 'iconos/ludoai.webp', category: 'cat_3d', tags: '3d, gamedev, ai, research' },
     // AI
     { id: 'chatgpt', title: 'ChatGPT', url: 'https://chatgpt.com/', icon: 'iconos/chatgpt.webp', category: 'cat_ai', tags: 'ai, openai, gpt4, chat' },
     { id: 'deepseek', title: 'DeepSeek', url: 'https://chat.deepseek.com/', icon: 'iconos/deepseek.webp', category: 'cat_ai', tags: 'ai, code, reasoning, llm' },
@@ -34,25 +34,23 @@ const DEFAULT_SHORTCUTS = [
     { id: 'seaart', title: 'Sea Art', url: 'https://www.seaart.ai/', icon: 'iconos/seaartai.webp', category: 'cat_art', tags: 'arte, ai, renderer, studio' },
     { id: 'shadertoy', title: 'Shadertoy', url: 'https://www.shadertoy.com/', icon: 'iconos/shadertoy.webp', category: 'cat_art', tags: 'glsl, shader, webgl, code' },
     // Audio
-    { id: 'minimax', title: 'Minimax', url: 'https://intl.minimaxi.com/', icon: 'iconos/MiniMax.webp', category: 'cat_audio', tags: 'audio, voice, tts, clone' },
-    { id: 'suno', title: 'Suno', url: 'https://suno.com/', icon: 'iconos/suno.webp', category: 'cat_audio', tags: 'audio, music, ai, songs' },
-    { id: 'elevenlabs', title: 'Eleven Labs', url: 'https://elevenlabs.io/', icon: 'iconos/elevenlabs.webp', category: 'cat_audio', tags: 'audio, voice, tts, speech' },
+    { id: 'minimax', title: 'Minimax', url: 'https://www.minimax.io/audio/voices', icon: 'iconos/MiniMax.webp', category: 'cat_audio', tags: 'audio, voice, tts, clone' },
+    { id: 'suno', title: 'Suno', url: 'https://app.suno.ai/', icon: 'iconos/suno.webp', category: 'cat_audio', tags: 'audio, music, ai, songs' },
+    { id: 'elevenlabs', title: 'Eleven Labs', url: 'https://elevenlabs.io/es', icon: 'iconos/elevenlabs.webp', category: 'cat_audio', tags: 'audio, voice, tts, speech' },
     // Google
-    { id: 'google', title: 'Google', url: 'https://www.google.com/', icon: 'iconos/google.webp', category: 'cat_google', tags: 'search, web, google' },
+    { id: 'google', title: 'Google', url: 'https://www.google.es/', icon: 'iconos/google.webp', category: 'cat_google', tags: 'search, web, google' },
     { id: 'gmail', title: 'Gmail', url: 'https://mail.google.com/', icon: 'iconos/gmail.webp', category: 'cat_google', tags: 'email, mail, google' },
-    { id: 'googledrive', title: 'Google Drive', url: 'https://drive.google.com/', icon: 'iconos/googledrive.webp', category: 'cat_google', tags: 'cloud, storage, files' },
+    { id: 'googledrive', title: 'Google Drive', url: 'https://workspace.google.com/intl/es/products/drive/', icon: 'iconos/googledrive.webp', category: 'cat_google', tags: 'cloud, storage, files' },
     { id: 'gemini', title: 'Gemini', url: 'https://gemini.google.com/', icon: 'iconos/gemini.webp', category: 'cat_google', tags: 'ai, google, gemini, multimodal' },
     { id: 'googleaistudio', title: 'AI Studio', url: 'https://aistudio.google.com/', icon: 'iconos/googleaistudio.webp', category: 'cat_google', tags: 'ai, api, gemini, dev' },
     { id: 'notebooklm', title: 'NotebookLM', url: 'https://notebooklm.google.com/', icon: 'iconos/notebooklm.webp', category: 'cat_google', tags: 'notes, ai, audio, summary' },
-    // Tools
-    { id: 'birme', title: 'Birme', url: 'https://www.birme.net/', icon: 'iconos/birme.webp', category: 'cat_tools', tags: 'tools, images, resize, batch' },
-    { id: 'photoroom', title: 'Photoroom', url: 'https://www.photoroom.com/', icon: 'iconos/photoroom.webp', category: 'cat_tools', tags: 'tools, remove bg, photo' },
-    { id: 'iloveimg', title: 'iLoveIMG', url: 'https://www.iloveimg.com/es', icon: 'iconos/iloveimg.webp', category: 'cat_tools', tags: 'tools, images, compress, crop' },
-    { id: 'tinypng', title: 'TinyPNG', url: 'https://tinypng.com/', icon: 'iconos/tinypng.webp', category: 'cat_tools', tags: 'tools, images, compress, webp' },
-    { id: 'ezgif', title: 'EZGIF', url: 'https://ezgif.com/', icon: 'iconos/ezgif.webp', category: 'cat_tools', tags: 'tools, gif, video, convert' },
-    { id: 'svgminify', title: 'SVG Minify', url: 'https://www.svgminify.com/', icon: 'iconos/svgminify.webp', category: 'cat_tools', tags: 'tools, svg, code, optimize' },
-    { id: 'vectorizer', title: 'Vectorizer AI', url: 'https://vectorizer.ai/', icon: 'iconos/vectorizer.webp', category: 'cat_tools', tags: 'tools, vector, svg, convert' },
-    { id: 'github', title: 'GitHub', url: 'https://github.com/', icon: 'iconos/github.webp', category: 'cat_tools', tags: 'code, git, dev, repo' },
+    // Tools & Dev (Original 6)
+    { id: 'birme', title: 'Birme', url: 'https://birme.net', icon: 'iconos/birme.webp', category: 'cat_tools', tags: 'birme redimensionar imagenes recortar fotos lote' },
+    { id: 'photoroom', title: 'Photoroom', url: 'https://www.photoroom.com/es/herramientas/eliminador-de-fondos', icon: 'iconos/photoroom.webp', category: 'cat_tools', tags: 'photoroom fondo quitar transparent cutout' },
+    { id: 'github', title: 'GitHub', url: 'https://github.com/Devildonia', icon: 'iconos/github.webp', category: 'cat_tools', tags: 'github codigo repositorios git devildonia dev' },
+    { id: 'itchio', title: 'itch.io', url: 'https://itch.io/', icon: 'iconos/itchio.webp', category: 'cat_tools', tags: 'itchio juegos assets indie sprites dev gamedev' },
+    { id: 'optimizeglb', title: 'OptimizeGLB', url: 'https://optimizeglb.com/dashboard', icon: 'iconos/OptimizeGLB.webp', category: 'cat_tools', tags: 'optimizeglb glb gltf 3d optimizador compresion dev 3dmodel' },
+    { id: 'translate', title: 'Traductor', url: 'https://translate.google.com/', icon: 'iconos/translate.webp', category: 'cat_tools', tags: 'traductor google translate idiomas' },
     // Social
     { id: 'instagram', title: 'Instagram', url: 'https://www.instagram.com/', icon: 'iconos/instagram.webp', category: 'cat_social', tags: 'social, fotos, meta, feed' },
     { id: 'facebook', title: 'Facebook', url: 'https://www.facebook.com/', icon: 'iconos/facebook.webp', category: 'cat_social', tags: 'social, amigos, meta' },
@@ -86,6 +84,7 @@ class AppState {
         this.activeFilter = this.getItem('active_pill_filter', 'all');
         this.searchEngine = this.getItem('app_search_engine', 'google');
         this.editMode = false;
+        this.layoutMatrix = this.loadLayoutMatrix();
         this.listeners = new Map();
     }
 
@@ -114,19 +113,11 @@ class AppState {
             const saved = this.getItem('custom_shortcuts_v2', null);
             if (saved) {
                 const list = JSON.parse(saved);
-                let modified = false;
-                list.forEach(s => {
-                    if (s.id === 'seaverse' && (s.url === 'https://seaverse.net/' || s.url === 'https://seaverse.net')) {
-                        s.url = 'https://seaverse.ai/';
-                        modified = true;
-                    }
-                    if (s.id === 'civitai' && (!s.url.includes('civitai.com'))) {
-                        s.url = 'https://civitai.com/';
-                        modified = true;
-                    }
-                });
-                if (modified) {
-                    this.setItem('custom_shortcuts_v2', JSON.stringify(list));
+                // Clean invalid tool shortcuts regression
+                const hasInvalidIcons = list.some(s => s.id === 'iloveimg' || s.id === 'tinypng' || s.id === 'ezgif' || s.id === 'svgminify' || s.id === 'vectorizer');
+                if (hasInvalidIcons) {
+                    this.setItem('custom_shortcuts_v2', JSON.stringify(DEFAULT_SHORTCUTS));
+                    return [...DEFAULT_SHORTCUTS];
                 }
                 return list;
             }
@@ -143,6 +134,20 @@ class AppState {
             }
         } catch (e) {}
         return [...DEFAULT_CATEGORIES];
+    }
+
+    loadLayoutMatrix() {
+        try {
+            const saved = this.getItem('dashboard_layout_v3', null);
+            if (saved) return JSON.parse(saved);
+        } catch (e) {}
+        return null;
+    }
+
+    saveLayoutMatrix(matrix) {
+        this.layoutMatrix = matrix;
+        this.setItem('dashboard_layout_v3', JSON.stringify(matrix));
+        this.emit('layout:changed', matrix);
     }
 
     detectLanguage() {
@@ -202,6 +207,9 @@ class AppState {
     resetToDefaults() {
         this.removeItem('custom_shortcuts_v2');
         this.removeItem('category_order_v2');
+        this.removeItem('dashboard_layout_v3');
+        this.removeItem('canvas_positions_v1');
+        this.layoutMatrix = null;
         this.shortcuts = [...DEFAULT_SHORTCUTS];
         this.categories = [...DEFAULT_CATEGORIES];
         this.emit('shortcuts:changed', this.shortcuts);
@@ -231,12 +239,7 @@ const escapeHtml = (str) => {
 // js/i18n.js - Internationalization Engine
 
 
-const i18nDictionaries = {
-    es: {"brand_greeting": "Bienvenido al Centro de Mando", "greetings": {"morning": "¡Buenos días, HaDeS!", "afternoon": "¡Buenas tardes, HaDeS!", "night": "¡Buenas noches, HaDeS!"}, "controls": {"sound_title": "Efectos de sonido (Activado/Desactivado)", "theme_title": "Cambiar Tema Visual", "lang_title": "Cambiar Idioma", "cmdk_btn": "Buscar", "cmdk_badge": "Ctrl K"}, "search": {"placeholder": "Buscar con {engine} o filtrar atajos...", "clear": "Limpiar búsqueda"}, "filters": {"all": "Todos", "ia_creativa": "IA & 3D", "arte_media": "Arte & Multimedia", "productividad": "Google & Herramientas", "social_compras": "Social & Compras"}, "categories": {"cat_3d": "3D Modeling & AI", "cat_ai": "Inteligencia Artificial", "cat_art": "Arte Digital & Modelos", "cat_audio": "Generación de Audio", "cat_google": "Google Workspace & AI", "cat_tools": "Herramientas & Dev", "cat_social": "Comunidad & Redes", "cat_shopping": "Compras & Pagos", "cat_video": "Vídeo & Generación IA"}, "badges": {"apps": "apps"}, "shortcuts": {"meshy": "Generación de modelos 3D y texturas con IA a partir de texto o imagen", "tripo3d": "Estudio rápido para generar modelos 3D listos para producción", "ludoai": "Plataforma de IA para ideación, análisis de mercado e investigación de videojuegos", "chatgpt": "Asistente conversacional avanzado y razonamiento con GPT-4o", "deepseek": "Modelo de razonamiento profundo y generación de código de alta precisión", "claude": "Modelo de IA de Anthropic con gran ventana de contexto y análisis de código", "qwen": "Modelos fundacionales y chat de Alibaba Cloud (Qwen 2.5)", "seaverse": "Herramientas y generadores de IA para mundos virtuales y multimedia", "civitai": "Comunidad y repositorio de modelos, Checkpoints y LoRAs para Stable Diffusion", "shakker": "Plataforma de generación y mezcla de imágenes de alta definición con IA", "tensorart": "Generador online de arte y modelos con créditos diarios gratuitos", "seaart": "Estudio de creación y renderizado artístico asistido por IA", "shadertoy": "Plataforma para programar, visualizar y compartir shaders GLSL en WebGL", "minimax": "Generación y clonación de voces ultrarrealistas con IA", "suno": "Composición y generación de canciones completas con música y letra por IA", "elevenlabs": "Síntesis de voz líder en el sector y traducción de audio", "google": "Motor de búsqueda web global y servicios integrados", "gmail": "Servicio de correo electrónico seguro y sincronizado", "googledrive": "Almacenamiento en la nube y gestión de archivos colaborativa", "gemini": "Modelo multimodal de Google integrado en su ecosistema", "googleaistudio": "Entorno de desarrollo y prototipado rápido con APIs de Gemini", "notebooklm": "Cuaderno inteligente de notas y resúmenes de audio con IA", "birme": "Redimensionador y recortador por lotes flexible de imágenes", "photoroom": "Eliminador de fondos profesional y edición rápida de fotos", "github": "Plataforma de desarrollo colaborativo y repositorios Git", "itchio": "Mercado indie de videojuegos, assets, música y sprites", "optimizeglb": "Compresión Draco y optimización de archivos 3D GLB/glTF", "translate": "Traducción instantánea de textos y páginas web en múltiples idiomas", "instagram": "Red social para compartir fotos, vídeos, historias y reels", "facebook": "Red social para conectar con amigos, grupos y comunidades", "x": "Red de microblogging para noticias y tendencias en tiempo real", "tiktok": "Plataforma de vídeos cortos en formato vertical", "threads": "Plataforma de microblogging y debate vinculada a Instagram", "patreon": "Membresías y suscripciones para creadores de contenido", "discord": "Servidores de chat de texto, voz y vídeo para comunidades", "linkedin": "Red social profesional para networking y empleo", "exophase": "Seguimiento de logros, trofeos y estadísticas de perfiles gaming", "amazon": "Tienda online global de productos con entrega rápida", "aliexpress": "Plataforma de compras online con variedad y precios de fábrica", "pccomponentes": "Tienda especializada en informática, hardware y tecnología", "paypal": "Pasarela de pagos en línea segura y transferencias", "wallapop": "Plataforma de compraventa de productos de segunda mano", "youtube": "Plataforma de vídeo en streaming, tutoriales y directos", "kling": "Generación de vídeo cinemático con movimiento realista por IA", "hedra": "Creación de avatares hablantes y personajes animados con IA"}, "no_results": {"title": "No se encontraron accesos directos", "desc": "Prueba con otros términos o busca directamente en la web pulsando Enter."}, "weather": {"title": "Configurar Ciudad del Clima", "desc": "Escribe el nombre de tu ciudad para ver el pronóstico meteorológico en vivo:", "input_placeholder": "Ej: Vigo, Madrid, Barcelona, Valencia...", "search_btn": "Buscar", "auto_btn": "Detectar automáticamente por IP", "loading": "Cargando...", "offline": "Sin conexión", "conditions": {"clear": "Despejado", "mostly_clear": "Mayormente despejado", "partly_cloudy": "Parcialmente nublado", "cloudy": "Nublado", "fog": "Niebla", "drizzle": "Llovizna ligera", "rain": "Lluvia", "heavy_rain": "Lluvia intensa", "snow": "Nieve", "showers": "Chubascos", "snow_showers": "Chubascos de nieve", "thunderstorm": "Tormenta", "hail_thunderstorm": "Tormenta con granizo"}}, "cmdk": {"placeholder": "Buscar atajo, herramienta o comando rápido...", "direct_search_prefix": "Buscar en {engine}:", "direct_search_cat": "Búsqueda Web Directa", "action_open": "Abrir", "action_search": "Buscar", "tip_nav": "Navegar", "tip_open": "Abrir enlace", "tip_close": "Cerrar"}, "user_modal": {"title": "Cambiar Nombre de Usuario", "desc": "Personaliza el nombre que aparece en el título y en los saludos de tu Centro de Mando:", "input_placeholder": "Tu nombre o alias...", "save_btn": "Guardar", "preview_label": "Vista previa:", "tooltip_title": "Haz clic para cambiar tu nombre de usuario", "doc_title_suffix": "· Centro de Mando"}, "settings_hub": {"title": "Ajustes del Centro de Mando", "btn_title": "Configuración y Personalización", "tabs": {"appearance": "Apariencia", "language": "Idioma", "weather": "Clima", "layout": "Diseño & Atajos", "backup": "Copia de Seguridad"}, "appearance": {"themes_label": "Tema Visual", "sound_label": "Efectos de Sonido Hápticos", "glow_label": "Resplandor Ambiental (Aurora)", "themes": {"cyber": "Cyber Neon", "nebula": "Deep Nebula", "amber": "Sunset Amber", "light": "Crystal Light", "sunset": "Sunset Amber"}}, "layout": {"edit_mode_title": "Modo Edición del Tablero", "edit_mode_desc": "Activa para arrastrar cajones, reordenar iconos, editarlos o eliminarlos.", "edit_mode_toggle": "Activar Modo Edición", "add_shortcut_btn": "➕ Añadir Nuevo Acceso Directo", "editing_active_badge": "Modo Edición Activado", "reset_layout_title": "Restablecer Diseño Original", "reset_layout_desc": "¿Has modificado mucho el tablero? Vuelve a empezar de cero con la disposición y accesos directos originales de fábrica.", "reset_layout_btn": "🔄 Restaurar Diseño de Fábrica"}, "backup": {"export_title": "Exportar Configuración", "export_desc": "Descarga un archivo JSON con todos tus atajos, orden personalizado y preferencias.", "export_btn": "📥 Descargar Copia (*.json)", "import_title": "Restaurar Configuración", "import_desc": "Carga un archivo de respaldo JSON previamente exportado.", "import_btn": "📤 Restaurar desde Archivo", "reset_title": "Restablecer de Fábrica", "reset_desc": "Restaura los 45 accesos directos originales predeterminados.", "reset_btn": "⚠️ Restablecer Valores", "reset_confirm": "¿Estás seguro de que deseas restablecer los valores de fábrica? Se perderán las personalizaciones.", "import_success": "¡Copia de seguridad restaurada con éxito!", "import_error": "El archivo de respaldo no es válido o está dañado."}, "profile": {"title": "Perfil de Usuario", "desc": "Personaliza tu nombre o alias para el Centro de Mando y saludos:"}}, "shortcut_editor": {"add_title": "Añadir Nuevo Acceso Directo", "edit_title": "Editar Acceso Directo", "title_label": "Nombre del Atajo", "title_placeholder": "Ej: Notion, Figma, Spotify...", "url_label": "URL de Destino", "url_placeholder": "https://ejemplo.com", "category_label": "Categoría Bento", "icon_label": "Icono de la Aplicación", "icon_preset": "Elegir icono incluido:", "icon_custom": "O URL de icono personalizada:", "desc_label": "Descripción (para el Tooltip)", "desc_placeholder": "Breve resumen de la herramienta...", "tags_label": "Etiquetas de Búsqueda", "tags_placeholder": "separadas por comas (ej: musica, streaming)", "save_btn": "Guardar Atajo", "delete_btn": "Eliminar Atajo", "delete_confirm": "¿Seguro que deseas eliminar este acceso directo?", "cancel_btn": "Cancelar"}, "bangs": {"calc_title": "Resultado Calculado", "direct_search": "Buscar en {service}", "suggestions_title": "Comandos Bang Rápidos"}, "widgets": {"scratchpad_title": "Bloc de Notas Glass", "scratchpad_placeholder": "Escribe ideas, tareas o notas rápidas aquí...", "scratchpad_saved": "Guardado automáticamente", "pomodoro_title": "Temporizador Focus", "pomodoro_focus": "Enfoque", "pomodoro_break": "Descanso", "pomodoro_start": "Iniciar", "pomodoro_pause": "Pausar", "pomodoro_reset": "Reiniciar", "toggle_widgets_title": "Mini-Widgets Bento", "toggle_scratchpad": "Mostrar Bloc de Notas", "toggle_pomodoro": "Mostrar Temporizador Pomodoro"}, "audio": {"preset_label": "Efecto de Sonido Háptico", "preset_scifi": "Sci-Fi Soft Pop (Sintetizado)", "preset_mech": "Click Mecánico Táctil", "preset_bubble": "Burbuja Acústica"}, "theme_studio": {"title": "Theme Studio Personalizado", "desc": "Personaliza los colores de acento y resplandor neón en tiempo real:", "primary_label": "Color Primario (Acento):", "secondary_label": "Color Secundario:", "reset_colors_btn": "Restablecer Colores Predeterminados"}, "importer": {"title": "Importar Marcadores de Navegador", "desc": "Importa un archivo bookmarks.html exportado desde Chrome, Firefox, Edge o Brave:", "select_file_btn": "📁 Seleccionar Archivo HTML", "merge_mode": "Combinar con mis atajos actuales", "replace_mode": "Reemplazar todos los atajos", "import_btn": "Importar Marcadores", "success_msg": "¡Se han importado {count} accesos directos con éxito!", "error_msg": "No se encontraron marcadores válidos en el archivo seleccionado."}},
-    en: {"brand_greeting": "Welcome to the Command Center", "greetings": {"morning": "Good morning, HaDeS!", "afternoon": "Good afternoon, HaDeS!", "night": "Good evening, HaDeS!"}, "controls": {"sound_title": "Sound Effects (Enabled/Disabled)", "theme_title": "Switch Visual Theme", "lang_title": "Switch Language", "cmdk_btn": "Search", "cmdk_badge": "Ctrl K"}, "search": {"placeholder": "Search with {engine} or filter shortcuts...", "clear": "Clear search"}, "filters": {"all": "All", "ia_creativa": "AI & 3D", "arte_media": "Art & Multimedia", "productividad": "Google & Tools", "social_compras": "Social & Shopping"}, "categories": {"cat_3d": "3D Modeling & AI", "cat_ai": "Artificial Intelligence", "cat_art": "Digital Art & Models", "cat_audio": "Audio Generation", "cat_google": "Google Workspace & AI", "cat_tools": "Tools & Dev", "cat_social": "Community & Social", "cat_shopping": "Shopping & Payments", "cat_video": "Video & AI Generation"}, "badges": {"apps": "apps"}, "shortcuts": {"meshy": "AI-powered 3D model and texture generation from text or image", "tripo3d": "Fast 3D studio generating production-ready 3D models with AI", "ludoai": "AI platform for game ideation, market analysis, and research", "chatgpt": "Advanced conversational AI assistant and reasoning with GPT-4o", "deepseek": "Deep reasoning AI model with high precision coding capabilities", "claude": "Anthropic's frontier AI model with vast context window and deep analysis", "qwen": "Alibaba Cloud foundational models and conversational AI (Qwen 2.5)", "seaverse": "AI creative tools and generators for virtual worlds and multimedia", "civitai": "Community model hub, Checkpoints and LoRAs for Stable Diffusion", "shakker": "High-definition image generation and AI image fusion platform", "tensorart": "Online generative art studio with free daily generation credits", "seaart": "AI-assisted art creation studio and image rendering platform", "shadertoy": "Platform to build, view, and share GLSL shaders in WebGL", "minimax": "Ultra-realistic voice cloning and text-to-speech AI generation", "suno": "Full song and music composition with lyrics generated by AI", "elevenlabs": "Industry-leading voice synthesis and multilingual audio translation", "google": "Global web search engine and integrated Google ecosystem services", "gmail": "Secure and synchronized webmail and communications service", "googledrive": "Cloud storage and collaborative document file management", "gemini": "Google multimodal AI model integrated across its workspace ecosystem", "googleaistudio": "Rapid prototyping environment and API access for Gemini models", "notebooklm": "Smart personalized notebook with AI-powered audio overviews", "birme": "Flexible batch image resizer and smart focal crop utility", "photoroom": "Professional background remover and quick photo editing suite", "github": "Collaborative software development platform and Git repositories", "itchio": "Indie marketplace for video games, assets, game music, and sprites", "optimizeglb": "Draco compression and performance optimizer for 3D GLB/glTF files", "translate": "Instant text and web page translations across multiple languages", "instagram": "Visual social media platform for photos, videos, stories, and reels", "facebook": "Social network to connect with friends, groups, and communities", "x": "Real-time microblogging network for global news, tech, and trends", "tiktok": "Short-form vertical video streaming and creative content platform", "threads": "Text-based conversation and microblogging platform linked to Instagram", "patreon": "Membership platform for creators to build recurring fan support", "discord": "Voice, video, and text communication platform for communities", "linkedin": "Professional networking platform for careers, jobs, and businesses", "exophase": "Gaming achievement, trophy, and multi-platform profile tracking", "amazon": "Global online shopping marketplace with fast delivery options", "aliexpress": "Global e-commerce platform offering factory-direct products", "pccomponentes": "Specialized computer hardware, electronics, and tech store", "paypal": "Secure digital wallet and online payment transfer system", "wallapop": "Peer-to-peer secondhand marketplace for buying and selling goods", "youtube": "Global streaming video platform, tutorials, music, and live broadcasts", "kling": "Cinematic video generation with realistic physics and camera motion", "hedra": "AI-powered expressive talking avatar and animated video generation"}, "no_results": {"title": "No shortcuts found", "desc": "Try different search terms or press Enter to search directly on the web."}, "weather": {"title": "Configure Weather City", "desc": "Enter the name of your city to view real-time weather forecasts:", "input_placeholder": "e.g. London, New York, Tokyo, Madrid...", "search_btn": "Search", "auto_btn": "Auto-detect via IP", "loading": "Loading...", "offline": "Offline", "conditions": {"clear": "Clear sky", "mostly_clear": "Mostly clear", "partly_cloudy": "Partly cloudy", "cloudy": "Overcast", "fog": "Fog", "drizzle": "Light drizzle", "rain": "Rain", "heavy_rain": "Heavy rain", "snow": "Snow", "showers": "Rain showers", "snow_showers": "Snow showers", "thunderstorm": "Thunderstorm", "hail_thunderstorm": "Thunderstorm with hail"}}, "cmdk": {"placeholder": "Search shortcut, tool or quick command...", "direct_search_prefix": "Search on {engine}:", "direct_search_cat": "Direct Web Search", "action_open": "Open", "action_search": "Search", "tip_nav": "Navigate", "tip_open": "Open link", "tip_close": "Close"}, "user_modal": {"title": "Change Username", "desc": "Customize the name displayed in the title and greetings of your Command Center:", "input_placeholder": "Your name or handle...", "save_btn": "Save", "preview_label": "Preview:", "tooltip_title": "Click to change your username", "doc_title_suffix": "· Command Center"}, "settings_hub": {"title": "Command Center Settings", "btn_title": "Configuration & Customization", "tabs": {"appearance": "Appearance", "language": "Language", "weather": "Weather", "layout": "Layout & Shortcuts", "backup": "Backup & Restore"}, "appearance": {"themes_label": "Visual Theme", "sound_label": "Haptic Sound Effects", "glow_label": "Ambient Aurora Glow", "themes": {"cyber": "Cyber Neon", "nebula": "Deep Nebula", "amber": "Sunset Amber", "light": "Crystal Light", "sunset": "Sunset Amber"}}, "layout": {"edit_mode_title": "Dashboard Edit Mode", "edit_mode_desc": "Enable to drag categories, reorder icons, edit or delete them.", "edit_mode_toggle": "Enable Edit Mode", "add_shortcut_btn": "➕ Add New Shortcut", "editing_active_badge": "Edit Mode Active", "reset_layout_title": "Reset Original Layout", "reset_layout_desc": "Extensively customized your dashboard? Start fresh anytime with the original factory layout and default shortcuts.", "reset_layout_btn": "🔄 Restore Factory Layout"}, "backup": {"export_title": "Export Configuration", "export_desc": "Download a JSON file containing all your shortcuts, custom layout, and preferences.", "export_btn": "📥 Download Backup (*.json)", "import_title": "Restore Configuration", "import_desc": "Load a previously exported JSON backup file.", "import_btn": "📤 Restore from File", "reset_title": "Factory Reset", "reset_desc": "Reset dashboard back to the original 45 default shortcuts.", "reset_btn": "⚠️ Reset to Default", "reset_confirm": "Are you sure you want to restore factory defaults? Customizations will be lost.", "import_success": "Backup successfully restored!", "import_error": "The backup file is invalid or corrupted."}, "profile": {"title": "User Profile", "desc": "Customize your name or alias for the Command Center and greetings:"}}, "shortcut_editor": {"add_title": "Add New Shortcut", "edit_title": "Edit Shortcut", "title_label": "Shortcut Name", "title_placeholder": "e.g. Notion, Figma, Spotify...", "url_label": "Target URL", "url_placeholder": "https://example.com", "category_label": "Bento Category", "icon_label": "Application Icon", "icon_preset": "Choose bundled icon:", "icon_custom": "Or custom icon URL:", "desc_label": "Description (for Tooltip)", "desc_placeholder": "Brief tool overview...", "tags_label": "Search Tags", "tags_placeholder": "comma separated (e.g. music, streaming)", "save_btn": "Save Shortcut", "delete_btn": "Delete Shortcut", "delete_confirm": "Are you sure you want to delete this shortcut?", "cancel_btn": "Cancel"}, "bangs": {"calc_title": "Calculation Result", "direct_search": "Search on {service}", "suggestions_title": "Quick Bang Commands"}, "widgets": {"scratchpad_title": "Glass Scratchpad", "scratchpad_placeholder": "Write thoughts, tasks or quick notes here...", "scratchpad_saved": "Auto-saved locally", "pomodoro_title": "Focus Timer", "pomodoro_focus": "Focus", "pomodoro_break": "Break", "pomodoro_start": "Start", "pomodoro_pause": "Pause", "pomodoro_reset": "Reset", "toggle_widgets_title": "Bento Mini-Widgets", "toggle_scratchpad": "Show Scratchpad", "toggle_pomodoro": "Show Pomodoro Timer"}, "audio": {"preset_label": "Haptic Sound Preset", "preset_scifi": "Sci-Fi Soft Pop (Procedural)", "preset_mech": "Mechanical Switch Click", "preset_bubble": "Acoustic Bubble"}, "theme_studio": {"title": "Custom Theme Studio", "desc": "Customize accent colors and neon spotlight in real-time:", "primary_label": "Primary Accent Color:", "secondary_label": "Secondary Color:", "reset_colors_btn": "Reset Default Colors"}, "importer": {"title": "Import Browser Bookmarks", "desc": "Import a bookmarks.html file exported from Chrome, Firefox, Edge or Brave:", "select_file_btn": "📁 Select HTML File", "merge_mode": "Merge with my existing shortcuts", "replace_mode": "Replace all shortcuts", "import_btn": "Import Bookmarks", "success_msg": "Successfully imported {count} shortcuts!", "error_msg": "No valid bookmarks found in selected file."}},
-    fr: {"brand_greeting": "Bienvenue au Centre de Commande", "greetings": {"morning": "Bonjour, HaDeS !", "afternoon": "Bon après-midi, HaDeS !", "night": "Bonsoir, HaDeS !"}, "controls": {"sound_title": "Effets sonores (Activé/Désactivé)", "theme_title": "Changer de Thème Visuel", "lang_title": "Changer de Langue", "cmdk_btn": "Rechercher", "cmdk_badge": "Ctrl K"}, "search": {"placeholder": "Rechercher avec {engine} ou filtrer les raccourcis...", "clear": "Effacer la recherche"}, "filters": {"all": "Tous", "ia_creativa": "IA & 3D", "arte_media": "Art & Multimédia", "productividad": "Google & Outils", "social_compras": "Social & Achats"}, "categories": {"cat_3d": "Modélisation 3D & IA", "cat_ai": "Intelligence Artificielle", "cat_art": "Art Numérique & Modèles", "cat_audio": "Génération Audio", "cat_google": "Google Workspace & IA", "cat_tools": "Outils & Développeur", "cat_social": "Communauté & Réseaux", "cat_shopping": "Achats & Paiements", "cat_video": "Vidéo & Génération IA"}, "badges": {"apps": "apps"}, "shortcuts": {"meshy": "Génération de modèles 3D et textures par IA à partir de texte ou image", "tripo3d": "Studio rapide pour générer des modèles 3D prêts pour la production", "ludoai": "Plateforme d'IA pour l'idéation et l'analyse de marché des jeux vidéo", "chatgpt": "Assistant conversationnel avancé et raisonnement avec GPT-4o", "deepseek": "Modèle d'IA de raisonnement profond et génération de code de haute précision", "claude": "Modèle d'IA d'Anthropic avec grande fenêtre de contexte et analyse de code", "qwen": "Modèles fondateurs et chat d'Alibaba Cloud (Qwen 2.5)", "seaverse": "Outils et générateurs d'IA pour mondes virtuels et multimédia", "civitai": "Dépôt communautaire de modèles, Checkpoints et LoRAs pour Stable Diffusion", "shakker": "Plateforme de génération et de fusion d'images haute définition par IA", "tensorart": "Générateur d'art en ligne avec crédits de création quotidiens gratuits", "seaart": "Studio de création et de rendu artistique assisté par IA", "shadertoy": "Plateforme pour programmer et partager des shaders GLSL en WebGL", "minimax": "Génération et clonage de voix ultra-réalistes par IA", "suno": "Composition musicale complète avec paroles et mélodie générées par IA", "elevenlabs": "Synthèse vocale de pointe et traduction audio multilingue", "google": "Moteur de recherche mondial et services intégrés de Google", "gmail": "Service de messagerie électronique sécurisé et synchronisé", "googledrive": "Stockage cloud et gestion collaborative de fichiers", "gemini": "Modèle multimodal de Google intégré à son écosystème", "googleaistudio": "Environnement de prototypage rapide avec les API Gemini", "notebooklm": "Carnet de notes intelligent avec résumés audio générés par IA", "birme": "Outil de redimensionnement et recadrage d'images par lots flexible", "photoroom": "Suppression professionnelle d'arrière-plan et retouche photo rapide", "github": "Plateforme de développement collaboratif et dépôts Git", "itchio": "Marché indépendant de jeux vidéo, assets, musique et sprites", "optimizeglb": "Compression Draco et optimisation de fichiers 3D GLB/glTF", "translate": "Traduction instantanée de textes et pages web en plusieurs langues", "instagram": "Réseau social pour partager photos, vidéos, stories et reels", "facebook": "Réseau social pour connecter avec amis, groupes et communautés", "x": "Réseau de microblogging pour actualités et tendances en temps réel", "tiktok": "Plateforme de vidéos courtes au format vertical", "threads": "Plateforme de microblogging et débat liée à Instagram", "patreon": "Abonnements et soutien participatif pour créateurs de contenu", "discord": "Serveurs de discussion textuelle, vocale et vidéo pour communautés", "linkedin": "Réseau social professionnel pour l'emploi et le networking", "exophase": "Suivi des succès, trophées et profils multi-plateformes de jeu", "amazon": "Boutique en ligne mondiale de produits avec livraison rapide", "aliexpress": "Plateforme d'achats en ligne avec prix directs d'usine", "pccomponentes": "Boutique spécialisée en informatique, hardware et technologie", "paypal": "Portefeuille numérique sécurisé et plateforme de paiement", "wallapop": "Plateforme d'achat et vente de produits d'occasion", "youtube": "Plateforme de streaming vidéo, tutoriels et diffusions en direct", "kling": "Génération de vidéos cinématographiques avec mouvements réalistes", "hedra": "Création d'avatars expressifs parlants et de personnages animés par IA"}, "no_results": {"title": "Aucun raccourci trouvé", "desc": "Essayez d'autres termes ou recherchez directement sur le Web en appuyant sur Entrée."}, "weather": {"title": "Configurer la Ville Météo", "desc": "Saisissez le nom de votre ville pour voir les prévisions en direct :", "input_placeholder": "Ex : Paris, Lyon, Montréal, Madrid...", "search_btn": "Chercher", "auto_btn": "Détecter automatiquement par IP", "loading": "Chargement...", "offline": "Hors ligne", "conditions": {"clear": "Ciel dégagé", "mostly_clear": "Généralement dégagé", "partly_cloudy": "Partiellement nuageux", "cloudy": "Couvert", "fog": "Brouillard", "drizzle": "Bruine légère", "rain": "Pluie", "heavy_rain": "Pluie battante", "snow": "Neige", "showers": "Averses de pluie", "snow_showers": "Averses de neige", "thunderstorm": "Orage", "hail_thunderstorm": "Orage avec grêle"}}, "cmdk": {"placeholder": "Rechercher un raccourci, un outil ou une commande rapide...", "direct_search_prefix": "Rechercher sur {engine} :", "direct_search_cat": "Recherche Web Directe", "action_open": "Ouvrir", "action_search": "Chercher", "tip_nav": "Naviguer", "tip_open": "Ouvrir le lien", "tip_close": "Fermer"}, "user_modal": {"title": "Changer de Nom d'Utilisateur", "desc": "Personnalisez le nom affiché dans le titre et les salutations de votre Centre de Commande :", "input_placeholder": "Votre nom ou pseudo...", "save_btn": "Enregistrer", "preview_label": "Aperçu :", "tooltip_title": "Cliquez pour changer votre nom d'utilisateur", "doc_title_suffix": "· Centre de Commande"}, "settings_hub": {"title": "Paramètres du Centre de Commande", "btn_title": "Configuration & Personnalisation", "tabs": {"appearance": "Apparence", "language": "Langue", "weather": "Météo", "layout": "Mise en page & Raccourcis", "backup": "Sauvegarde"}, "appearance": {"themes_label": "Thème Visuel", "sound_label": "Effets Sonores Haptiques", "glow_label": "Lueur Ambiante Aurora", "themes": {"cyber": "Cyber Neon", "nebula": "Deep Nebula", "amber": "Sunset Amber", "light": "Crystal Light", "sunset": "Sunset Amber"}}, "layout": {"edit_mode_title": "Mode Édition du Tableau", "edit_mode_desc": "Activez pour glisser les catégories, réorganiser les icônes, les modifier ou les supprimer.", "edit_mode_toggle": "Activer le Mode Édition", "add_shortcut_btn": "➕ Ajouter un Nouveau Raccourci", "editing_active_badge": "Mode Édition Activé", "reset_layout_title": "Réinitialiser la Disposition", "reset_layout_desc": "Vous avez beaucoup personnalisé votre tableau ? Repartez de zéro avec la disposition et les raccourcis d'usine.", "reset_layout_btn": "🔄 Restaurer la Disposition d'Usine"}, "backup": {"export_title": "Exporter la Configuration", "export_desc": "Téléchargez un fichier JSON avec tous vos raccourcis et préférences.", "export_btn": "📥 Télécharger la Sauvegarde (*.json)", "import_title": "Restaurer la Configuration", "import_desc": "Chargez un fichier de sauvegarde JSON préalablement exporté.", "import_btn": "📤 Restaurer depuis le Fichier", "reset_title": "Réinitialisation d'Usine", "reset_desc": "Restaure les 45 raccourcis originaux par défaut.", "reset_btn": "⚠️ Réinitialiser par Défaut", "reset_confirm": "Êtes-vous sûr de vouloir réinitialiser ? Les personnalisations seront perdues.", "import_success": "Sauvegarde restaurée avec succès !", "import_error": "Le fichier de sauvegarde est invalide ou corrompu."}, "profile": {"title": "Profil Utilisateur", "desc": "Personnalisez votre nom ou pseudo pour le Centre de Commande et les salutations :"}}, "shortcut_editor": {"add_title": "Ajouter un Nouveau Raccourci", "edit_title": "Modifier le Raccourci", "title_label": "Nom du Raccourci", "title_placeholder": "Ex : Notion, Figma, Spotify...", "url_label": "URL de Destination", "url_placeholder": "https://exemple.com", "category_label": "Catégorie Bento", "icon_label": "Icône de l'Application", "icon_preset": "Choisir une icône incluse :", "icon_custom": "Ou URL d'icône personnalisée :", "desc_label": "Description (pour le Tooltip)", "desc_placeholder": "Bref résumé de l'outil...", "tags_label": "Mots-clés de Recherche", "tags_placeholder": "séparés par des virgules (ex : musique, streaming)", "save_btn": "Enregistrer le Raccourci", "delete_btn": "Supprimer le Raccourci", "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce raccourci ?", "cancel_btn": "Annuler"}, "bangs": {"calc_title": "Résultat du Calcul", "direct_search": "Rechercher sur {service}", "suggestions_title": "Commandes Bang Rapides"}, "widgets": {"scratchpad_title": "Bloc-notes Glass", "scratchpad_placeholder": "Écrivez vos idées ou notes rapides ici...", "scratchpad_saved": "Enregistré automatiquement", "pomodoro_title": "Minuteur Focus", "pomodoro_focus": "Concentration", "pomodoro_break": "Pause", "pomodoro_start": "Démarrer", "pomodoro_pause": "Pause", "pomodoro_reset": "Réinitialiser", "toggle_widgets_title": "Mini-Widgets Bento", "toggle_scratchpad": "Afficher le Bloc-notes", "toggle_pomodoro": "Afficher le Minuteur Pomodoro"}, "audio": {"preset_label": "Effet Sonore Haptique", "preset_scifi": "Sci-Fi Soft Pop (Synthétisé)", "preset_mech": "Clic Mécanique Tactile", "preset_bubble": "Bulle Acoustique"}, "theme_studio": {"title": "Studio de Thème Personnalisé", "desc": "Personnalisez les couleurs d'accent et les reflets néon en temps réel :", "primary_label": "Couleur Primaire (Accent) :", "secondary_label": "Couleur Secondaire :", "reset_colors_btn": "Réinitialiser les Couleurs"}, "importer": {"title": "Importer les Favoris du Navigateur", "desc": "Importez un fichier bookmarks.html exporté depuis Chrome, Firefox, Edge ou Brave :", "select_file_btn": "📁 Sélectionner un Fichier HTML", "merge_mode": "Fusionner avec mes raccourcis actuels", "replace_mode": "Remplacer tous les raccourcis", "import_btn": "Importer les Favoris", "success_msg": "{count} raccourcis importés avec succès !", "error_msg": "Aucun favori valide trouvé dans le fichier sélectionné."}},
-    de: {"brand_greeting": "Willkommen im Kontrollzentrum", "greetings": {"morning": "Guten Morgen, HaDeS!", "afternoon": "Guten Tag, HaDeS!", "night": "Guten Abend, HaDeS!"}, "controls": {"sound_title": "Soundeffekte (Ein/Aus)", "theme_title": "Visuelles Design wechseln", "lang_title": "Sprache wechseln", "cmdk_btn": "Suchen", "cmdk_badge": "Ctrl K"}, "search": {"placeholder": "Mit {engine} suchen oder Verknüpfungen filtern...", "clear": "Suche löschen"}, "filters": {"all": "Alle", "ia_creativa": "KI & 3D", "arte_media": "Kunst & Medien", "productividad": "Google & Tools", "social_compras": "Social & Shopping"}, "categories": {"cat_3d": "3D-Modellierung & KI", "cat_ai": "Künstliche Intelligenz", "cat_art": "Digitale Kunst & Modelle", "cat_audio": "Audio-Generierung", "cat_google": "Google Workspace & KI", "cat_tools": "Tools & Entwickler", "cat_social": "Community & Soziales", "cat_shopping": "Shopping & Bezahlen", "cat_video": "Video & KI-Generierung"}, "badges": {"apps": "Apps"}, "shortcuts": {"meshy": "KI-gestützte Generierung von 3D-Modellen und Texturen aus Text oder Bild", "tripo3d": "Schnelles Studio zur Erstellung produktionsbereiter 3D-Modelle mit KI", "ludoai": "KI-Plattform für Spielideen, Marktanalysen und Videospielforschung", "chatgpt": "Fortschrittlicher KI-Assistent und logisches Denken mit GPT-4o", "deepseek": "Tiefgreifendes KI-Modell mit hoher Präzision bei der Codegenerierung", "claude": "Anthropics KI-Modell mit riesigem Kontextfenster und Codeanalyse", "qwen": "Basis-KI-Modelle und Chatbot von Alibaba Cloud (Qwen 2.5)", "seaverse": "KI-Tools und Generatoren für virtuelle Welten und Multimedia", "civitai": "Community-Repository für Modelle, Checkpoints und LoRAs für Stable Diffusion", "shakker": "Plattform zur hochauflösenden Bildgenerierung und KI-Bildfusion", "tensorart": "Online-Kunstgenerator mit kostenlosen täglichen Generierungsguthaben", "seaart": "KI-unterstütztes Studio für künstlerische Erstellung und Bildrendering", "shadertoy": "Plattform zum Programmieren, Visualisieren und Teilen von GLSL-Shadern in WebGL", "minimax": "Ultrarealistische Stimmengenerierung und Sprachklonung mit KI", "suno": "Vollständige Song- und Musikkomposition mit von KI erstellten Texten", "elevenlabs": "Branchenführende Sprachsynthese und mehrsprachige Audioübersetzung", "google": "Globale Websuchmaschine und integrierte Google-Dienste", "gmail": "Sicherer und synchronisierter E-Mail-Dienst von Google", "googledrive": "Cloud-Speicher und kollaborative Dateiverwaltung", "gemini": "Multimodales Google-KI-Modell im Arbeitsbereich-Ökosystem", "googleaistudio": "Schnelle Prototyping-Umgebung für Entwickler mit Gemini-APIs", "notebooklm": "Intelligentes Notizbuch mit KI-generierten Audio-Zusammenfassungen", "birme": "Flexibler Stapel-Bildverkleinerer und smarter Zuschnitt", "photoroom": "Professioneller Hintergrundentferner und schnelle Fotobearbeitung", "github": "Kollaborative Entwicklungsplattform und Git-Repositories", "itchio": "Indie-Marktplatz für Videospiele, Assets, Musik und Sprites", "optimizeglb": "Draco-Kompression und Optimierung für 3D-GLB/glTF-Dateien", "translate": "Sofortige Text- und Webseitenübersetzung in mehreren Sprachen", "instagram": "Soziales Netzwerk für Fotos, Videos, Stories und Reels", "facebook": "Soziales Netzwerk zum Verbinden mit Freunden, Gruppen und Communities", "x": "Echtzeit-Microblogging-Netzwerk für Nachrichten und globale Trends", "tiktok": "Plattform für kurze vertikale Videos und kreative Clips", "threads": "Konversations- und Microblogging-Plattform verknüpft mit Instagram", "patreon": "Abonnements und Mitgliedschaftsplattform für Content-Ersteller", "discord": "Sprach-, Video- und Text-Chatserver für Communities", "linkedin": "Professionelles soziales Netzwerk für Karriere und Networking", "exophase": "Gaming-Erfolgs-, Trophäen- und plattformübergreifendes Profil-Tracking", "amazon": "Globaler Online-Marktplatz mit schneller Produktlieferung", "aliexpress": "Online-Shopping-Plattform mit Artikeln zu Fabrikpreisen", "pccomponentes": "Fachgeschäft für Computer, Hardware und Technik", "paypal": "Sichere Online-Zahlungsplattform und digitale Geldbörse", "wallapop": "Marktplatz für den Kauf und Verkauf von gebrauchten Artikeln", "youtube": "Streaming-Videoplattform, Tutorials, Musik und Live-Übertragungen", "kling": "Kinoreife Videogenerierung mit realistischen Bewegungen durch KI", "hedra": "Erstellung sprechender Avatare und animierter Charaktere mit KI"}, "no_results": {"title": "Keine Verknüpfungen gefunden", "desc": "Versuchen Sie andere Suchbegriffe oder drücken Sie Enter, um direkt im Web zu suchen."}, "weather": {"title": "Wetter-Stadt konfigurieren", "desc": "Geben Sie den Namen Ihrer Stadt ein, um die Live-Wettervorhersage zu sehen:", "input_placeholder": "z. B. Berlin, Wien, Zürich, München...", "search_btn": "Suchen", "auto_btn": "Automatisch über IP ermitteln", "loading": "Laden...", "offline": "Offline", "conditions": {"clear": "Klarer Himmel", "mostly_clear": "Überwiegend klar", "partly_cloudy": "Teilweise bewölkt", "cloudy": "Bedeckt", "fog": "Nebel", "drizzle": "Leichter Nieselregen", "rain": "Regen", "heavy_rain": "Starker Regen", "snow": "Schnee", "showers": "Regenschauer", "snow_showers": "Schneeschauer", "thunderstorm": "Gewitter", "hail_thunderstorm": "Gewitter mit Hagel"}}, "cmdk": {"placeholder": "Verknüpfung, Tool oder Schnellbefehl suchen...", "direct_search_prefix": "Auf {engine} suchen:", "direct_search_cat": "Direkte Websuche", "action_open": "Öffnen", "action_search": "Suchen", "tip_nav": "Navigieren", "tip_open": "Link öffnen", "tip_close": "Schließen"}, "user_modal": {"title": "Benutzername ändern", "desc": "Passen Sie den Namen an, der im Titel und in den Begrüßungen Ihres Kontrollzentrums angezeigt wird:", "input_placeholder": "Ihr Name oder Pseudonym...", "save_btn": "Speichern", "preview_label": "Vorschau:", "tooltip_title": "Klicken, um Ihren Benutzernamen zu ändern", "doc_title_suffix": "· Kontrollzentrum"}, "settings_hub": {"title": "Kontrollzentrum Einstellungen", "btn_title": "Konfiguration & Anpassung", "tabs": {"appearance": "Erscheinungsbild", "language": "Sprache", "weather": "Wetter", "layout": "Layout & Verknüpfungen", "backup": "Sicherung & Wiederherstellung"}, "appearance": {"themes_label": "Visuelles Design", "sound_label": "Haptische Soundeffekte", "glow_label": "Ambientes Aurora-Leuchten", "themes": {"cyber": "Cyber Neon", "nebula": "Deep Nebula", "amber": "Sunset Amber", "light": "Crystal Light", "sunset": "Sunset Amber"}}, "layout": {"edit_mode_title": "Dashboard-Bearbeitungsmodus", "edit_mode_desc": "Aktivieren, um Kategorien zu ziehen, Symbole neu anzuordnen, zu bearbeiten oder zu löschen.", "edit_mode_toggle": "Bearbeitungsmodus aktivieren", "add_shortcut_btn": "➕ Neue Verknüpfung hinzufügen", "editing_active_badge": "Bearbeitungsmodus Aktiv", "reset_layout_title": "Ursprüngliches Layout wiederherstellen", "reset_layout_desc": "Haben Sie Ihr Dashboard stark angepasst? Fangen Sie jederzeit mit dem ursprünglichen Werkslayout und den Standardverknüpfungen von vorne an.", "reset_layout_btn": "🔄 Werkslayout wiederherstellen"}, "backup": {"export_title": "Konfiguration exportieren", "export_desc": "Laden Sie eine JSON-Datei mit all Ihren Verknüpfungen und Einstellungen herunter.", "export_btn": "📥 Sicherung herunterladen (*.json)", "import_title": "Konfiguration wiederherstellen", "import_desc": "Laden Sie eine zuvor exportierte JSON-Sicherungsdatei.", "import_btn": "📤 Aus Datei wiederherstellen", "reset_title": "Werkseinstellungen", "reset_desc": "Stellt die ursprünglichen 45 Standard-Verknüpfungen wieder her.", "reset_btn": "⚠️ Auf Standard zurücksetzen", "reset_confirm": "Möchten Sie wirklich die Werkseinstellungen wiederherstellen?", "import_success": "Sicherung erfolgreich wiederhergestellt!", "import_error": "Die Sicherungsdatei ist ungültig oder beschädigt."}, "profile": {"title": "Benutzerprofil", "desc": "Passen Sie Ihren Namen oder Alias für das Command Center und die Begrüßungen an:"}}, "shortcut_editor": {"add_title": "Neue Verknüpfung hinzufügen", "edit_title": "Verknüpfung bearbeiten", "title_label": "Name der Verknüpfung", "title_placeholder": "z. B. Notion, Figma, Spotify...", "url_label": "Ziel-URL", "url_placeholder": "https://beispiel.com", "category_label": "Bento-Kategorie", "icon_label": "Anwendungssymbol", "icon_preset": "Enthaltenes Symbol wählen:", "icon_custom": "Oder benutzerdefinierte Symbol-URL:", "desc_label": "Beschreibung (für Tooltip)", "desc_placeholder": "Kurze Übersicht über das Tool...", "tags_label": "Suchbegriffe", "tags_placeholder": "kommagetrennt (z. B. Musik, Streaming)", "save_btn": "Verknüpfung speichern", "delete_btn": "Verknüpfung löschen", "delete_confirm": "Möchten Sie diese Verknüpfung wirklich löschen?", "cancel_btn": "Abbrechen"}, "bangs": {"calc_title": "Berechnungsergebnis", "direct_search": "Auf {service} suchen", "suggestions_title": "Schnelle Bang-Befehle"}, "widgets": {"scratchpad_title": "Glass-Notizblock", "scratchpad_placeholder": "Gedanken, Aufgaben oder schnelle Notizen hier schreiben...", "scratchpad_saved": "Automatisch gespeichert", "pomodoro_title": "Fokus-Timer", "pomodoro_focus": "Fokus", "pomodoro_break": "Pause", "pomodoro_start": "Starten", "pomodoro_pause": "Pause", "pomodoro_reset": "Zurücksetzen", "toggle_widgets_title": "Bento Mini-Widgets", "toggle_scratchpad": "Notizblock anzeigen", "toggle_pomodoro": "Pomodoro-Timer anzeigen"}, "audio": {"preset_label": "Haptischer Sound-Effekt", "preset_scifi": "Sci-Fi Soft Pop (Synthetisiert)", "preset_mech": "Mechanischer Klick", "preset_bubble": "Akustische Blase"}, "theme_studio": {"title": "Individuelles Theme-Studio", "desc": "Akzentfarben und Neon-Leuchten in Echtzeit anpassen:", "primary_label": "Primäre Akzentfarbe:", "secondary_label": "Sekundärfarbe:", "reset_colors_btn": "Standardfarben wiederherstellen"}, "importer": {"title": "Browser-Lesezeichen importieren", "desc": "Importieren Sie eine aus Chrome, Firefox, Edge oder Brave exportierte bookmarks.html-Datei:", "select_file_btn": "📁 HTML-Datei auswählen", "merge_mode": "Mit meinen vorhandenen Verknüpfungen zusammenführen", "replace_mode": "Alle Verknüpfungen ersetzen", "import_btn": "Lesezeichen importieren", "success_msg": "Erfolgreich {count} Verknüpfungen importiert!", "error_msg": "Keine gültigen Lesezeichen in der ausgewählten Datei gefunden."}}
-};
+const i18nDictionaries = {"es": {"brand_greeting": "Bienvenido al Centro de Mando", "greetings": {"morning": "¡Buenos días, HaDeS!", "afternoon": "¡Buenas tardes, HaDeS!", "night": "¡Buenas noches, HaDeS!"}, "controls": {"sound_title": "Efectos de sonido (Activado/Desactivado)", "theme_title": "Cambiar Tema Visual", "lang_title": "Cambiar Idioma", "cmdk_btn": "Buscar", "cmdk_badge": "Ctrl K"}, "search": {"placeholder": "Buscar con {engine} o filtrar atajos...", "clear": "Limpiar búsqueda"}, "filters": {"all": "Todos", "ia_creativa": "IA & 3D", "arte_media": "Arte & Multimedia", "productividad": "Google & Herramientas", "social_compras": "Social & Compras"}, "categories": {"cat_3d": "3D Modeling & AI", "cat_ai": "Inteligencia Artificial", "cat_art": "Arte Digital & Modelos", "cat_audio": "Generación de Audio", "cat_google": "Google Workspace & AI", "cat_tools": "Herramientas & Dev", "cat_social": "Comunidad & Redes", "cat_shopping": "Compras & Pagos", "cat_video": "Vídeo & Generación IA"}, "badges": {"apps": "apps"}, "shortcuts": {"meshy": "Generación de modelos 3D y texturas con IA a partir de texto o imagen", "tripo3d": "Estudio rápido para generar modelos 3D listos para producción", "ludoai": "Plataforma de IA para ideación, análisis de mercado e investigación de videojuegos", "chatgpt": "Asistente conversacional avanzado y razonamiento con GPT-4o", "deepseek": "Modelo de razonamiento profundo y generación de código de alta precisión", "claude": "Modelo de IA de Anthropic con gran ventana de contexto y análisis de código", "qwen": "Modelos fundacionales y chat de Alibaba Cloud (Qwen 2.5)", "seaverse": "Herramientas y generadores de IA para mundos virtuales y multimedia", "civitai": "Comunidad y repositorio de modelos, Checkpoints y LoRAs para Stable Diffusion", "shakker": "Plataforma de generación y mezcla de imágenes de alta definición con IA", "tensorart": "Generador online de arte y modelos con créditos diarios gratuitos", "seaart": "Estudio de creación y renderizado artístico asistido por IA", "shadertoy": "Plataforma para programar, visualizar y compartir shaders GLSL en WebGL", "minimax": "Generación y clonación de voces ultrarrealistas con IA", "suno": "Composición y generación de canciones completas con música y letra por IA", "elevenlabs": "Síntesis de voz líder en el sector y traducción de audio", "google": "Motor de búsqueda web global y servicios integrados", "gmail": "Servicio de correo electrónico seguro y sincronizado", "googledrive": "Almacenamiento en la nube y gestión de archivos colaborativa", "gemini": "Modelo multimodal de Google integrado en su ecosistema", "googleaistudio": "Entorno de desarrollo y prototipado rápido con APIs de Gemini", "notebooklm": "Cuaderno inteligente de notas y resúmenes de audio con IA", "birme": "Redimensionador y recortador por lotes flexible de imágenes", "photoroom": "Eliminador de fondos profesional y edición rápida de fotos", "github": "Plataforma de desarrollo colaborativo y repositorios Git", "itchio": "Mercado indie de videojuegos, assets, música y sprites", "optimizeglb": "Compresión Draco y optimización de archivos 3D GLB/glTF", "translate": "Traducción instantánea de textos y páginas web en múltiples idiomas", "instagram": "Red social para compartir fotos, vídeos, historias y reels", "facebook": "Red social para conectar con amigos, grupos y comunidades", "x": "Red de microblogging para noticias y tendencias en tiempo real", "tiktok": "Plataforma de vídeos cortos en formato vertical", "threads": "Plataforma de microblogging y debate vinculada a Instagram", "patreon": "Membresías y suscripciones para creadores de contenido", "discord": "Servidores de chat de texto, voz y vídeo para comunidades", "linkedin": "Red social profesional para networking y empleo", "exophase": "Seguimiento de logros, trofeos y estadísticas de perfiles gaming", "amazon": "Tienda online global de productos con entrega rápida", "aliexpress": "Plataforma de compras online con variedad y precios de fábrica", "pccomponentes": "Tienda especializada en informática, hardware y tecnología", "paypal": "Pasarela de pagos en línea segura y transferencias", "wallapop": "Plataforma de compraventa de productos de segunda mano", "youtube": "Plataforma de vídeo en streaming, tutoriales y directos", "kling": "Generación de vídeo cinemático con movimiento realista por IA", "hedra": "Creación de avatares hablantes y personajes animados con IA"}, "no_results": {"title": "No se encontraron accesos directos", "desc": "Prueba con otros términos o busca directamente en la web pulsando Enter."}, "weather": {"title": "Configurar Ciudad del Clima", "desc": "Escribe el nombre de tu ciudad para ver el pronóstico meteorológico en vivo:", "input_placeholder": "Ej: Vigo, Madrid, Barcelona, Valencia...", "search_btn": "Buscar", "auto_btn": "Detectar automáticamente por IP", "loading": "Cargando...", "offline": "Sin conexión", "conditions": {"clear": "Despejado", "mostly_clear": "Mayormente despejado", "partly_cloudy": "Parcialmente nublado", "cloudy": "Nublado", "fog": "Niebla", "drizzle": "Llovizna ligera", "rain": "Lluvia", "heavy_rain": "Lluvia intensa", "snow": "Nieve", "showers": "Chubascos", "snow_showers": "Chubascos de nieve", "thunderstorm": "Tormenta", "hail_thunderstorm": "Tormenta con granizo"}}, "cmdk": {"placeholder": "Buscar atajo, herramienta o comando rápido...", "direct_search_prefix": "Buscar en {engine}:", "direct_search_cat": "Búsqueda Web Directa", "action_open": "Abrir", "action_search": "Buscar", "tip_nav": "Navegar", "tip_open": "Abrir enlace", "tip_close": "Cerrar"}, "user_modal": {"title": "Cambiar Nombre de Usuario", "desc": "Personaliza el nombre que aparece en el título y en los saludos de tu Centro de Mando:", "input_placeholder": "Tu nombre o alias...", "save_btn": "Guardar", "preview_label": "Vista previa:", "tooltip_title": "Haz clic para cambiar tu nombre de usuario", "doc_title_suffix": "· Centro de Mando"}, "settings_hub": {"title": "Ajustes del Centro de Mando", "btn_title": "Configuración y Personalización", "tabs": {"appearance": "Apariencia", "language": "Idioma", "weather": "Clima", "layout": "Diseño & Atajos", "backup": "Copia de Seguridad"}, "appearance": {"themes_label": "Tema Visual", "sound_label": "Efectos de Sonido Hápticos", "glow_label": "Resplandor Ambiental (Aurora)", "themes": {"cyber": "Cyber Neon", "nebula": "Deep Nebula", "amber": "Sunset Amber", "light": "Crystal Light", "sunset": "Sunset Amber"}}, "layout": {"edit_mode_title": "Modo Edición del Tablero", "edit_mode_desc": "Activa para arrastrar cajones, reordenar iconos, editarlos o eliminarlos.", "edit_mode_toggle": "Activar Modo Edición", "add_shortcut_btn": "➕ Añadir Nuevo Acceso Directo", "editing_active_badge": "Modo Edición Activado", "reset_layout_title": "Restablecer Diseño Original", "reset_layout_desc": "¿Has modificado mucho el tablero? Vuelve a empezar de cero con la disposición y accesos directos originales de fábrica.", "reset_layout_btn": "🔄 Restaurar Diseño de Fábrica"}, "backup": {"export_title": "Exportar Configuración", "export_desc": "Descarga un archivo JSON con todos tus atajos, orden personalizado y preferencias.", "export_btn": "📥 Descargar Copia (*.json)", "import_title": "Restaurar Configuración", "import_desc": "Carga un archivo de respaldo JSON previamente exportado.", "import_btn": "📤 Restaurar desde Archivo", "reset_title": "Restablecer de Fábrica", "reset_desc": "Restaura los 45 accesos directos originales predeterminados.", "reset_btn": "⚠️ Restablecer Valores", "reset_confirm": "¿Estás seguro de que deseas restablecer los valores de fábrica? Se perderán las personalizaciones.", "import_success": "¡Copia de seguridad restaurada con éxito!", "import_error": "El archivo de respaldo no es válido o está dañado."}, "profile": {"title": "Perfil de Usuario", "desc": "Personaliza tu nombre o alias para el Centro de Mando y saludos:"}}, "shortcut_editor": {"add_title": "Añadir Nuevo Acceso Directo", "edit_title": "Editar Acceso Directo", "title_label": "Nombre del Atajo", "title_placeholder": "Ej: Notion, Figma, Spotify...", "url_label": "URL de Destino", "url_placeholder": "https://ejemplo.com", "category_label": "Categoría Bento", "icon_label": "Icono de la Aplicación", "icon_preset": "Elegir icono incluido:", "icon_custom": "O URL de icono personalizada:", "desc_label": "Descripción (para el Tooltip)", "desc_placeholder": "Breve resumen de la herramienta...", "tags_label": "Etiquetas de Búsqueda", "tags_placeholder": "separadas por comas (ej: musica, streaming)", "save_btn": "Guardar Atajo", "delete_btn": "Eliminar Atajo", "delete_confirm": "¿Seguro que deseas eliminar este acceso directo?", "cancel_btn": "Cancelar"}, "bangs": {"calc_title": "Resultado Calculado", "direct_search": "Buscar en {service}", "suggestions_title": "Comandos Bang Rápidos"}, "widgets": {"scratchpad_title": "Bloc de Notas Glass", "scratchpad_placeholder": "Escribe ideas, tareas o notas rápidas aquí...", "scratchpad_saved": "Guardado automáticamente", "pomodoro_title": "Temporizador Focus", "pomodoro_focus": "Enfoque", "pomodoro_break": "Descanso", "pomodoro_start": "Iniciar", "pomodoro_pause": "Pausar", "pomodoro_reset": "Reiniciar", "toggle_widgets_title": "Mini-Widgets Bento", "toggle_scratchpad": "Mostrar Bloc de Notas", "toggle_pomodoro": "Mostrar Temporizador Pomodoro", "scratchpad_pin": "Fijar Post-it"}, "audio": {"preset_label": "Efecto de Sonido Háptico", "preset_scifi": "Sci-Fi Soft Pop (Sintetizado)", "preset_mech": "Click Mecánico Táctil", "preset_bubble": "Burbuja Acústica"}, "theme_studio": {"title": "Theme Studio Personalizado", "desc": "Personaliza los colores de acento y resplandor neón en tiempo real:", "primary_label": "Color Primario (Acento):", "secondary_label": "Color Secundario:", "reset_colors_btn": "Restablecer Colores Predeterminados"}, "importer": {"title": "Importar Marcadores de Navegador", "desc": "Importa un archivo bookmarks.html exportado desde Chrome, Firefox, Edge o Brave:", "select_file_btn": "📁 Seleccionar Archivo HTML", "merge_mode": "Combinar con mis atajos actuales", "replace_mode": "Reemplazar todos los atajos", "import_btn": "Importar Marcadores", "success_msg": "¡Se han importado {count} accesos directos con éxito!", "error_msg": "No se encontraron marcadores válidos en el archivo seleccionado."}}, "en": {"brand_greeting": "Welcome to the Command Center", "greetings": {"morning": "Good morning, HaDeS!", "afternoon": "Good afternoon, HaDeS!", "night": "Good evening, HaDeS!"}, "controls": {"sound_title": "Sound Effects (Enabled/Disabled)", "theme_title": "Switch Visual Theme", "lang_title": "Switch Language", "cmdk_btn": "Search", "cmdk_badge": "Ctrl K"}, "search": {"placeholder": "Search with {engine} or filter shortcuts...", "clear": "Clear search"}, "filters": {"all": "All", "ia_creativa": "AI & 3D", "arte_media": "Art & Multimedia", "productividad": "Google & Tools", "social_compras": "Social & Shopping"}, "categories": {"cat_3d": "3D Modeling & AI", "cat_ai": "Artificial Intelligence", "cat_art": "Digital Art & Models", "cat_audio": "Audio Generation", "cat_google": "Google Workspace & AI", "cat_tools": "Tools & Dev", "cat_social": "Community & Social", "cat_shopping": "Shopping & Payments", "cat_video": "Video & AI Generation"}, "badges": {"apps": "apps"}, "shortcuts": {"meshy": "AI-powered 3D model and texture generation from text or image", "tripo3d": "Fast 3D studio generating production-ready 3D models with AI", "ludoai": "AI platform for game ideation, market analysis, and research", "chatgpt": "Advanced conversational AI assistant and reasoning with GPT-4o", "deepseek": "Deep reasoning AI model with high precision coding capabilities", "claude": "Anthropic's frontier AI model with vast context window and deep analysis", "qwen": "Alibaba Cloud foundational models and conversational AI (Qwen 2.5)", "seaverse": "AI creative tools and generators for virtual worlds and multimedia", "civitai": "Community model hub, Checkpoints and LoRAs for Stable Diffusion", "shakker": "High-definition image generation and AI image fusion platform", "tensorart": "Online generative art studio with free daily generation credits", "seaart": "AI-assisted art creation studio and image rendering platform", "shadertoy": "Platform to build, view, and share GLSL shaders in WebGL", "minimax": "Ultra-realistic voice cloning and text-to-speech AI generation", "suno": "Full song and music composition with lyrics generated by AI", "elevenlabs": "Industry-leading voice synthesis and multilingual audio translation", "google": "Global web search engine and integrated Google ecosystem services", "gmail": "Secure and synchronized webmail and communications service", "googledrive": "Cloud storage and collaborative document file management", "gemini": "Google multimodal AI model integrated across its workspace ecosystem", "googleaistudio": "Rapid prototyping environment and API access for Gemini models", "notebooklm": "Smart personalized notebook with AI-powered audio overviews", "birme": "Flexible batch image resizer and smart focal crop utility", "photoroom": "Professional background remover and quick photo editing suite", "github": "Collaborative software development platform and Git repositories", "itchio": "Indie marketplace for video games, assets, game music, and sprites", "optimizeglb": "Draco compression and performance optimizer for 3D GLB/glTF files", "translate": "Instant text and web page translations across multiple languages", "instagram": "Visual social media platform for photos, videos, stories, and reels", "facebook": "Social network to connect with friends, groups, and communities", "x": "Real-time microblogging network for global news, tech, and trends", "tiktok": "Short-form vertical video streaming and creative content platform", "threads": "Text-based conversation and microblogging platform linked to Instagram", "patreon": "Membership platform for creators to build recurring fan support", "discord": "Voice, video, and text communication platform for communities", "linkedin": "Professional networking platform for careers, jobs, and businesses", "exophase": "Gaming achievement, trophy, and multi-platform profile tracking", "amazon": "Global online shopping marketplace with fast delivery options", "aliexpress": "Global e-commerce platform offering factory-direct products", "pccomponentes": "Specialized computer hardware, electronics, and tech store", "paypal": "Secure digital wallet and online payment transfer system", "wallapop": "Peer-to-peer secondhand marketplace for buying and selling goods", "youtube": "Global streaming video platform, tutorials, music, and live broadcasts", "kling": "Cinematic video generation with realistic physics and camera motion", "hedra": "AI-powered expressive talking avatar and animated video generation"}, "no_results": {"title": "No shortcuts found", "desc": "Try different search terms or press Enter to search directly on the web."}, "weather": {"title": "Configure Weather City", "desc": "Enter the name of your city to view real-time weather forecasts:", "input_placeholder": "e.g. London, New York, Tokyo, Madrid...", "search_btn": "Search", "auto_btn": "Auto-detect via IP", "loading": "Loading...", "offline": "Offline", "conditions": {"clear": "Clear sky", "mostly_clear": "Mostly clear", "partly_cloudy": "Partly cloudy", "cloudy": "Overcast", "fog": "Fog", "drizzle": "Light drizzle", "rain": "Rain", "heavy_rain": "Heavy rain", "snow": "Snow", "showers": "Rain showers", "snow_showers": "Snow showers", "thunderstorm": "Thunderstorm", "hail_thunderstorm": "Thunderstorm with hail"}}, "cmdk": {"placeholder": "Search shortcut, tool or quick command...", "direct_search_prefix": "Search on {engine}:", "direct_search_cat": "Direct Web Search", "action_open": "Open", "action_search": "Search", "tip_nav": "Navigate", "tip_open": "Open link", "tip_close": "Close"}, "user_modal": {"title": "Change Username", "desc": "Customize the name displayed in the title and greetings of your Command Center:", "input_placeholder": "Your name or handle...", "save_btn": "Save", "preview_label": "Preview:", "tooltip_title": "Click to change your username", "doc_title_suffix": "· Command Center"}, "settings_hub": {"title": "Command Center Settings", "btn_title": "Configuration & Customization", "tabs": {"appearance": "Appearance", "language": "Language", "weather": "Weather", "layout": "Layout & Shortcuts", "backup": "Backup & Restore"}, "appearance": {"themes_label": "Visual Theme", "sound_label": "Haptic Sound Effects", "glow_label": "Ambient Aurora Glow", "themes": {"cyber": "Cyber Neon", "nebula": "Deep Nebula", "amber": "Sunset Amber", "light": "Crystal Light", "sunset": "Sunset Amber"}}, "layout": {"edit_mode_title": "Dashboard Edit Mode", "edit_mode_desc": "Enable to drag categories, reorder icons, edit or delete them.", "edit_mode_toggle": "Enable Edit Mode", "add_shortcut_btn": "➕ Add New Shortcut", "editing_active_badge": "Edit Mode Active", "reset_layout_title": "Reset Original Layout", "reset_layout_desc": "Extensively customized your dashboard? Start fresh anytime with the original factory layout and default shortcuts.", "reset_layout_btn": "🔄 Restore Factory Layout"}, "backup": {"export_title": "Export Configuration", "export_desc": "Download a JSON file containing all your shortcuts, custom layout, and preferences.", "export_btn": "📥 Download Backup (*.json)", "import_title": "Restore Configuration", "import_desc": "Load a previously exported JSON backup file.", "import_btn": "📤 Restore from File", "reset_title": "Factory Reset", "reset_desc": "Reset dashboard back to the original 45 default shortcuts.", "reset_btn": "⚠️ Reset to Default", "reset_confirm": "Are you sure you want to restore factory defaults? Customizations will be lost.", "import_success": "Backup successfully restored!", "import_error": "The backup file is invalid or corrupted."}, "profile": {"title": "User Profile", "desc": "Customize your name or alias for the Command Center and greetings:"}}, "shortcut_editor": {"add_title": "Add New Shortcut", "edit_title": "Edit Shortcut", "title_label": "Shortcut Name", "title_placeholder": "e.g. Notion, Figma, Spotify...", "url_label": "Target URL", "url_placeholder": "https://example.com", "category_label": "Bento Category", "icon_label": "Application Icon", "icon_preset": "Choose bundled icon:", "icon_custom": "Or custom icon URL:", "desc_label": "Description (for Tooltip)", "desc_placeholder": "Brief tool overview...", "tags_label": "Search Tags", "tags_placeholder": "comma separated (e.g. music, streaming)", "save_btn": "Save Shortcut", "delete_btn": "Delete Shortcut", "delete_confirm": "Are you sure you want to delete this shortcut?", "cancel_btn": "Cancel"}, "bangs": {"calc_title": "Calculation Result", "direct_search": "Search on {service}", "suggestions_title": "Quick Bang Commands"}, "widgets": {"scratchpad_title": "Glass Scratchpad", "scratchpad_placeholder": "Write thoughts, tasks or quick notes here...", "scratchpad_saved": "Auto-saved locally", "pomodoro_title": "Focus Timer", "pomodoro_focus": "Focus", "pomodoro_break": "Break", "pomodoro_start": "Start", "pomodoro_pause": "Pause", "pomodoro_reset": "Reset", "toggle_widgets_title": "Bento Mini-Widgets", "toggle_scratchpad": "Show Scratchpad", "toggle_pomodoro": "Show Pomodoro Timer", "scratchpad_pin": "Pin Post-it"}, "audio": {"preset_label": "Haptic Sound Preset", "preset_scifi": "Sci-Fi Soft Pop (Procedural)", "preset_mech": "Mechanical Switch Click", "preset_bubble": "Acoustic Bubble"}, "theme_studio": {"title": "Custom Theme Studio", "desc": "Customize accent colors and neon spotlight in real-time:", "primary_label": "Primary Accent Color:", "secondary_label": "Secondary Color:", "reset_colors_btn": "Reset Default Colors"}, "importer": {"title": "Import Browser Bookmarks", "desc": "Import a bookmarks.html file exported from Chrome, Firefox, Edge or Brave:", "select_file_btn": "📁 Select HTML File", "merge_mode": "Merge with my existing shortcuts", "replace_mode": "Replace all shortcuts", "import_btn": "Import Bookmarks", "success_msg": "Successfully imported {count} shortcuts!", "error_msg": "No valid bookmarks found in selected file."}}, "fr": {"brand_greeting": "Bienvenue au Centre de Commande", "greetings": {"morning": "Bonjour, HaDeS !", "afternoon": "Bon après-midi, HaDeS !", "night": "Bonsoir, HaDeS !"}, "controls": {"sound_title": "Effets sonores (Activé/Désactivé)", "theme_title": "Changer de Thème Visuel", "lang_title": "Changer de Langue", "cmdk_btn": "Rechercher", "cmdk_badge": "Ctrl K"}, "search": {"placeholder": "Rechercher avec {engine} ou filtrer les raccourcis...", "clear": "Effacer la recherche"}, "filters": {"all": "Tous", "ia_creativa": "IA & 3D", "arte_media": "Art & Multimédia", "productividad": "Google & Outils", "social_compras": "Social & Achats"}, "categories": {"cat_3d": "Modélisation 3D & IA", "cat_ai": "Intelligence Artificielle", "cat_art": "Art Numérique & Modèles", "cat_audio": "Génération Audio", "cat_google": "Google Workspace & IA", "cat_tools": "Outils & Développeur", "cat_social": "Communauté & Réseaux", "cat_shopping": "Achats & Paiements", "cat_video": "Vidéo & Génération IA"}, "badges": {"apps": "apps"}, "shortcuts": {"meshy": "Génération de modèles 3D et textures par IA à partir de texte ou image", "tripo3d": "Studio rapide pour générer des modèles 3D prêts pour la production", "ludoai": "Plateforme d'IA pour l'idéation et l'analyse de marché des jeux vidéo", "chatgpt": "Assistant conversationnel avancé et raisonnement avec GPT-4o", "deepseek": "Modèle d'IA de raisonnement profond et génération de code de haute précision", "claude": "Modèle d'IA d'Anthropic avec grande fenêtre de contexte et analyse de code", "qwen": "Modèles fondateurs et chat d'Alibaba Cloud (Qwen 2.5)", "seaverse": "Outils et générateurs d'IA pour mondes virtuels et multimédia", "civitai": "Dépôt communautaire de modèles, Checkpoints et LoRAs pour Stable Diffusion", "shakker": "Plateforme de génération et de fusion d'images haute définition par IA", "tensorart": "Générateur d'art en ligne avec crédits de création quotidiens gratuits", "seaart": "Studio de création et de rendu artistique assisté par IA", "shadertoy": "Plateforme pour programmer et partager des shaders GLSL en WebGL", "minimax": "Génération et clonage de voix ultra-réalistes par IA", "suno": "Composition musicale complète avec paroles et mélodie générées par IA", "elevenlabs": "Synthèse vocale de pointe et traduction audio multilingue", "google": "Moteur de recherche mondial et services intégrés de Google", "gmail": "Service de messagerie électronique sécurisé et synchronisé", "googledrive": "Stockage cloud et gestion collaborative de fichiers", "gemini": "Modèle multimodal de Google intégré à son écosystème", "googleaistudio": "Environnement de prototypage rapide avec les API Gemini", "notebooklm": "Carnet de notes intelligent avec résumés audio générés par IA", "birme": "Outil de redimensionnement et recadrage d'images par lots flexible", "photoroom": "Suppression professionnelle d'arrière-plan et retouche photo rapide", "github": "Plateforme de développement collaboratif et dépôts Git", "itchio": "Marché indépendant de jeux vidéo, assets, musique et sprites", "optimizeglb": "Compression Draco et optimisation de fichiers 3D GLB/glTF", "translate": "Traduction instantanée de textes et pages web en plusieurs langues", "instagram": "Réseau social pour partager photos, vidéos, stories et reels", "facebook": "Réseau social pour connecter avec amis, groupes et communautés", "x": "Réseau de microblogging pour actualités et tendances en temps réel", "tiktok": "Plateforme de vidéos courtes au format vertical", "threads": "Plateforme de microblogging et débat liée à Instagram", "patreon": "Abonnements et soutien participatif pour créateurs de contenu", "discord": "Serveurs de discussion textuelle, vocale et vidéo pour communautés", "linkedin": "Réseau social professionnel pour l'emploi et le networking", "exophase": "Suivi des succès, trophées et profils multi-plateformes de jeu", "amazon": "Boutique en ligne mondiale de produits avec livraison rapide", "aliexpress": "Plateforme d'achats en ligne avec prix directs d'usine", "pccomponentes": "Boutique spécialisée en informatique, hardware et technologie", "paypal": "Portefeuille numérique sécurisé et plateforme de paiement", "wallapop": "Plateforme d'achat et vente de produits d'occasion", "youtube": "Plateforme de streaming vidéo, tutoriels et diffusions en direct", "kling": "Génération de vidéos cinématographiques avec mouvements réalistes", "hedra": "Création d'avatars expressifs parlants et de personnages animés par IA"}, "no_results": {"title": "Aucun raccourci trouvé", "desc": "Essayez d'autres termes ou recherchez directement sur le Web en appuyant sur Entrée."}, "weather": {"title": "Configurer la Ville Météo", "desc": "Saisissez le nom de votre ville pour voir les prévisions en direct :", "input_placeholder": "Ex : Paris, Lyon, Montréal, Madrid...", "search_btn": "Chercher", "auto_btn": "Détecter automatiquement par IP", "loading": "Chargement...", "offline": "Hors ligne", "conditions": {"clear": "Ciel dégagé", "mostly_clear": "Généralement dégagé", "partly_cloudy": "Partiellement nuageux", "cloudy": "Couvert", "fog": "Brouillard", "drizzle": "Bruine légère", "rain": "Pluie", "heavy_rain": "Pluie battante", "snow": "Neige", "showers": "Averses de pluie", "snow_showers": "Averses de neige", "thunderstorm": "Orage", "hail_thunderstorm": "Orage avec grêle"}}, "cmdk": {"placeholder": "Rechercher un raccourci, un outil ou une commande rapide...", "direct_search_prefix": "Rechercher sur {engine} :", "direct_search_cat": "Recherche Web Directe", "action_open": "Ouvrir", "action_search": "Chercher", "tip_nav": "Naviguer", "tip_open": "Ouvrir le lien", "tip_close": "Fermer"}, "user_modal": {"title": "Changer de Nom d'Utilisateur", "desc": "Personnalisez le nom affiché dans le titre et les salutations de votre Centre de Commande :", "input_placeholder": "Votre nom ou pseudo...", "save_btn": "Enregistrer", "preview_label": "Aperçu :", "tooltip_title": "Cliquez pour changer votre nom d'utilisateur", "doc_title_suffix": "· Centre de Commande"}, "settings_hub": {"title": "Paramètres du Centre de Commande", "btn_title": "Configuration & Personnalisation", "tabs": {"appearance": "Apparence", "language": "Langue", "weather": "Météo", "layout": "Mise en page & Raccourcis", "backup": "Sauvegarde"}, "appearance": {"themes_label": "Thème Visuel", "sound_label": "Effets Sonores Haptiques", "glow_label": "Lueur Ambiante Aurora", "themes": {"cyber": "Cyber Neon", "nebula": "Deep Nebula", "amber": "Sunset Amber", "light": "Crystal Light", "sunset": "Sunset Amber"}}, "layout": {"edit_mode_title": "Mode Édition du Tableau", "edit_mode_desc": "Activez pour glisser les catégories, réorganiser les icônes, les modifier ou les supprimer.", "edit_mode_toggle": "Activer le Mode Édition", "add_shortcut_btn": "➕ Ajouter un Nouveau Raccourci", "editing_active_badge": "Mode Édition Activé", "reset_layout_title": "Réinitialiser la Disposition", "reset_layout_desc": "Vous avez beaucoup personnalisé votre tableau ? Repartez de zéro avec la disposition et les raccourcis d'usine.", "reset_layout_btn": "🔄 Restaurer la Disposition d'Usine"}, "backup": {"export_title": "Exporter la Configuration", "export_desc": "Téléchargez un fichier JSON avec tous vos raccourcis et préférences.", "export_btn": "📥 Télécharger la Sauvegarde (*.json)", "import_title": "Restaurer la Configuration", "import_desc": "Chargez un fichier de sauvegarde JSON préalablement exporté.", "import_btn": "📤 Restaurer depuis le Fichier", "reset_title": "Réinitialisation d'Usine", "reset_desc": "Restaure les 45 raccourcis originaux par défaut.", "reset_btn": "⚠️ Réinitialiser par Défaut", "reset_confirm": "Êtes-vous sûr de vouloir réinitialiser ? Les personnalisations seront perdues.", "import_success": "Sauvegarde restaurée avec succès !", "import_error": "Le fichier de sauvegarde est invalide ou corrompu."}, "profile": {"title": "Profil Utilisateur", "desc": "Personnalisez votre nom ou pseudo pour le Centre de Commande et les salutations :"}}, "shortcut_editor": {"add_title": "Ajouter un Nouveau Raccourci", "edit_title": "Modifier le Raccourci", "title_label": "Nom du Raccourci", "title_placeholder": "Ex : Notion, Figma, Spotify...", "url_label": "URL de Destination", "url_placeholder": "https://exemple.com", "category_label": "Catégorie Bento", "icon_label": "Icône de l'Application", "icon_preset": "Choisir une icône incluse :", "icon_custom": "Ou URL d'icône personnalisée :", "desc_label": "Description (pour le Tooltip)", "desc_placeholder": "Bref résumé de l'outil...", "tags_label": "Mots-clés de Recherche", "tags_placeholder": "séparés par des virgules (ex : musique, streaming)", "save_btn": "Enregistrer le Raccourci", "delete_btn": "Supprimer le Raccourci", "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce raccourci ?", "cancel_btn": "Annuler"}, "bangs": {"calc_title": "Résultat du Calcul", "direct_search": "Rechercher sur {service}", "suggestions_title": "Commandes Bang Rapides"}, "widgets": {"scratchpad_title": "Bloc-notes Glass", "scratchpad_placeholder": "Écrivez vos idées ou notes rapides ici...", "scratchpad_saved": "Enregistré automatiquement", "pomodoro_title": "Minuteur Focus", "pomodoro_focus": "Concentration", "pomodoro_break": "Pause", "pomodoro_start": "Démarrer", "pomodoro_pause": "Pause", "pomodoro_reset": "Réinitialiser", "toggle_widgets_title": "Mini-Widgets Bento", "toggle_scratchpad": "Afficher le Bloc-notes", "toggle_pomodoro": "Afficher le Minuteur Pomodoro", "scratchpad_pin": "Épingler Post-it"}, "audio": {"preset_label": "Effet Sonore Haptique", "preset_scifi": "Sci-Fi Soft Pop (Synthétisé)", "preset_mech": "Clic Mécanique Tactile", "preset_bubble": "Bulle Acoustique"}, "theme_studio": {"title": "Studio de Thème Personnalisé", "desc": "Personnalisez les couleurs d'accent et les reflets néon en temps réel :", "primary_label": "Couleur Primaire (Accent) :", "secondary_label": "Couleur Secondaire :", "reset_colors_btn": "Réinitialiser les Couleurs"}, "importer": {"title": "Importer les Favoris du Navigateur", "desc": "Importez un fichier bookmarks.html exporté depuis Chrome, Firefox, Edge ou Brave :", "select_file_btn": "📁 Sélectionner un Fichier HTML", "merge_mode": "Fusionner avec mes raccourcis actuels", "replace_mode": "Remplacer tous les raccourcis", "import_btn": "Importer les Favoris", "success_msg": "{count} raccourcis importés avec succès !", "error_msg": "Aucun favori valide trouvé dans le fichier sélectionné."}}, "de": {"brand_greeting": "Willkommen im Kontrollzentrum", "greetings": {"morning": "Guten Morgen, HaDeS!", "afternoon": "Guten Tag, HaDeS!", "night": "Guten Abend, HaDeS!"}, "controls": {"sound_title": "Soundeffekte (Ein/Aus)", "theme_title": "Visuelles Design wechseln", "lang_title": "Sprache wechseln", "cmdk_btn": "Suchen", "cmdk_badge": "Ctrl K"}, "search": {"placeholder": "Mit {engine} suchen oder Verknüpfungen filtern...", "clear": "Suche löschen"}, "filters": {"all": "Alle", "ia_creativa": "KI & 3D", "arte_media": "Kunst & Medien", "productividad": "Google & Tools", "social_compras": "Social & Shopping"}, "categories": {"cat_3d": "3D-Modellierung & KI", "cat_ai": "Künstliche Intelligenz", "cat_art": "Digitale Kunst & Modelle", "cat_audio": "Audio-Generierung", "cat_google": "Google Workspace & KI", "cat_tools": "Tools & Entwickler", "cat_social": "Community & Soziales", "cat_shopping": "Shopping & Bezahlen", "cat_video": "Video & KI-Generierung"}, "badges": {"apps": "Apps"}, "shortcuts": {"meshy": "KI-gestützte Generierung von 3D-Modellen und Texturen aus Text oder Bild", "tripo3d": "Schnelles Studio zur Erstellung produktionsbereiter 3D-Modelle mit KI", "ludoai": "KI-Plattform für Spielideen, Marktanalysen und Videospielforschung", "chatgpt": "Fortschrittlicher KI-Assistent und logisches Denken mit GPT-4o", "deepseek": "Tiefgreifendes KI-Modell mit hoher Präzision bei der Codegenerierung", "claude": "Anthropics KI-Modell mit riesigem Kontextfenster und Codeanalyse", "qwen": "Basis-KI-Modelle und Chatbot von Alibaba Cloud (Qwen 2.5)", "seaverse": "KI-Tools und Generatoren für virtuelle Welten und Multimedia", "civitai": "Community-Repository für Modelle, Checkpoints und LoRAs für Stable Diffusion", "shakker": "Plattform zur hochauflösenden Bildgenerierung und KI-Bildfusion", "tensorart": "Online-Kunstgenerator mit kostenlosen täglichen Generierungsguthaben", "seaart": "KI-unterstütztes Studio für künstlerische Erstellung und Bildrendering", "shadertoy": "Plattform zum Programmieren, Visualisieren und Teilen von GLSL-Shadern in WebGL", "minimax": "Ultrarealistische Stimmengenerierung und Sprachklonung mit KI", "suno": "Vollständige Song- und Musikkomposition mit von KI erstellten Texten", "elevenlabs": "Branchenführende Sprachsynthese und mehrsprachige Audioübersetzung", "google": "Globale Websuchmaschine und integrierte Google-Dienste", "gmail": "Sicherer und synchronisierter E-Mail-Dienst von Google", "googledrive": "Cloud-Speicher und kollaborative Dateiverwaltung", "gemini": "Multimodales Google-KI-Modell im Arbeitsbereich-Ökosystem", "googleaistudio": "Schnelle Prototyping-Umgebung für Entwickler mit Gemini-APIs", "notebooklm": "Intelligentes Notizbuch mit KI-generierten Audio-Zusammenfassungen", "birme": "Flexibler Stapel-Bildverkleinerer und smarter Zuschnitt", "photoroom": "Professioneller Hintergrundentferner und schnelle Fotobearbeitung", "github": "Kollaborative Entwicklungsplattform und Git-Repositories", "itchio": "Indie-Marktplatz für Videospiele, Assets, Musik und Sprites", "optimizeglb": "Draco-Kompression und Optimierung für 3D-GLB/glTF-Dateien", "translate": "Sofortige Text- und Webseitenübersetzung in mehreren Sprachen", "instagram": "Soziales Netzwerk für Fotos, Videos, Stories und Reels", "facebook": "Soziales Netzwerk zum Verbinden mit Freunden, Gruppen und Communities", "x": "Echtzeit-Microblogging-Netzwerk für Nachrichten und globale Trends", "tiktok": "Plattform für kurze vertikale Videos und kreative Clips", "threads": "Konversations- und Microblogging-Plattform verknüpft mit Instagram", "patreon": "Abonnements und Mitgliedschaftsplattform für Content-Ersteller", "discord": "Sprach-, Video- und Text-Chatserver für Communities", "linkedin": "Professionelles soziales Netzwerk für Karriere und Networking", "exophase": "Gaming-Erfolgs-, Trophäen- und plattformübergreifendes Profil-Tracking", "amazon": "Globaler Online-Marktplatz mit schneller Produktlieferung", "aliexpress": "Online-Shopping-Plattform mit Artikeln zu Fabrikpreisen", "pccomponentes": "Fachgeschäft für Computer, Hardware und Technik", "paypal": "Sichere Online-Zahlungsplattform und digitale Geldbörse", "wallapop": "Marktplatz für den Kauf und Verkauf von gebrauchten Artikeln", "youtube": "Streaming-Videoplattform, Tutorials, Musik und Live-Übertragungen", "kling": "Kinoreife Videogenerierung mit realistischen Bewegungen durch KI", "hedra": "Erstellung sprechender Avatare und animierter Charaktere mit KI"}, "no_results": {"title": "Keine Verknüpfungen gefunden", "desc": "Versuchen Sie andere Suchbegriffe oder drücken Sie Enter, um direkt im Web zu suchen."}, "weather": {"title": "Wetter-Stadt konfigurieren", "desc": "Geben Sie den Namen Ihrer Stadt ein, um die Live-Wettervorhersage zu sehen:", "input_placeholder": "z. B. Berlin, Wien, Zürich, München...", "search_btn": "Suchen", "auto_btn": "Automatisch über IP ermitteln", "loading": "Laden...", "offline": "Offline", "conditions": {"clear": "Klarer Himmel", "mostly_clear": "Überwiegend klar", "partly_cloudy": "Teilweise bewölkt", "cloudy": "Bedeckt", "fog": "Nebel", "drizzle": "Leichter Nieselregen", "rain": "Regen", "heavy_rain": "Starker Regen", "snow": "Schnee", "showers": "Regenschauer", "snow_showers": "Schneeschauer", "thunderstorm": "Gewitter", "hail_thunderstorm": "Gewitter mit Hagel"}}, "cmdk": {"placeholder": "Verknüpfung, Tool oder Schnellbefehl suchen...", "direct_search_prefix": "Auf {engine} suchen:", "direct_search_cat": "Direkte Websuche", "action_open": "Öffnen", "action_search": "Suchen", "tip_nav": "Navigieren", "tip_open": "Link öffnen", "tip_close": "Schließen"}, "user_modal": {"title": "Benutzername ändern", "desc": "Passen Sie den Namen an, der im Titel und in den Begrüßungen Ihres Kontrollzentrums angezeigt wird:", "input_placeholder": "Ihr Name oder Pseudonym...", "save_btn": "Speichern", "preview_label": "Vorschau:", "tooltip_title": "Klicken, um Ihren Benutzernamen zu ändern", "doc_title_suffix": "· Kontrollzentrum"}, "settings_hub": {"title": "Kontrollzentrum Einstellungen", "btn_title": "Konfiguration & Anpassung", "tabs": {"appearance": "Erscheinungsbild", "language": "Sprache", "weather": "Wetter", "layout": "Layout & Verknüpfungen", "backup": "Sicherung & Wiederherstellung"}, "appearance": {"themes_label": "Visuelles Design", "sound_label": "Haptische Soundeffekte", "glow_label": "Ambientes Aurora-Leuchten", "themes": {"cyber": "Cyber Neon", "nebula": "Deep Nebula", "amber": "Sunset Amber", "light": "Crystal Light", "sunset": "Sunset Amber"}}, "layout": {"edit_mode_title": "Dashboard-Bearbeitungsmodus", "edit_mode_desc": "Aktivieren, um Kategorien zu ziehen, Symbole neu anzuordnen, zu bearbeiten oder zu löschen.", "edit_mode_toggle": "Bearbeitungsmodus aktivieren", "add_shortcut_btn": "➕ Neue Verknüpfung hinzufügen", "editing_active_badge": "Bearbeitungsmodus Aktiv", "reset_layout_title": "Ursprüngliches Layout wiederherstellen", "reset_layout_desc": "Haben Sie Ihr Dashboard stark angepasst? Fangen Sie jederzeit mit dem ursprünglichen Werkslayout und den Standardverknüpfungen von vorne an.", "reset_layout_btn": "🔄 Werkslayout wiederherstellen"}, "backup": {"export_title": "Konfiguration exportieren", "export_desc": "Laden Sie eine JSON-Datei mit all Ihren Verknüpfungen und Einstellungen herunter.", "export_btn": "📥 Sicherung herunterladen (*.json)", "import_title": "Konfiguration wiederherstellen", "import_desc": "Laden Sie eine zuvor exportierte JSON-Sicherungsdatei.", "import_btn": "📤 Aus Datei wiederherstellen", "reset_title": "Werkseinstellungen", "reset_desc": "Stellt die ursprünglichen 45 Standard-Verknüpfungen wieder her.", "reset_btn": "⚠️ Auf Standard zurücksetzen", "reset_confirm": "Möchten Sie wirklich die Werkseinstellungen wiederherstellen?", "import_success": "Sicherung erfolgreich wiederhergestellt!", "import_error": "Die Sicherungsdatei ist ungültig oder beschädigt."}, "profile": {"title": "Benutzerprofil", "desc": "Passen Sie Ihren Namen oder Alias für das Command Center und die Begrüßungen an:"}}, "shortcut_editor": {"add_title": "Neue Verknüpfung hinzufügen", "edit_title": "Verknüpfung bearbeiten", "title_label": "Name der Verknüpfung", "title_placeholder": "z. B. Notion, Figma, Spotify...", "url_label": "Ziel-URL", "url_placeholder": "https://beispiel.com", "category_label": "Bento-Kategorie", "icon_label": "Anwendungssymbol", "icon_preset": "Enthaltenes Symbol wählen:", "icon_custom": "Oder benutzerdefinierte Symbol-URL:", "desc_label": "Beschreibung (für Tooltip)", "desc_placeholder": "Kurze Übersicht über das Tool...", "tags_label": "Suchbegriffe", "tags_placeholder": "kommagetrennt (z. B. Musik, Streaming)", "save_btn": "Verknüpfung speichern", "delete_btn": "Verknüpfung löschen", "delete_confirm": "Möchten Sie diese Verknüpfung wirklich löschen?", "cancel_btn": "Abbrechen"}, "bangs": {"calc_title": "Berechnungsergebnis", "direct_search": "Auf {service} suchen", "suggestions_title": "Schnelle Bang-Befehle"}, "widgets": {"scratchpad_title": "Glass-Notizblock", "scratchpad_placeholder": "Gedanken, Aufgaben oder schnelle Notizen hier schreiben...", "scratchpad_saved": "Automatisch gespeichert", "pomodoro_title": "Fokus-Timer", "pomodoro_focus": "Fokus", "pomodoro_break": "Pause", "pomodoro_start": "Starten", "pomodoro_pause": "Pause", "pomodoro_reset": "Zurücksetzen", "toggle_widgets_title": "Bento Mini-Widgets", "toggle_scratchpad": "Notizblock anzeigen", "toggle_pomodoro": "Pomodoro-Timer anzeigen", "scratchpad_pin": "Post-it anheften"}, "audio": {"preset_label": "Haptischer Sound-Effekt", "preset_scifi": "Sci-Fi Soft Pop (Synthetisiert)", "preset_mech": "Mechanischer Klick", "preset_bubble": "Akustische Blase"}, "theme_studio": {"title": "Individuelles Theme-Studio", "desc": "Akzentfarben und Neon-Leuchten in Echtzeit anpassen:", "primary_label": "Primäre Akzentfarbe:", "secondary_label": "Sekundärfarbe:", "reset_colors_btn": "Standardfarben wiederherstellen"}, "importer": {"title": "Browser-Lesezeichen importieren", "desc": "Importieren Sie eine aus Chrome, Firefox, Edge oder Brave exportierte bookmarks.html-Datei:", "select_file_btn": "📁 HTML-Datei auswählen", "merge_mode": "Mit meinen vorhandenen Verknüpfungen zusammenführen", "replace_mode": "Alle Verknüpfungen ersetzen", "import_btn": "Lesezeichen importieren", "success_msg": "Erfolgreich {count} Verknüpfungen importiert!", "error_msg": "Keine gültigen Lesezeichen in der ausgewählten Datei gefunden."}}};
 
 const getTranslation = (path, lang = state.language) => {
     const dict = i18nDictionaries[lang] || i18nDictionaries.es;
@@ -246,7 +249,6 @@ const getTranslation = (path, lang = state.language) => {
         if (current && typeof current === 'object' && key in current) {
             current = current[key];
         } else {
-            // Fallback to Spanish if missing in current language
             let fallback = i18nDictionaries.es;
             for (const fKey of keys) {
                 if (fallback && typeof fallback === 'object' && fKey in fallback) {
@@ -264,7 +266,6 @@ const getTranslation = (path, lang = state.language) => {
 const updateDocumentLocalization = () => {
     const lang = state.language;
 
-    // Update static elements with data-i18n
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         const trans = getTranslation(key, lang);
@@ -273,7 +274,6 @@ const updateDocumentLocalization = () => {
         }
     });
 
-    // Update static placeholders with data-i18n-placeholder
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
         const trans = getTranslation(key, lang);
@@ -282,7 +282,6 @@ const updateDocumentLocalization = () => {
         }
     });
 
-    // Update static titles with data-i18n-title
     document.querySelectorAll('[data-i18n-title]').forEach(el => {
         const key = el.getAttribute('data-i18n-title');
         const trans = getTranslation(key, lang);
@@ -291,7 +290,6 @@ const updateDocumentLocalization = () => {
         }
     });
 };
-
 
 async function loadLocaleAsync(lang) {
     if (i18nDictionaries[lang]) return i18nDictionaries[lang];
@@ -935,6 +933,233 @@ class WidgetsManager {
 }
 
 
+// --- Module: js/postits.js ---
+// js/postits.js - Floating Glass Post-it System
+
+
+class PostItManager {
+    constructor() {
+        this.container = null;
+        this.postits = this.loadPostIts();
+        this.topZIndex = 1000;
+        this.colors = ['cyan', 'yellow', 'magenta', 'emerald'];
+    }
+
+    init() {
+        this.container = document.getElementById('postits-canvas');
+        if (!this.container) {
+            this.container = document.createElement('div');
+            this.container.id = 'postits-canvas';
+            this.container.className = 'postits-canvas-container';
+            document.body.appendChild(this.container);
+        }
+
+        // Bind Scratchpad "Fix Post-it" button
+        const pinBtn = document.getElementById('create-postit-btn');
+        const textarea = document.getElementById('scratchpad-input');
+
+        if (pinBtn && textarea) {
+            pinBtn.addEventListener('click', () => {
+                const text = textarea.value.trim();
+                if (text) {
+                    this.createPostIt(text);
+                    textarea.value = '';
+                    localStorage.removeItem('bento_scratchpad_notes');
+                } else {
+                    textarea.focus();
+                }
+            });
+
+            textarea.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    e.preventDefault();
+                    pinBtn.click();
+                }
+            });
+        }
+
+        this.renderAll();
+    }
+
+    loadPostIts() {
+        try {
+            const saved = localStorage.getItem('glass_postits_v1');
+            if (saved) return JSON.parse(saved);
+        } catch (e) {}
+        return [];
+    }
+
+    savePostIts() {
+        try {
+            localStorage.setItem('glass_postits_v1', JSON.stringify(this.postits));
+        } catch (e) {}
+    }
+
+    createPostIt(text, color = 'cyan') {
+        soundFx.play('click');
+        const offset = (this.postits.length * 28) % 240;
+        const initialX = Math.min(window.innerWidth - 260, Math.max(20, 120 + offset));
+        const initialY = Math.min(window.innerHeight - 220, Math.max(80, 160 + offset));
+        const rotation = (Math.random() * 4 - 2).toFixed(1); // -2deg to +2deg
+
+        const newNote = {
+            id: 'postit_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+            text: text,
+            x: initialX,
+            y: initialY,
+            color: color,
+            rotation: parseFloat(rotation),
+            zIndex: ++this.topZIndex,
+            createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+
+        this.postits.push(newNote);
+        this.savePostIts();
+        this.renderSingle(newNote, true);
+    }
+
+    renderAll() {
+        if (!this.container) return;
+        this.container.innerHTML = '';
+        this.postits.forEach(note => this.renderSingle(note, false));
+    }
+
+    renderSingle(note, isNew = false) {
+        const el = document.createElement('div');
+        el.className = `glass-postit color-${note.color} ${isNew ? 'postit-spawn-anim' : ''}`;
+        el.id = note.id;
+        el.style.left = `${note.x}px`;
+        el.style.top = `${note.y}px`;
+        el.style.zIndex = note.zIndex || 1000;
+        el.style.transform = `rotate(${note.rotation || 0}deg)`;
+
+        el.innerHTML = `
+            <div class="postit-topbar">
+                <span class="postit-pin-grip" title="Arrastrar Post-it">📌</span>
+                <span class="postit-time">${escapeHtml(note.createdAt || '')}</span>
+                <div class="postit-actions">
+                    <button class="postit-color-btn" title="Cambiar color">🎨</button>
+                    <button class="postit-delete-btn" title="Eliminar Post-it">✕</button>
+                </div>
+            </div>
+            <div class="postit-body" contenteditable="true" spellcheck="false">${escapeHtml(note.text)}</div>
+        `;
+
+        this.bindPostItInteractions(el, note);
+        this.container.appendChild(el);
+    }
+
+    bindPostItInteractions(el, note) {
+        // Bring to front on pointer down
+        el.addEventListener('pointerdown', () => {
+            note.zIndex = ++this.topZIndex;
+            el.style.zIndex = note.zIndex;
+        });
+
+        // Content editable sync
+        const bodyEl = el.querySelector('.postit-body');
+        if (bodyEl) {
+            bodyEl.addEventListener('input', () => {
+                note.text = bodyEl.innerText;
+                this.savePostIts();
+            });
+        }
+
+        // Color toggle
+        const colorBtn = el.querySelector('.postit-color-btn');
+        if (colorBtn) {
+            colorBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                soundFx.play('hover');
+                const currentIndex = this.colors.indexOf(note.color);
+                const nextColor = this.colors[(currentIndex + 1) % this.colors.length];
+                el.classList.remove(`color-${note.color}`);
+                note.color = nextColor;
+                el.classList.add(`color-${note.color}`);
+                this.savePostIts();
+            });
+        }
+
+        // Delete button
+        const deleteBtn = el.querySelector('.postit-delete-btn');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                soundFx.play('click');
+                el.classList.add('postit-delete-anim');
+                setTimeout(() => {
+                    this.postits = this.postits.filter(n => n.id !== note.id);
+                    this.savePostIts();
+                    el.remove();
+                }, 220);
+            });
+        }
+
+        // Universal Freeform Smooth Dragging (Click anywhere on the postit)
+        let isDragging = false;
+        let startX = 0, startY = 0;
+        let elemInitialX = 0, elemInitialY = 0;
+        let hasMoved = false;
+
+        const onPointerDown = (e) => {
+            if (e.target.closest('.postit-actions')) return;
+            // If clicking directly into body to edit, allow editing without forcing drag unless moved
+            isDragging = true;
+            hasMoved = false;
+            startX = e.clientX;
+            startY = e.clientY;
+            elemInitialX = el.offsetLeft;
+            elemInitialY = el.offsetTop;
+            try { el.setPointerCapture(e.pointerId); } catch (err) {}
+        };
+
+        const onPointerMove = (e) => {
+            if (!isDragging) return;
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+
+            if (!hasMoved && (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3)) {
+                hasMoved = true;
+                el.classList.add('is-dragging-postit');
+                soundFx.play('hover');
+            }
+
+            if (hasMoved) {
+                let newX = elemInitialX + deltaX;
+                let newY = elemInitialY + deltaY;
+
+                // Constrain within viewport bounds
+                const maxX = window.innerWidth - el.offsetWidth - 10;
+                const maxY = window.innerHeight - el.offsetHeight - 10;
+                newX = Math.max(10, Math.min(maxX, newX));
+                newY = Math.max(10, Math.min(maxY, newY));
+
+                el.style.left = `${newX}px`;
+                el.style.top = `${newY}px`;
+                note.x = newX;
+                note.y = newY;
+            }
+        };
+
+        const onPointerUp = (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            if (hasMoved) {
+                el.classList.remove('is-dragging-postit');
+                this.savePostIts();
+                soundFx.play('click');
+            }
+            try { el.releasePointerCapture(e.pointerId); } catch (err) {}
+        };
+
+        el.addEventListener('pointerdown', onPointerDown);
+        el.addEventListener('pointermove', onPointerMove);
+        el.addEventListener('pointerup', onPointerUp);
+        el.addEventListener('pointercancel', onPointerUp);
+    }
+}
+
+
 // --- Module: js/theme-studio.js ---
 // js/theme-studio.js - Custom Dynamic Color Theme Studio
 
@@ -1097,7 +1322,7 @@ class BookmarksImporter {
 
 class DashboardRenderer {
     constructor() {
-        this.gridContainer = document.getElementById('shortcuts-grid');
+        this.gridContainer = document.getElementById('zone-grid') || document.getElementById('shortcuts-grid');
         this.smartTooltip = document.getElementById('smart-tooltip');
         this.tooltipTitle = document.getElementById('tooltip-title');
         this.tooltipDomain = document.getElementById('tooltip-domain');
@@ -1125,9 +1350,10 @@ class DashboardRenderer {
             section.className = `categoria ${isFeatured ? 'categoria-featured' : ''}`;
             section.setAttribute('data-group', cat.group);
             section.setAttribute('data-cat-id', cat.id);
+            section.setAttribute('data-tile-id', `tile-${cat.id}`);
 
             // Drag handle for Edit Mode
-            const dragHandle = state.editMode ? `<span class="cat-drag-handle" title="Arrastrar cajón">⠿</span>` : '';
+            const dragHandle = '';
             const catTitle = t.categories[cat.id] || cat.defaultTitle;
             const badgeText = `${shortcutsInCat.length} ${t.badges.apps}`;
 
@@ -1269,90 +1495,340 @@ class DashboardRenderer {
 
 
 
+// --- Module: js/layout.js ---
+// js/layout.js - Freeform Canvas & Resize Layout Manager (Exact Cursor Lock)
+
+
+class LayoutManager {
+    constructor() {
+        this.positions = this.loadPositions();
+        this.topZIndex = 300;
+        this.floatingBar = document.getElementById('floating-edit-bar');
+        this.exitBtn = document.getElementById('exit-edit-mode-btn');
+        this.resetBtn = document.getElementById('reset-layout-btn-bar');
+    }
+
+    loadPositions() {
+        try {
+            const saved = localStorage.getItem('canvas_positions_v1');
+            if (saved) return JSON.parse(saved);
+        } catch (e) {}
+        return {};
+    }
+
+    savePositions() {
+        try {
+            localStorage.setItem('canvas_positions_v1', JSON.stringify(this.positions));
+        } catch (e) {}
+    }
+
+    init() {
+        this.applyPositions();
+        state.on('dashboard:rendered', () => this.applyPositions());
+        state.on('editmode:changed', (enabled) => this.toggleEditVisuals(enabled));
+
+        if (this.exitBtn) {
+            this.exitBtn.addEventListener('click', () => {
+                soundFx.play('click');
+                state.setEditMode(false);
+            });
+        }
+
+        if (this.resetBtn) {
+            this.resetBtn.addEventListener('click', () => {
+                soundFx.play('click');
+                this.resetLayout();
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && state.editMode) {
+                state.setEditMode(false);
+            }
+        });
+    }
+
+    applyPositions() {
+        const tiles = document.querySelectorAll('[data-tile-id]');
+        tiles.forEach(tile => {
+            const id = tile.getAttribute('data-tile-id');
+            const pos = this.positions[id];
+            if (pos && (pos.x !== undefined || pos.y !== undefined || pos.w || pos.h)) {
+                tile.classList.add('freeform-positioned');
+                if (pos.x !== undefined) tile.style.left = `${pos.x}px`;
+                if (pos.y !== undefined) tile.style.top = `${pos.y}px`;
+                if (pos.w) tile.style.width = `${pos.w}px`;
+                if (pos.h) tile.style.height = `${pos.h}px`;
+                if (pos.zIndex) tile.style.zIndex = pos.zIndex;
+            } else {
+                tile.classList.remove('freeform-positioned');
+                tile.style.removeProperty('left');
+                tile.style.removeProperty('top');
+                tile.style.removeProperty('width');
+                tile.style.removeProperty('height');
+                tile.style.removeProperty('z-index');
+            }
+        });
+
+        this.toggleEditVisuals(state.editMode);
+    }
+
+    resetLayout() {
+        this.positions = {};
+        localStorage.removeItem('canvas_positions_v1');
+        localStorage.removeItem('dashboard_layout_v3');
+        this.applyPositions();
+        soundFx.play('chime');
+    }
+
+    toggleEditVisuals(enabled) {
+        document.body.classList.toggle('edit-mode-active', enabled);
+        if (this.floatingBar) {
+            this.floatingBar.classList.toggle('hidden', !enabled);
+        }
+
+        const tiles = document.querySelectorAll('[data-tile-id]');
+        tiles.forEach(tile => {
+            tile.classList.toggle('modular-tile', enabled);
+
+            // Drag Handle
+            let handle = tile.querySelector('.modular-drag-handle');
+            if (enabled && !handle) {
+                handle = document.createElement('span');
+                handle.className = 'modular-drag-handle';
+                handle.setAttribute('title', 'Arrastrar módulo a cualquier posición');
+                handle.textContent = '⠿';
+                tile.prepend(handle);
+            } else if (!enabled && handle) {
+                handle.remove();
+            }
+
+            // Resize Handle (Bottom Right Corner)
+            let resizeHandle = tile.querySelector('.modular-resize-handle');
+            if (enabled && !resizeHandle) {
+                resizeHandle = document.createElement('span');
+                resizeHandle.className = 'modular-resize-handle';
+                resizeHandle.setAttribute('title', 'Redimensionar módulo');
+                resizeHandle.textContent = '↘';
+                tile.appendChild(resizeHandle);
+                this.bindResizeEvents(tile, resizeHandle);
+            } else if (!enabled && resizeHandle) {
+                resizeHandle.remove();
+            }
+
+            if (enabled) {
+                this.bindTileDragEvents(tile);
+            } else {
+                tile.onpointerdown = null;
+            }
+        });
+    }
+
+    bindTileDragEvents(tile) {
+        const id = tile.getAttribute('data-tile-id');
+        let isDragging = false;
+        let grabOffsetX = 0, grabOffsetY = 0;
+        let hasMoved = false;
+
+        const onPointerDown = (e) => {
+            if (!state.editMode) return;
+            if (e.target.closest('.modular-resize-handle') || e.target.closest('.card-action-btn') || e.target.closest('.enlace-icono')) return;
+
+            isDragging = true;
+            hasMoved = false;
+
+            const rect = tile.getBoundingClientRect();
+            grabOffsetX = e.clientX - rect.left;
+            grabOffsetY = e.clientY - rect.top;
+
+            this.topZIndex += 1;
+            tile.style.zIndex = this.topZIndex;
+
+            try { tile.setPointerCapture(e.pointerId); } catch (err) {}
+        };
+
+        const onPointerMove = (e) => {
+            if (!isDragging) return;
+
+            if (!hasMoved) {
+                hasMoved = true;
+                tile.classList.add('tile-is-dragging');
+                tile.classList.add('freeform-positioned');
+                soundFx.play('hover');
+            }
+
+            // Exact 1:1 cursor-locked viewport positioning
+            const targetX = e.clientX - grabOffsetX;
+            const targetY = e.clientY - grabOffsetY;
+
+            // Clamping with 10px safe margins
+            const maxX = Math.max(10, window.innerWidth - tile.offsetWidth - 10);
+            const maxY = Math.max(10, window.innerHeight - tile.offsetHeight - 10);
+            const newX = Math.max(10, Math.min(maxX, targetX));
+            const newY = Math.max(10, Math.min(maxY, targetY));
+
+            tile.style.left = `${newX}px`;
+            tile.style.top = `${newY}px`;
+
+            if (!this.positions[id]) this.positions[id] = {};
+            this.positions[id].x = newX;
+            this.positions[id].y = newY;
+            this.positions[id].zIndex = this.topZIndex;
+        };
+
+        const onPointerUp = (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            if (hasMoved) {
+                tile.classList.remove('tile-is-dragging');
+                this.savePositions();
+                soundFx.play('click');
+            }
+            try { tile.releasePointerCapture(e.pointerId); } catch (err) {}
+        };
+
+        tile.onpointerdown = onPointerDown;
+        tile.onpointermove = onPointerMove;
+        tile.onpointerup = onPointerUp;
+        tile.onpointercancel = onPointerUp;
+    }
+
+    bindResizeEvents(tile, resizeHandle) {
+        const id = tile.getAttribute('data-tile-id');
+        let isResizing = false;
+        let startClientX = 0, startClientY = 0;
+        let startW = 0, startH = 0;
+
+        const onResizeDown = (e) => {
+            e.stopPropagation();
+            isResizing = true;
+            startClientX = e.clientX;
+            startClientY = e.clientY;
+
+            const rect = tile.getBoundingClientRect();
+            startW = rect.width;
+            startH = rect.height;
+
+            tile.classList.add('freeform-positioned');
+            tile.classList.add('tile-is-resizing');
+            soundFx.play('hover');
+            try { resizeHandle.setPointerCapture(e.pointerId); } catch (err) {}
+        };
+
+        const onResizeMove = (e) => {
+            if (!isResizing) return;
+            const deltaX = e.clientX - startClientX;
+            const deltaY = e.clientY - startClientY;
+
+            const newW = Math.max(140, Math.min(window.innerWidth - 30, startW + deltaX));
+            const newH = Math.max(60, Math.min(window.innerHeight - 30, startH + deltaY));
+
+            tile.style.width = `${newW}px`;
+            tile.style.height = `${newH}px`;
+
+            if (!this.positions[id]) this.positions[id] = {};
+            this.positions[id].w = newW;
+            this.positions[id].h = newH;
+        };
+
+        const onResizeUp = (e) => {
+            if (!isResizing) return;
+            isResizing = false;
+            tile.classList.remove('tile-is-resizing');
+            this.savePositions();
+            soundFx.play('click');
+            try { resizeHandle.releasePointerCapture(e.pointerId); } catch (err) {}
+        };
+
+        resizeHandle.onpointerdown = onResizeDown;
+        resizeHandle.onpointermove = onResizeMove;
+        resizeHandle.onpointerup = onResizeUp;
+        resizeHandle.onpointercancel = onResizeUp;
+    }
+}
+
+
 // --- Module: js/dragdrop.js ---
-// js/dragdrop.js - Native HTML5 Drag & Drop for Categories & Icons
+// js/dragdrop.js - Shortcut Cards Inner Drag & Drop Reordering
 
 
 class DragDropManager {
-    constructor(renderer) {
+    constructor(renderer, layoutManager) {
         this.renderer = renderer;
+        this.layoutManager = layoutManager;
         this.draggedCard = null;
-        this.draggedCategory = null;
     }
 
     init() {
         state.on('editmode:changed', (enabled) => {
-            this.renderer.render();
             if (enabled) {
-                this.enableDragDrop();
+                this.enableCardDragDrop();
+            } else {
+                this.disableCardDragDrop();
             }
         });
     }
 
-    enableDragDrop() {
-        const categories = document.querySelectorAll('.categoria');
+    enableCardDragDrop() {
         const cards = document.querySelectorAll('.enlace-icono');
-
-        // Category Drag & Drop
-        categories.forEach(cat => {
-            const handle = cat.querySelector('.cat-drag-handle');
-            if (handle) {
-                handle.setAttribute('draggable', 'true');
-                handle.addEventListener('dragstart', (e) => {
-                    this.draggedCategory = cat;
-                    cat.classList.add('dragging-cat');
-                    e.dataTransfer.effectAllowed = 'move';
-                });
-                handle.addEventListener('dragend', () => {
-                    if (this.draggedCategory) this.draggedCategory.classList.remove('dragging-cat');
-                    this.draggedCategory = null;
-                    this.saveCategoryOrder();
-                });
-            }
-
-            cat.addEventListener('dragover', (e) => {
-                if (!this.draggedCategory || this.draggedCategory === cat) return;
-                e.preventDefault();
-                e.dataTransfer.dropEffect = 'move';
-                const grid = cat.parentElement;
-                const nextSibling = (e.clientY > cat.getBoundingClientRect().top + cat.offsetHeight / 2) ? cat.nextSibling : cat;
-                grid.insertBefore(this.draggedCategory, nextSibling);
-            });
-        });
-
-        // Icon Card Drag & Drop
         cards.forEach(card => {
             card.setAttribute('draggable', 'true');
-            card.addEventListener('dragstart', (e) => {
+            card.ondragstart = (e) => {
+                e.stopPropagation();
                 this.draggedCard = card;
                 card.classList.add('dragging-card');
+                soundFx.play('click');
                 e.dataTransfer.effectAllowed = 'move';
-            });
+            };
 
-            card.addEventListener('dragend', () => {
+            card.ondragend = () => {
                 if (this.draggedCard) this.draggedCard.classList.remove('dragging-card');
                 this.draggedCard = null;
                 this.saveShortcutsOrder();
-            });
+                soundFx.play('click');
+            };
         });
 
-        const grids = document.querySelectorAll('.iconos-grupo');
-        grids.forEach(grid => {
-            grid.addEventListener('dragover', (e) => {
+        const iconGrids = document.querySelectorAll('.iconos-grupo');
+        iconGrids.forEach(grid => {
+            grid.ondragover = (e) => {
                 if (!this.draggedCard) return;
                 e.preventDefault();
+                e.stopPropagation();
                 e.dataTransfer.dropEffect = 'move';
-                const afterElement = this.getDragAfterElement(grid, e.clientX, e.clientY);
+                const afterElement = this.getCardAfterElement(grid, e.clientX, e.clientY);
                 if (afterElement == null) {
                     grid.appendChild(this.draggedCard);
                 } else {
                     grid.insertBefore(this.draggedCard, afterElement);
                 }
-            });
+            };
+
+            grid.ondrop = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.saveShortcutsOrder();
+                soundFx.play('click');
+            };
         });
     }
 
-    getDragAfterElement(container, x, y) {
+    disableCardDragDrop() {
+        const cards = document.querySelectorAll('.enlace-icono');
+        cards.forEach(card => {
+            card.removeAttribute('draggable');
+            card.ondragstart = null;
+            card.ondragend = null;
+        });
+
+        const iconGrids = document.querySelectorAll('.iconos-grupo');
+        iconGrids.forEach(grid => {
+            grid.ondragover = null;
+            grid.ondrop = null;
+        });
+    }
+
+    getCardAfterElement(container, x, y) {
         const draggableElements = [...container.querySelectorAll('.enlace-icono:not(.dragging-card)')];
         return draggableElements.reduce((closest, child) => {
             const box = child.getBoundingClientRect();
@@ -1363,12 +1839,6 @@ class DragDropManager {
                 return closest;
             }
         }, { offset: Number.NEGATIVE_INFINITY }).element;
-    }
-
-    saveCategoryOrder() {
-        const catEls = document.querySelectorAll('.categoria');
-        const catIds = Array.from(catEls).map(el => el.getAttribute('data-cat-id')).filter(Boolean);
-        state.saveCategoriesOrder(catIds);
     }
 
     saveShortcutsOrder() {
@@ -1564,7 +2034,7 @@ class BackupManager {
 
     exportBackup() {
         const data = {
-            version: '2.0.0',
+            version: '3.0.0',
             exportedAt: new Date().toISOString(),
             settings: {
                 userName: state.userName,
@@ -1574,6 +2044,9 @@ class BackupManager {
                 weatherCity: localStorage.getItem('weather_manual_city')
             },
             categoriesOrder: state.categories.map(c => c.id),
+            layoutMatrix: state.layoutMatrix,
+            postits: JSON.parse(localStorage.getItem('glass_postits_v1') || '[]'),
+            canvasPositions: JSON.parse(localStorage.getItem('canvas_positions_v1') || '{}'),
             shortcuts: state.shortcuts
         };
 
@@ -1600,6 +2073,15 @@ class BackupManager {
                     state.saveShortcuts(data.shortcuts);
                     if (data.categoriesOrder && Array.isArray(data.categoriesOrder)) {
                         state.saveCategoriesOrder(data.categoriesOrder);
+                    }
+                    if (data.canvasPositions) {
+                        localStorage.setItem('canvas_positions_v1', JSON.stringify(data.canvasPositions));
+                    }
+                    if (data.postits) {
+                        localStorage.setItem('glass_postits_v1', JSON.stringify(data.postits));
+                    }
+                    if (data.layoutMatrix) {
+                        state.saveLayoutMatrix(data.layoutMatrix);
                     }
                     if (data.settings) {
                         if (data.settings.userName) state.setUserName(data.settings.userName);
@@ -1990,7 +2472,6 @@ class SettingsHub {
             this.editModeToggle.addEventListener('change', (e) => {
                 soundFx.play('click');
                 state.setEditMode(e.target.checked);
-                this.renderer.render();
             });
         }
 
@@ -2201,17 +2682,21 @@ function initApp() {
     const weather = new WeatherEngine();
     const search = new SearchEngineManager();
     const widgets = new WidgetsManager();
+    const postits = new PostItManager();
+    const layoutManager = new LayoutManager();
     const shortcutManager = new ShortcutManager(renderer);
     const backupManager = new BackupManager(renderer);
     const importer = new BookmarksImporter(renderer);
-    const dragDropManager = new DragDropManager(renderer);
+    const dragDropManager = new DragDropManager(renderer, layoutManager);
     const settingsHub = new SettingsHub(renderer, shortcutManager, backupManager, importer, themeStudio);
 
     // 3. Render Dashboard & Init Subsystems
     renderer.render();
+    layoutManager.init();
     weather.init();
     search.init();
     widgets.init();
+    postits.init();
     dragDropManager.init();
     shortcutManager.init();
     backupManager.init();
@@ -2220,6 +2705,7 @@ function initApp() {
     loadLocaleAsync(state.language).then(() => {
         updateDocumentLocalization();
         renderer.render();
+        layoutManager.applyPositions();
     });
 
     // 4. User Name Interactive Modal & Drawer Sync

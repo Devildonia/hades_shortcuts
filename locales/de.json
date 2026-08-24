@@ -219,7 +219,8 @@
     "pomodoro_reset": "Zurücksetzen",
     "toggle_widgets_title": "Bento Mini-Widgets",
     "toggle_scratchpad": "Notizblock anzeigen",
-    "toggle_pomodoro": "Pomodoro-Timer anzeigen"
+    "toggle_pomodoro": "Pomodoro-Timer anzeigen",
+    "scratchpad_pin": "Post-it anheften"
   },
   "audio": {
     "preset_label": "Haptischer Sound-Effekt",

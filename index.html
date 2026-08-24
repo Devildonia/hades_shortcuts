@@ -28,10 +28,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=4.3.0">
+    <link rel="stylesheet" href="style.css?v=4.10.0">
 
     <!-- Master Script Module -->
-    <script defer src="js/bundle.js?v=4.3.0"></script>
+    <script defer src="js/bundle.js?v=4.10.0"></script>
 </head>
 <body>
 
@@ -44,9 +44,9 @@
     <!-- Top Navigation Bar & Widgets -->
     <header class="top-nav">
         <!-- Left Widgets: Clock & Weather -->
-        <div class="nav-widgets-left">
+        <div class="nav-widgets-left modular-dropzone" id="zone-header-left">
             <!-- Live Clock Widget -->
-            <div class="nav-widget widget-clock" id="clock-widget">
+            <div class="nav-widget widget-clock" id="clock-widget" data-tile-id="tile-clock">
                 <span class="pulse-dot"></span>
                 <div class="clock-details">
                     <span class="clock-time" id="live-time">19:45</span>
@@ -55,7 +55,7 @@
             </div>
 
             <!-- Weather Widget -->
-            <div class="nav-widget widget-weather" id="weather-widget" title="Haz clic para cambiar o buscar tu ciudad" role="button" tabindex="0">
+            <div class="nav-widget widget-weather" id="weather-widget" data-tile-id="tile-weather" title="Haz clic para cambiar o buscar tu ciudad" role="button" tabindex="0">
                 <span class="weather-icon" id="weather-icon">⛅</span>
                 <div class="weather-details">
                     <div class="weather-temp-row">
@@ -68,20 +68,20 @@
         </div>
 
         <!-- Center Brand / Title -->
-        <div class="brand-center">
-            <h1 class="brand-title" style="cursor: pointer;" title="Haz clic para cambiar tu nombre de usuario"><span class="brand-user-name" id="brand-user-name" title="Haz clic para cambiar tu nombre de usuario" role="button" tabindex="0">HaDeS</span><span class="brand-user-suffix" id="brand-user-suffix">'</span> <span class="accent-text">SHORTCUTS</span></h1>
-            <p class="brand-greeting" id="greeting-text">Bienvenido al Centro de Mando</p>
+        <div class="brand-center modular-dropzone" id="zone-header-center">
+            <div class="brand-tile-wrapper" data-tile-id="tile-brand"><h1 class="brand-title" style="cursor: pointer;" title="Haz clic para cambiar tu nombre de usuario"><span class="brand-user-name" id="brand-user-name" title="Haz clic para cambiar tu nombre de usuario" role="button" tabindex="0">HaDeS</span><span class="brand-user-suffix" id="brand-user-suffix">'</span> <span class="accent-text">SHORTCUTS</span></h1>
+            <p class="brand-greeting" id="greeting-text">Bienvenido al Centro de Mando</p></div>
         </div>
 
                 <!-- Top Right Controls (Unified Settings Hub) -->
-        <div class="nav-controls">
+        <div class="nav-controls modular-dropzone" id="zone-header-right">
             <!-- Settings Hub Button -->
-            <button class="control-btn settings-main-btn" id="settings-btn" title="Configuración y Personalización" aria-label="Ajustes" data-i18n-title="settings_hub.btn_title">
+            <div class="settings-btn-tile" data-tile-id="tile-settings-btn"><button class="control-btn settings-main-btn" id="settings-btn" title="Configuración y Personalización" aria-label="Ajustes" data-i18n-title="settings_hub.btn_title">
                 <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="3"></circle>
                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                 </svg>
-            </button>
+            </button></div>
         </div>
     </header>
 
@@ -89,8 +89,8 @@
     <main class="dashboard-wrapper">
         
         <!-- Search & Filter Bar Section -->
-        <section class="search-section">
-            <div class="search-box-wrapper">
+        <section class="search-section modular-dropzone" id="zone-hero">
+            <div class="search-box-wrapper" data-tile-id="tile-search">
                 <!-- Search Engine Selector Dropdown -->
                 <div class="engine-dropdown-wrapper">
                     <button class="engine-selector-btn" id="engine-btn" title="Cambiar motor de búsqueda" aria-label="Cambiar motor de búsqueda" aria-haspopup="true" aria-expanded="false">
@@ -140,19 +140,27 @@
         </section>
 
                 <!-- Mini-Widgets Bento Section -->
-        <section class="mini-widgets-section" id="mini-widgets-section">
+        <section class="mini-widgets-section modular-dropzone" id="zone-widgets">
             <!-- Widget 1: Scratchpad Glass -->
-            <div class="mini-widget-card widget-scratchpad" id="widget-scratchpad-card">
+            <div class="mini-widget-card widget-scratchpad" id="widget-scratchpad-card" data-tile-id="tile-scratchpad">
                 <div class="widget-header">
-                    <span class="widget-icon">📝</span>
-                    <h3 data-i18n="widgets.scratchpad_title">Bloc de Notas Glass</h3>
-                    <span class="widget-status" data-i18n="widgets.scratchpad_saved">Guardado</span>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="widget-icon">📝</span>
+                        <h3 data-i18n="widgets.scratchpad_title">Bloc de Notas Glass</h3>
+                    </div>
+                    <button class="scratchpad-pin-btn" id="create-postit-btn" title="Fijar nota como Post-it flotante (Ctrl+Enter)">
+                        <span>📌</span> <span data-i18n="widgets.scratchpad_pin">Fijar Post-it</span>
+                    </button>
                 </div>
-                <textarea id="scratchpad-input" class="scratchpad-textarea" placeholder="Escribe ideas o notas rápidas aquí..." data-i18n-placeholder="widgets.scratchpad_placeholder"></textarea>
+                <textarea id="scratchpad-input" class="scratchpad-textarea" placeholder="Escribe ideas o notas rápidas y fíjalas en pantalla..." data-i18n-placeholder="widgets.scratchpad_placeholder"></textarea>
+                <div class="scratchpad-footer">
+                    <span class="widget-status" data-i18n="widgets.scratchpad_saved">Auto-guardado</span>
+                    <span class="scratchpad-tip">Tip: <strong>Ctrl+Enter</strong> para fijar</span>
+                </div>
             </div>
 
             <!-- Widget 2: Pomodoro Focus Timer -->
-            <div class="mini-widget-card widget-pomodoro" id="widget-pomodoro-card">
+            <div class="mini-widget-card widget-pomodoro" id="widget-pomodoro-card" data-tile-id="tile-pomodoro">
                 <div class="widget-header">
                     <span class="widget-icon">⏳</span>
                     <h3 data-i18n="widgets.pomodoro_title">Temporizador Focus</h3>
@@ -175,7 +183,7 @@
         </section>
 
         <!-- Bento Grid System -->
-        <div class="categorias-contenedor" id="shortcuts-grid">
+        <div class="categorias-contenedor modular-dropzone" id="shortcuts-grid">
             
             <!-- Category 1: 3D -->
             <section class="categoria" data-group="ia-creativa">
@@ -879,5 +887,17 @@
         </div>
     </div>
 
+
+    <!-- Floating Edit Mode Control Bar -->
+    <div class="floating-edit-bar hidden" id="floating-edit-bar">
+        <div class="floating-edit-content">
+            <span class="floating-edit-badge">✏️ Modo Edición Activo</span>
+            <span class="floating-edit-hint">Arrastra los módulos por sus tiradores ⠿ para reorganizarlos</span>
+            <button class="settings-action-btn secondary" id="reset-layout-btn-bar" style="width: auto; padding: 6px 14px; margin-right: 8px;">🔄 Restablecer</button>
+            <button class="settings-action-btn primary" id="exit-edit-mode-btn" style="width: auto; padding: 6px 18px;">✓ Guardar y Salir</button>
+        </div>
+    </div>
+
+<div id="postits-canvas" class="postits-canvas-container"></div>
 </body>
 </html>

@@ -19,7 +19,7 @@ export class BackupManager {
 
     exportBackup() {
         const data = {
-            version: '2.0.0',
+            version: '3.0.0',
             exportedAt: new Date().toISOString(),
             settings: {
                 userName: state.userName,
@@ -29,6 +29,9 @@ export class BackupManager {
                 weatherCity: localStorage.getItem('weather_manual_city')
             },
             categoriesOrder: state.categories.map(c => c.id),
+            layoutMatrix: state.layoutMatrix,
+            postits: JSON.parse(localStorage.getItem('glass_postits_v1') || '[]'),
+            canvasPositions: JSON.parse(localStorage.getItem('canvas_positions_v1') || '{}'),
             shortcuts: state.shortcuts
         };
 
@@ -55,6 +58,15 @@ export class BackupManager {
                     state.saveShortcuts(data.shortcuts);
                     if (data.categoriesOrder && Array.isArray(data.categoriesOrder)) {
                         state.saveCategoriesOrder(data.categoriesOrder);
+                    }
+                    if (data.canvasPositions) {
+                        localStorage.setItem('canvas_positions_v1', JSON.stringify(data.canvasPositions));
+                    }
+                    if (data.postits) {
+                        localStorage.setItem('glass_postits_v1', JSON.stringify(data.postits));
+                    }
+                    if (data.layoutMatrix) {
+                        state.saveLayoutMatrix(data.layoutMatrix);
                     }
                     if (data.settings) {
                         if (data.settings.userName) state.setUserName(data.settings.userName);

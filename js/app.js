@@ -7,10 +7,12 @@ import { WeatherEngine } from './weather.js';
 import { SearchEngineManager } from './search.js';
 import { DashboardRenderer } from './render.js';
 import { DragDropManager } from './dragdrop.js';
+import { LayoutManager } from './layout.js';
 import { ShortcutManager } from './shortcut-manager.js';
 import { BackupManager } from './backup.js';
 import { SettingsHub } from './settings.js';
 import { WidgetsManager } from './widgets.js';
+import { PostItManager } from './postits.js';
 import { ThemeStudio } from './theme-studio.js';
 import { BookmarksImporter } from './importer.js';
 
@@ -172,17 +174,21 @@ export function initApp() {
     const weather = new WeatherEngine();
     const search = new SearchEngineManager();
     const widgets = new WidgetsManager();
+    const postits = new PostItManager();
+    const layoutManager = new LayoutManager();
     const shortcutManager = new ShortcutManager(renderer);
     const backupManager = new BackupManager(renderer);
     const importer = new BookmarksImporter(renderer);
-    const dragDropManager = new DragDropManager(renderer);
+    const dragDropManager = new DragDropManager(renderer, layoutManager);
     const settingsHub = new SettingsHub(renderer, shortcutManager, backupManager, importer, themeStudio);
 
     // 3. Render Dashboard & Init Subsystems
     renderer.render();
+    layoutManager.init();
     weather.init();
     search.init();
     widgets.init();
+    postits.init();
     dragDropManager.init();
     shortcutManager.init();
     backupManager.init();
@@ -191,6 +197,7 @@ export function initApp() {
     loadLocaleAsync(state.language).then(() => {
         updateDocumentLocalization();
         renderer.render();
+        layoutManager.applyPositions();
     });
 
     // 4. User Name Interactive Modal & Drawer Sync

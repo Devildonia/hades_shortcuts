@@ -1,87 +1,85 @@
-// js/dragdrop.js - Native HTML5 Drag & Drop for Categories & Icons
+// js/dragdrop.js - Shortcut Cards Inner Drag & Drop Reordering
 
 import { state } from './state.js';
+import { soundFx } from './audio.js';
 
 export class DragDropManager {
-    constructor(renderer) {
+    constructor(renderer, layoutManager) {
         this.renderer = renderer;
+        this.layoutManager = layoutManager;
         this.draggedCard = null;
-        this.draggedCategory = null;
     }
 
     init() {
         state.on('editmode:changed', (enabled) => {
-            this.renderer.render();
             if (enabled) {
-                this.enableDragDrop();
+                this.enableCardDragDrop();
+            } else {
+                this.disableCardDragDrop();
             }
         });
     }
 
-    enableDragDrop() {
-        const categories = document.querySelectorAll('.categoria');
+    enableCardDragDrop() {
         const cards = document.querySelectorAll('.enlace-icono');
-
-        // Category Drag & Drop
-        categories.forEach(cat => {
-            const handle = cat.querySelector('.cat-drag-handle');
-            if (handle) {
-                handle.setAttribute('draggable', 'true');
-                handle.addEventListener('dragstart', (e) => {
-                    this.draggedCategory = cat;
-                    cat.classList.add('dragging-cat');
-                    e.dataTransfer.effectAllowed = 'move';
-                });
-                handle.addEventListener('dragend', () => {
-                    if (this.draggedCategory) this.draggedCategory.classList.remove('dragging-cat');
-                    this.draggedCategory = null;
-                    this.saveCategoryOrder();
-                });
-            }
-
-            cat.addEventListener('dragover', (e) => {
-                if (!this.draggedCategory || this.draggedCategory === cat) return;
-                e.preventDefault();
-                e.dataTransfer.dropEffect = 'move';
-                const grid = cat.parentElement;
-                const nextSibling = (e.clientY > cat.getBoundingClientRect().top + cat.offsetHeight / 2) ? cat.nextSibling : cat;
-                grid.insertBefore(this.draggedCategory, nextSibling);
-            });
-        });
-
-        // Icon Card Drag & Drop
         cards.forEach(card => {
             card.setAttribute('draggable', 'true');
-            card.addEventListener('dragstart', (e) => {
+            card.ondragstart = (e) => {
+                e.stopPropagation();
                 this.draggedCard = card;
                 card.classList.add('dragging-card');
+                soundFx.play('click');
                 e.dataTransfer.effectAllowed = 'move';
-            });
+            };
 
-            card.addEventListener('dragend', () => {
+            card.ondragend = () => {
                 if (this.draggedCard) this.draggedCard.classList.remove('dragging-card');
                 this.draggedCard = null;
                 this.saveShortcutsOrder();
-            });
+                soundFx.play('click');
+            };
         });
 
-        const grids = document.querySelectorAll('.iconos-grupo');
-        grids.forEach(grid => {
-            grid.addEventListener('dragover', (e) => {
+        const iconGrids = document.querySelectorAll('.iconos-grupo');
+        iconGrids.forEach(grid => {
+            grid.ondragover = (e) => {
                 if (!this.draggedCard) return;
                 e.preventDefault();
+                e.stopPropagation();
                 e.dataTransfer.dropEffect = 'move';
-                const afterElement = this.getDragAfterElement(grid, e.clientX, e.clientY);
+                const afterElement = this.getCardAfterElement(grid, e.clientX, e.clientY);
                 if (afterElement == null) {
                     grid.appendChild(this.draggedCard);
                 } else {
                     grid.insertBefore(this.draggedCard, afterElement);
                 }
-            });
+            };
+
+            grid.ondrop = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.saveShortcutsOrder();
+                soundFx.play('click');
+            };
         });
     }
 
-    getDragAfterElement(container, x, y) {
+    disableCardDragDrop() {
+        const cards = document.querySelectorAll('.enlace-icono');
+        cards.forEach(card => {
+            card.removeAttribute('draggable');
+            card.ondragstart = null;
+            card.ondragend = null;
+        });
+
+        const iconGrids = document.querySelectorAll('.iconos-grupo');
+        iconGrids.forEach(grid => {
+            grid.ondragover = null;
+            grid.ondrop = null;
+        });
+    }
+
+    getCardAfterElement(container, x, y) {
         const draggableElements = [...container.querySelectorAll('.enlace-icono:not(.dragging-card)')];
         return draggableElements.reduce((closest, child) => {
             const box = child.getBoundingClientRect();
@@ -92,12 +90,6 @@ export class DragDropManager {
                 return closest;
             }
         }, { offset: Number.NEGATIVE_INFINITY }).element;
-    }
-
-    saveCategoryOrder() {
-        const catEls = document.querySelectorAll('.categoria');
-        const catIds = Array.from(catEls).map(el => el.getAttribute('data-cat-id')).filter(Boolean);
-        state.saveCategoriesOrder(catIds);
     }
 
     saveShortcutsOrder() {

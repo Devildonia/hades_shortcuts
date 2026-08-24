@@ -219,7 +219,8 @@
     "pomodoro_reset": "Reset",
     "toggle_widgets_title": "Bento Mini-Widgets",
     "toggle_scratchpad": "Show Scratchpad",
-    "toggle_pomodoro": "Show Pomodoro Timer"
+    "toggle_pomodoro": "Show Pomodoro Timer",
+    "scratchpad_pin": "Pin Post-it"
   },
   "audio": {
     "preset_label": "Haptic Sound Preset",
