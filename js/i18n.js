@@ -62,3 +62,17 @@ export const updateDocumentLocalization = () => {
         }
     });
 };
+
+
+export async function loadLocaleAsync(lang) {
+    if (i18nDictionaries[lang]) return i18nDictionaries[lang];
+    try {
+        const res = await fetch(`./locales/${lang}.json`);
+        if (res.ok) {
+            const data = await res.json();
+            i18nDictionaries[lang] = data;
+            return data;
+        }
+    } catch (e) {}
+    return i18nDictionaries.es;
+}

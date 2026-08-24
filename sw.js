@@ -1,6 +1,6 @@
 // sw.js - Service Worker for HaDeS' Shortcuts PWA (Network-First with Offline Cache Fallback)
 
-const CACHE_NAME = 'hades-shortcuts-v4-cache';
+const CACHE_NAME = 'hades-shortcuts-v4-3-cache';
 const STATIC_ASSETS = [
     './',
     './index.html',
