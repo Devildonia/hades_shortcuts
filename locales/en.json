@@ -262,5 +262,20 @@
     "import_btn": "Import Bookmarks",
     "success_msg": "Successfully imported {count} shortcuts!",
     "error_msg": "No valid bookmarks found in selected file."
+  },
+  "devtools": {
+    "qr_title": "Generated QR Code",
+    "qr_hint": "Scan with your phone camera to open or beam link instantly.",
+    "qr_copy": "📋 Copy Image",
+    "qr_download": "⬇️ Download PNG"
+  },
+  "hud": {
+    "placeholder": "Launch app or quick shortcut..."
+  },
+  "edit_bar": {
+    "badge": "✏️ Edit Mode Active",
+    "hint": "Drag modules by their handles ⠿ to reorder canvas",
+    "reset": "🔄 Reset",
+    "save": "✓ Save & Exit"
   }
 }

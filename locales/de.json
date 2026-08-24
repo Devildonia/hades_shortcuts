@@ -262,5 +262,20 @@
     "import_btn": "Lesezeichen importieren",
     "success_msg": "Erfolgreich {count} Verknüpfungen importiert!",
     "error_msg": "Keine gültigen Lesezeichen in der ausgewählten Datei gefunden."
+  },
+  "devtools": {
+    "qr_title": "Generierter QR-Code",
+    "qr_hint": "Scannen Sie mit der Kamera, um den Link sofort zu öffnen.",
+    "qr_copy": "📋 Bild kopieren",
+    "qr_download": "⬇️ PNG herunterladen"
+  },
+  "hud": {
+    "placeholder": "App oder Schnellzugriff starten..."
+  },
+  "edit_bar": {
+    "badge": "✏️ Bearbeitungsmodus Aktiv",
+    "hint": "Ziehen Sie Module an den Griffen ⠿, um sie neu anzuordnen",
+    "reset": "🔄 Zurücksetzen",
+    "save": "✓ Speichern & Beenden"
   }
 }

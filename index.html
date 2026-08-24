@@ -1003,10 +1003,10 @@
     <!-- Floating Edit Mode Control Bar -->
     <div class="floating-edit-bar hidden" id="floating-edit-bar">
         <div class="floating-edit-content">
-            <span class="floating-edit-badge">✏️ Modo Edición Activo</span>
-            <span class="floating-edit-hint">Arrastra los módulos por sus tiradores ⠿ para reorganizarlos</span>
-            <button class="settings-action-btn secondary" id="reset-layout-btn-bar" style="width: auto; padding: 6px 14px; margin-right: 8px;">🔄 Restablecer</button>
-            <button class="settings-action-btn primary" id="exit-edit-mode-btn" style="width: auto; padding: 6px 18px;">✓ Guardar y Salir</button>
+            <span class="floating-edit-badge" data-i18n="edit_bar.badge">✏️ Modo Edición Activo</span>
+            <span class="floating-edit-hint" data-i18n="edit_bar.hint">Arrastra los módulos por sus tiradores ⠿ para reorganizarlos</span>
+            <button class="settings-action-btn secondary" id="reset-layout-btn-bar" data-i18n="edit_bar.reset" style="width: auto; padding: 6px 14px; margin-right: 8px;">🔄 Restablecer</button>
+            <button class="settings-action-btn primary" id="exit-edit-mode-btn" data-i18n="edit_bar.save" style="width: auto; padding: 6px 18px;">✓ Guardar y Salir</button>
         </div>
     </div>
 
@@ -1018,7 +1018,7 @@
             <div class="modal-header">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <span style="font-size: 1.25rem;">📱</span>
-                    <h3>Código QR Generado</h3>
+                    <h3 data-i18n="devtools.qr_title">Código QR Generado</h3>
                 </div>
                 <button class="modal-close-btn" id="close-qr-modal" aria-label="Cerrar">✕</button>
             </div>
@@ -1027,11 +1027,11 @@
                 <div class="qr-canvas-wrapper">
                     <canvas id="qr-canvas"></canvas>
                 </div>
-                <p class="qr-hint">Escanea con la cámara de tu móvil para abrir o transferir al instante.</p>
+                <p class="qr-hint" data-i18n="devtools.qr_hint">Escanea con la cámara de tu móvil para abrir o transferir al instante.</p>
             </div>
             <div class="shortcut-modal-footer">
-                <button class="settings-action-btn secondary" id="qr-copy-btn">📋 Copiar Imagen</button>
-                <button class="settings-action-btn primary" id="qr-download-btn">⬇️ Descargar PNG</button>
+                <button class="settings-action-btn secondary" id="qr-copy-btn" data-i18n="devtools.qr_copy">📋 Copiar Imagen</button>
+                <button class="settings-action-btn primary" id="qr-download-btn" data-i18n="devtools.qr_download">⬇️ Descargar PNG</button>
             </div>
         </div>
     </div>
@@ -1047,7 +1047,7 @@
             </div>
             <div class="hud-search-row">
                 <span class="hud-search-icon">🔍</span>
-                <input type="text" id="hud-search-input" placeholder="Lanzar aplicación o atajo rápido..." autocomplete="off">
+                <input type="text" id="hud-search-input" placeholder="Lanzar aplicación o atajo rápido..." data-i18n-placeholder="hud.placeholder" autocomplete="off">
             </div>
             <div class="hud-results-grid" id="hud-results-grid"></div>
         </div>

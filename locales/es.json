@@ -262,5 +262,20 @@
     "import_btn": "Importar Marcadores",
     "success_msg": "¡Se han importado {count} accesos directos con éxito!",
     "error_msg": "No se encontraron marcadores válidos en el archivo seleccionado."
+  },
+  "devtools": {
+    "qr_title": "Código QR Generado",
+    "qr_hint": "Escanea con la cámara de tu móvil para abrir o transferir al instante.",
+    "qr_copy": "📋 Copiar Imagen",
+    "qr_download": "⬇️ Descargar PNG"
+  },
+  "hud": {
+    "placeholder": "Lanzar aplicación o atajo rápido..."
+  },
+  "edit_bar": {
+    "badge": "✏️ Modo Edición Activo",
+    "hint": "Arrastra los módulos por sus tiradores ⠿ para reorganizarlos",
+    "reset": "🔄 Restablecer",
+    "save": "✓ Guardar y Salir"
   }
 }

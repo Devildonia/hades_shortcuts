@@ -262,5 +262,20 @@
     "import_btn": "Importer les Favoris",
     "success_msg": "{count} raccourcis importés avec succès !",
     "error_msg": "Aucun favori valide trouvé dans le fichier sélectionné."
+  },
+  "devtools": {
+    "qr_title": "Code QR Généré",
+    "qr_hint": "Scannez avec votre appareil photo pour ouvrir instantanément.",
+    "qr_copy": "📋 Copier l'image",
+    "qr_download": "⬇️ Télécharger PNG"
+  },
+  "hud": {
+    "placeholder": "Lancer une application ou un raccourci..."
+  },
+  "edit_bar": {
+    "badge": "✏️ Mode Édition Actif",
+    "hint": "Faites glisser les modules par leurs poignées ⠿ pour réorganiser",
+    "reset": "🔄 Réinitialiser",
+    "save": "✓ Sauvegarder & Quitter"
   }
 }
