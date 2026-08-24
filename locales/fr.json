@@ -240,7 +240,8 @@
     "scratchpad_pin": "Épingler Post-it",
     "ambient_title": "Audio Ambiant Focus",
     "ambient_play": "Lire",
-    "ambient_pause": "Pause"
+    "ambient_pause": "Pause",
+    "techradar_title": "Radar Tech & IA"
   },
   "audio": {
     "preset_label": "Effet Sonore Haptique",
@@ -295,5 +296,9 @@
     "noon": "Zénith Solaire",
     "twilight": "Crépuscule Cyber",
     "midnight": "Nuit Abyssale"
+  },
+  "tech_radar": {
+    "loading": "Chargement des titres...",
+    "pin_tooltip": "Épingler sur Post-it"
   }
 }

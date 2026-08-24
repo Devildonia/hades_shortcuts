@@ -1,3 +1,4 @@
+import { techRadar } from './tech-radar.js';
 import { telemetry } from './telemetry.js';
 import { solarEngine } from './solar-engine.js';
 import { radialHUD } from './radial-hud.js';
@@ -208,6 +209,7 @@ export function initApp() {
         radialHUD.init();
         solarEngine.init();
         telemetry.init();
+        techRadar.init();
     miniHud.init();
 
     loadLocaleAsync(state.language).then(() => {

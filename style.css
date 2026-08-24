@@ -4267,3 +4267,122 @@ input:checked + .slider:before {
     border-color: rgba(0, 0, 0, 0.08);
     color: #475569;
 }
+
+
+/* ==========================================================================
+   Phase 4: Live Tech Radar Bento Capsule
+   ========================================================================== */
+.widget-techradar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 175px;
+}
+
+.techradar-refresh-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.techradar-refresh-btn:hover {
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    transform: rotate(180deg);
+}
+
+.techradar-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+    max-height: 120px;
+}
+
+.techradar-loading {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 18px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.techradar-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 6px 8px;
+    transition: var(--transition-fast);
+}
+
+.techradar-row:hover {
+    background: rgba(0, 242, 254, 0.08);
+    border-color: var(--accent-primary);
+    transform: translateX(2px);
+}
+
+.techradar-title-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.techradar-score {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #f59e0b;
+    white-space: nowrap;
+}
+
+.techradar-title-text {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.techradar-pin-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    transition: opacity 0.2s, transform 0.2s;
+    padding: 2px;
+}
+
+.techradar-pin-btn:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+[data-theme="light"] .techradar-row {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .techradar-row:hover {
+    background: #f0f7ff;
+    border-color: #0284c7;
+}

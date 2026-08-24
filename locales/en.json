@@ -240,7 +240,8 @@
     "scratchpad_pin": "Pin Post-it",
     "ambient_title": "Ambient Focus Audio",
     "ambient_play": "Play",
-    "ambient_pause": "Pause"
+    "ambient_pause": "Pause",
+    "techradar_title": "Tech Radar Live"
   },
   "audio": {
     "preset_label": "Haptic Sound Preset",
@@ -295,5 +296,9 @@
     "noon": "High Noon",
     "twilight": "Cyber Twilight",
     "midnight": "Abyssal Midnight"
+  },
+  "tech_radar": {
+    "loading": "Loading headlines...",
+    "pin_tooltip": "Pin to Post-it"
   }
 }

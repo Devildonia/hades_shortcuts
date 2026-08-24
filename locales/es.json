@@ -240,7 +240,8 @@
     "scratchpad_pin": "Fijar Post-it",
     "ambient_title": "Audio Ambiental Focus",
     "ambient_play": "Reproducir",
-    "ambient_pause": "Pausar"
+    "ambient_pause": "Pausar",
+    "techradar_title": "Radar Tech & IA"
   },
   "audio": {
     "preset_label": "Efecto de Sonido Háptico",
@@ -295,5 +296,9 @@
     "noon": "Cenit Solar",
     "twilight": "Crepúsculo Cyber",
     "midnight": "Noche Abisal"
+  },
+  "tech_radar": {
+    "loading": "Cargando titulares...",
+    "pin_tooltip": "Fijar en Post-it"
   }
 }
