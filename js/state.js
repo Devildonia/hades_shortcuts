@@ -195,3 +195,7 @@ export class AppState {
 }
 
 export const state = new AppState();
+
+export const escapeHtml = (str) => {
+    return String(str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+};

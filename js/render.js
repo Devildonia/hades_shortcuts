@@ -1,6 +1,6 @@
 // js/render.js - Dynamic Bento Grid & Shortcut Card Renderer
 
-import { state } from './state.js';
+import { state, escapeHtml } from './state.js';
 import { i18nDictionaries } from './i18n.js';
 import { soundFx } from './audio.js';
 
@@ -175,6 +175,3 @@ export class DashboardRenderer {
     }
 }
 
-const escapeHtml = (str) => {
-    return String(str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-};

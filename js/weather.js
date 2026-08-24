@@ -1,6 +1,6 @@
 // js/weather.js - Clock & Weather Engine
 
-import { state } from './state.js';
+import { state, escapeHtml } from './state.js';
 import { i18nDictionaries } from './i18n.js';
 
 export class WeatherEngine {
@@ -273,6 +273,3 @@ export class WeatherEngine {
     }
 }
 
-const escapeHtml = (str) => {
-    return String(str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-};
