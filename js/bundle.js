@@ -98,7 +98,7 @@ class AppState {
                         s.url = 'https://seaverse.ai/';
                         modified = true;
                     }
-                    if (s.id === 'civitai' && (s.url === 'https://civitai.red/' || s.url === 'https://civitai.red')) {
+                    if (s.id === 'civitai' && (!s.url.includes('civitai.com'))) {
                         s.url = 'https://civitai.com/';
                         modified = true;
                     }
