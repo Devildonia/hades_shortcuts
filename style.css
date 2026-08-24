@@ -211,11 +211,11 @@ body {
 
 /* Clock & Left Widgets Container */
 .nav-widgets-left {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 6px;
     justify-self: start;
+    position: relative;
 }
 
 /* Live Clock Glass Capsule Box */
@@ -4146,6 +4146,9 @@ input:checked + .slider:before {
 
 /* Telemetry Capsule 4-Indicator System */
 .telemetry-capsule {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -4162,6 +4165,8 @@ input:checked + .slider:before {
     transition: var(--transition-fast);
     user-select: none;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+    z-index: 5;
 }
 
 .telemetry-capsule:hover {
