@@ -61,7 +61,12 @@ export class PostItManager {
         } catch (e) {}
     }
 
-    createPostIt(text, color = 'cyan') {
+        createPostIt(text, color = 'cyan') {
+        if (this.postits.length >= 25) {
+            soundFx.play('click');
+            alert('Has alcanzado el límite máximo de 25 notas flotantes. Elimina alguna nota para fijar una nueva.');
+            return;
+        }
         soundFx.play('click');
         const offset = (this.postits.length * 28) % 240;
         const initialX = Math.min(window.innerWidth - 260, Math.max(20, 120 + offset));

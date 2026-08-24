@@ -995,7 +995,12 @@ class PostItManager {
         } catch (e) {}
     }
 
-    createPostIt(text, color = 'cyan') {
+        createPostIt(text, color = 'cyan') {
+        if (this.postits.length >= 25) {
+            soundFx.play('click');
+            alert('Has alcanzado el límite máximo de 25 notas flotantes. Elimina alguna nota para fijar una nueva.');
+            return;
+        }
         soundFx.play('click');
         const offset = (this.postits.length * 28) % 240;
         const initialX = Math.min(window.innerWidth - 260, Math.max(20, 120 + offset));
@@ -1496,7 +1501,7 @@ class DashboardRenderer {
 
 
 // --- Module: js/layout.js ---
-// js/layout.js - Freeform Canvas & Resize Layout Manager (Exact Cursor Lock)
+// js/layout.js - Freeform Canvas & Resize Layout Manager (rAF Throttled & Exact Cursor Lock)
 
 
 class LayoutManager {
@@ -1629,6 +1634,7 @@ class LayoutManager {
         let isDragging = false;
         let grabOffsetX = 0, grabOffsetY = 0;
         let hasMoved = false;
+        let rafId = null;
 
         const onPointerDown = (e) => {
             if (!state.editMode) return;
@@ -1650,35 +1656,42 @@ class LayoutManager {
         const onPointerMove = (e) => {
             if (!isDragging) return;
 
-            if (!hasMoved) {
-                hasMoved = true;
-                tile.classList.add('tile-is-dragging');
-                tile.classList.add('freeform-positioned');
-                soundFx.play('hover');
-            }
+            const clientX = e.clientX;
+            const clientY = e.clientY;
 
-            // Exact 1:1 cursor-locked viewport positioning
-            const targetX = e.clientX - grabOffsetX;
-            const targetY = e.clientY - grabOffsetY;
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                if (!isDragging) return;
 
-            // Clamping with 10px safe margins
-            const maxX = Math.max(10, window.innerWidth - tile.offsetWidth - 10);
-            const maxY = Math.max(10, window.innerHeight - tile.offsetHeight - 10);
-            const newX = Math.max(10, Math.min(maxX, targetX));
-            const newY = Math.max(10, Math.min(maxY, targetY));
+                if (!hasMoved) {
+                    hasMoved = true;
+                    tile.classList.add('tile-is-dragging');
+                    tile.classList.add('freeform-positioned');
+                    soundFx.play('hover');
+                }
 
-            tile.style.left = `${newX}px`;
-            tile.style.top = `${newY}px`;
+                const targetX = clientX - grabOffsetX;
+                const targetY = clientY - grabOffsetY;
 
-            if (!this.positions[id]) this.positions[id] = {};
-            this.positions[id].x = newX;
-            this.positions[id].y = newY;
-            this.positions[id].zIndex = this.topZIndex;
+                const maxX = Math.max(10, window.innerWidth - tile.offsetWidth - 10);
+                const maxY = Math.max(10, window.innerHeight - tile.offsetHeight - 10);
+                const newX = Math.max(10, Math.min(maxX, targetX));
+                const newY = Math.max(10, Math.min(maxY, targetY));
+
+                tile.style.left = `${newX}px`;
+                tile.style.top = `${newY}px`;
+
+                if (!this.positions[id]) this.positions[id] = {};
+                this.positions[id].x = newX;
+                this.positions[id].y = newY;
+                this.positions[id].zIndex = this.topZIndex;
+            });
         };
 
         const onPointerUp = (e) => {
             if (!isDragging) return;
             isDragging = false;
+            if (rafId) cancelAnimationFrame(rafId);
             if (hasMoved) {
                 tile.classList.remove('tile-is-dragging');
                 this.savePositions();
@@ -1698,6 +1711,7 @@ class LayoutManager {
         let isResizing = false;
         let startClientX = 0, startClientY = 0;
         let startW = 0, startH = 0;
+        let resizeRafId = null;
 
         const onResizeDown = (e) => {
             e.stopPropagation();
@@ -1717,23 +1731,31 @@ class LayoutManager {
 
         const onResizeMove = (e) => {
             if (!isResizing) return;
-            const deltaX = e.clientX - startClientX;
-            const deltaY = e.clientY - startClientY;
+            const clientX = e.clientX;
+            const clientY = e.clientY;
 
-            const newW = Math.max(140, Math.min(window.innerWidth - 30, startW + deltaX));
-            const newH = Math.max(60, Math.min(window.innerHeight - 30, startH + deltaY));
+            if (resizeRafId) cancelAnimationFrame(resizeRafId);
+            resizeRafId = requestAnimationFrame(() => {
+                if (!isResizing) return;
+                const deltaX = clientX - startClientX;
+                const deltaY = clientY - startClientY;
 
-            tile.style.width = `${newW}px`;
-            tile.style.height = `${newH}px`;
+                const newW = Math.max(140, Math.min(window.innerWidth - 30, startW + deltaX));
+                const newH = Math.max(60, Math.min(window.innerHeight - 30, startH + deltaY));
 
-            if (!this.positions[id]) this.positions[id] = {};
-            this.positions[id].w = newW;
-            this.positions[id].h = newH;
+                tile.style.width = `${newW}px`;
+                tile.style.height = `${newH}px`;
+
+                if (!this.positions[id]) this.positions[id] = {};
+                this.positions[id].w = newW;
+                this.positions[id].h = newH;
+            });
         };
 
         const onResizeUp = (e) => {
             if (!isResizing) return;
             isResizing = false;
+            if (resizeRafId) cancelAnimationFrame(resizeRafId);
             tile.classList.remove('tile-is-resizing');
             this.savePositions();
             soundFx.play('click');

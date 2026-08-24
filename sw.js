@@ -1,6 +1,6 @@
-// sw.js - Service Worker for HaDeS' Shortcuts PWA (Network-First with Offline Cache Fallback)
+// sw.js - Service Worker for HaDeS' Shortcuts PWA (Network-First with Offline Cache & Stale-While-Revalidate Icons)
 
-const CACHE_NAME = 'hades-shortcuts-v4-3-cache';
+const CACHE_NAME = 'hades-shortcuts-v4-11-cache';
 const STATIC_ASSETS = [
     './',
     './index.html',
@@ -41,7 +41,27 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-    // Network-first strategy: always get latest from server, fallback to cache if offline
+    const url = new URL(e.request.url);
+
+    // Stale-While-Revalidate strategy for icons (.webp, .png, .ico, /iconos/)
+    if (url.pathname.includes('/iconos/') || url.pathname.endsWith('.webp') || url.pathname.endsWith('.png') || url.pathname.endsWith('.ico')) {
+        e.respondWith(
+            caches.open(CACHE_NAME).then((cache) => {
+                return cache.match(e.request).then((cachedResponse) => {
+                    const fetchPromise = fetch(e.request).then((networkResponse) => {
+                        if (networkResponse && networkResponse.status === 200) {
+                            cache.put(e.request, networkResponse.clone());
+                        }
+                        return networkResponse;
+                    }).catch(() => cachedResponse);
+                    return cachedResponse || fetchPromise;
+                });
+            })
+        );
+        return;
+    }
+
+    // Network-First strategy for core app files
     e.respondWith(
         fetch(e.request)
             .then((res) => {
