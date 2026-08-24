@@ -43,10 +43,12 @@ export const DEFAULT_SHORTCUTS = [
     // Tools
     { id: 'birme', title: 'Birme', url: 'https://www.birme.net/', icon: 'iconos/birme.webp', category: 'cat_tools', tags: 'tools, images, resize, batch' },
     { id: 'photoroom', title: 'Photoroom', url: 'https://www.photoroom.com/', icon: 'iconos/photoroom.webp', category: 'cat_tools', tags: 'tools, remove bg, photo' },
+    { id: 'iloveimg', title: 'iLoveIMG', url: 'https://www.iloveimg.com/es', icon: 'iconos/iloveimg.webp', category: 'cat_tools', tags: 'tools, images, compress, crop' },
+    { id: 'tinypng', title: 'TinyPNG', url: 'https://tinypng.com/', icon: 'iconos/tinypng.webp', category: 'cat_tools', tags: 'tools, images, compress, webp' },
+    { id: 'ezgif', title: 'EZGIF', url: 'https://ezgif.com/', icon: 'iconos/ezgif.webp', category: 'cat_tools', tags: 'tools, gif, video, convert' },
+    { id: 'svgminify', title: 'SVG Minify', url: 'https://www.svgminify.com/', icon: 'iconos/svgminify.webp', category: 'cat_tools', tags: 'tools, svg, code, optimize' },
+    { id: 'vectorizer', title: 'Vectorizer AI', url: 'https://vectorizer.ai/', icon: 'iconos/vectorizer.webp', category: 'cat_tools', tags: 'tools, vector, svg, convert' },
     { id: 'github', title: 'GitHub', url: 'https://github.com/', icon: 'iconos/github.webp', category: 'cat_tools', tags: 'code, git, dev, repo' },
-    { id: 'itchio', title: 'Itch.io', url: 'https://itch.io/', icon: 'iconos/itchio.webp', category: 'cat_tools', tags: 'games, gamedev, assets, store' },
-    { id: 'optimizeglb', title: 'OptimizeGLB', url: 'https://optimizeglb.com/', icon: 'iconos/optimizeglb.webp', category: 'cat_tools', tags: '3d, glb, compression, tools' },
-    { id: 'translate', title: 'Traductor', url: 'https://translate.google.com/', icon: 'iconos/translate.webp', category: 'cat_tools', tags: 'google, translate, idiomas, tools' },
     // Social
     { id: 'instagram', title: 'Instagram', url: 'https://www.instagram.com/', icon: 'iconos/instagram.webp', category: 'cat_social', tags: 'social, fotos, meta, feed' },
     { id: 'facebook', title: 'Facebook', url: 'https://www.facebook.com/', icon: 'iconos/facebook.webp', category: 'cat_social', tags: 'social, amigos, meta' },
@@ -73,23 +75,43 @@ export class AppState {
     constructor() {
         this.shortcuts = this.loadShortcuts();
         this.categories = this.loadCategories();
-        this.userName = localStorage.getItem('custom_user_name') || 'HaDeS';
-        this.theme = localStorage.getItem('app_theme') || 'cyber';
-        this.soundEnabled = localStorage.getItem('sound_enabled') !== 'false';
+        this.userName = this.getItem('custom_user_name', 'HaDeS');
+        this.theme = this.getItem('app_theme', 'cyber');
+        this.soundEnabled = this.getItem('sound_enabled', 'true') !== 'false';
         this.language = this.detectLanguage();
-        this.activeFilter = localStorage.getItem('active_pill_filter') || 'all';
-        this.searchEngine = localStorage.getItem('app_search_engine') || 'google';
+        this.activeFilter = this.getItem('active_pill_filter', 'all');
+        this.searchEngine = this.getItem('app_search_engine', 'google');
         this.editMode = false;
         this.listeners = new Map();
     }
 
+    getItem(k, def) {
+        try {
+            return (typeof localStorage !== 'undefined' && localStorage.getItem(k)) || def;
+        } catch (e) {
+            return def;
+        }
+    }
+
+    setItem(k, v) {
+        try {
+            if (typeof localStorage !== 'undefined') localStorage.setItem(k, v);
+        } catch (e) {}
+    }
+
+    removeItem(k) {
+        try {
+            if (typeof localStorage !== 'undefined') localStorage.removeItem(k);
+        } catch (e) {}
+    }
+
     loadShortcuts() {
         try {
-            const saved = localStorage.getItem('custom_shortcuts_v2');
+            const saved = this.getItem('custom_shortcuts_v2', null);
             if (saved) {
                 const list = JSON.parse(saved);
                 let modified = false;
-                                list.forEach(s => {
+                list.forEach(s => {
                     if (s.id === 'seaverse' && (s.url === 'https://seaverse.net/' || s.url === 'https://seaverse.net')) {
                         s.url = 'https://seaverse.ai/';
                         modified = true;
@@ -100,7 +122,7 @@ export class AppState {
                     }
                 });
                 if (modified) {
-                    localStorage.setItem('custom_shortcuts_v2', JSON.stringify(list));
+                    this.setItem('custom_shortcuts_v2', JSON.stringify(list));
                 }
                 return list;
             }
@@ -110,53 +132,49 @@ export class AppState {
 
     loadCategories() {
         try {
-            const savedOrder = localStorage.getItem('category_order_v2');
-            if (savedOrder) {
-                const orderIds = JSON.parse(savedOrder);
-                return [...DEFAULT_CATEGORIES].sort((a, b) => {
-                    const idxA = orderIds.indexOf(a.id);
-                    const idxB = orderIds.indexOf(b.id);
-                    if (idxA === -1) return 1;
-                    if (idxB === -1) return -1;
-                    return idxA - idxB;
-                });
+            const order = this.getItem('category_order_v2', null);
+            if (order) {
+                const ids = JSON.parse(order);
+                return [...DEFAULT_CATEGORIES].sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id));
             }
         } catch (e) {}
         return [...DEFAULT_CATEGORIES];
     }
 
     detectLanguage() {
-        const saved = localStorage.getItem('app_language');
+        const saved = this.getItem('app_language', null);
         if (saved && ['es', 'en', 'fr', 'de'].includes(saved)) return saved;
-        const navLang = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
-        if (navLang.startsWith('fr')) return 'fr';
-        if (navLang.startsWith('de')) return 'de';
-        if (navLang.startsWith('en')) return 'en';
+        if (typeof navigator !== 'undefined') {
+            const navLang = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
+            if (navLang.startsWith('fr')) return 'fr';
+            if (navLang.startsWith('de')) return 'de';
+            if (navLang.startsWith('en')) return 'en';
+        }
         return 'es';
     }
 
     setUserName(name) {
         this.userName = (name || 'HaDeS').trim();
-        localStorage.setItem('custom_user_name', this.userName);
+        this.setItem('custom_user_name', this.userName);
         this.emit('username:changed', this.userName);
     }
 
     setTheme(themeName) {
         this.theme = themeName;
-        localStorage.setItem('app_theme', themeName);
+        this.setItem('app_theme', themeName);
         this.emit('theme:changed', themeName);
     }
 
     setSoundEnabled(enabled) {
         this.soundEnabled = enabled;
-        localStorage.setItem('sound_enabled', enabled ? 'true' : 'false');
+        this.setItem('sound_enabled', enabled ? 'true' : 'false');
         this.emit('sound:changed', enabled);
     }
 
     setLanguage(langCode) {
         if (!['es', 'en', 'fr', 'de'].includes(langCode)) langCode = 'es';
         this.language = langCode;
-        localStorage.setItem('app_language', langCode);
+        this.setItem('app_language', langCode);
         this.emit('language:changed', langCode);
     }
 
@@ -167,19 +185,19 @@ export class AppState {
 
     saveShortcuts(list) {
         this.shortcuts = [...list];
-        localStorage.setItem('custom_shortcuts_v2', JSON.stringify(this.shortcuts));
+        this.setItem('custom_shortcuts_v2', JSON.stringify(this.shortcuts));
         this.emit('shortcuts:changed', this.shortcuts);
     }
 
     saveCategoriesOrder(catIds) {
         this.categories = [...this.categories].sort((a, b) => catIds.indexOf(a.id) - catIds.indexOf(b.id));
-        localStorage.setItem('category_order_v2', JSON.stringify(catIds));
+        this.setItem('category_order_v2', JSON.stringify(catIds));
         this.emit('categories:changed', this.categories);
     }
 
     resetToDefaults() {
-        localStorage.removeItem('custom_shortcuts_v2');
-        localStorage.removeItem('category_order_v2');
+        this.removeItem('custom_shortcuts_v2');
+        this.removeItem('category_order_v2');
         this.shortcuts = [...DEFAULT_SHORTCUTS];
         this.categories = [...DEFAULT_CATEGORIES];
         this.emit('shortcuts:changed', this.shortcuts);

@@ -2499,3 +2499,17 @@ input:checked + .slider:before {
 }
 .import-status-msg.success { color: #10b981; }
 .import-status-msg.error { color: #ef4444; }
+
+
+/* ==========================================================================
+   Filter & Search Visibility Classes (Pills & Search Engine)
+   ========================================================================== */
+.categoria.hidden-by-pill,
+.categoria.hidden-by-search {
+    display: none !important;
+}
+
+.enlace-icono.hidden-by-filter,
+.enlace-icono.no-match {
+    display: none !important;
+}
