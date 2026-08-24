@@ -256,6 +256,11 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── audio.js             # Procedural Web Audio API synthesizer (0 KB)
 │   ├── ambient-audio.js     # Procedural focus ambient soundscapes (0 KB)
 │   ├── aurora-canvas.js     # Reactive Aurora Canvas mesh & Mini-HUD launcher
+│   ├── solar-engine.js      # Astronomical solar elevation & circadian lighting
+│   ├── radial-hud.js        # 360° holographic action wheel & sub-orbital favs
+│   ├── telemetry.js         # Real-time ping, battery, fps & offline monitor
+│   ├── tech-radar.js        # Live HackerNews/AI tech radar bento capsule
+│   ├── neural-search.js     # Local semantic vector search & AI assistant
 │   ├── macros.js            # Compound multi-action macro & routine engine
 │   ├── crypto-sync.js       # Zero-knowledge AES-256-GCM + GitHub Gist sync
 │   ├── bangs.js             # Bang commands parser & safe math calculator
@@ -272,7 +277,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── dragdrop.js          # Inner card reordering drag & drop manager
 │   ├── shortcut-manager.js  # Add / Edit / Delete modal & HD Favicon engine
 │   ├── backup.js            # JSON export, import & factory reset
-│   └── settings.js          # Slide-over settings drawer controller
+│   └── settings.js          # Floating settings modal controller
 ├── iconos/                  # 48 optimized WebP icon assets (60x60)
 └── sounds/                  # Haptic audio fallback assets
 ```
