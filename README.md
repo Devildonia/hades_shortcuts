@@ -105,6 +105,10 @@ Execute complete productivity routines with a single compound command:
 - **`!3d`**: Launches **Meshy AI + Tripo 3D + Civitai** with 🚀 Deep Space Brown Noise.
 - **`!social`**: Launches **Discord + X (Twitter) + Instagram** in background tabs.
 
+### 🔒 Zero-Knowledge Encrypted Cloud Sync (E2EE)
+- **Client-Side PBKDF2 + AES-256-GCM**: Derive 256-bit encryption keys from your master password with 100,000 PBKDF2 iterations using native `window.crypto.subtle`.
+- **Private GitHub Gist Backup**: Safely synchronize all your custom shortcuts, 360° canvas positions, glass post-its, and theme settings across multiple devices with zero server tracking.
+
 ### 📱 PWA & Offline Support
 - Fully installable Progressive Web App (`manifest.json` + `sw.js`) for a distraction-free standalone desktop experience on Windows, macOS, and Linux.
 
@@ -202,6 +206,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── audio.js             # Procedural Web Audio API synthesizer (0 KB)
 │   ├── ambient-audio.js     # Procedural focus ambient soundscapes (0 KB)
 │   ├── macros.js            # Compound multi-action macro & routine engine
+│   ├── crypto-sync.js       # Zero-knowledge AES-256-GCM + GitHub Gist sync
 │   ├── bangs.js             # Bang commands parser & safe math calculator
 │   ├── devtools.js          # Built-in DevTools Omnibox & QR Code Generator
 │   ├── postits.js           # Floating Glass Post-its manager

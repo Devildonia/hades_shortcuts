@@ -185,6 +185,15 @@
     "macros": {
       "title": "Routines & Quick Triggers",
       "desc": "Type these commands in the search bar to run multi-action routines instantly:"
+    },
+    "sync": {
+      "title": "🔒 Encrypted Cloud Sync (E2EE)",
+      "desc": "Sync your shortcuts, notes, and preferences across devices with military-grade AES-256-GCM encryption via private GitHub Gists:",
+      "token_label": "GitHub Personal Access Token (PAT)",
+      "pass_label": "Master Encryption Password",
+      "gist_label": "Gist ID (Optional, auto-created on upload)",
+      "push_btn": "⬆️ Upload & Encrypt",
+      "pull_btn": "⬇️ Download & Decrypt"
     }
   },
   "shortcut_editor": {

@@ -28,10 +28,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=5.2.0">
+    <link rel="stylesheet" href="style.css?v=5.3.0">
 
     <!-- Master Script Module -->
-    <script defer src="js/bundle.js?v=5.2.0"></script>
+    <script defer src="js/bundle.js?v=5.3.0"></script>
 </head>
 <body>
 
@@ -875,6 +875,34 @@
 
             <!-- Tab 4: Backup -->
             <div class="settings-tab-pane" id="tab-pane-backup">
+
+                <!-- E2EE Cloud Sync Section (Phase 4) -->
+                <div class="settings-section">
+                    <h4 data-i18n="settings_hub.sync.title">🔒 Sincronización en la Nube Cifrada (E2EE)</h4>
+                    <p class="settings-hint" data-i18n="settings_hub.sync.desc">Sincroniza tus atajos, notas y configuraciones entre todos tus ordenadores y móviles con cifrado militar AES-256-GCM vía GitHub Gist privado:</p>
+                    
+                    <div class="sync-form-grid">
+                        <div class="form-group">
+                            <label data-i18n="settings_hub.sync.token_label">GitHub Personal Access Token (PAT)</label>
+                            <input type="password" id="sync-token-input" placeholder="ghp_..." autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="settings_hub.sync.pass_label">Contraseña Maestra de Cifrado</label>
+                            <input type="password" id="sync-pass-input" placeholder="Tu clave secreta..." autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="settings_hub.sync.gist_label">Gist ID (Opcional, se auto-crea al subir)</label>
+                            <input type="text" id="sync-gist-input" placeholder="ID de tu Gist privado..." autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="sync-actions-row">
+                        <button class="settings-action-btn primary" id="sync-push-btn" data-i18n="settings_hub.sync.push_btn">⬆️ Subir y Cifrar</button>
+                        <button class="settings-action-btn secondary" id="sync-pull-btn" data-i18n="settings_hub.sync.pull_btn">⬇️ Descargar y Descifrar</button>
+                    </div>
+                    <div id="sync-status-msg" class="sync-status-msg"></div>
+                </div>
+
                 <div class="settings-section">
                     <h4 data-i18n="importer.title">Importar Marcadores de Navegador</h4>
                     <p class="settings-hint" data-i18n="importer.desc">Importa un archivo bookmarks.html exportado desde Chrome, Firefox, Edge o Brave:</p>

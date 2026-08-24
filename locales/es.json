@@ -185,6 +185,15 @@
     "macros": {
       "title": "Rutinas & Disparadores Rápidos",
       "desc": "Escribe estos comandos en la barra de búsqueda para ejecutar múltiples acciones en 1 segundo:"
+    },
+    "sync": {
+      "title": "🔒 Sincronización en la Nube Cifrada (E2EE)",
+      "desc": "Sincroniza tus atajos, notas y configuraciones entre todos tus dispositivos con cifrado militar AES-256-GCM vía GitHub Gist privado:",
+      "token_label": "GitHub Personal Access Token (PAT)",
+      "pass_label": "Contraseña Maestra de Cifrado",
+      "gist_label": "Gist ID (Opcional, se auto-crea al subir)",
+      "push_btn": "⬆️ Subir y Cifrar",
+      "pull_btn": "⬇️ Descargar y Descifrar"
     }
   },
   "shortcut_editor": {

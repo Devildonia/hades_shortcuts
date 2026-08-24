@@ -185,6 +185,15 @@
     "macros": {
       "title": "Routinen & Schnell-Trigger",
       "desc": "Geben Sie diese Befehle in die Suchleiste ein, um Multi-Aktions-Routinen auszuführen:"
+    },
+    "sync": {
+      "title": "🔒 Verschlüsselte Cloud-Synchronisierung (E2EE)",
+      "desc": "Synchronisieren Sie Ihre Verknüpfungen und Notizen mit militärischer AES-256-GCM-Verschlüsselung via privatem GitHub Gist:",
+      "token_label": "GitHub Personal Access Token (PAT)",
+      "pass_label": "Master-Verschlüsselungskennwort",
+      "gist_label": "Gist-ID (Optional, wird automatisch erstellt)",
+      "push_btn": "⬆️ Hochladen & Verschlüsseln",
+      "pull_btn": "⬇️ Herunterladen & Entschlüsseln"
     }
   },
   "shortcut_editor": {

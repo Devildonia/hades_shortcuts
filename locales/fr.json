@@ -185,6 +185,15 @@
     "macros": {
       "title": "Routines & Déclencheurs Rapides",
       "desc": "Tapez ces commandes dans la recherche pour exécuter des routines multi-actions :"
+    },
+    "sync": {
+      "title": "🔒 Synchronisation Cloud Chiffrée (E2EE)",
+      "desc": "Synchronisez vos raccourcis et notes avec le chiffrement AES-256-GCM via GitHub Gist privé :",
+      "token_label": "GitHub Token d'accès personnel (PAT)",
+      "pass_label": "Mot de passe maître de chiffrement",
+      "gist_label": "Gist ID (Optionnel, auto-créé)",
+      "push_btn": "⬆️ Téléverser et Chiffrer",
+      "pull_btn": "⬇️ Télécharger et Déchiffrer"
     }
   },
   "shortcut_editor": {

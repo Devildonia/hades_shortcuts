@@ -1,3 +1,4 @@
+import { CryptoSyncEngine } from './crypto-sync.js';
 import { ambientAudio } from './ambient-audio.js';
 import { devTools } from './devtools.js';
 // js/app.js - Master Orchestrator for HaDeS' Shortcuts Next-Gen
@@ -182,7 +183,8 @@ export function initApp() {
     const backupManager = new BackupManager(renderer);
     const importer = new BookmarksImporter(renderer);
     const dragDropManager = new DragDropManager(renderer, layoutManager);
-    const settingsHub = new SettingsHub(renderer, shortcutManager, backupManager, importer, themeStudio);
+    const cryptoSync = new CryptoSyncEngine(renderer);
+    const settingsHub = new SettingsHub(renderer, shortcutManager, backupManager, importer, themeStudio, cryptoSync);
 
     // 3. Render Dashboard & Init Subsystems
     renderer.render();
@@ -197,6 +199,7 @@ export function initApp() {
     shortcutManager.init();
     backupManager.init();
     settingsHub.init();
+    cryptoSync.init();
 
     loadLocaleAsync(state.language).then(() => {
         updateDocumentLocalization();

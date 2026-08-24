@@ -3209,3 +3209,40 @@ input:checked + .slider:before {
     font-size: 0.75rem;
     margin-top: 4px;
 }
+
+
+/* ==========================================================================
+   E2EE Cloud Sync Styles (Phase 4)
+   ========================================================================== */
+.sync-form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.sync-actions-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.sync-status-msg {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    margin-top: 10px;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+}
+
+.sync-status-msg.success {
+    background: rgba(0, 242, 254, 0.1);
+    color: var(--accent-primary);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+}
+
+.sync-status-msg.error {
+    background: rgba(255, 75, 75, 0.1);
+    color: #ff5e5e;
+    border: 1px solid rgba(255, 75, 75, 0.3);
+}
