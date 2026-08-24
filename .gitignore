@@ -1,0 +1,8 @@
+# Local launch scripts
+local server.bat
+*.bat
+
+# OS & Editor artifacts
+.DS_Store
+Thumbs.db
+*.log
