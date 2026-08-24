@@ -4020,17 +4020,18 @@ input:checked + .slider:before {
 }
 
 
+
 /* ==========================================================================
-   Phase 1: Radial HUD Action Wheel Styles (360° Gestural Quick Access)
+   Spectacular Holographic Radial HUD & Telemetry Capsule Styles
    ========================================================================== */
 .radial-hud-overlay {
     position: fixed;
     inset: 0;
     z-index: 10005;
-    background: rgba(5, 10, 20, 0.65);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    animation: fadeIn 0.15s ease;
+    background: radial-gradient(circle at center, rgba(5, 12, 28, 0.75) 0%, rgba(2, 6, 16, 0.9) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .radial-hud-overlay.hidden {
@@ -4044,12 +4045,12 @@ input:checked + .slider:before {
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: radialSpring 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: radialSpring 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes radialSpring {
     from {
-        transform: scale(0.6) rotate(-25deg);
+        transform: scale(0.5) rotate(-30deg);
         opacity: 0;
     }
     to {
@@ -4060,89 +4061,162 @@ input:checked + .slider:before {
 
 .radial-hud-center-ring {
     position: absolute;
-    width: 220px;
-    height: 220px;
+    width: 270px;
+    height: 270px;
     border-radius: 50%;
-    border: 1px dashed rgba(0, 242, 254, 0.4);
-    box-shadow: 0 0 25px rgba(0, 242, 254, 0.15), inset 0 0 25px rgba(0, 242, 254, 0.1);
+    border: 2px dashed rgba(0, 242, 254, 0.4);
+    box-shadow: 0 0 35px rgba(0, 242, 254, 0.25), inset 0 0 35px rgba(0, 242, 254, 0.15);
     pointer-events: none;
-    animation: spinSlow 30s linear infinite;
-}
-
-@keyframes spinSlow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    animation: spinSlow 40s linear infinite;
 }
 
 .radial-hud-center-btn {
     position: absolute;
-    width: 54px;
-    height: 54px;
+    width: 62px;
+    height: 62px;
     border-radius: 50%;
-    background: radial-gradient(circle, var(--bg-secondary) 0%, rgba(10, 15, 29, 0.95) 100%);
-    border: 2px solid var(--accent-primary);
-    box-shadow: 0 0 20px var(--accent-glow);
+    background: radial-gradient(circle, #00f2fe 0%, #0b132b 85%);
+    border: 2px solid #00f2fe;
+    box-shadow: 0 0 30px rgba(0, 242, 254, 0.6), inset 0 0 15px #00f2fe;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 10;
-    transition: transform var(--transition-fast);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .radial-hud-center-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 30px var(--accent-primary);
+    transform: scale(1.15) rotate(90deg);
+    box-shadow: 0 0 45px rgba(0, 242, 254, 0.9);
 }
 
 .radial-hud-core-icon {
-    font-size: 1.25rem;
-    color: var(--accent-primary);
-    filter: drop-shadow(0 0 6px var(--accent-glow));
+    font-size: 1.45rem;
+    color: #ffffff;
+    filter: drop-shadow(0 0 8px #00f2fe);
 }
 
 .radial-node-btn {
     position: absolute;
-    width: 56px;
-    height: 56px;
+    width: 62px;
+    height: 62px;
     border-radius: 50%;
-    background: rgba(11, 19, 43, 0.9);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--card-border-hover);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 242, 254, 0.15);
+    background: rgba(11, 19, 43, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 2px solid rgba(0, 242, 254, 0.4);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 242, 254, 0.2);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 2px;
     cursor: pointer;
-    margin-left: -28px;
-    margin-top: -28px;
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, border-color 0.2s ease;
+    margin-left: -31px;
+    margin-top: -31px;
+    transform: translate(var(--node-x, 0px), var(--node-y, 0px)) scale(1);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     user-select: none;
     z-index: 5;
 }
 
 .radial-node-btn:hover {
-    background: rgba(0, 242, 254, 0.25);
-    border-color: var(--accent-primary);
-    transform: scale(1.18) !important;
-    box-shadow: 0 0 22px var(--accent-glow);
+    transform: translate(var(--node-x, 0px), var(--node-y, 0px)) scale(1.22) !important;
+    background: radial-gradient(circle, rgba(0, 242, 254, 0.4) 0%, rgba(11, 19, 43, 0.95) 100%);
+    border-color: #00f2fe;
+    box-shadow: 0 0 30px rgba(0, 242, 254, 0.8), 0 12px 30px rgba(0, 0, 0, 0.8);
 }
 
 .radial-node-icon {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
+    filter: drop-shadow(0 0 5px rgba(0, 242, 254, 0.6));
 }
 
 .radial-node-label {
-    font-size: 0.65rem;
+    font-size: 0.64rem;
     font-family: var(--font-display);
-    font-weight: 700;
-    color: var(--text-primary);
+    font-weight: 800;
+    color: #ffffff;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
+    text-shadow: 0 0 6px rgba(0, 242, 254, 0.8);
 }
+
+/* Telemetry Capsule 4-Indicator System */
+.telemetry-capsule {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--card-border);
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    user-select: none;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.telemetry-capsule:hover {
+    border-color: var(--accent-primary);
+    background: var(--card-bg-hover);
+    box-shadow: 0 0 16px var(--accent-glow);
+    transform: translateY(-1px);
+    color: var(--text-primary);
+}
+
+.telemetry-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 700;
+    font-size: 0.68rem;
+    padding: 2px 6px;
+    border-radius: var(--radius-pill);
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+}
+
+.telemetry-status-badge.offline {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+.telemetry-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.telemetry-dot.online {
+    background: #10b981;
+    box-shadow: 0 0 6px #10b981;
+}
+
+.telemetry-dot.offline {
+    background: #ef4444;
+    box-shadow: 0 0 6px #ef4444;
+}
+
+.telemetry-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.telemetry-icon {
+    font-size: 0.75rem;
+}
+
 
 /* Light Theme Radial HUD */
 [data-theme="light"] .radial-node-btn {

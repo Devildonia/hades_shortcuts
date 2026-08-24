@@ -11,6 +11,8 @@ export class TelemetryEngine {
         this.batteryEl = document.getElementById('telemetry-battery-val');
         this.fpsEl = document.getElementById('telemetry-fps-val');
         this.statusDot = document.getElementById('telemetry-status-dot');
+        this.statusBadge = document.getElementById('telemetry-status-badge');
+        this.statusText = document.getElementById('telemetry-status-text');
         this.lastPing = 24;
         this.fps = 60;
         this.timer = null;
@@ -72,18 +74,16 @@ export class TelemetryEngine {
 
     bindOnlineOffline() {
         window.addEventListener('online', () => {
-            if (this.statusDot) {
-                this.statusDot.className = 'telemetry-dot online';
-                this.statusDot.title = 'Online';
-            }
+            if (this.statusDot) this.statusDot.className = 'telemetry-dot online';
+            if (this.statusBadge) this.statusBadge.className = 'telemetry-status-badge online';
+            if (this.statusText) this.statusText.textContent = 'ONLINE';
             this.measurePing();
         });
         window.addEventListener('offline', () => {
-            if (this.statusDot) {
-                this.statusDot.className = 'telemetry-dot offline';
-                this.statusDot.title = 'Offline';
-            }
-            if (this.pingEl) this.pingEl.textContent = 'OFFLINE';
+            if (this.statusDot) this.statusDot.className = 'telemetry-dot offline';
+            if (this.statusBadge) this.statusBadge.className = 'telemetry-status-badge offline';
+            if (this.statusText) this.statusText.textContent = 'OFFLINE';
+            if (this.pingEl) this.pingEl.textContent = '---';
         });
     }
 

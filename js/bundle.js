@@ -965,7 +965,7 @@ class RadialHUDEngine {
     renderRadialNodes() {
         if (!this.hudWheel) return;
         this.hudWheel.innerHTML = '';
-        const radius = 105;
+        const radius = 125;
         const total = this.actions.length;
         const t = (i18nDictionaries[state.language] || i18nDictionaries.es).radial_hud || {};
 
@@ -978,7 +978,8 @@ class RadialHUDEngine {
             btn.className = 'radial-node-btn';
             btn.setAttribute('data-action', act.id);
             btn.setAttribute('title', t[act.labelKey] || act.id);
-            btn.style.transform = `translate(${x}px, ${y}px)`;
+            btn.style.setProperty('--node-x', `${x}px`);
+            btn.style.setProperty('--node-y', `${y}px`);
             btn.innerHTML = `<span class="radial-node-icon">${act.icon}</span><span class="radial-node-label">${t[act.labelKey] || act.id}</span>`;
 
             btn.addEventListener('click', (e) => {
@@ -1120,6 +1121,8 @@ class TelemetryEngine {
         this.batteryEl = document.getElementById('telemetry-battery-val');
         this.fpsEl = document.getElementById('telemetry-fps-val');
         this.statusDot = document.getElementById('telemetry-status-dot');
+        this.statusBadge = document.getElementById('telemetry-status-badge');
+        this.statusText = document.getElementById('telemetry-status-text');
         this.lastPing = 24;
         this.fps = 60;
         this.timer = null;
@@ -1181,18 +1184,16 @@ class TelemetryEngine {
 
     bindOnlineOffline() {
         window.addEventListener('online', () => {
-            if (this.statusDot) {
-                this.statusDot.className = 'telemetry-dot online';
-                this.statusDot.title = 'Online';
-            }
+            if (this.statusDot) this.statusDot.className = 'telemetry-dot online';
+            if (this.statusBadge) this.statusBadge.className = 'telemetry-status-badge online';
+            if (this.statusText) this.statusText.textContent = 'ONLINE';
             this.measurePing();
         });
         window.addEventListener('offline', () => {
-            if (this.statusDot) {
-                this.statusDot.className = 'telemetry-dot offline';
-                this.statusDot.title = 'Offline';
-            }
-            if (this.pingEl) this.pingEl.textContent = 'OFFLINE';
+            if (this.statusDot) this.statusDot.className = 'telemetry-dot offline';
+            if (this.statusBadge) this.statusBadge.className = 'telemetry-status-badge offline';
+            if (this.statusText) this.statusText.textContent = 'OFFLINE';
+            if (this.pingEl) this.pingEl.textContent = '---';
         });
     }
 
@@ -1337,7 +1338,7 @@ const techRadar = new TechRadarEngine();
 
 
 // --- Module: js/neural-search.js ---
-// js/neural-search.js - Neural WebGPU & Semantic Vector Search Engine
+// js/neural-search.js - Neural WebGPU & Semantic Vector Search Engine with Live AI Answers & Translator
 
 
 class NeuralSearchEngine {
@@ -1394,38 +1395,83 @@ class NeuralSearchEngine {
         return results.length > 0 ? results : null;
     }
 
-    handleAICommands(query) {
+    handleAICommands(query, bannerEl) {
         const trimmed = query.trim();
         const t = (i18nDictionaries[state.language] || i18nDictionaries.es).neural || {};
 
         if (trimmed.startsWith('!ai ')) {
             const prompt = trimmed.slice(4).trim();
             if (!prompt) return false;
-            return {
-                title: `🧠 ${t.ai_answer_title || 'AI Quick Assist'}:`,
-                content: `<em>"${escapeHtml(prompt)}"</em> &rarr; <strong>${this.generateLocalQuickAnswer(prompt)}</strong>`
-            };
+            
+            // Immediate local response
+            const quickAnswer = this.generateLocalQuickAnswer(prompt);
+            if (bannerEl) {
+                bannerEl.innerHTML = `<span>🧠 <strong>${t.ai_answer_title || 'Asistente IA'}:</strong></span> <span>${quickAnswer}</span>`;
+                bannerEl.classList.remove('hidden');
+            }
+
+            // Async fetch rich knowledge from DuckDuckGo Instant API
+            this.fetchLiveInstantKnowledge(prompt, bannerEl);
+            return true;
         }
 
         if (trimmed.startsWith('!t ')) {
             const textToTrans = trimmed.slice(3).trim();
             if (!textToTrans) return false;
-            return {
-                title: `🌐 ${t.translate_title || 'Traductor Rápido'}:`,
-                content: `<code>${escapeHtml(textToTrans)}</code> &rarr; <strong>${escapeHtml(textToTrans.toUpperCase())}</strong>`
-            };
+
+            if (bannerEl) {
+                bannerEl.innerHTML = `<span>🌐 <strong>${t.translate_title || 'Traducción'}:</strong></span> <span>Traduciendo <em>"${escapeHtml(textToTrans)}"</em>...</span>`;
+                bannerEl.classList.remove('hidden');
+            }
+
+            this.fetchLiveTranslation(textToTrans, bannerEl);
+            return true;
         }
 
-        return null;
+        return false;
     }
 
     generateLocalQuickAnswer(prompt) {
         const p = prompt.toLowerCase();
-        if (p.includes('3d') || p.includes('mesh')) return 'Meshy AI & Tripo3D son las mejores opciones para modelado 3D por IA.';
-        if (p.includes('audio') || p.includes('musica') || p.includes('music')) return 'Suno & ElevenLabs ofrecen generación completa de audio y voz.';
-        if (p.includes('code') || p.includes('codigo') || p.includes('programar')) return 'DeepSeek & Claude destacan por su razonamiento técnico y generación de código.';
-        if (p.includes('shader') || p.includes('webgl') || p.includes('webgpu')) return 'Shadertoy es el repositorio líder de shaders y experimentos WebGL/WebGPU.';
-        return `Consulta procesada en local con WebGPU y red semántica para: "${escapeHtml(prompt)}"`;
+        if (p.includes('xenoblade')) return '<strong>Xenoblade Chronicles 2</strong> es una aclamada obra maestra RPG de Monolith Soft para Nintendo Switch, destacada por su inmenso mundo abierto, banda sonora legendaria y profundo sistema de combate.';
+        if (p.includes('3d') || p.includes('mesh')) return 'Para modelado 3D con IA destacan <strong>Meshy AI</strong> y <strong>Tripo 3D</strong> para mallas rápidas listas para exportar en GLB/OBJ.';
+        if (p.includes('musica') || p.includes('music') || p.includes('audio')) return '<strong>Suno AI</strong> y <strong>ElevenLabs</strong> son los motores líderes para generación de canciones y síntesis de voz.';
+        if (p.includes('code') || p.includes('codigo')) return '<strong>DeepSeek-R1</strong> y <strong>Claude 3.5 Sonnet</strong> lideran en razonamiento algorítmico y generación de software.';
+        return `Procesando análisis semántico para: "<em>${escapeHtml(prompt)}</em>"...`;
+    }
+
+    async fetchLiveInstantKnowledge(prompt, bannerEl) {
+        try {
+            const url = `https://api.duckduckgo.com/?q=${encodeURIComponent(prompt)}&format=json&no_html=1&skip_disambig=1`;
+            const res = await fetch(url);
+            const data = await res.json();
+            if (data && (data.AbstractText || data.Answer)) {
+                const answer = data.Answer || data.AbstractText;
+                if (bannerEl) {
+                    bannerEl.innerHTML = `<span>🧠 <strong>Asistente IA:</strong></span> <span>${escapeHtml(answer)}</span>`;
+                }
+            }
+        } catch (e) {}
+    }
+
+    async fetchLiveTranslation(text, bannerEl) {
+        try {
+            const targetLang = state.language === 'en' ? 'es' : 'en';
+            const langPair = state.language === 'en' ? 'es|en' : 'en|es';
+            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langPair}`;
+            const res = await fetch(url);
+            const data = await res.json();
+            if (data && data.responseData && data.responseData.translatedText) {
+                const translated = data.responseData.translatedText;
+                if (bannerEl) {
+                    bannerEl.innerHTML = `<span>🌐 <strong>Traducción (${targetLang.toUpperCase()}):</strong></span> <span><strong>${escapeHtml(translated)}</strong></span>`;
+                }
+            }
+        } catch (e) {
+            if (bannerEl) {
+                bannerEl.innerHTML = `<span>🌐 <strong>Traducción:</strong></span> <span>${escapeHtml(text.toUpperCase())}</span>`;
+            }
+        }
     }
 }
 
@@ -2572,6 +2618,13 @@ class PostItManager {
             });
         }
 
+        // Global listener for postit creation from Tech Radar or Radial HUD
+        window.addEventListener('postit:create', (e) => {
+            if (e.detail && e.detail.text) {
+                this.createPostIt(e.detail.text, e.detail.x, e.detail.y, e.detail.color);
+            }
+        });
+
         this.renderAll();
     }
 
@@ -2589,7 +2642,7 @@ class PostItManager {
         } catch (e) {}
     }
 
-        createPostIt(text, color = 'cyan') {
+        createPostIt(text, x = null, y = null, color = 'cyan') {
         if (this.postits.length >= 25) {
             soundFx.play('click');
             alert('Has alcanzado el límite máximo de 25 notas flotantes. Elimina alguna nota para fijar una nueva.');
@@ -2597,8 +2650,8 @@ class PostItManager {
         }
         soundFx.play('click');
         const offset = (this.postits.length * 28) % 240;
-        const initialX = Math.min(window.innerWidth - 260, Math.max(20, 120 + offset));
-        const initialY = Math.min(window.innerHeight - 220, Math.max(80, 160 + offset));
+        const initialX = (x !== null && x !== undefined) ? Math.min(window.innerWidth - 260, Math.max(20, x)) : Math.min(window.innerWidth - 260, Math.max(20, 120 + offset));
+        const initialY = (y !== null && y !== undefined) ? Math.min(window.innerHeight - 220, Math.max(80, y)) : Math.min(window.innerHeight - 220, Math.max(80, 160 + offset));
         const rotation = (Math.random() * 4 - 2).toFixed(1); // -2deg to +2deg
 
         const newNote = {
@@ -2606,7 +2659,7 @@ class PostItManager {
             text: text,
             x: initialX,
             y: initialY,
-            color: color,
+            color: color || 'cyan',
             rotation: parseFloat(rotation),
             zIndex: ++this.topZIndex,
             createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -3944,11 +3997,9 @@ class SearchEngineManager {
         }
 
         // 2. Check Arithmetic Calculator
-        // Check AI Commands
-        const aiResult = neuralSearch.handleAICommands(query);
-        if (aiResult && this.calcBanner) {
-            this.calcBanner.innerHTML = `<span>${aiResult.title}</span> <span>${aiResult.content}</span>`;
-            this.calcBanner.classList.remove('hidden');
+        // Check AI & Translation Commands
+        const isAIHandled = neuralSearch.handleAICommands(query, this.calcBanner);
+        if (isAIHandled) {
             return;
         }
 

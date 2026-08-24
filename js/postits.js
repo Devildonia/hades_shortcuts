@@ -44,6 +44,13 @@ export class PostItManager {
             });
         }
 
+        // Global listener for postit creation from Tech Radar or Radial HUD
+        window.addEventListener('postit:create', (e) => {
+            if (e.detail && e.detail.text) {
+                this.createPostIt(e.detail.text, e.detail.x, e.detail.y, e.detail.color);
+            }
+        });
+
         this.renderAll();
     }
 
@@ -61,7 +68,7 @@ export class PostItManager {
         } catch (e) {}
     }
 
-        createPostIt(text, color = 'cyan') {
+        createPostIt(text, x = null, y = null, color = 'cyan') {
         if (this.postits.length >= 25) {
             soundFx.play('click');
             alert('Has alcanzado el límite máximo de 25 notas flotantes. Elimina alguna nota para fijar una nueva.');
@@ -69,8 +76,8 @@ export class PostItManager {
         }
         soundFx.play('click');
         const offset = (this.postits.length * 28) % 240;
-        const initialX = Math.min(window.innerWidth - 260, Math.max(20, 120 + offset));
-        const initialY = Math.min(window.innerHeight - 220, Math.max(80, 160 + offset));
+        const initialX = (x !== null && x !== undefined) ? Math.min(window.innerWidth - 260, Math.max(20, x)) : Math.min(window.innerWidth - 260, Math.max(20, 120 + offset));
+        const initialY = (y !== null && y !== undefined) ? Math.min(window.innerHeight - 220, Math.max(80, y)) : Math.min(window.innerHeight - 220, Math.max(80, 160 + offset));
         const rotation = (Math.random() * 4 - 2).toFixed(1); // -2deg to +2deg
 
         const newNote = {
@@ -78,7 +85,7 @@ export class PostItManager {
             text: text,
             x: initialX,
             y: initialY,
-            color: color,
+            color: color || 'cyan',
             rotation: parseFloat(rotation),
             zIndex: ++this.topZIndex,
             createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })

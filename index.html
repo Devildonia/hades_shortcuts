@@ -55,11 +55,15 @@
                 </div>
             </div>
 
-            <!-- Telemetry Capsule -->
-            <div class="telemetry-capsule" id="telemetry-capsule" title="Latencia & Telemetría del Sistema (Clic para medir)">
-                <span class="telemetry-dot online" id="telemetry-status-dot"></span>
-                <span class="telemetry-item"><span class="telemetry-icon">📶</span> <span id="telemetry-ping-val">24ms</span></span>
-                <span class="telemetry-item"><span class="telemetry-icon">🔋</span> <span id="telemetry-battery-val">100%</span></span>
+            <!-- Telemetry Capsule (Status, Ping, FPS, Battery) -->
+            <div class="telemetry-capsule" id="telemetry-capsule" title="Telemetría en Vivo: Estado, Ping, FPS y Batería (Clic para refrescar)">
+                <span class="telemetry-status-badge online" id="telemetry-status-badge">
+                    <span class="telemetry-dot online" id="telemetry-status-dot"></span>
+                    <span class="telemetry-status-text" id="telemetry-status-text">ONLINE</span>
+                </span>
+                <span class="telemetry-item" title="Latencia / Ping"><span class="telemetry-icon">📶</span> <span id="telemetry-ping-val">28ms</span></span>
+                <span class="telemetry-item" title="Tasa de Refresco"><span class="telemetry-icon">⚡</span> <span id="telemetry-fps-val">60 FPS</span></span>
+                <span class="telemetry-item" title="Batería"><span class="telemetry-icon">🔋</span> <span id="telemetry-battery-val">100%</span></span>
             </div>
         </div>
 

@@ -121,11 +121,9 @@ export class SearchEngineManager {
         }
 
         // 2. Check Arithmetic Calculator
-        // Check AI Commands
-        const aiResult = neuralSearch.handleAICommands(query);
-        if (aiResult && this.calcBanner) {
-            this.calcBanner.innerHTML = `<span>${aiResult.title}</span> <span>${aiResult.content}</span>`;
-            this.calcBanner.classList.remove('hidden');
+        // Check AI & Translation Commands
+        const isAIHandled = neuralSearch.handleAICommands(query, this.calcBanner);
+        if (isAIHandled) {
             return;
         }
 

@@ -32,7 +32,7 @@ export class RadialHUDEngine {
     renderRadialNodes() {
         if (!this.hudWheel) return;
         this.hudWheel.innerHTML = '';
-        const radius = 105;
+        const radius = 125;
         const total = this.actions.length;
         const t = (i18nDictionaries[state.language] || i18nDictionaries.es).radial_hud || {};
 
@@ -45,7 +45,8 @@ export class RadialHUDEngine {
             btn.className = 'radial-node-btn';
             btn.setAttribute('data-action', act.id);
             btn.setAttribute('title', t[act.labelKey] || act.id);
-            btn.style.transform = `translate(${x}px, ${y}px)`;
+            btn.style.setProperty('--node-x', `${x}px`);
+            btn.style.setProperty('--node-y', `${y}px`);
             btn.innerHTML = `<span class="radial-node-icon">${act.icon}</span><span class="radial-node-label">${t[act.labelKey] || act.id}</span>`;
 
             btn.addEventListener('click', (e) => {
