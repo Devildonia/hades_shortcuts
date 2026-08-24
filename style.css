@@ -3611,3 +3611,117 @@ input:checked + .slider:before {
 [data-theme="light"] .postit-note {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
+
+
+/* ==========================================================================
+   Visual Icon Grid Picker (Replaces generic select)
+   ========================================================================== */
+.icon-picker-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.sc-icon-preview-chip {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--accent-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.sc-icon-preview-chip img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.sc-icon-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+    gap: 8px;
+    max-height: 140px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 10px;
+}
+
+.sc-icon-picker-grid::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sc-icon-picker-grid::-webkit-scrollbar-thumb {
+    background: rgba(0, 242, 254, 0.3);
+    border-radius: 4px;
+}
+
+.sc-icon-chip {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    padding: 4px;
+}
+
+.sc-icon-chip:hover {
+    background: rgba(0, 242, 254, 0.15);
+    border-color: var(--accent-primary);
+    transform: scale(1.1);
+    box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.sc-icon-chip.selected {
+    background: rgba(0, 242, 254, 0.25);
+    border: 2px solid var(--accent-primary);
+    transform: scale(1.05);
+    box-shadow: 0 0 14px var(--accent-glow);
+}
+
+.sc-icon-chip img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+[data-theme="light"] .sc-icon-preview-chip {
+    background: #ffffff;
+    border-color: #0284c7;
+    box-shadow: 0 2px 8px rgba(2, 132, 199, 0.2);
+}
+
+[data-theme="light"] .sc-icon-picker-grid {
+    background: #f8fafc;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .sc-icon-chip {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .sc-icon-chip:hover {
+    background: #f0f7ff;
+    border-color: #0284c7;
+}
+
+[data-theme="light"] .sc-icon-chip.selected {
+    background: #e0f2fe;
+    border-color: #0284c7;
+    box-shadow: 0 0 10px rgba(2, 132, 199, 0.25);
+}

@@ -969,8 +969,13 @@
                     </div>
 
                     <div class="form-group flex-1">
-                        <label data-i18n="shortcut_editor.icon_preset">Icono de la Aplicación</label>
-                        <select id="sc-icon-select" class="form-select"></select>
+                        <div class="icon-picker-label-row">
+                            <label data-i18n="shortcut_editor.icon_preset">Icono de la Aplicación</label>
+                            <div class="sc-icon-preview-chip" id="sc-icon-preview-chip">
+                                <img id="sc-icon-preview-img" src="iconos/chatgpt.webp" alt="Icon Preview">
+                            </div>
+                        </div>
+                        <div class="sc-icon-picker-grid" id="sc-icon-picker-grid" role="listbox" aria-label="Seleccionar icono"></div>
                     </div>
                 </div>
 
