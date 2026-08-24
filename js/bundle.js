@@ -2915,7 +2915,7 @@ class DragDropManager {
 
 
 // --- Module: js/shortcut-manager.js ---
-// js/shortcut-manager.js - Add / Edit / Delete Shortcut Modal with Visual Icon Grid & Smart Favicon HD
+// js/shortcut-manager.js - Add / Edit / Delete Shortcut Modal with Custom Themed Select & Smart Favicon HD
 
 
 const PRESET_ICONS = [
@@ -2936,8 +2936,7 @@ class ShortcutManager {
         this.titleInput = document.getElementById('sc-title-input');
         this.urlInput = document.getElementById('sc-url-input');
         this.catSelect = document.getElementById('sc-category-select');
-        this.iconGrid = document.getElementById('sc-icon-picker-grid');
-        this.previewImg = document.getElementById('sc-icon-preview-img');
+        this.iconSelect = document.getElementById('sc-icon-select');
         this.customIconInput = document.getElementById('sc-custom-icon');
         this.descInput = document.getElementById('sc-desc-input');
         this.tagsInput = document.getElementById('sc-tags-input');
@@ -2945,12 +2944,11 @@ class ShortcutManager {
         this.deleteBtn = document.getElementById('sc-delete-btn');
         this.closeBtn = document.getElementById('close-sc-modal');
         this.editingShortcutId = null;
-        this.selectedIcon = 'iconos/chatgpt.webp';
     }
 
     init() {
         this.populateCategorySelect();
-        this.renderVisualIconGrid();
+        this.populateIconPresets();
         this.bindEvents();
         this.bindSmartFaviconAutoDerive();
 
@@ -2970,34 +2968,15 @@ class ShortcutManager {
         });
     }
 
-    renderVisualIconGrid() {
-        if (!this.iconGrid) return;
-        this.iconGrid.innerHTML = '';
+    populateIconPresets() {
+        if (!this.iconSelect) return;
+        this.iconSelect.innerHTML = '';
         PRESET_ICONS.forEach(ic => {
-            const path = `iconos/${ic}`;
-            const chip = document.createElement('div');
-            chip.className = `sc-icon-chip ${this.selectedIcon === path ? 'selected' : ''}`;
-            chip.setAttribute('data-icon-path', path);
-            chip.setAttribute('title', ic.replace('.webp', ''));
-            chip.innerHTML = `<img src="${path}" alt="${ic}" loading="lazy">`;
-            
-            chip.addEventListener('click', () => {
-                soundFx.play('click');
-                this.selectIcon(path);
-                if (this.customIconInput) this.customIconInput.value = '';
-            });
-            this.iconGrid.appendChild(chip);
+            const opt = document.createElement('option');
+            opt.value = `iconos/${ic}`;
+            opt.textContent = ic.replace('.webp', '');
+            this.iconSelect.appendChild(opt);
         });
-    }
-
-    selectIcon(iconPath) {
-        this.selectedIcon = iconPath;
-        if (this.previewImg) this.previewImg.src = iconPath;
-        if (this.iconGrid) {
-            this.iconGrid.querySelectorAll('.sc-icon-chip').forEach(chip => {
-                chip.classList.toggle('selected', chip.getAttribute('data-icon-path') === iconPath);
-            });
-        }
     }
 
     openAddModal() {
@@ -3008,7 +2987,7 @@ class ShortcutManager {
         this.customIconInput.value = '';
         this.descInput.value = '';
         this.tagsInput.value = '';
-        this.selectIcon('iconos/chatgpt.webp');
+        if (this.iconSelect) this.iconSelect.value = 'iconos/chatgpt.webp';
         if (this.deleteBtn) this.deleteBtn.classList.add('hidden');
         document.getElementById('sc-modal-title').textContent = (i18nDictionaries[state.language] || i18nDictionaries.es).shortcut_editor.add_title;
         this.modal.classList.remove('hidden');
@@ -3024,11 +3003,9 @@ class ShortcutManager {
         this.tagsInput.value = sc.tags || '';
 
         if (sc.icon.startsWith('iconos/')) {
-            this.selectIcon(sc.icon);
+            if (this.iconSelect) this.iconSelect.value = sc.icon;
             this.customIconInput.value = '';
         } else {
-            this.selectedIcon = sc.icon;
-            if (this.previewImg) this.previewImg.src = sc.icon;
             this.customIconInput.value = sc.icon;
         }
 
@@ -3047,7 +3024,7 @@ class ShortcutManager {
         const url = this.urlInput.value.trim();
         if (!title || !url) return;
 
-        let icon = this.customIconInput.value.trim() || this.selectedIcon;
+        let icon = this.customIconInput.value.trim() || (this.iconSelect ? this.iconSelect.value : 'iconos/google.webp');
         const category = this.catSelect.value;
         const desc = this.descInput.value.trim();
         const tags = this.tagsInput.value.trim();
@@ -3099,16 +3076,7 @@ class ShortcutManager {
                     if (this.customIconInput) {
                         this.customIconInput.value = hdFavicon;
                     }
-                    if (this.previewImg) this.previewImg.src = hdFavicon;
                 } catch (e) {}
-            });
-        }
-        if (this.customIconInput) {
-            this.customIconInput.addEventListener('input', () => {
-                const customVal = this.customIconInput.value.trim();
-                if (customVal && this.previewImg) {
-                    this.previewImg.src = customVal;
-                }
             });
         }
     }

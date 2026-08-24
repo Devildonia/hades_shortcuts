@@ -3725,3 +3725,63 @@ input:checked + .slider:before {
     border-color: #0284c7;
     box-shadow: 0 0 10px rgba(2, 132, 199, 0.25);
 }
+
+
+/* ==========================================================================
+   Custom Themed Select & Dropdown Scrollbar
+   ========================================================================== */
+.custom-themed-select,
+.form-select {
+    background-color: rgba(10, 15, 29, 0.85) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: var(--radius-sm);
+    padding: 9px 12px;
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    cursor: pointer;
+    scrollbar-color: var(--accent-primary) #0a0f1d;
+    scrollbar-width: thin;
+}
+
+.custom-themed-select:focus,
+.form-select:focus {
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 0 12px var(--accent-glow) !important;
+    outline: none;
+}
+
+.custom-themed-select option,
+.form-select option {
+    background-color: #0b132b !important;
+    color: #e2e8f0 !important;
+    padding: 8px 12px;
+}
+
+.custom-themed-select option:checked,
+.form-select option:checked,
+.custom-themed-select option:hover,
+.form-select option:hover {
+    background-color: #00f2fe !important;
+    color: #000000 !important;
+}
+
+[data-theme="light"] .custom-themed-select,
+[data-theme="light"] .form-select {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    scrollbar-color: #0284c7 #f1f5f9;
+}
+
+[data-theme="light"] .custom-themed-select option,
+[data-theme="light"] .form-select option {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .custom-themed-select option:checked,
+[data-theme="light"] .form-select option:checked {
+    background-color: #0284c7 !important;
+    color: #ffffff !important;
+}
