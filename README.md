@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ HaDeS' Shortcuts · Next-Gen (v5.0)
+# ⚡ HaDeS' Shortcuts · Next-Gen (v6.0)
 ### *A high-performance, ultra-aesthetic browser command center, productivity OS & startpage*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -66,6 +66,44 @@
 ---
 
 ## 🌟 Key Features
+
+### 🛸 Radial HUD Action Wheel (360° Gestural Quick Access)
+- **Holographic Circular Menu**: Press <kbd>Middle-Click</kbd> anywhere on the background or <kbd>Alt</kbd> + <kbd>C</kbd> to deploy an 8-node radial wheel orbiting your cursor:
+  1. ⚡ **Top Favorites**: Instant launch of your most-used shortcut.
+  2. 🎧 **Ambient Audio**: 1-click play/pause and soundscape toggle.
+  3. ⏳ **Pomodoro Focus**: Quick start/pause timer.
+  4. 📌 **Instant Post-it**: Creates a sticky note directly under your mouse cursor.
+  5. 🌓 **Theme Switcher**: Instant day/night/cyber color cycling.
+  6. 📱 **QR Generator**: Generates mobile QR code on the fly.
+  7. 🔍 **Search Focus**: Jump to omnibox.
+  8. ⚙️ **Floating Settings**: Open centered configuration modal.
+
+### ☀️ Dynamic Solar Lighting & Circadian Rhythm Engine
+- **Astronomical Solar Synthesis**: Calculates true solar elevation angle and solar time according to your geographic coordinates (e.g. San Francisco `37.7749`, `-122.4194`):
+  - 🌅 **Golden Dawn (06:00 - 10:00)**: Warm amber gold tones and gentle sunrise glows.
+  - ☀️ **High Noon (10:00 - 18:00)**: High-contrast sapphire cyan and crystal daylight mesh.
+  - 🌆 **Cyber Twilight (18:00 - 22:00)**: Vibrant neon magenta, sunset violet, and twilight auroras.
+  - 🌌 **Deep Space Midnight (22:00 - 06:00)**: Deep navy abyssal palette with starry micro-particles on the Aurora Canvas and blue-light eye protection.
+
+### 📊 Cyberpunk System Telemetry & Network Health Capsule
+- **Real-Time Network & Hardware Monitoring**:
+  - 📶 **Live Latency Ping (ms)**: High-frequency non-blocking ping probe against global Cloudflare (`1.1.1.1`) and Google DNS endpoints.
+  - 🔋 **Battery API**: Real-time battery charge percentage and charging status (`⚡95%`).
+  - 🖥️ **Refresh Rate Monitor**: Real-time display refresh rate detector (60Hz, 120Hz, 144Hz).
+  - 🌐 **Instant Offline Auto-Failover**: Dynamic detection of offline states with auto-cached local fallbacks.
+
+### 📡 Live Tech Radar Bento Capsule
+- **Real-Time Curated Tech & AI Streams**:
+  - Direct live integration with **HackerNews Top Stories** and AI Radars via zero-backend asynchronous fetch with a 15-minute `localStorage` cache.
+  - **1-Click Post-it Pinning**: Click 📌 on any trending headline to instantly pin it as a floating Glass Post-it for later reading.
+
+### 🧠 Neural WebGPU & Semantic Vector Search Engine
+- **In-Browser Local Semantic Vector Indexing**:
+  - Instant cosine vector similarity matching across all titles, tags, and categories.
+  - Type natural language queries like *"tools for generating 3d models"* or *"where to edit photos with ai"* to automatically highlight matching apps.
+  - **Omnibox AI Assistant**:
+    - `!ai <prompt>`: Instant client-side intelligent answers.
+    - `!t <text>`: Fast multilingual translation helper.
 
 ### 🛠️ DevTools Omnibox & «Swiss Army Knife»
 Transform your search bar into an instant utility suite:

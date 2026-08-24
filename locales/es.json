@@ -300,5 +300,10 @@
   "tech_radar": {
     "loading": "Cargando titulares...",
     "pin_tooltip": "Fijar en Post-it"
+  },
+  "neural": {
+    "ai_answer_title": "Asistente IA Local",
+    "translate_title": "Traducción Rápida",
+    "semantic_match": "Coincidencia Semántica IA"
   }
 }

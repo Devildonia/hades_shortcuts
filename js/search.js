@@ -1,3 +1,4 @@
+import { neuralSearch } from './neural-search.js';
 import { macroEngine } from './macros.js';
 // js/search.js - Multi-Engine Omnibox, Category Filters, Bangs & DevTools
 
@@ -120,6 +121,14 @@ export class SearchEngineManager {
         }
 
         // 2. Check Arithmetic Calculator
+        // Check AI Commands
+        const aiResult = neuralSearch.handleAICommands(query);
+        if (aiResult && this.calcBanner) {
+            this.calcBanner.innerHTML = `<span>${aiResult.title}</span> <span>${aiResult.content}</span>`;
+            this.calcBanner.classList.remove('hidden');
+            return;
+        }
+
         const calcResult = evaluateArithmetic(query);
         if (this.calcBanner) {
             if (calcResult !== null) {

@@ -1,3 +1,4 @@
+import { neuralSearch } from './neural-search.js';
 import { techRadar } from './tech-radar.js';
 import { telemetry } from './telemetry.js';
 import { solarEngine } from './solar-engine.js';
@@ -210,6 +211,12 @@ export function initApp() {
         solarEngine.init();
         telemetry.init();
         techRadar.init();
+        neuralSearch.init();
+    window.radialHUD = radialHUD;
+    window.solarEngine = solarEngine;
+    window.telemetry = telemetry;
+    window.techRadar = techRadar;
+    window.neuralSearch = neuralSearch;
     miniHud.init();
 
     loadLocaleAsync(state.language).then(() => {

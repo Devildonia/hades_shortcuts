@@ -300,5 +300,10 @@
   "tech_radar": {
     "loading": "Schlagzeilen laden...",
     "pin_tooltip": "Auf Post-it heften"
+  },
+  "neural": {
+    "ai_answer_title": "Lokaler KI-Assistent",
+    "translate_title": "Schnellübersetzung",
+    "semantic_match": "Semantische KI-Übereinstimmung"
   }
 }

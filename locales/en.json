@@ -300,5 +300,10 @@
   "tech_radar": {
     "loading": "Loading headlines...",
     "pin_tooltip": "Pin to Post-it"
+  },
+  "neural": {
+    "ai_answer_title": "Local AI Assistant",
+    "translate_title": "Quick Translation",
+    "semantic_match": "AI Semantic Match"
   }
 }
