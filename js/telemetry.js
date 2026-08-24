@@ -60,14 +60,18 @@ export class TelemetryEngine {
         let frameCount = 0;
         let lastTime = performance.now();
         const checkFPS = (now) => {
+            if (document.hidden) {
+                requestAnimationFrame(checkFPS);
+                return;
+            }
             frameCount++;
             if (now - lastTime >= 1000) {
                 this.fps = Math.round((frameCount * 1000) / (now - lastTime));
-                if (this.fpsEl) this.fpsEl.textContent = `${this.fps}fps`;
+                if (this.fpsEl) this.fpsEl.textContent = `${this.fps} FPS`;
                 frameCount = 0;
                 lastTime = now;
             }
-            if (frameCount < 120) requestAnimationFrame(checkFPS);
+            requestAnimationFrame(checkFPS);
         };
         requestAnimationFrame(checkFPS);
     }

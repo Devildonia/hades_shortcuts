@@ -95,11 +95,11 @@ export class NeuralSearchEngine {
 
     generateLocalQuickAnswer(prompt) {
         const p = prompt.toLowerCase();
-        if (p.includes('xenoblade')) return '<strong>Xenoblade Chronicles 2</strong> es una aclamada obra maestra RPG de Monolith Soft para Nintendo Switch, destacada por su inmenso mundo abierto, banda sonora legendaria y profundo sistema de combate.';
-        if (p.includes('3d') || p.includes('mesh')) return 'Para modelado 3D con IA destacan <strong>Meshy AI</strong> y <strong>Tripo 3D</strong> para mallas rápidas listas para exportar en GLB/OBJ.';
-        if (p.includes('musica') || p.includes('music') || p.includes('audio')) return '<strong>Suno AI</strong> y <strong>ElevenLabs</strong> son los motores líderes para generación de canciones y síntesis de voz.';
-        if (p.includes('code') || p.includes('codigo')) return '<strong>DeepSeek-R1</strong> y <strong>Claude 3.5 Sonnet</strong> lideran en razonamiento algorítmico y generación de software.';
-        return `Procesando análisis semántico para: "<em>${escapeHtml(prompt)}</em>"...`;
+        if (p.includes('3d') || p.includes('mesh')) return 'Para modelado 3D destacan <strong>Meshy AI</strong> y <strong>Tripo 3D</strong> para mallas generativas exportables en GLB/OBJ.';
+        if (p.includes('musica') || p.includes('music') || p.includes('audio')) return '<strong>Suno AI</strong> y <strong>ElevenLabs</strong> son herramientas de referencia para síntesis de audio y voz.';
+        if (p.includes('code') || p.includes('codigo') || p.includes('program')) return '<strong>Claude 3.5 Sonnet</strong> y <strong>DeepSeek-R1</strong> lideran en análisis algorítmico y generación de código.';
+        if (p.includes('webgpu') || p.includes('webgl')) return '<strong>WebGPU</strong> es el estándar moderno de gráficos y cómputo de bajo nivel en navegador que sucede a WebGL.';
+        return `Consultando base de conocimiento para: "<em>${escapeHtml(prompt)}</em>"...`;
     }
 
     async fetchLiveInstantKnowledge(prompt, bannerEl) {
@@ -122,7 +122,22 @@ export class NeuralSearchEngine {
             const langPair = state.language === 'en' ? 'es|en' : 'en|es';
             const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langPair}`;
             const res = await fetch(url);
+            
+            if (res.status === 429) {
+                if (bannerEl) {
+                    bannerEl.innerHTML = `<span>⚠️ <strong>Traducción:</strong></span> <span>Límite de API alcanzado (1000 palabras/día por IP). Inténtalo más tarde.</span>`;
+                }
+                return;
+            }
+
             const data = await res.json();
+            if (data && data.responseStatus === 429) {
+                if (bannerEl) {
+                    bannerEl.innerHTML = `<span>⚠️ <strong>Traducción:</strong></span> <span>Límite de API alcanzado (1000 palabras/día por IP). Inténtalo más tarde.</span>`;
+                }
+                return;
+            }
+
             if (data && data.responseData && data.responseData.translatedText) {
                 const translated = data.responseData.translatedText;
                 if (bannerEl) {

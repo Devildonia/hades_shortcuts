@@ -160,12 +160,14 @@ export class DashboardRenderer {
         this.smartTooltip.classList.remove('hidden');
         this.smartTooltip.classList.add('visible');
         this.smartTooltip.setAttribute('aria-hidden', 'false');
+        this.smartTooltip.setAttribute('aria-hidden', 'false');
     }
 
     hideTooltip() {
         if (this.smartTooltip) {
             this.smartTooltip.classList.remove('visible');
             this.smartTooltip.classList.add('hidden');
+            this.smartTooltip.setAttribute('aria-hidden', 'true');
             this.smartTooltip.setAttribute('aria-hidden', 'true');
         }
     }

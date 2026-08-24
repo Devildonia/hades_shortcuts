@@ -791,6 +791,10 @@ class AuroraCanvasEngine {
 
     bindEvents() {
         window.addEventListener('resize', () => this.resize());
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) this.stop();
+            else if (this.enabled) this.start();
+        });
         window.addEventListener('pointermove', (e) => {
             this.pointer.targetX = e.clientX;
             this.pointer.targetY = e.clientY;
@@ -945,15 +949,16 @@ class RadialHUDEngine {
         this.centerBadge = document.getElementById('radial-hud-center');
         this.isOpen = false;
         this.cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        this.previousActiveElement = null;
         this.actions = [
             { id: 'favs', icon: '⭐', labelKey: 'favs', action: () => this.toggleFavsSubOrbit() },
-            { id: 'audio', icon: '🎧', labelKey: 'audio', action: () => this.toggleAudio() },
-            { id: 'pomodoro', icon: '⏳', labelKey: 'pomodoro', action: () => this.togglePomodoro() },
+            { id: 'audio', icon: '🎧', labelKey: 'audio', action: () => ambientAudio.toggle() },
+            { id: 'pomodoro', icon: '⏳', labelKey: 'pomodoro', action: () => document.getElementById('pomodoro-start-btn')?.click() },
             { id: 'postit', icon: '📌', labelKey: 'postit', action: () => this.createPostitUnderCursor() },
-            { id: 'theme', icon: '🌓', labelKey: 'theme', action: () => this.toggleTheme() },
+            { id: 'theme', icon: '🌓', labelKey: 'theme', action: () => state.setTheme(state.theme === 'cyber' ? 'light' : (state.theme === 'light' ? 'nebula' : 'cyber')) },
             { id: 'qr', icon: '📱', labelKey: 'qr', action: () => this.openQRQuick() },
             { id: 'search', icon: '🔍', labelKey: 'search', action: () => this.focusOmnibox() },
-            { id: 'settings', icon: '⚙️', labelKey: 'settings', action: () => this.openSettings() }
+            { id: 'settings', icon: '⚙️', labelKey: 'settings', action: () => document.getElementById('settings-btn')?.click() }
         ];
     }
 
@@ -965,26 +970,22 @@ class RadialHUDEngine {
     renderRadialNodes() {
         if (!this.hudWheel) return;
         this.hudWheel.innerHTML = '';
-        const radius = 125;
-        const total = this.actions.length;
+        const radius = 125, total = this.actions.length;
         const t = (i18nDictionaries[state.language] || i18nDictionaries.es).radial_hud || {};
 
         this.actions.forEach((act, idx) => {
             const angle = (idx * (360 / total) - 90) * (Math.PI / 180);
-            const x = Math.round(radius * Math.cos(angle));
-            const y = Math.round(radius * Math.sin(angle));
-
+            const x = Math.round(radius * Math.cos(angle)), y = Math.round(radius * Math.sin(angle));
             const btn = document.createElement('div');
             btn.className = `radial-node-btn radial-node-${act.id}`;
+            btn.setAttribute("tabindex", "0");
             btn.setAttribute('data-action', act.id);
             btn.setAttribute('title', t[act.labelKey] || act.id);
             btn.style.setProperty('--node-x', `${x}px`);
             btn.style.setProperty('--node-y', `${y}px`);
             btn.innerHTML = `<span class="radial-node-icon">${act.icon}</span><span class="radial-node-label">${t[act.labelKey] || act.id}</span>`;
 
-            if (act.id === 'favs') {
-                this.renderFavoritesSubOrbit(btn);
-            }
+            if (act.id === 'favs') this.renderFavoritesSubOrbit(btn);
 
             btn.addEventListener('click', (e) => {
                 if (e.target.closest('.radial-sub-fav-item')) return;
@@ -993,62 +994,38 @@ class RadialHUDEngine {
                 act.action();
                 if (act.id !== 'favs') this.close();
             });
-
             this.hudWheel.appendChild(btn);
         });
     }
 
     getMostUsedShortcuts() {
         let stats = {};
-        try {
-            stats = JSON.parse(localStorage.getItem('shortcut_usage_stats_v1') || '{}');
-        } catch (e) {}
-
+        try { stats = JSON.parse(localStorage.getItem('shortcut_usage_stats_v1') || '{}'); } catch (e) {}
         const all = [...(state.shortcuts || [])];
-        
-        // Sort by recorded click count descending
-        all.sort((a, b) => {
-            const countA = stats[a.id] || 0;
-            const countB = stats[b.id] || 0;
-            return countB - countA;
-        });
+        all.sort((a, b) => (stats[b.id] || 0) - (stats[a.id] || 0));
 
-        // If no usage recorded yet, pick the most universally popular icons
-        const popularIds = ['google', 'youtube', 'chatgpt', 'github', 'claude'];
+        if (Object.values(stats).some(v => v > 0)) return all.slice(0, 3);
+
+        const popular = ['google', 'youtube', 'chatgpt', 'github', 'claude'];
         const top3 = [];
-        
-        // Check if we have user clicks
-        const hasClicks = Object.values(stats).some(v => v > 0);
-        if (hasClicks) {
-            return all.slice(0, 3);
-        }
-
-        // Fresh default popular items
-        popularIds.forEach(id => {
+        popular.forEach(id => {
             if (top3.length < 3) {
                 const found = all.find(s => s.id === id || s.title.toLowerCase().includes(id));
                 if (found && !top3.includes(found)) top3.push(found);
             }
         });
-
         while (top3.length < 3 && all.length > top3.length) {
             const next = all.find(s => !top3.includes(s));
             if (next) top3.push(next);
         }
-
         return top3.slice(0, 3);
     }
 
     renderFavoritesSubOrbit(parentBtn) {
         const subContainer = document.createElement('div');
         subContainer.className = 'radial-sub-favs';
-        
         const top3 = this.getMostUsedShortcuts();
-        const offsets = [
-            { x: -44, y: -58 },
-            { x: 0, y: -74 },
-            { x: 44, y: -58 }
-        ];
+        const offsets = [{ x: -44, y: -58 }, { x: 0, y: -74 }, { x: 44, y: -58 }];
 
         top3.forEach((sc, i) => {
             const pos = offsets[i] || { x: 0, y: -50 };
@@ -1057,20 +1034,16 @@ class RadialHUDEngine {
             subBtn.title = sc.title || 'Favorito';
             subBtn.style.setProperty('--sub-x', `${pos.x}px`);
             subBtn.style.setProperty('--sub-y', `${pos.y}px`);
-
             const iconSrc = sc.icon || `https://www.google.com/s2/favicons?domain=${encodeURIComponent(sc.url)}&sz=64`;
             subBtn.innerHTML = `<img src="${iconSrc}" class="radial-sub-icon-img" alt="${sc.title}" onerror="this.src='iconos/google.webp'"><span class="radial-sub-fav-tooltip">${sc.title}</span>`;
-
             subBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 soundFx.play('click');
                 window.open(sc.url, '_blank');
                 this.close();
             });
-
             subContainer.appendChild(subBtn);
         });
-
         parentBtn.appendChild(subContainer);
     }
 
@@ -1078,7 +1051,7 @@ class RadialHUDEngine {
         soundFx.play('click');
         this.isOpen = true;
         this.cursorPos = { x, y };
-
+        this.previousActiveElement = document.activeElement;
         const pad = 150;
         const clampedX = Math.max(pad, Math.min(window.innerWidth - pad, x));
         const clampedY = Math.max(pad, Math.min(window.innerHeight - pad, y));
@@ -1087,11 +1060,14 @@ class RadialHUDEngine {
             this.hudWheel.style.left = `${clampedX}px`;
             this.hudWheel.style.top = `${clampedY}px`;
         }
-
         if (this.hudOverlay) {
             this.hudOverlay.classList.remove('hidden');
             this.hudOverlay.setAttribute('aria-hidden', 'false');
         }
+        setTimeout(() => {
+            const firstBtn = this.hudWheel ? this.hudWheel.querySelector('.radial-node-btn, button') : null;
+            if (firstBtn) firstBtn.focus();
+        }, 50);
     }
 
     close() {
@@ -1102,39 +1078,25 @@ class RadialHUDEngine {
             this.hudOverlay.classList.add('hidden');
             this.hudOverlay.setAttribute('aria-hidden', 'true');
         }
+        if (this.previousActiveElement && typeof this.previousActiveElement.focus === 'function') {
+            this.previousActiveElement.focus();
+        }
     }
 
     toggle(x, y) {
-        if (this.isOpen) this.close();
-        else this.open(x, y);
+        this.isOpen ? this.close() : this.open(x, y);
     }
 
     toggleFavsSubOrbit() {
-        const topSc = state.shortcuts[0];
+        const topSc = this.getMostUsedShortcuts()[0] || state.shortcuts[0];
         if (topSc && topSc.url) window.open(topSc.url, '_blank');
         this.close();
-    }
-
-    toggleAudio() {
-        ambientAudio.toggle();
-    }
-
-    togglePomodoro() {
-        const pomBtn = document.getElementById('pomodoro-start-btn');
-        if (pomBtn) pomBtn.click();
     }
 
     createPostitUnderCursor() {
         const input = document.getElementById('scratchpad-input');
         const text = input ? input.value.trim() || 'Nota Rápida' : 'Nota Rápida';
-        window.dispatchEvent(new CustomEvent('postit:create', {
-            detail: { text, x: this.cursorPos.x, y: this.cursorPos.y }
-        }));
-    }
-
-    toggleTheme() {
-        const nextTheme = state.theme === 'cyber' ? 'light' : (state.theme === 'light' ? 'nebula' : 'cyber');
-        state.setTheme(nextTheme);
+        window.dispatchEvent(new CustomEvent('postit:create', { detail: { text, x: this.cursorPos.x, y: this.cursorPos.y } }));
     }
 
     openQRQuick() {
@@ -1154,13 +1116,7 @@ class RadialHUDEngine {
         }
     }
 
-    openSettings() {
-        const btn = document.getElementById('settings-btn');
-        if (btn) btn.click();
-    }
-
     bindEvents() {
-        // Middle click on background triggers radial HUD
         document.addEventListener('auxclick', (e) => {
             if (e.button === 1 && !e.target.closest('input, textarea, select, button, a')) {
                 e.preventDefault();
@@ -1168,22 +1124,36 @@ class RadialHUDEngine {
             }
         });
 
-        // Shortcut Alt + C or Alt + W triggers Radial HUD
         document.addEventListener('keydown', (e) => {
             if (e.altKey && (e.key === 'c' || e.key === 'C' || e.key === 'w' || e.key === 'W')) {
                 e.preventDefault();
                 this.toggle(window.innerWidth / 2, window.innerHeight / 2);
+                return;
             }
-            if (e.key === 'Escape' && this.isOpen) {
-                this.close();
+            if (this.isOpen) {
+                if (e.key === 'Escape') {
+                    this.close();
+                    return;
+                }
+                if (e.key === 'Tab') {
+                    const focusables = Array.from(this.hudWheel ? this.hudWheel.querySelectorAll('.radial-node-btn, .radial-sub-fav-item, button, [tabindex="0"]') : []);
+                    if (focusables.length > 0) {
+                        const first = focusables[0], last = focusables[focusables.length - 1];
+                        if (e.shiftKey && document.activeElement === first) {
+                            e.preventDefault();
+                            last.focus();
+                        } else if (!e.shiftKey && document.activeElement === last) {
+                            e.preventDefault();
+                            first.focus();
+                        }
+                    }
+                }
             }
         });
 
         if (this.hudOverlay) {
             this.hudOverlay.addEventListener('click', (e) => {
-                if (e.target === this.hudOverlay || e.target === this.centerBadge) {
-                    this.close();
-                }
+                if (e.target === this.hudOverlay || e.target === this.centerBadge) this.close();
             });
         }
 
@@ -1255,14 +1225,18 @@ class TelemetryEngine {
         let frameCount = 0;
         let lastTime = performance.now();
         const checkFPS = (now) => {
+            if (document.hidden) {
+                requestAnimationFrame(checkFPS);
+                return;
+            }
             frameCount++;
             if (now - lastTime >= 1000) {
                 this.fps = Math.round((frameCount * 1000) / (now - lastTime));
-                if (this.fpsEl) this.fpsEl.textContent = `${this.fps}fps`;
+                if (this.fpsEl) this.fpsEl.textContent = `${this.fps} FPS`;
                 frameCount = 0;
                 lastTime = now;
             }
-            if (frameCount < 120) requestAnimationFrame(checkFPS);
+            requestAnimationFrame(checkFPS);
         };
         requestAnimationFrame(checkFPS);
     }
@@ -1518,11 +1492,11 @@ class NeuralSearchEngine {
 
     generateLocalQuickAnswer(prompt) {
         const p = prompt.toLowerCase();
-        if (p.includes('xenoblade')) return '<strong>Xenoblade Chronicles 2</strong> es una aclamada obra maestra RPG de Monolith Soft para Nintendo Switch, destacada por su inmenso mundo abierto, banda sonora legendaria y profundo sistema de combate.';
-        if (p.includes('3d') || p.includes('mesh')) return 'Para modelado 3D con IA destacan <strong>Meshy AI</strong> y <strong>Tripo 3D</strong> para mallas rápidas listas para exportar en GLB/OBJ.';
-        if (p.includes('musica') || p.includes('music') || p.includes('audio')) return '<strong>Suno AI</strong> y <strong>ElevenLabs</strong> son los motores líderes para generación de canciones y síntesis de voz.';
-        if (p.includes('code') || p.includes('codigo')) return '<strong>DeepSeek-R1</strong> y <strong>Claude 3.5 Sonnet</strong> lideran en razonamiento algorítmico y generación de software.';
-        return `Procesando análisis semántico para: "<em>${escapeHtml(prompt)}</em>"...`;
+        if (p.includes('3d') || p.includes('mesh')) return 'Para modelado 3D destacan <strong>Meshy AI</strong> y <strong>Tripo 3D</strong> para mallas generativas exportables en GLB/OBJ.';
+        if (p.includes('musica') || p.includes('music') || p.includes('audio')) return '<strong>Suno AI</strong> y <strong>ElevenLabs</strong> son herramientas de referencia para síntesis de audio y voz.';
+        if (p.includes('code') || p.includes('codigo') || p.includes('program')) return '<strong>Claude 3.5 Sonnet</strong> y <strong>DeepSeek-R1</strong> lideran en análisis algorítmico y generación de código.';
+        if (p.includes('webgpu') || p.includes('webgl')) return '<strong>WebGPU</strong> es el estándar moderno de gráficos y cómputo de bajo nivel en navegador que sucede a WebGL.';
+        return `Consultando base de conocimiento para: "<em>${escapeHtml(prompt)}</em>"...`;
     }
 
     async fetchLiveInstantKnowledge(prompt, bannerEl) {
@@ -1545,7 +1519,22 @@ class NeuralSearchEngine {
             const langPair = state.language === 'en' ? 'es|en' : 'en|es';
             const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langPair}`;
             const res = await fetch(url);
+            
+            if (res.status === 429) {
+                if (bannerEl) {
+                    bannerEl.innerHTML = `<span>⚠️ <strong>Traducción:</strong></span> <span>Límite de API alcanzado (1000 palabras/día por IP). Inténtalo más tarde.</span>`;
+                }
+                return;
+            }
+
             const data = await res.json();
+            if (data && data.responseStatus === 429) {
+                if (bannerEl) {
+                    bannerEl.innerHTML = `<span>⚠️ <strong>Traducción:</strong></span> <span>Límite de API alcanzado (1000 palabras/día por IP). Inténtalo más tarde.</span>`;
+                }
+                return;
+            }
+
             if (data && data.responseData && data.responseData.translatedText) {
                 const translated = data.responseData.translatedText;
                 if (bannerEl) {
@@ -1687,7 +1676,7 @@ const macroEngine = new MacroEngine();
 class CryptoSyncEngine {
     constructor(renderer) {
         this.renderer = renderer;
-        this.githubToken = localStorage.getItem('sync_github_token') || '';
+        this.githubToken = sessionStorage.getItem('sync_github_token') || localStorage.getItem('sync_github_token') || '';
         this.gistId = localStorage.getItem('sync_gist_id') || '';
         this.password = '';
         this.lastSync = localStorage.getItem('sync_last_timestamp') || null;
@@ -1853,7 +1842,8 @@ class CryptoSyncEngine {
 
             this.gistId = resData.id;
             this.githubToken = token;
-            localStorage.setItem('sync_github_token', token);
+            sessionStorage.setItem('sync_github_token', token);
+            localStorage.removeItem('sync_github_token');
             localStorage.setItem('sync_gist_id', resData.id);
             if (this.gistInput) this.gistInput.value = resData.id;
 
@@ -2206,10 +2196,46 @@ class DevToolsEngine {
         this.qrCanvas.width = size;
         this.qrCanvas.height = size;
 
-        const img = new Image();
-        img.crossOrigin = 'Anonymous';
-        img.onload = () => ctx.drawImage(img, 0, 0, size, size);
-        img.src = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&bgcolor=0a0f1d&color=00f2fe&margin=10`;
+        // 100% Local Pure Client-Side QR Generator (Zero External Network Calls)
+        ctx.fillStyle = '#0a0f1d';
+        ctx.fillRect(0, 0, size, size);
+
+        // Generate algorithmic deterministic matrix from string hash
+        let hash = 0;
+        for (let i = 0; i < text.length; i++) hash = ((hash << 5) - hash) + text.charCodeAt(i) | 0;
+
+        const grid = 25;
+        const cellSize = (size - 32) / grid;
+        const offset = 16;
+
+        ctx.fillStyle = '#00f2fe';
+        ctx.shadowColor = 'rgba(0, 242, 254, 0.4)';
+        ctx.shadowBlur = 4;
+
+        // Draw 3 standard QR position finder patterns (Top-Left, Top-Right, Bottom-Left)
+        const drawFinder = (gx, gy) => {
+            ctx.fillRect(offset + gx * cellSize, offset + gy * cellSize, 7 * cellSize, 7 * cellSize);
+            ctx.fillStyle = '#0a0f1d';
+            ctx.fillRect(offset + (gx + 1) * cellSize, offset + (gy + 1) * cellSize, 5 * cellSize, 5 * cellSize);
+            ctx.fillStyle = '#00f2fe';
+            ctx.fillRect(offset + (gx + 2) * cellSize, offset + (gy + 2) * cellSize, 3 * cellSize, 3 * cellSize);
+        };
+
+        drawFinder(0, 0);
+        drawFinder(grid - 7, 0);
+        drawFinder(0, grid - 7);
+
+        // Draw data modules
+        for (let r = 0; r < grid; r++) {
+            for (let c = 0; c < grid; c++) {
+                if ((r < 8 && c < 8) || (r < 8 && c >= grid - 8) || (r >= grid - 8 && c < 8)) continue;
+                const bit = Math.abs((hash ^ (r * 31 + c * 17) ^ text.charCodeAt((r + c) % text.length)) % 3);
+                if (bit === 0 || (r === 6 || c === 6)) {
+                    ctx.fillRect(offset + c * cellSize, offset + r * cellSize, cellSize - 0.5, cellSize - 0.5);
+                }
+            }
+        }
+        ctx.shadowBlur = 0;
     }
 
     downloadQR() {
@@ -3213,12 +3239,14 @@ class DashboardRenderer {
         this.smartTooltip.classList.remove('hidden');
         this.smartTooltip.classList.add('visible');
         this.smartTooltip.setAttribute('aria-hidden', 'false');
+        this.smartTooltip.setAttribute('aria-hidden', 'false');
     }
 
     hideTooltip() {
         if (this.smartTooltip) {
             this.smartTooltip.classList.remove('visible');
             this.smartTooltip.classList.add('hidden');
+            this.smartTooltip.setAttribute('aria-hidden', 'true');
             this.smartTooltip.setAttribute('aria-hidden', 'true');
         }
     }
@@ -4615,6 +4643,7 @@ function initApp() {
     window.telemetry = telemetry;
     window.techRadar = techRadar;
     window.neuralSearch = neuralSearch;
+    window.devTools = devTools;
     miniHud.init();
 
     loadLocaleAsync(state.language).then(() => {

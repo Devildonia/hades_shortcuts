@@ -129,6 +129,10 @@ export class AuroraCanvasEngine {
 
     bindEvents() {
         window.addEventListener('resize', () => this.resize());
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) this.stop();
+            else if (this.enabled) this.start();
+        });
         window.addEventListener('pointermove', (e) => {
             this.pointer.targetX = e.clientX;
             this.pointer.targetY = e.clientY;

@@ -218,6 +218,7 @@ export function initApp() {
     window.telemetry = telemetry;
     window.techRadar = techRadar;
     window.neuralSearch = neuralSearch;
+    window.devTools = devTools;
     miniHud.init();
 
     loadLocaleAsync(state.language).then(() => {

@@ -12,15 +12,16 @@ export class RadialHUDEngine {
         this.centerBadge = document.getElementById('radial-hud-center');
         this.isOpen = false;
         this.cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        this.previousActiveElement = null;
         this.actions = [
             { id: 'favs', icon: '⭐', labelKey: 'favs', action: () => this.toggleFavsSubOrbit() },
-            { id: 'audio', icon: '🎧', labelKey: 'audio', action: () => this.toggleAudio() },
-            { id: 'pomodoro', icon: '⏳', labelKey: 'pomodoro', action: () => this.togglePomodoro() },
+            { id: 'audio', icon: '🎧', labelKey: 'audio', action: () => ambientAudio.toggle() },
+            { id: 'pomodoro', icon: '⏳', labelKey: 'pomodoro', action: () => document.getElementById('pomodoro-start-btn')?.click() },
             { id: 'postit', icon: '📌', labelKey: 'postit', action: () => this.createPostitUnderCursor() },
-            { id: 'theme', icon: '🌓', labelKey: 'theme', action: () => this.toggleTheme() },
+            { id: 'theme', icon: '🌓', labelKey: 'theme', action: () => state.setTheme(state.theme === 'cyber' ? 'light' : (state.theme === 'light' ? 'nebula' : 'cyber')) },
             { id: 'qr', icon: '📱', labelKey: 'qr', action: () => this.openQRQuick() },
             { id: 'search', icon: '🔍', labelKey: 'search', action: () => this.focusOmnibox() },
-            { id: 'settings', icon: '⚙️', labelKey: 'settings', action: () => this.openSettings() }
+            { id: 'settings', icon: '⚙️', labelKey: 'settings', action: () => document.getElementById('settings-btn')?.click() }
         ];
     }
 
@@ -32,26 +33,22 @@ export class RadialHUDEngine {
     renderRadialNodes() {
         if (!this.hudWheel) return;
         this.hudWheel.innerHTML = '';
-        const radius = 125;
-        const total = this.actions.length;
+        const radius = 125, total = this.actions.length;
         const t = (i18nDictionaries[state.language] || i18nDictionaries.es).radial_hud || {};
 
         this.actions.forEach((act, idx) => {
             const angle = (idx * (360 / total) - 90) * (Math.PI / 180);
-            const x = Math.round(radius * Math.cos(angle));
-            const y = Math.round(radius * Math.sin(angle));
-
+            const x = Math.round(radius * Math.cos(angle)), y = Math.round(radius * Math.sin(angle));
             const btn = document.createElement('div');
             btn.className = `radial-node-btn radial-node-${act.id}`;
+            btn.setAttribute("tabindex", "0");
             btn.setAttribute('data-action', act.id);
             btn.setAttribute('title', t[act.labelKey] || act.id);
             btn.style.setProperty('--node-x', `${x}px`);
             btn.style.setProperty('--node-y', `${y}px`);
             btn.innerHTML = `<span class="radial-node-icon">${act.icon}</span><span class="radial-node-label">${t[act.labelKey] || act.id}</span>`;
 
-            if (act.id === 'favs') {
-                this.renderFavoritesSubOrbit(btn);
-            }
+            if (act.id === 'favs') this.renderFavoritesSubOrbit(btn);
 
             btn.addEventListener('click', (e) => {
                 if (e.target.closest('.radial-sub-fav-item')) return;
@@ -60,62 +57,38 @@ export class RadialHUDEngine {
                 act.action();
                 if (act.id !== 'favs') this.close();
             });
-
             this.hudWheel.appendChild(btn);
         });
     }
 
     getMostUsedShortcuts() {
         let stats = {};
-        try {
-            stats = JSON.parse(localStorage.getItem('shortcut_usage_stats_v1') || '{}');
-        } catch (e) {}
-
+        try { stats = JSON.parse(localStorage.getItem('shortcut_usage_stats_v1') || '{}'); } catch (e) {}
         const all = [...(state.shortcuts || [])];
-        
-        // Sort by recorded click count descending
-        all.sort((a, b) => {
-            const countA = stats[a.id] || 0;
-            const countB = stats[b.id] || 0;
-            return countB - countA;
-        });
+        all.sort((a, b) => (stats[b.id] || 0) - (stats[a.id] || 0));
 
-        // If no usage recorded yet, pick the most universally popular icons
-        const popularIds = ['google', 'youtube', 'chatgpt', 'github', 'claude'];
+        if (Object.values(stats).some(v => v > 0)) return all.slice(0, 3);
+
+        const popular = ['google', 'youtube', 'chatgpt', 'github', 'claude'];
         const top3 = [];
-        
-        // Check if we have user clicks
-        const hasClicks = Object.values(stats).some(v => v > 0);
-        if (hasClicks) {
-            return all.slice(0, 3);
-        }
-
-        // Fresh default popular items
-        popularIds.forEach(id => {
+        popular.forEach(id => {
             if (top3.length < 3) {
                 const found = all.find(s => s.id === id || s.title.toLowerCase().includes(id));
                 if (found && !top3.includes(found)) top3.push(found);
             }
         });
-
         while (top3.length < 3 && all.length > top3.length) {
             const next = all.find(s => !top3.includes(s));
             if (next) top3.push(next);
         }
-
         return top3.slice(0, 3);
     }
 
     renderFavoritesSubOrbit(parentBtn) {
         const subContainer = document.createElement('div');
         subContainer.className = 'radial-sub-favs';
-        
         const top3 = this.getMostUsedShortcuts();
-        const offsets = [
-            { x: -44, y: -58 },
-            { x: 0, y: -74 },
-            { x: 44, y: -58 }
-        ];
+        const offsets = [{ x: -44, y: -58 }, { x: 0, y: -74 }, { x: 44, y: -58 }];
 
         top3.forEach((sc, i) => {
             const pos = offsets[i] || { x: 0, y: -50 };
@@ -124,20 +97,16 @@ export class RadialHUDEngine {
             subBtn.title = sc.title || 'Favorito';
             subBtn.style.setProperty('--sub-x', `${pos.x}px`);
             subBtn.style.setProperty('--sub-y', `${pos.y}px`);
-
             const iconSrc = sc.icon || `https://www.google.com/s2/favicons?domain=${encodeURIComponent(sc.url)}&sz=64`;
             subBtn.innerHTML = `<img src="${iconSrc}" class="radial-sub-icon-img" alt="${sc.title}" onerror="this.src='iconos/google.webp'"><span class="radial-sub-fav-tooltip">${sc.title}</span>`;
-
             subBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 soundFx.play('click');
                 window.open(sc.url, '_blank');
                 this.close();
             });
-
             subContainer.appendChild(subBtn);
         });
-
         parentBtn.appendChild(subContainer);
     }
 
@@ -145,7 +114,7 @@ export class RadialHUDEngine {
         soundFx.play('click');
         this.isOpen = true;
         this.cursorPos = { x, y };
-
+        this.previousActiveElement = document.activeElement;
         const pad = 150;
         const clampedX = Math.max(pad, Math.min(window.innerWidth - pad, x));
         const clampedY = Math.max(pad, Math.min(window.innerHeight - pad, y));
@@ -154,11 +123,14 @@ export class RadialHUDEngine {
             this.hudWheel.style.left = `${clampedX}px`;
             this.hudWheel.style.top = `${clampedY}px`;
         }
-
         if (this.hudOverlay) {
             this.hudOverlay.classList.remove('hidden');
             this.hudOverlay.setAttribute('aria-hidden', 'false');
         }
+        setTimeout(() => {
+            const firstBtn = this.hudWheel ? this.hudWheel.querySelector('.radial-node-btn, button') : null;
+            if (firstBtn) firstBtn.focus();
+        }, 50);
     }
 
     close() {
@@ -169,39 +141,25 @@ export class RadialHUDEngine {
             this.hudOverlay.classList.add('hidden');
             this.hudOverlay.setAttribute('aria-hidden', 'true');
         }
+        if (this.previousActiveElement && typeof this.previousActiveElement.focus === 'function') {
+            this.previousActiveElement.focus();
+        }
     }
 
     toggle(x, y) {
-        if (this.isOpen) this.close();
-        else this.open(x, y);
+        this.isOpen ? this.close() : this.open(x, y);
     }
 
     toggleFavsSubOrbit() {
-        const topSc = state.shortcuts[0];
+        const topSc = this.getMostUsedShortcuts()[0] || state.shortcuts[0];
         if (topSc && topSc.url) window.open(topSc.url, '_blank');
         this.close();
-    }
-
-    toggleAudio() {
-        ambientAudio.toggle();
-    }
-
-    togglePomodoro() {
-        const pomBtn = document.getElementById('pomodoro-start-btn');
-        if (pomBtn) pomBtn.click();
     }
 
     createPostitUnderCursor() {
         const input = document.getElementById('scratchpad-input');
         const text = input ? input.value.trim() || 'Nota Rápida' : 'Nota Rápida';
-        window.dispatchEvent(new CustomEvent('postit:create', {
-            detail: { text, x: this.cursorPos.x, y: this.cursorPos.y }
-        }));
-    }
-
-    toggleTheme() {
-        const nextTheme = state.theme === 'cyber' ? 'light' : (state.theme === 'light' ? 'nebula' : 'cyber');
-        state.setTheme(nextTheme);
+        window.dispatchEvent(new CustomEvent('postit:create', { detail: { text, x: this.cursorPos.x, y: this.cursorPos.y } }));
     }
 
     openQRQuick() {
@@ -221,13 +179,7 @@ export class RadialHUDEngine {
         }
     }
 
-    openSettings() {
-        const btn = document.getElementById('settings-btn');
-        if (btn) btn.click();
-    }
-
     bindEvents() {
-        // Middle click on background triggers radial HUD
         document.addEventListener('auxclick', (e) => {
             if (e.button === 1 && !e.target.closest('input, textarea, select, button, a')) {
                 e.preventDefault();
@@ -235,22 +187,36 @@ export class RadialHUDEngine {
             }
         });
 
-        // Shortcut Alt + C or Alt + W triggers Radial HUD
         document.addEventListener('keydown', (e) => {
             if (e.altKey && (e.key === 'c' || e.key === 'C' || e.key === 'w' || e.key === 'W')) {
                 e.preventDefault();
                 this.toggle(window.innerWidth / 2, window.innerHeight / 2);
+                return;
             }
-            if (e.key === 'Escape' && this.isOpen) {
-                this.close();
+            if (this.isOpen) {
+                if (e.key === 'Escape') {
+                    this.close();
+                    return;
+                }
+                if (e.key === 'Tab') {
+                    const focusables = Array.from(this.hudWheel ? this.hudWheel.querySelectorAll('.radial-node-btn, .radial-sub-fav-item, button, [tabindex="0"]') : []);
+                    if (focusables.length > 0) {
+                        const first = focusables[0], last = focusables[focusables.length - 1];
+                        if (e.shiftKey && document.activeElement === first) {
+                            e.preventDefault();
+                            last.focus();
+                        } else if (!e.shiftKey && document.activeElement === last) {
+                            e.preventDefault();
+                            first.focus();
+                        }
+                    }
+                }
             }
         });
 
         if (this.hudOverlay) {
             this.hudOverlay.addEventListener('click', (e) => {
-                if (e.target === this.hudOverlay || e.target === this.centerBadge) {
-                    this.close();
-                }
+                if (e.target === this.hudOverlay || e.target === this.centerBadge) this.close();
             });
         }
 
