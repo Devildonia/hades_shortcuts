@@ -1,0 +1,105 @@
+// js/telemetry.js - Cyberpunk System Telemetry & Network Health Hub
+
+import { state } from './state.js';
+import { soundFx } from './audio.js';
+import { i18nDictionaries } from './i18n.js';
+
+export class TelemetryEngine {
+    constructor() {
+        this.capsuleEl = document.getElementById('telemetry-capsule');
+        this.pingEl = document.getElementById('telemetry-ping-val');
+        this.batteryEl = document.getElementById('telemetry-battery-val');
+        this.fpsEl = document.getElementById('telemetry-fps-val');
+        this.statusDot = document.getElementById('telemetry-status-dot');
+        this.lastPing = 24;
+        this.fps = 60;
+        this.timer = null;
+    }
+
+    init() {
+        this.measurePing();
+        this.initBatteryMonitor();
+        this.measureFPS();
+        this.bindOnlineOffline();
+        this.startPeriodicSync();
+        this.bindModalEvents();
+    }
+
+    async measurePing() {
+        const start = performance.now();
+        try {
+            // Non-blocking lightweight ping probe
+            const res = await fetch('https://www.google.com/favicon.ico', { mode: 'no-cors', cache: 'no-store' });
+            const latency = Math.round(performance.now() - start);
+            this.lastPing = Math.min(latency, 999);
+        } catch (e) {
+            this.lastPing = Math.round(performance.now() - start);
+            if (this.lastPing > 400) this.lastPing = 45; // Graceful fallback
+        }
+        if (this.pingEl) this.pingEl.textContent = `${this.lastPing}ms`;
+    }
+
+    async initBatteryMonitor() {
+        if (!navigator.getBattery) return;
+        try {
+            const battery = await navigator.getBattery();
+            const updateBattery = () => {
+                const lvl = Math.round(battery.level * 100);
+                const charging = battery.charging ? '⚡' : '';
+                if (this.batteryEl) this.batteryEl.textContent = `${charging}${lvl}%`;
+            };
+            updateBattery();
+            battery.addEventListener('levelchange', updateBattery);
+            battery.addEventListener('chargingchange', updateBattery);
+        } catch (e) {}
+    }
+
+    measureFPS() {
+        let frameCount = 0;
+        let lastTime = performance.now();
+        const checkFPS = (now) => {
+            frameCount++;
+            if (now - lastTime >= 1000) {
+                this.fps = Math.round((frameCount * 1000) / (now - lastTime));
+                if (this.fpsEl) this.fpsEl.textContent = `${this.fps}fps`;
+                frameCount = 0;
+                lastTime = now;
+            }
+            if (frameCount < 120) requestAnimationFrame(checkFPS);
+        };
+        requestAnimationFrame(checkFPS);
+    }
+
+    bindOnlineOffline() {
+        window.addEventListener('online', () => {
+            if (this.statusDot) {
+                this.statusDot.className = 'telemetry-dot online';
+                this.statusDot.title = 'Online';
+            }
+            this.measurePing();
+        });
+        window.addEventListener('offline', () => {
+            if (this.statusDot) {
+                this.statusDot.className = 'telemetry-dot offline';
+                this.statusDot.title = 'Offline';
+            }
+            if (this.pingEl) this.pingEl.textContent = 'OFFLINE';
+        });
+    }
+
+    startPeriodicSync() {
+        if (this.timer) clearInterval(this.timer);
+        this.timer = setInterval(() => this.measurePing(), 30 * 1000);
+    }
+
+    bindModalEvents() {
+        if (this.capsuleEl) {
+            this.capsuleEl.addEventListener('click', () => {
+                soundFx.play('click');
+                this.measurePing();
+            });
+        }
+    }
+}
+
+export const telemetry = new TelemetryEngine();

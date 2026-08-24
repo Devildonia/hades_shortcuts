@@ -44,7 +44,7 @@
 
     <!-- Top Navigation Bar & Widgets -->
     <header class="top-nav">
-        <!-- Left Widgets: Clock -->
+        <!-- Left Widgets: Clock + Telemetry Capsule -->
         <div class="nav-widgets-left modular-dropzone" id="zone-header-left">
             <!-- Live Clock Widget -->
             <div class="nav-widget widget-clock" id="clock-widget" data-tile-id="tile-clock">
@@ -53,6 +53,13 @@
                     <span class="clock-time" id="live-time">19:45</span>
                     <span class="clock-date" id="live-date">Cargando fecha...</span>
                 </div>
+            </div>
+
+            <!-- Telemetry Capsule -->
+            <div class="telemetry-capsule" id="telemetry-capsule" title="Latencia & Telemetría del Sistema (Clic para medir)">
+                <span class="telemetry-dot online" id="telemetry-status-dot"></span>
+                <span class="telemetry-item"><span class="telemetry-icon">📶</span> <span id="telemetry-ping-val">24ms</span></span>
+                <span class="telemetry-item"><span class="telemetry-icon">🔋</span> <span id="telemetry-battery-val">100%</span></span>
             </div>
         </div>
 

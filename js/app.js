@@ -1,3 +1,4 @@
+import { telemetry } from './telemetry.js';
 import { solarEngine } from './solar-engine.js';
 import { radialHUD } from './radial-hud.js';
 import { auroraCanvas, miniHud } from './aurora-canvas.js';
@@ -206,6 +207,7 @@ export function initApp() {
     auroraCanvas.init();
         radialHUD.init();
         solarEngine.init();
+        telemetry.init();
     miniHud.init();
 
     loadLocaleAsync(state.language).then(() => {
