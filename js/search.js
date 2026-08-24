@@ -1,7 +1,9 @@
-// js/search.js - Multi-Engine Search & Card Filtering
+// js/search.js - Multi-Engine Search, Bangs, Safe Calculator & Arrow Navigation
 
 import { state } from './state.js';
 import { i18nDictionaries } from './i18n.js';
+import { parseBangQuery, evaluateArithmetic, BANGS_MAP } from './bangs.js';
+import { soundFx } from './audio.js';
 
 export const SEARCH_ENGINES = {
     google: { name: 'Google', url: 'https://www.google.com/search?q=', icon: 'iconos/google.webp' },
@@ -23,7 +25,9 @@ export class SearchEngineManager {
         this.clearSearchBtn = document.getElementById('clear-search');
         this.pillButtons = document.querySelectorAll('.pill-btn');
         this.noResultsMsg = document.getElementById('no-results-msg') || document.getElementById('no-results');
+        this.calcBanner = document.getElementById('search-calc-banner');
         this.currentEngineKey = state.searchEngine;
+        this.focusedCardIndex = -1;
     }
 
     init() {
@@ -80,6 +84,18 @@ export class SearchEngineManager {
         const categories = document.querySelectorAll('.categoria');
         let totalVisible = 0;
 
+        // Check arithmetic evaluation
+        const calcResult = evaluateArithmetic(query);
+        if (this.calcBanner) {
+            if (calcResult !== null) {
+                const t = (i18nDictionaries[state.language] || i18nDictionaries.es).bangs || {};
+                this.calcBanner.innerHTML = `<span>🔢 <strong>${t.calc_title || 'Resultado'}:</strong></span> <span class="calc-val">${calcResult}</span>`;
+                this.calcBanner.classList.remove('hidden');
+            } else {
+                this.calcBanner.classList.add('hidden');
+            }
+        }
+
         categories.forEach(cat => {
             const group = cat.getAttribute('data-group');
             const matchesPill = (state.activeFilter === 'all' || state.activeFilter === group);
@@ -117,24 +133,26 @@ export class SearchEngineManager {
         if (this.clearSearchBtn) {
             this.clearSearchBtn.classList.toggle('hidden', query.length === 0);
         }
+        this.focusedCardIndex = -1;
     }
 
     bindEvents() {
         if (this.engineBtn) {
             this.engineBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
+                soundFx.play('click');
                 this.engineMenu.classList.toggle('active');
             });
         }
 
         this.engineOptions.forEach(opt => {
             opt.addEventListener('click', () => {
+                soundFx.play('click');
                 this.setEngine(opt.getAttribute('data-engine'));
                 this.engineMenu.classList.remove('active');
             });
         });
 
-        // Close engine menu on outside click
         document.addEventListener('click', (e) => {
             if (this.engineMenu && this.engineMenu.classList.contains('active') && !this.engineMenu.contains(e.target) && !this.engineBtn.contains(e.target)) {
                 this.engineMenu.classList.remove('active');
@@ -143,27 +161,12 @@ export class SearchEngineManager {
 
         if (this.searchInput) {
             this.searchInput.addEventListener('input', () => this.filterShortcuts());
-            this.searchInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    const q = this.searchInput.value.trim();
-                    if (!q) return;
-                    const firstVisible = document.querySelector('.enlace-icono:not(.hidden-by-filter):not(.no-match)');
-                    if (firstVisible) {
-                        window.open(firstVisible.getAttribute('href'), '_blank');
-                    } else {
-                        const engine = SEARCH_ENGINES[this.currentEngineKey];
-                        window.open(`${engine.url}${encodeURIComponent(q)}`, '_blank');
-                    }
-                } else if (e.key === 'Escape') {
-                    this.searchInput.value = '';
-                    this.filterShortcuts();
-                    this.searchInput.blur();
-                }
-            });
+            this.searchInput.addEventListener('keydown', (e) => this.handleSearchKeydown(e));
         }
 
         if (this.clearSearchBtn) {
             this.clearSearchBtn.addEventListener('click', () => {
+                soundFx.play('click');
                 if (this.searchInput) {
                     this.searchInput.value = '';
                     this.filterShortcuts();
@@ -174,6 +177,7 @@ export class SearchEngineManager {
 
         this.pillButtons.forEach(btn => {
             btn.addEventListener('click', () => {
+                soundFx.play('click');
                 this.pillButtons.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 state.activeFilter = btn.getAttribute('data-filter') || 'all';
@@ -181,5 +185,52 @@ export class SearchEngineManager {
                 this.filterShortcuts();
             });
         });
+    }
+
+    handleSearchKeydown(e) {
+        const visibleCards = Array.from(document.querySelectorAll('.enlace-icono:not(.hidden-by-filter):not(.no-match)'));
+
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+            if (visibleCards.length > 0) {
+                e.preventDefault();
+                this.focusedCardIndex = (this.focusedCardIndex + 1) % visibleCards.length;
+                visibleCards[this.focusedCardIndex].focus();
+                soundFx.play('hover');
+            }
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+            if (visibleCards.length > 0) {
+                e.preventDefault();
+                this.focusedCardIndex = (this.focusedCardIndex - 1 + visibleCards.length) % visibleCards.length;
+                visibleCards[this.focusedCardIndex].focus();
+                soundFx.play('hover');
+            }
+        } else if (e.key === 'Enter') {
+            const raw = this.searchInput.value.trim();
+            if (!raw) return;
+
+            // 1. Check Bang Command
+            const bangParsed = parseBangQuery(raw);
+            if (bangParsed.isBang) {
+                soundFx.play('click');
+                window.open(bangParsed.targetUrl, '_blank');
+                return;
+            }
+
+            // 2. If card is focused or visible
+            const firstVisible = visibleCards[0];
+            if (firstVisible && !raw.includes(' ') && raw.length <= 15) {
+                soundFx.play('click');
+                window.open(firstVisible.getAttribute('href'), '_blank');
+            } else {
+                // Search active engine
+                soundFx.play('click');
+                const engine = SEARCH_ENGINES[this.currentEngineKey];
+                window.open(`${engine.url}${encodeURIComponent(raw)}`, '_blank');
+            }
+        } else if (e.key === 'Escape') {
+            this.searchInput.value = '';
+            this.filterShortcuts();
+            this.searchInput.blur();
+        }
     }
 }

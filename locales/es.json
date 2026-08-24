@@ -197,5 +197,47 @@
     "delete_btn": "Eliminar Atajo",
     "delete_confirm": "¿Seguro que deseas eliminar este acceso directo?",
     "cancel_btn": "Cancelar"
+  },
+  "bangs": {
+    "calc_title": "Resultado Calculado",
+    "direct_search": "Buscar en {service}",
+    "suggestions_title": "Comandos Bang Rápidos"
+  },
+  "widgets": {
+    "scratchpad_title": "Bloc de Notas Glass",
+    "scratchpad_placeholder": "Escribe ideas, tareas o notas rápidas aquí...",
+    "scratchpad_saved": "Guardado automáticamente",
+    "pomodoro_title": "Temporizador Focus",
+    "pomodoro_focus": "Enfoque",
+    "pomodoro_break": "Descanso",
+    "pomodoro_start": "Iniciar",
+    "pomodoro_pause": "Pausar",
+    "pomodoro_reset": "Reiniciar",
+    "toggle_widgets_title": "Mini-Widgets Bento",
+    "toggle_scratchpad": "Mostrar Bloc de Notas",
+    "toggle_pomodoro": "Mostrar Temporizador Pomodoro"
+  },
+  "audio": {
+    "preset_label": "Efecto de Sonido Háptico",
+    "preset_scifi": "Sci-Fi Soft Pop (Sintetizado)",
+    "preset_mech": "Click Mecánico Táctil",
+    "preset_bubble": "Burbuja Acústica"
+  },
+  "theme_studio": {
+    "title": "Theme Studio Personalizado",
+    "desc": "Personaliza los colores de acento y resplandor neón en tiempo real:",
+    "primary_label": "Color Primario (Acento):",
+    "secondary_label": "Color Secundario:",
+    "reset_colors_btn": "Restablecer Colores Predeterminados"
+  },
+  "importer": {
+    "title": "Importar Marcadores de Navegador",
+    "desc": "Importa un archivo bookmarks.html exportado desde Chrome, Firefox, Edge o Brave:",
+    "select_file_btn": "📁 Seleccionar Archivo HTML",
+    "merge_mode": "Combinar con mis atajos actuales",
+    "replace_mode": "Reemplazar todos los atajos",
+    "import_btn": "Importar Marcadores",
+    "success_msg": "¡Se han importado {count} accesos directos con éxito!",
+    "error_msg": "No se encontraron marcadores válidos en el archivo seleccionado."
   }
 }

@@ -19,6 +19,7 @@
     <meta name="twitter:image" content="favicon.ico">
 
     <!-- Favicon & Fonts -->
+    <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -132,6 +133,43 @@
                 <button class="pill-btn" data-filter="productividad">Google & Herramientas</button>
                 <button class="pill-btn" data-filter="social-compras">Social & Compras</button>
             </div>
+                        <!-- Search Calc & Bang Banner -->
+                <div class="search-calc-banner hidden" id="search-calc-banner"></div>
+        </section>
+
+                <!-- Mini-Widgets Bento Section -->
+        <section class="mini-widgets-section" id="mini-widgets-section">
+            <!-- Widget 1: Scratchpad Glass -->
+            <div class="mini-widget-card widget-scratchpad" id="widget-scratchpad-card">
+                <div class="widget-header">
+                    <span class="widget-icon">📝</span>
+                    <h3 data-i18n="widgets.scratchpad_title">Bloc de Notas Glass</h3>
+                    <span class="widget-status" data-i18n="widgets.scratchpad_saved">Guardado</span>
+                </div>
+                <textarea id="scratchpad-input" class="scratchpad-textarea" placeholder="Escribe ideas o notas rápidas aquí..." data-i18n-placeholder="widgets.scratchpad_placeholder"></textarea>
+            </div>
+
+            <!-- Widget 2: Pomodoro Focus Timer -->
+            <div class="mini-widget-card widget-pomodoro" id="widget-pomodoro-card">
+                <div class="widget-header">
+                    <span class="widget-icon">⏳</span>
+                    <h3 data-i18n="widgets.pomodoro_title">Temporizador Focus</h3>
+                    <span class="pomodoro-badge focus" id="pomodoro-mode-badge" data-i18n="widgets.pomodoro_focus">Enfoque</span>
+                </div>
+                <div class="pomodoro-body">
+                    <div class="pomodoro-ring-wrapper">
+                        <svg class="pomodoro-svg" viewBox="0 0 80 80">
+                            <circle class="pomodoro-bg-circle" cx="40" cy="40" r="36"></circle>
+                            <circle class="pomodoro-progress-circle" id="pomodoro-progress-circle" cx="40" cy="40" r="36"></circle>
+                        </svg>
+                        <span class="pomodoro-time" id="pomodoro-time-display">25:00</span>
+                    </div>
+                    <div class="pomodoro-controls">
+                        <button class="pomodoro-btn start" id="pomodoro-start-btn" data-i18n="widgets.pomodoro_start">Iniciar</button>
+                        <button class="pomodoro-btn reset" id="pomodoro-reset-btn" data-i18n="widgets.pomodoro_reset">Reiniciar</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Bento Grid System -->
@@ -164,7 +202,9 @@
                         <span class="icon-title">Ludo.ai</span>
                     </a>
                 </div>
-            </section>
+                            <!-- Search Calc & Bang Banner -->
+                <div class="search-calc-banner hidden" id="search-calc-banner"></div>
+        </section>
 
             <!-- Category 2: AI -->
             <section class="categoria categoria-featured" data-group="ia-creativa">
@@ -205,7 +245,9 @@
                         <span class="icon-title">SeaVerse</span>
                     </a>
                 </div>
-            </section>
+                            <!-- Search Calc & Bang Banner -->
+                <div class="search-calc-banner hidden" id="search-calc-banner"></div>
+        </section>
 
             <!-- Category 3: Arte Digital -->
             <section class="categoria" data-group="arte-media">
@@ -246,7 +288,9 @@
                         <span class="icon-title">Shadertoy</span>
                     </a>
                 </div>
-            </section>
+                            <!-- Search Calc & Bang Banner -->
+                <div class="search-calc-banner hidden" id="search-calc-banner"></div>
+        </section>
 
             <!-- Category 4: Audio -->
             <section class="categoria" data-group="arte-media">
@@ -275,7 +319,9 @@
                         <span class="icon-title">Eleven Labs</span>
                     </a>
                 </div>
-            </section>
+                            <!-- Search Calc & Bang Banner -->
+                <div class="search-calc-banner hidden" id="search-calc-banner"></div>
+        </section>
 
             <!-- Category 5: Google Suite -->
             <section class="categoria categoria-featured" data-group="productividad">
@@ -322,7 +368,9 @@
                         <span class="icon-title">NotebookLM</span>
                     </a>
                 </div>
-            </section>
+                            <!-- Search Calc & Bang Banner -->
+                <div class="search-calc-banner hidden" id="search-calc-banner"></div>
+        </section>
 
             <!-- Category 6: Tools & Utilidades -->
             <section class="categoria" data-group="productividad">
@@ -369,7 +417,9 @@
                         <span class="icon-title">Traductor</span>
                     </a>
                 </div>
-            </section>
+                            <!-- Search Calc & Bang Banner -->
+                <div class="search-calc-banner hidden" id="search-calc-banner"></div>
+        </section>
 
             <!-- Category 7: Redes Sociales -->
             <section class="categoria" data-group="social-compras">
@@ -434,7 +484,9 @@
                         <span class="icon-title">Exophase</span>
                     </a>
                 </div>
-            </section>
+                            <!-- Search Calc & Bang Banner -->
+                <div class="search-calc-banner hidden" id="search-calc-banner"></div>
+        </section>
 
             <!-- Category 8: Compras -->
             <section class="categoria" data-group="social-compras">
@@ -475,7 +527,9 @@
                         <span class="icon-title">Wallapop</span>
                     </a>
                 </div>
-            </section>
+                            <!-- Search Calc & Bang Banner -->
+                <div class="search-calc-banner hidden" id="search-calc-banner"></div>
+        </section>
 
             <!-- Category 9: Vídeos & Generación -->
             <section class="categoria" data-group="arte-media">
@@ -504,7 +558,9 @@
                         <span class="icon-title">Hedra</span>
                     </a>
                 </div>
-            </section>
+                            <!-- Search Calc & Bang Banner -->
+                <div class="search-calc-banner hidden" id="search-calc-banner"></div>
+        </section>
 
         </div>
 
@@ -631,7 +687,15 @@
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row">
+                    <div class="settings-select-row">
+                        <span class="settings-toggle-title" data-i18n="audio.preset_label">Efecto de Sonido Háptico</span>
+                        <select id="sound-preset-select" class="settings-select">
+                            <option value="scifi" data-i18n="audio.preset_scifi">Sci-Fi Soft Pop (Sintetizado)</option>
+                            <option value="mech" data-i18n="audio.preset_mech">Click Mecánico Táctil</option>
+                            <option value="bubble" data-i18n="audio.preset_bubble">Burbuja Acústica</option>
+                        </select>
+                    </div>
+                    <div class="settings-toggle-row" style="margin-top: 14px;">
                         <div>
                             <span class="settings-toggle-title" data-i18n="settings_hub.appearance.glow_label">Resplandor Ambiental (Aurora)</span>
                         </div>
@@ -640,6 +704,23 @@
                             <span class="slider round"></span>
                         </label>
                     </div>
+                </div>
+
+                <!-- Custom Theme Studio Section -->
+                <div class="settings-section">
+                    <h4 data-i18n="theme_studio.title">Theme Studio Personalizado</h4>
+                    <p class="settings-hint" data-i18n="theme_studio.desc">Personaliza los colores de acento y resplandor neón en tiempo real:</p>
+                    <div class="theme-color-inputs">
+                        <label class="color-picker-label">
+                            <span data-i18n="theme_studio.primary_label">Color Primario:</span>
+                            <input type="color" id="custom-theme-primary" value="#00f2fe">
+                        </label>
+                        <label class="color-picker-label">
+                            <span data-i18n="theme_studio.secondary_label">Color Secundario:</span>
+                            <input type="color" id="custom-theme-secondary" value="#4facfe">
+                        </label>
+                    </div>
+                    <button class="settings-action-btn secondary" id="reset-theme-colors-btn" data-i18n="theme_studio.reset_colors_btn" style="margin-top: 10px;">Restablecer Colores Predeterminados</button>
                 </div>
             </div>
 
@@ -669,6 +750,24 @@
                         </label>
                     </div>
                 </div>
+
+                <div class="settings-section">
+                    <h4 data-i18n="widgets.toggle_widgets_title">Mini-Widgets Bento</h4>
+                    <div class="settings-toggle-row">
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_scratchpad">Mostrar Bloc de Notas</span>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-widget-scratchpad" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_pomodoro">Mostrar Temporizador Pomodoro</span>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-widget-pomodoro" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
                 <div class="settings-section">
                     <button class="settings-action-btn primary" id="drawer-add-shortcut-btn" data-i18n="settings_hub.layout.add_shortcut_btn">➕ Añadir Nuevo Acceso Directo</button>
                 </div>
@@ -681,6 +780,14 @@
 
             <!-- Tab 4: Backup -->
             <div class="settings-tab-pane" id="tab-pane-backup">
+                <div class="settings-section">
+                    <h4 data-i18n="importer.title">Importar Marcadores de Navegador</h4>
+                    <p class="settings-hint" data-i18n="importer.desc">Importa un archivo bookmarks.html exportado desde Chrome, Firefox, Edge o Brave:</p>
+                    <input type="file" id="bookmark-file-input" accept=".html,.htm" style="display: none;">
+                    <button class="settings-action-btn primary" id="import-bookmarks-btn" data-i18n="importer.select_file_btn">📁 Seleccionar Archivo HTML</button>
+                    <div id="import-bookmarks-status" class="import-status-msg"></div>
+                </div>
+
                 <div class="settings-section">
                     <h4 data-i18n="settings_hub.backup.export_title">Exportar Configuración</h4>
                     <p class="settings-hint" data-i18n="settings_hub.backup.export_desc">Descarga un archivo JSON con todos tus atajos y preferencias.</p>

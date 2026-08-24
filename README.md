@@ -1,10 +1,11 @@
 <div align="center">
 
-# ⚡ HaDeS' Shortcuts
-### *A high-performance, ultra-aesthetic browser startpage & command center*
+# ⚡ HaDeS' Shortcuts · Next-Gen
+### *A high-performance, ultra-aesthetic browser startpage, command center & productivity hub*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Online%20Preview-brightgreen?logo=github)](https://devildonia.github.io/hades_shortcuts/)
+[![PWA Ready](https://img.shields.io/badge/PWA-Installable%20Desktop-orange?logo=pwa)](https://devildonia.github.io/hades_shortcuts/)
 [![Pure Vanilla](https://img.shields.io/badge/Stack-Vanilla%20HTML%20%2F%20CSS%20%2F%20JS-yellow.svg)](https://developer.mozilla.org/en-US/)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20Zero-brightgreen.svg)]()
 [![Bundle Size](https://img.shields.io/badge/Total%20Size-~200%20KB-success.svg)]()
@@ -27,10 +28,11 @@
 
 [Live Demo](https://devildonia.github.io/hades_shortcuts/) •
 [Features](#-key-features) •
+[Bangs & Calculator](#-bang-commands--live-calculator) •
+[Widgets](#-bento-mini-widgets) •
 [Gallery](#-visual-showcase) •
 [Quick Start](#-quick-start) •
 [Keyboard Shortcuts](#-keyboard-shortcuts) •
-[Localization (i18n)](#-internationalization-i18n) •
 [Architecture](#-project-architecture)
 
 <br />
@@ -57,49 +59,45 @@
 
 ## 🌟 Key Features
 
-### 💎 Liquid Glass 2.0 & Bento Grid Layout
-- **Dynamic Aurora Backdrops**: Multi-layer ambient glow animations with subtle tactile grain overlay.
-- **Spotlight Cursor Glow**: Real-time cursor tracking on Bento cards accelerated with `requestAnimationFrame` (60/144/240 FPS with 0% CPU overhead).
-- **Smart Liquid Tooltips**: Contextual floating glass tooltips with viewport boundary collision detection (anti-clipping) and dynamic `aria-hidden` states (WCAG 2.2 AA).
+### ⚡ Bang Commands (`!`) & Live Calculator
+- **Direct Service Search**: Type `!yt music`, `!gh react`, `!w quantum`, `!r technology`, or `!civitai lora` to jump directly into destination search engines.
+- **Instant Safe Math Evaluator**: Type `45 * 1.21`, `(120 + 30) / 2`, or `25 * 80` to see interactive calculated results right in your search bar.
+- **Keyboard Arrow Navigation**: Navigate cards seamlessly with <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> and hit <kbd>Enter</kbd> to launch.
 
-### 🔍 Multi-Engine Web Search
-- **Instant Search Switcher**: Toggle seamlessly between **Google, DuckDuckGo, Perplexity AI, Bing, YouTube, and GitHub** with official crisp WebP logos.
-- **Live Fuzzy Filtering**: Real-time shortcut filtering across titles, tags, and descriptions as you type.
+### 📝 Bento Mini-Widgets ("Liquid Cards")
+- **Glass Scratchpad**: Fast persistent notepad with auto-save in `localStorage` for ideas, checklists, and tasks.
+- **Pomodoro Focus Timer**: 25 min focus / 5 min break timer with SVG circular progress ring and gentle acoustic alarm chimes.
+- **Configurable Visibility**: Toggle widgets on/off anytime from the *Layout & Shortcuts* settings tab.
 
-### ⚙️ Unified Settings Hub & Slide-Over Drawer
-- **All-in-One Settings**: Dedicated glass drawer (<svg>⚙️</svg>) with 5 categorized tabs (*Appearance, Language, Weather, Layout & Shortcuts, Backup*).
-- **Theme & Sound Controls**: Switch between 4 visual themes, toggle tactile sound effects, and control ambient Aurora glow.
+### 🔊 Procedural Web Audio API Synthesizer (0 KB)
+- Zero external MP3 dependencies with real-time mathematical audio synthesis.
+- 3 selectable haptic sound presets: **Sci-Fi Soft Pop**, **Mechanical Switch**, and **Acoustic Bubble**.
 
-### 🧩 Drag & Drop Customization & Shortcut Manager
-- **Bento Grid Customization**: Reorder entire category blocks or rearrange individual icons with native HTML5 Drag & Drop.
-- **Add / Edit / Delete**: Add custom shortcuts with custom URLs, bundled or custom WebP icons, descriptions, and tags.
-- **Zero Idle Overhead**: The Drag & Drop engine only runs when *Edit Mode* is explicitly enabled.
-- **Emergency Layout Reset**: Dedicated "🔄 Restore Factory Layout" button in the Layout tab.
+### 🎨 Custom Theme Studio
+- Live color picker in *Settings > Appearance* to customize primary accent and secondary glow colors with instant CSS variable re-calculation.
 
-### 💾 JSON Backup & Instant Restore
-- **One-Click Export**: Download a full `shortcuts-backup.json` configuration file.
-- **One-Click Restore**: Seamlessly import your setup across any browser or computer.
-- **Factory Reset**: Revert back to the default 45 shortcuts at any time.
+### 📥 Universal Browser Bookmarks Importer
+- Import `bookmarks.html` exported from **Google Chrome, Mozilla Firefox, Microsoft Edge, Brave, or Safari** with one click.
 
-### 👤 Interactive Username & Saxon Genitive Engine
-- **Customizable Name**: Click the title in the header to change your name on the fly.
-- **Intelligent Suffix Grammar**: Automatically applies the single apostrophe `'` for names ending in `s/S` (*HaDeS' Shortcuts*, *Carlos' Shortcuts*) or `'s` for others (*Alex's Shortcuts*, *Elena's Shortcuts*).
+### 📱 PWA & Offline Support
+- Fully installable Progressive Web App (`manifest.json` + `sw.js`) for a distraction-free standalone desktop experience on Windows, macOS, and Linux.
 
-### ⛅ Live Weather Widget
-- **Automatic IP Geolocation**: Detects location without intrusive browser permission dialogs.
-- **Open-Meteo Integration**: Accurate real-time temperature, condition descriptions in your active language, and day/night dynamic weather icons.
-- **Custom City Picker**: Click the weather widget to search and pin any city worldwide with persistent local storage.
+---
 
-### 🌍 Full 4-Language Localization (i18n)
-- Seamless 100% native translations across **Spanish (🇪🇸), English (🇬🇧), French (🇫🇷), and German (🇩🇪)**.
-- Localizes greetings, date formats (`toLocaleDateString`), category titles, weather states, and all 45 shortcut descriptions.
-- Auto-detects browser language and actively loads external `/locales/*.json` files with embedded fallback.
+## ⚡ Bang Commands & Search Cheatsheet
 
-### 🛡️ Enterprise-Grade Security & Performance
-- **Zero Dependencies**: Pure vanilla HTML5, CSS3, and ES6 JavaScript. No Node.js runtime, no npm packages, no bundlers required.
-- **Reverse Tabnabbing Shield**: All external links are hardened with `rel="noopener noreferrer"`.
-- **Cumulative Layout Shift (CLS = 0)**: Explicit `width="60"` and `height="60"` on all media assets.
-- **WCAG 2.2 AA Accessibility**: Keyboard `:focus-visible` neon rings, dynamic `aria-hidden`, and `@media (prefers-reduced-motion: reduce)` support.
+| Command | Destination Service | Example |
+| :--- | :--- | :--- |
+| `!yt <query>` | YouTube Search | `!yt lofi hip hop` |
+| `!gh <query>` | GitHub Repositories | `!gh three.js` |
+| `!w <query>` | Wikipedia (ES) | `!w James Webb` |
+| `!r <query>` | Reddit Search | `!r webdev` |
+| `!m <query>` | Google Maps | `!m Vigo, Spain` |
+| `!civitai <query>` | Civitai Model Hub | `!civitai cyberpunk` |
+| `!tr <text>` | Google Translate | `!tr thank you so much` |
+| `!npm <pkg>` | NPM Registry | `!npm canvas-confetti` |
+| `!ddg <query>` | DuckDuckGo Direct | `!ddg privacy tools` |
+| `<math expr>` | Instant Calculator | `150 * 1.21` |
 
 ---
 
@@ -108,10 +106,11 @@
 | Shortcut | Action |
 | :--- | :--- |
 | <kbd>Ctrl</kbd> + <kbd>K</kbd> / <kbd>Cmd</kbd> + <kbd>K</kbd> | Focus the main search bar instantly |
-| <kbd>/</kbd> | Focus search bar (when not inside an input) |
-| <kbd>Tab</kbd> | Accessible keyboard navigation with `:focus-visible` ring |
-| <kbd>Enter</kbd> | Launch highlighted shortcut or search active engine |
-| <kbd>ESC</kbd> | Clear & blur search bar |
+| <kbd>/</kbd> | Focus search bar (when not typing in an input/textarea) |
+| <kbd>Ctrl</kbd> + <kbd>,</kbd> | Open Settings Drawer |
+| <kbd>Arrow Keys</kbd> (<kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd>) | Navigate visible Bento cards |
+| <kbd>Enter</kbd> | Launch highlighted shortcut, execute bang, or search engine |
+| <kbd>ESC</kbd> | Clear & blur search bar / close open modals |
 
 ---
 
@@ -122,7 +121,7 @@ Test and use the production dashboard directly in your browser without any insta
 👉 **[https://devildonia.github.io/hades_shortcuts/](https://devildonia.github.io/hades_shortcuts/)**
 
 ### Option 2: Direct Local File (Offline)
-Simply clone the repository and double-click [`index.html`](index.html) in your browser. All assets, sounds, and dictionaries are self-contained and run offline without any server setup.
+Simply clone the repository and double-click [`index.html`](index.html) in your browser. All assets, sounds, and dictionaries run 100% offline without any server setup.
 
 ### Option 3: Local HTTP Server
 Run the included `local server.bat` script or launch a simple Python server:
@@ -136,7 +135,7 @@ Then visit `http://localhost:8080` in your favorite browser.
 
 ## 🌍 Internationalization (i18n)
 
-All interface strings, category titles, greetings, and shortcut tooltips are fully localized:
+All interface strings, category titles, greetings, widgets, and shortcut tooltips are fully localized:
 
 ```
 locales/
@@ -150,9 +149,11 @@ locales/
 
 ## 🏛️ Project Architecture (Anti-God File Modular Design)
 
-The project enforces a strict Single Responsibility Principle (SRP) with native ES6 modules under `/js/` (~50–185 lines each):
+The project enforces a strict Single Responsibility Principle (SRP) with native ES6 modules under `/js/` (~50–190 lines each):
 
 ```
+├── manifest.json            # PWA manifest for desktop installation
+├── sw.js                    # Service Worker for offline cache & performance
 ├── index.html               # Clean, accessible semantic DOM structure
 ├── style.css                # Fluid CSS design tokens, themes & animations
 ├── locales/                 # i18n translation dictionaries (ES, EN, FR, DE)
@@ -161,16 +162,21 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 ├── js/
 │   ├── app.js               # Main orchestrator & lifecycle manager
 │   ├── state.js             # Reactive central state & localStorage sync
+│   ├── audio.js             # Procedural Web Audio API synthesizer (0 KB)
+│   ├── bangs.js             # Bang commands parser & safe math calculator
+│   ├── widgets.js           # Bento widgets manager (Scratchpad + Pomodoro)
+│   ├── theme-studio.js      # Real-time custom theme color palette generator
+│   ├── importer.js          # Universal HTML bookmarks parser (Chrome/Firefox)
 │   ├── i18n.js              # Localization engine & dynamic loader
 │   ├── weather.js           # Precision clock & Open-Meteo weather geocoder
-│   ├── search.js            # Multi-engine search & fuzzy shortcut filter
+│   ├── search.js            # Multi-engine search, bangs & arrow navigation
 │   ├── render.js            # Dynamic Bento grid, cards & smart tooltips
 │   ├── dragdrop.js          # Native HTML5 Drag & Drop manager
 │   ├── shortcut-manager.js  # Add / Edit / Delete modal controller
 │   ├── backup.js            # JSON export, import & factory reset
 │   └── settings.js          # Slide-over settings drawer controller
 ├── iconos/                  # 48 optimized WebP icon assets (60x60)
-└── sounds/                  # Haptic feedback audio effects (click & hover)
+└── sounds/                  # Haptic audio fallback assets
 ```
 
 ---

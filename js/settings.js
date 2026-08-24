@@ -1,128 +1,157 @@
-// js/settings.js - Unified Settings Slide-Over Drawer
+// js/settings.js - Slide-Over Settings Drawer Hub
 
 import { state } from './state.js';
-import { i18nDictionaries, updateDocumentLocalization } from './i18n.js';
+import { updateDocumentLocalization } from './i18n.js';
+import { soundFx } from './audio.js';
 
 export class SettingsHub {
-    constructor(renderer, shortcutManager, backupManager) {
+    constructor(renderer, shortcutManager, backupManager, importer, themeStudio) {
         this.renderer = renderer;
         this.shortcutManager = shortcutManager;
         this.backupManager = backupManager;
-        this.settingsBtn = document.getElementById('settings-btn');
+        this.importer = importer;
+        this.themeStudio = themeStudio;
         this.drawer = document.getElementById('settings-drawer');
-        this.closeDrawerBtn = document.getElementById('close-settings-drawer');
-        this.tabButtons = document.querySelectorAll('.settings-tab-btn');
-        this.tabContents = document.querySelectorAll('.settings-tab-pane');
+        this.settingsBtn = document.getElementById('settings-btn');
+        this.closeBtn = document.getElementById('close-settings-drawer');
+        this.tabBtns = document.querySelectorAll('.settings-tab-btn');
+        this.tabPanes = document.querySelectorAll('.settings-tab-pane');
         this.themeRadios = document.querySelectorAll('input[name="setting-theme"]');
-        this.soundCheckbox = document.getElementById('setting-sound-toggle');
-        this.glowCheckbox = document.getElementById('setting-glow-toggle');
-        this.langSelect = document.getElementById('setting-lang-select');
+        this.soundToggle = document.getElementById('setting-sound-toggle');
+        this.soundPresetSelect = document.getElementById('sound-preset-select');
+        this.glowToggle = document.getElementById('setting-glow-toggle');
         this.editModeToggle = document.getElementById('setting-edit-mode-toggle');
         this.addShortcutBtn = document.getElementById('drawer-add-shortcut-btn');
         this.layoutResetBtn = document.getElementById('layout-reset-defaults-btn');
+        this.toggleScratchpad = document.getElementById('toggle-widget-scratchpad');
+        this.togglePomodoro = document.getElementById('toggle-widget-pomodoro');
     }
 
     init() {
         this.bindEvents();
         this.syncUIState();
+        if (this.importer) this.importer.init();
+        if (this.themeStudio) this.themeStudio.init();
     }
 
-    openDrawer() {
+    open() {
         if (!this.drawer) return;
-        this.drawer.classList.remove('hidden');
-        this.drawer.classList.add('open');
+        soundFx.play('click');
         this.syncUIState();
+        this.drawer.classList.remove('hidden');
     }
 
-    closeDrawer() {
+    close() {
         if (!this.drawer) return;
-        this.drawer.classList.remove('open');
-        setTimeout(() => this.drawer.classList.add('hidden'), 250);
-    }
-
-    switchTab(tabId) {
-        this.tabButtons.forEach(btn => {
-            btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
-        });
-        this.tabContents.forEach(pane => {
-            pane.classList.toggle('active', pane.getAttribute('id') === `tab-pane-${tabId}`);
-        });
+        soundFx.play('click');
+        this.drawer.classList.add('hidden');
     }
 
     syncUIState() {
-        if (this.soundCheckbox) this.soundCheckbox.checked = state.soundEnabled;
-        if (this.langSelect) this.langSelect.value = state.language;
+        this.themeRadios.forEach(radio => {
+            radio.checked = (radio.value === state.theme || (radio.value === 'sunset' && state.theme === 'amber'));
+        });
+
+        if (this.soundToggle) this.soundToggle.checked = state.soundEnabled;
+        if (this.soundPresetSelect) this.soundPresetSelect.value = soundFx.preset;
         if (this.editModeToggle) this.editModeToggle.checked = state.editMode;
 
-        this.themeRadios.forEach(radio => {
-            radio.checked = radio.value === state.theme;
-        });
+        const scratchpadVisible = localStorage.getItem('widget_scratchpad_visible') !== 'false';
+        const pomodoroVisible = localStorage.getItem('widget_pomodoro_visible') !== 'false';
+        if (this.toggleScratchpad) this.toggleScratchpad.checked = scratchpadVisible;
+        if (this.togglePomodoro) this.togglePomodoro.checked = pomodoroVisible;
     }
 
     bindEvents() {
-        if (this.settingsBtn) {
-            this.settingsBtn.addEventListener('click', () => this.openDrawer());
-        }
-        if (this.closeDrawerBtn) {
-            this.closeDrawerBtn.addEventListener('click', () => this.closeDrawer());
-        }
+        if (this.settingsBtn) this.settingsBtn.addEventListener('click', () => this.open());
+        if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.close());
+
         if (this.drawer) {
             this.drawer.addEventListener('click', (e) => {
-                if (e.target === this.drawer) this.closeDrawer();
+                if (e.target === this.drawer) this.close();
             });
         }
 
-        this.tabButtons.forEach(btn => {
+        this.tabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                this.switchTab(btn.getAttribute('data-tab'));
+                soundFx.play('click');
+                const targetTab = btn.getAttribute('data-tab');
+                this.tabBtns.forEach(b => b.classList.toggle('active', b === btn));
+                this.tabPanes.forEach(pane => {
+                    pane.classList.toggle('active', pane.id === `tab-pane-${targetTab}`);
+                });
             });
         });
 
         this.themeRadios.forEach(radio => {
-            radio.addEventListener('change', () => {
-                state.setTheme(radio.value);
+            radio.addEventListener('change', (e) => {
+                soundFx.play('click');
+                state.setTheme(e.target.value);
             });
         });
 
-        if (this.soundCheckbox) {
-            this.soundCheckbox.addEventListener('change', () => {
-                state.setSoundEnabled(this.soundCheckbox.checked);
+        if (this.soundToggle) {
+            this.soundToggle.addEventListener('change', (e) => {
+                state.setSoundEnabled(e.target.checked);
+                soundFx.play('click');
             });
         }
 
-        if (this.glowCheckbox) {
-            this.glowCheckbox.addEventListener('change', () => {
-                document.querySelectorAll('.ambient-glow').forEach(glow => {
-                    glow.style.display = this.glowCheckbox.checked ? 'block' : 'none';
-                });
-            });
-        }
-
-        if (this.langSelect) {
-            this.langSelect.addEventListener('change', () => {
-                state.setLanguage(this.langSelect.value);
-                updateDocumentLocalization();
-                this.renderer.render();
+        if (this.soundPresetSelect) {
+            this.soundPresetSelect.addEventListener('change', (e) => {
+                soundFx.setPreset(e.target.value);
+                soundFx.play('click');
             });
         }
 
         if (this.editModeToggle) {
-            this.editModeToggle.addEventListener('change', () => {
-                state.setEditMode(this.editModeToggle.checked);
+            this.editModeToggle.addEventListener('change', (e) => {
+                soundFx.play('click');
+                state.setEditMode(e.target.checked);
+                this.renderer.render();
+            });
+        }
+
+        if (this.toggleScratchpad) {
+            this.toggleScratchpad.addEventListener('change', (e) => {
+                const el = document.getElementById('widget-scratchpad-card');
+                if (el) el.classList.toggle('hidden', !e.target.checked);
+                localStorage.setItem('widget_scratchpad_visible', e.target.checked ? 'true' : 'false');
+            });
+        }
+
+        if (this.togglePomodoro) {
+            this.togglePomodoro.addEventListener('change', (e) => {
+                const el = document.getElementById('widget-pomodoro-card');
+                if (el) el.classList.toggle('hidden', !e.target.checked);
+                localStorage.setItem('widget_pomodoro_visible', e.target.checked ? 'true' : 'false');
             });
         }
 
         if (this.layoutResetBtn) {
             this.layoutResetBtn.addEventListener('click', () => {
+                soundFx.play('click');
                 this.backupManager.resetDefaults();
             });
         }
 
         if (this.addShortcutBtn) {
             this.addShortcutBtn.addEventListener('click', () => {
-                this.closeDrawer();
+                this.close();
                 this.shortcutManager.openAddModal();
             });
         }
+
+        // Language Radios in Settings
+        const langRadios = document.querySelectorAll('input[name="setting-lang"]');
+        langRadios.forEach(radio => {
+            radio.checked = (radio.value === state.language);
+            radio.addEventListener('change', (e) => {
+                soundFx.play('click');
+                state.setLanguage(e.target.value);
+                updateDocumentLocalization();
+                this.renderer.render();
+            });
+        });
     }
 }

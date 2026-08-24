@@ -2,6 +2,7 @@
 
 import { state } from './state.js';
 import { i18nDictionaries } from './i18n.js';
+import { soundFx } from './audio.js';
 
 export class DashboardRenderer {
     constructor() {
@@ -10,10 +11,7 @@ export class DashboardRenderer {
         this.tooltipTitle = document.getElementById('tooltip-title');
         this.tooltipDomain = document.getElementById('tooltip-domain');
         this.tooltipDesc = document.getElementById('tooltip-desc');
-        this.hoverSound = new Audio('sounds/hover.mp3');
-        this.clickSound = new Audio('sounds/click.mp3');
-        this.hoverSound.volume = 0.2;
-        this.clickSound.volume = 0.25;
+
     }
 
     playSound(audio) {
@@ -96,7 +94,7 @@ export class DashboardRenderer {
 
     bindCardInteractions(card, shortcut) {
         card.addEventListener('mouseenter', (e) => {
-            this.playSound(this.hoverSound);
+            soundFx.play('hover');
             if (!state.editMode) this.showTooltip(card, shortcut);
         });
 
@@ -106,7 +104,7 @@ export class DashboardRenderer {
                 e.preventDefault();
                 return;
             }
-            this.playSound(this.clickSound);
+            soundFx.play('click');
         });
 
         // Edit Mode Actions

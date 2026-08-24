@@ -197,5 +197,47 @@
     "delete_btn": "Supprimer le Raccourci",
     "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce raccourci ?",
     "cancel_btn": "Annuler"
+  },
+  "bangs": {
+    "calc_title": "Résultat du Calcul",
+    "direct_search": "Rechercher sur {service}",
+    "suggestions_title": "Commandes Bang Rapides"
+  },
+  "widgets": {
+    "scratchpad_title": "Bloc-notes Glass",
+    "scratchpad_placeholder": "Écrivez vos idées ou notes rapides ici...",
+    "scratchpad_saved": "Enregistré automatiquement",
+    "pomodoro_title": "Minuteur Focus",
+    "pomodoro_focus": "Concentration",
+    "pomodoro_break": "Pause",
+    "pomodoro_start": "Démarrer",
+    "pomodoro_pause": "Pause",
+    "pomodoro_reset": "Réinitialiser",
+    "toggle_widgets_title": "Mini-Widgets Bento",
+    "toggle_scratchpad": "Afficher le Bloc-notes",
+    "toggle_pomodoro": "Afficher le Minuteur Pomodoro"
+  },
+  "audio": {
+    "preset_label": "Effet Sonore Haptique",
+    "preset_scifi": "Sci-Fi Soft Pop (Synthétisé)",
+    "preset_mech": "Clic Mécanique Tactile",
+    "preset_bubble": "Bulle Acoustique"
+  },
+  "theme_studio": {
+    "title": "Studio de Thème Personnalisé",
+    "desc": "Personnalisez les couleurs d'accent et les reflets néon en temps réel :",
+    "primary_label": "Couleur Primaire (Accent) :",
+    "secondary_label": "Couleur Secondaire :",
+    "reset_colors_btn": "Réinitialiser les Couleurs"
+  },
+  "importer": {
+    "title": "Importer les Favoris du Navigateur",
+    "desc": "Importez un fichier bookmarks.html exporté depuis Chrome, Firefox, Edge ou Brave :",
+    "select_file_btn": "📁 Sélectionner un Fichier HTML",
+    "merge_mode": "Fusionner avec mes raccourcis actuels",
+    "replace_mode": "Remplacer tous les raccourcis",
+    "import_btn": "Importer les Favoris",
+    "success_msg": "{count} raccourcis importés avec succès !",
+    "error_msg": "Aucun favori valide trouvé dans le fichier sélectionné."
   }
 }

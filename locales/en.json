@@ -197,5 +197,47 @@
     "delete_btn": "Delete Shortcut",
     "delete_confirm": "Are you sure you want to delete this shortcut?",
     "cancel_btn": "Cancel"
+  },
+  "bangs": {
+    "calc_title": "Calculation Result",
+    "direct_search": "Search on {service}",
+    "suggestions_title": "Quick Bang Commands"
+  },
+  "widgets": {
+    "scratchpad_title": "Glass Scratchpad",
+    "scratchpad_placeholder": "Write thoughts, tasks or quick notes here...",
+    "scratchpad_saved": "Auto-saved locally",
+    "pomodoro_title": "Focus Timer",
+    "pomodoro_focus": "Focus",
+    "pomodoro_break": "Break",
+    "pomodoro_start": "Start",
+    "pomodoro_pause": "Pause",
+    "pomodoro_reset": "Reset",
+    "toggle_widgets_title": "Bento Mini-Widgets",
+    "toggle_scratchpad": "Show Scratchpad",
+    "toggle_pomodoro": "Show Pomodoro Timer"
+  },
+  "audio": {
+    "preset_label": "Haptic Sound Preset",
+    "preset_scifi": "Sci-Fi Soft Pop (Procedural)",
+    "preset_mech": "Mechanical Switch Click",
+    "preset_bubble": "Acoustic Bubble"
+  },
+  "theme_studio": {
+    "title": "Custom Theme Studio",
+    "desc": "Customize accent colors and neon spotlight in real-time:",
+    "primary_label": "Primary Accent Color:",
+    "secondary_label": "Secondary Color:",
+    "reset_colors_btn": "Reset Default Colors"
+  },
+  "importer": {
+    "title": "Import Browser Bookmarks",
+    "desc": "Import a bookmarks.html file exported from Chrome, Firefox, Edge or Brave:",
+    "select_file_btn": "📁 Select HTML File",
+    "merge_mode": "Merge with my existing shortcuts",
+    "replace_mode": "Replace all shortcuts",
+    "import_btn": "Import Bookmarks",
+    "success_msg": "Successfully imported {count} shortcuts!",
+    "error_msg": "No valid bookmarks found in selected file."
   }
 }

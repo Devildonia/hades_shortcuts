@@ -1,7 +1,8 @@
-// js/app.js - Master Orchestrator for HaDeS' Shortcuts
+// js/app.js - Master Orchestrator for HaDeS' Shortcuts Next-Gen
 
 import { state } from './state.js';
 import { updateDocumentLocalization, loadLocaleAsync } from './i18n.js';
+import { soundFx } from './audio.js';
 import { WeatherEngine } from './weather.js';
 import { SearchEngineManager } from './search.js';
 import { DashboardRenderer } from './render.js';
@@ -9,31 +10,41 @@ import { DragDropManager } from './dragdrop.js';
 import { ShortcutManager } from './shortcut-manager.js';
 import { BackupManager } from './backup.js';
 import { SettingsHub } from './settings.js';
+import { WidgetsManager } from './widgets.js';
+import { ThemeStudio } from './theme-studio.js';
+import { BookmarksImporter } from './importer.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initialize Visual Theme
+    // 1. Initialize Visual Theme & Custom Theme Studio
     document.documentElement.setAttribute('data-theme', state.theme);
     state.on('theme:changed', (theme) => {
         document.documentElement.setAttribute('data-theme', theme);
     });
 
+    const themeStudio = new ThemeStudio();
+    themeStudio.init();
+
     // 2. Initialize Core Subsystems
     const renderer = new DashboardRenderer();
     const weather = new WeatherEngine();
     const search = new SearchEngineManager();
+    const widgets = new WidgetsManager();
     const shortcutManager = new ShortcutManager(renderer);
     const backupManager = new BackupManager(renderer);
+    const importer = new BookmarksImporter(renderer);
     const dragDropManager = new DragDropManager(renderer);
-    const settingsHub = new SettingsHub(renderer, shortcutManager, backupManager);
+    const settingsHub = new SettingsHub(renderer, shortcutManager, backupManager, importer, themeStudio);
 
-    // 3. Render Dashboard
+    // 3. Render Dashboard & Init Subsystems
     renderer.render();
     weather.init();
     search.init();
+    widgets.init();
     dragDropManager.init();
     shortcutManager.init();
     backupManager.init();
     settingsHub.init();
+
     loadLocaleAsync(state.language).then(() => {
         updateDocumentLocalization();
         renderer.render();
@@ -43,84 +54,96 @@ document.addEventListener('DOMContentLoaded', () => {
     initUserNameModal(weather);
 
     // 5. Global Keyboard Shortcuts
-    document.addEventListener('keydown', (e) => {
-        if (((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') || (e.key === '/' && document.activeElement?.tagName !== 'INPUT')) {
-            e.preventDefault();
-            const input = document.getElementById('main-search');
-            if (input) {
-                input.focus();
-                input.select();
-            }
-        } else if (e.key === 'Escape') {
-            const input = document.getElementById('main-search');
-            if (document.activeElement === input) {
-                input.blur();
-            }
-        }
-    });
+    initGlobalKeybindings(search, settingsHub);
 
-    console.log("⚡ HaDeS' Shortcuts: Master Modular Architecture Initialized.");
+    // 6. Register Service Worker for PWA
+    if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
 });
 
-function initUserNameModal(weather) {
-    const brandUserNameEl = document.getElementById('brand-user-name');
-    const brandUserSuffixEl = document.getElementById('brand-user-suffix');
-    const userModal = document.getElementById('user-modal');
-    const closeUserModalBtn = document.getElementById('close-user-modal');
-    const userNameInput = document.getElementById('user-name-input');
-    const userSaveBtn = document.getElementById('user-save-btn');
-    const userPreviewText = document.getElementById('user-preview-text');
+const initUserNameModal = (weather) => {
+    const brandName = document.getElementById('brand-user-name');
+    const brandSuffix = document.getElementById('brand-user-suffix');
+    const modal = document.getElementById('user-modal');
+    const input = document.getElementById('user-name-input');
+    const saveBtn = document.getElementById('user-save-btn');
+    const closeBtn = document.getElementById('close-user-modal');
+    const preview = document.getElementById('user-preview-text');
 
-    const formatTitle = (name) => {
+    const updateSuffix = (name) => {
         const trimmed = (name || 'HaDeS').trim();
-        if (!trimmed) return { name: 'HaDeS', suffix: "'", full: "HaDeS' SHORTCUTS" };
-        const suffix = trimmed.slice(-1).toLowerCase() === 's' ? "'" : "'s";
-        return { name: trimmed, suffix, full: `${trimmed}${suffix} SHORTCUTS` };
+        const suffix = trimmed.toLowerCase().endsWith('s') ? "'" : "'s";
+        if (brandName) brandName.textContent = trimmed;
+        if (brandSuffix) brandSuffix.textContent = suffix;
+        document.title = `${trimmed}${suffix} Shortcuts · Command Center`;
     };
 
-    const updateUI = (name) => {
-        const formatted = formatTitle(name);
-        if (brandUserNameEl) brandUserNameEl.textContent = formatted.name;
-        if (brandUserSuffixEl) brandUserSuffixEl.textContent = formatted.suffix;
-        document.title = `${formatted.name}${formatted.suffix} Shortcuts · Command Center`;
-        weather.updateClockAndGreeting();
+    updateSuffix(state.userName);
+
+    const openModal = () => {
+        soundFx.play('click');
+        if (modal) modal.classList.remove('hidden');
+        if (input) {
+            input.value = state.userName;
+            input.focus();
+        }
+        updatePreview();
     };
 
-    updateUI(state.userName);
+    const closeModal = () => {
+        soundFx.play('click');
+        if (modal) modal.classList.add('hidden');
+    };
 
-    if (brandUserNameEl) {
-        brandUserNameEl.addEventListener('click', () => {
-            if (userModal) {
-                userModal.classList.remove('hidden');
-                if (userNameInput) {
-                    userNameInput.value = state.userName;
-                    const formatted = formatTitle(state.userName);
-                    if (userPreviewText) userPreviewText.textContent = formatted.full;
-                    userNameInput.focus();
-                }
-            }
-        });
-    }
-
-    if (userNameInput) {
-        userNameInput.addEventListener('input', () => {
-            const formatted = formatTitle(userNameInput.value);
-            if (userPreviewText) userPreviewText.textContent = formatted.full;
-        });
-    }
+    const updatePreview = () => {
+        if (!preview || !input) return;
+        const val = input.value.trim() || 'HaDeS';
+        const suffix = val.toLowerCase().endsWith('s') ? "'" : "'s";
+        preview.textContent = `${val}${suffix} SHORTCUTS`;
+    };
 
     const saveName = () => {
-        const val = userNameInput?.value.trim() || 'HaDeS';
-        state.setUserName(val);
-        updateUI(val);
-        if (userModal) userModal.classList.add('hidden');
+        soundFx.play('click');
+        const newName = input ? input.value.trim() || 'HaDeS' : 'HaDeS';
+        state.setUserName(newName);
+        updateSuffix(newName);
+        closeModal();
     };
 
-    if (userSaveBtn) userSaveBtn.addEventListener('click', saveName);
-    if (closeUserModalBtn) closeUserModalBtn.addEventListener('click', () => userModal?.classList.add('hidden'));
-    if (userModal) {
-        userModal.addEventListener('click', (e) => {
-            if (e.target === userModal) userModal.classList.add('hidden');
+    if (brandName) brandName.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (saveBtn) saveBtn.addEventListener('click', saveName);
+    if (input) {
+        input.addEventListener('input', updatePreview);
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') saveName();
+            if (e.key === 'Escape') closeModal();
         });
     }
-}
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+    }
+};
+
+const initGlobalKeybindings = (search, settingsHub) => {
+    document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            soundFx.play('hover');
+            if (search.searchInput) {
+                search.searchInput.focus();
+                search.searchInput.select();
+            }
+        } else if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+            soundFx.play('hover');
+            if (search.searchInput) search.searchInput.focus();
+        } else if ((e.ctrlKey || e.metaKey) && e.key === ',') {
+            e.preventDefault();
+            settingsHub.open();
+        }
+    });
+};

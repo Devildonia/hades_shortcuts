@@ -197,5 +197,47 @@
     "delete_btn": "Verknüpfung löschen",
     "delete_confirm": "Möchten Sie diese Verknüpfung wirklich löschen?",
     "cancel_btn": "Abbrechen"
+  },
+  "bangs": {
+    "calc_title": "Berechnungsergebnis",
+    "direct_search": "Auf {service} suchen",
+    "suggestions_title": "Schnelle Bang-Befehle"
+  },
+  "widgets": {
+    "scratchpad_title": "Glass-Notizblock",
+    "scratchpad_placeholder": "Gedanken, Aufgaben oder schnelle Notizen hier schreiben...",
+    "scratchpad_saved": "Automatisch gespeichert",
+    "pomodoro_title": "Fokus-Timer",
+    "pomodoro_focus": "Fokus",
+    "pomodoro_break": "Pause",
+    "pomodoro_start": "Starten",
+    "pomodoro_pause": "Pause",
+    "pomodoro_reset": "Zurücksetzen",
+    "toggle_widgets_title": "Bento Mini-Widgets",
+    "toggle_scratchpad": "Notizblock anzeigen",
+    "toggle_pomodoro": "Pomodoro-Timer anzeigen"
+  },
+  "audio": {
+    "preset_label": "Haptischer Sound-Effekt",
+    "preset_scifi": "Sci-Fi Soft Pop (Synthetisiert)",
+    "preset_mech": "Mechanischer Klick",
+    "preset_bubble": "Akustische Blase"
+  },
+  "theme_studio": {
+    "title": "Individuelles Theme-Studio",
+    "desc": "Akzentfarben und Neon-Leuchten in Echtzeit anpassen:",
+    "primary_label": "Primäre Akzentfarbe:",
+    "secondary_label": "Sekundärfarbe:",
+    "reset_colors_btn": "Standardfarben wiederherstellen"
+  },
+  "importer": {
+    "title": "Browser-Lesezeichen importieren",
+    "desc": "Importieren Sie eine aus Chrome, Firefox, Edge oder Brave exportierte bookmarks.html-Datei:",
+    "select_file_btn": "📁 HTML-Datei auswählen",
+    "merge_mode": "Mit meinen vorhandenen Verknüpfungen zusammenführen",
+    "replace_mode": "Alle Verknüpfungen ersetzen",
+    "import_btn": "Lesezeichen importieren",
+    "success_msg": "Erfolgreich {count} Verknüpfungen importiert!",
+    "error_msg": "Keine gültigen Lesezeichen in der ausgewählten Datei gefunden."
   }
 }
