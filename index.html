@@ -28,10 +28,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=4.13.0">
+    <link rel="stylesheet" href="style.css?v=5.0.0">
 
     <!-- Master Script Module -->
-    <script defer src="js/bundle.js?v=4.13.0"></script>
+    <script defer src="js/bundle.js?v=5.0.0"></script>
 </head>
 <body>
 
@@ -905,5 +905,30 @@
     </div>
 
 <div id="postits-canvas" class="postits-canvas-container"></div>
+
+    <!-- DevTools: Interactive QR Code Modal -->
+    <div class="modal-overlay hidden" id="qr-modal" role="dialog" aria-modal="true">
+        <div class="modal-glass-card qr-modal-card">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 1.25rem;">📱</span>
+                    <h3>Código QR Generado</h3>
+                </div>
+                <button class="modal-close-btn" id="close-qr-modal" aria-label="Cerrar">✕</button>
+            </div>
+            <div class="qr-modal-body">
+                <p class="qr-target-text" id="qr-text-display">https://...</p>
+                <div class="qr-canvas-wrapper">
+                    <canvas id="qr-canvas"></canvas>
+                </div>
+                <p class="qr-hint">Escanea con la cámara de tu móvil para abrir o transferir al instante.</p>
+            </div>
+            <div class="shortcut-modal-footer">
+                <button class="settings-action-btn secondary" id="qr-copy-btn">📋 Copiar Imagen</button>
+                <button class="settings-action-btn primary" id="qr-download-btn">⬇️ Descargar PNG</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

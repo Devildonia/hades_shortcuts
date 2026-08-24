@@ -9,7 +9,14 @@ export const BANGS_MAP = {
     '!civitai': { name: 'Civitai', url: 'https://civitai.com/?query=' },
     '!tr': { name: 'Traductor', url: 'https://translate.google.com/?text=' },
     '!npm': { name: 'NPM', url: 'https://www.npmjs.com/search?q=' },
-    '!ddg': { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=' }
+    '!ddg': { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=' },
+    '!uuid': { name: 'UUID Generator', isDevTool: true },
+    '!qr': { name: 'QR Code Generator', isDevTool: true },
+    '!color': { name: 'Color Converter', isDevTool: true },
+    '!b64': { name: 'Base64 Encode', isDevTool: true },
+    '!b64d': { name: 'Base64 Decode', isDevTool: true },
+    '!epoch': { name: 'Epoch Time Converter', isDevTool: true },
+    '!time': { name: 'Date & Time', isDevTool: true }
 };
 
 export const parseBangQuery = (rawQuery) => {

@@ -1,4 +1,4 @@
-// js/shortcut-manager.js - Add / Edit / Delete Shortcut Modal
+// js/shortcut-manager.js - Add / Edit / Delete Shortcut Modal with Smart Favicon HD
 
 import { state } from './state.js';
 import { i18nDictionaries } from './i18n.js';
@@ -24,6 +24,7 @@ export class ShortcutManager {
         this.populateCategorySelect();
         this.populateIconPresets();
         this.bindEvents();
+        this.bindSmartFaviconAutoDerive();
 
         window.addEventListener('shortcut:edit', (e) => this.openEditModal(e.detail));
         window.addEventListener('shortcut:delete', (e) => this.deleteShortcut(e.detail.id));
@@ -81,21 +82,24 @@ export class ShortcutManager {
         this.titleInput.value = sc.title;
         this.urlInput.value = sc.url;
         this.catSelect.value = sc.category;
+        this.descInput.value = sc.desc || '';
+        this.tagsInput.value = sc.tags || '';
+
         if (sc.icon.startsWith('iconos/')) {
             this.iconSelect.value = sc.icon;
             this.customIconInput.value = '';
         } else {
             this.customIconInput.value = sc.icon;
         }
-        this.descInput.value = sc.desc || '';
-        this.tagsInput.value = sc.tags || '';
+
         if (this.deleteBtn) this.deleteBtn.classList.remove('hidden');
         document.getElementById('sc-modal-title').textContent = (i18nDictionaries[state.language] || i18nDictionaries.es).shortcut_editor.edit_title;
         this.modal.classList.remove('hidden');
     }
 
     closeModal() {
-        if (this.modal) this.modal.classList.add('hidden');
+        this.modal.classList.add('hidden');
+        this.editingShortcutId = null;
     }
 
     saveShortcut() {
@@ -103,24 +107,22 @@ export class ShortcutManager {
         const url = this.urlInput.value.trim();
         if (!title || !url) return;
 
-        const icon = this.customIconInput.value.trim() || this.iconSelect.value || 'iconos/google.webp';
-        const category = this.catSelect.value || 'cat_tools';
+        let icon = this.customIconInput.value.trim() || this.iconSelect.value;
+        const category = this.catSelect.value;
         const desc = this.descInput.value.trim();
         const tags = this.tagsInput.value.trim();
 
         if (this.editingShortcutId) {
-            const updated = state.shortcuts.map(s => {
+            const list = state.shortcuts.map(s => {
                 if (s.id === this.editingShortcutId) {
                     return { ...s, title, url, icon, category, desc, tags };
                 }
                 return s;
             });
-            state.saveShortcuts(updated);
+            state.saveShortcuts(list);
         } else {
-            const newSc = {
-                id: `custom_${Date.now()}`,
-                title, url, icon, category, desc, tags
-            };
+            const newId = 'sc_' + Date.now();
+            const newSc = { id: newId, title, url, icon, category, desc, tags };
             state.saveShortcuts([...state.shortcuts, newSc]);
         }
 
@@ -129,12 +131,36 @@ export class ShortcutManager {
     }
 
     deleteShortcut(id) {
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).shortcut_editor;
-        if (confirm(t.delete_confirm)) {
-            const updated = state.shortcuts.filter(s => s.id !== id);
-            state.saveShortcuts(updated);
-            this.closeModal();
-            this.renderer.render();
+        const list = state.shortcuts.filter(s => s.id !== id);
+        state.saveShortcuts(list);
+        this.closeModal();
+        this.renderer.render();
+    }
+
+    bindSmartFaviconAutoDerive() {
+        if (this.urlInput) {
+            this.urlInput.addEventListener('input', () => {
+                const val = this.urlInput.value.trim();
+                if (!val) return;
+                try {
+                    let formattedUrl = val;
+                    if (!val.startsWith('http://') && !val.startsWith('https://')) {
+                        formattedUrl = 'https://' + val;
+                    }
+                    const parsed = new URL(formattedUrl);
+                    const domain = parsed.hostname.replace(/^www\./, '');
+                    
+                    if (this.titleInput && !this.titleInput.value.trim()) {
+                        const name = domain.split('.')[0];
+                        this.titleInput.value = name.charAt(0).toUpperCase() + name.slice(1);
+                    }
+
+                    const hdFavicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+                    if (this.customIconInput) {
+                        this.customIconInput.value = hdFavicon;
+                    }
+                } catch (e) {}
+            });
         }
     }
 

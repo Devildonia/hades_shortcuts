@@ -1,7 +1,7 @@
 <div align="center">
 
-# ⚡ HaDeS' Shortcuts · Next-Gen
-### *A high-performance, ultra-aesthetic browser startpage, command center & productivity hub*
+# ⚡ HaDeS' Shortcuts · Next-Gen (v5.0)
+### *A high-performance, ultra-aesthetic browser command center, productivity OS & startpage*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Online%20Preview-brightgreen?logo=github)](https://devildonia.github.io/hades_shortcuts/)
@@ -28,7 +28,8 @@
 
 [Live Demo](https://devildonia.github.io/hades_shortcuts/) •
 [Features](#-key-features) •
-[Bangs & Calculator](#-bang-commands--live-calculator) •
+[DevTools & Bangs](#-devtools-omnibox--bang-commands) •
+[Freeform & Post-its](#-freeform-canvas--floating-post-its) •
 [Widgets](#-bento-mini-widgets) •
 [Gallery](#-visual-showcase) •
 [Quick Start](#-quick-start) •
@@ -59,10 +60,23 @@
 
 ## 🌟 Key Features
 
-### ⚡ Bang Commands (`!`) & Live Calculator
-- **Direct Service Search**: Type `!yt music`, `!gh react`, `!w quantum`, `!r technology`, or `!civitai lora` to jump directly into destination search engines.
-- **Instant Safe Math Evaluator**: Type `45 * 1.21`, `(120 + 30) / 2`, or `25 * 80` to see interactive calculated results right in your search bar.
-- **Keyboard Arrow Navigation**: Navigate cards seamlessly with <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> and hit <kbd>Enter</kbd> to launch.
+### 🛠️ DevTools Omnibox & «Swiss Army Knife»
+Transform your search bar into an instant utility suite:
+- **`!uuid`**: Generates cryptographically secure UUIDv4 with 1-click clipboard copy.
+- **`!color <value>`**: Full two-way color converter (HEX ⇄ RGB ⇄ HSL) with visual color chips.
+- **`!b64 <text>` / `!b64d <hash>`**: Safe Base64 encoder and decoder in real time.
+- **`!epoch` / `!time <timestamp>`**: Instant UNIX timestamp to readable ISO & relative date converter.
+- **`!qr <text or url>`**: Generates high-resolution **Interactive Glass QR Modal** with PNG download and clipboard copy to seamlessly beam links to your smartphone.
+
+### 🎨 Freeform Canvas & Floating Glass Post-its
+- **Freeform Screen Positioning**: Move any category box, clock, weather, or notes anywhere across the 360° screen canvas with 1:1 cursor lock (`LayoutManager`).
+- **Corner Resize Handles (`↘`)**: Dynamically resize width and height of any widget on the fly.
+- **Glass Post-its**: Pin floating translucent sticky notes with custom neon color cycling, live in-place editing, and persistent positioning.
+
+### 🔍 Smart HD Favicon Auto-Derivation
+- When adding any URL (e.g. `https://figma.com`), the system automatically derives:
+  - Official platform title (`Figma`).
+  - High-Definition 128×128 px official favicon (`Google S2 / IconHorse HD API`).
 
 ### 📝 Bento Mini-Widgets ("Liquid Cards")
 - **Glass Scratchpad**: Fast persistent notepad with auto-save in `localStorage` for ideas, checklists, and tasks.
@@ -84,10 +98,16 @@
 
 ---
 
-## ⚡ Bang Commands & Search Cheatsheet
+## ⚡ DevTools Omnibox & Bang Commands Cheatsheet
 
-| Command | Destination Service | Example |
+| Command | Action / Destination Service | Example |
 | :--- | :--- | :--- |
+| `!uuid` | Generate UUIDv4 with 1-click copy | `!uuid` |
+| `!color <val>` | Color converter & visual preview swatch | `!color #00f2fe` or `!color rgb(0,242,254)` |
+| `!b64 <text>` | Real-time UTF-8 Base64 Encoder | `!b64 Cyberpunk 2077` |
+| `!b64d <hash>` | Real-time Base64 Decoder | `!b64d Q3liZXJwdW5r` |
+| `!time` / `!epoch` | UNIX epoch to local date & relative time | `!time` or `!epoch 1787589157` |
+| `!qr <link>` | Generate Interactive Glass QR Code Modal | `!qr https://github.com` |
 | `!yt <query>` | YouTube Search | `!yt lofi hip hop` |
 | `!gh <query>` | GitHub Repositories | `!gh three.js` |
 | `!w <query>` | Wikipedia (ES) | `!w James Webb` |
@@ -97,7 +117,7 @@
 | `!tr <text>` | Google Translate | `!tr thank you so much` |
 | `!npm <pkg>` | NPM Registry | `!npm canvas-confetti` |
 | `!ddg <query>` | DuckDuckGo Direct | `!ddg privacy tools` |
-| `<math expr>` | Instant Calculator | `150 * 1.21` |
+| `<math expr>` | Instant Math Calculator | `150 * 1.21` or `(45 + 15) / 2` |
 
 ---
 
@@ -108,9 +128,10 @@
 | <kbd>Ctrl</kbd> + <kbd>K</kbd> / <kbd>Cmd</kbd> + <kbd>K</kbd> | Focus the main search bar instantly |
 | <kbd>/</kbd> | Focus search bar (when not typing in an input/textarea) |
 | <kbd>Ctrl</kbd> + <kbd>,</kbd> | Open Settings Drawer |
+| <kbd>Ctrl</kbd> + <kbd>Enter</kbd> | Pin note as floating Glass Post-it (in Scratchpad) |
 | <kbd>Arrow Keys</kbd> (<kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd>) | Navigate visible Bento cards |
 | <kbd>Enter</kbd> | Launch highlighted shortcut, execute bang, or search engine |
-| <kbd>ESC</kbd> | Clear & blur search bar / close open modals |
+| <kbd>ESC</kbd> | Clear search / Exit Edit Mode / Close open modals |
 
 ---
 
@@ -149,7 +170,7 @@ locales/
 
 ## 🏛️ Project Architecture (Anti-God File Modular Design)
 
-The project enforces a strict Single Responsibility Principle (SRP) with native ES6 modules under `/js/` (~50–190 lines each):
+The project enforces a strict Single Responsibility Principle (SRP) with native ES6 modules under `/js/` (~50–250 lines each, 0 god files):
 
 ```
 ├── manifest.json            # PWA manifest for desktop installation
@@ -164,6 +185,9 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── state.js             # Reactive central state & localStorage sync
 │   ├── audio.js             # Procedural Web Audio API synthesizer (0 KB)
 │   ├── bangs.js             # Bang commands parser & safe math calculator
+│   ├── devtools.js          # Built-in DevTools Omnibox & QR Code Generator
+│   ├── postits.js           # Floating Glass Post-its manager
+│   ├── layout.js            # Freeform Canvas & Corner Resize Engine (rAF)
 │   ├── widgets.js           # Bento widgets manager (Scratchpad + Pomodoro)
 │   ├── theme-studio.js      # Real-time custom theme color palette generator
 │   ├── importer.js          # Universal HTML bookmarks parser (Chrome/Firefox)
@@ -171,8 +195,8 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── weather.js           # Precision clock & Open-Meteo weather geocoder
 │   ├── search.js            # Multi-engine search, bangs & arrow navigation
 │   ├── render.js            # Dynamic Bento grid, cards & smart tooltips
-│   ├── dragdrop.js          # Native HTML5 Drag & Drop manager
-│   ├── shortcut-manager.js  # Add / Edit / Delete modal controller
+│   ├── dragdrop.js          # Inner card reordering drag & drop manager
+│   ├── shortcut-manager.js  # Add / Edit / Delete modal & HD Favicon engine
 │   ├── backup.js            # JSON export, import & factory reset
 │   └── settings.js          # Slide-over settings drawer controller
 ├── iconos/                  # 48 optimized WebP icon assets (60x60)

@@ -1,57 +1,42 @@
-// js/search.js - Multi-Engine Search, Bangs, Safe Calculator & Arrow Navigation
+// js/search.js - Multi-Engine Omnibox, Category Filters, Bangs & DevTools
 
 import { state } from './state.js';
 import { i18nDictionaries } from './i18n.js';
-import { parseBangQuery, evaluateArithmetic, BANGS_MAP } from './bangs.js';
+import { parseBangQuery, evaluateArithmetic } from './bangs.js';
+import { devTools } from './devtools.js';
 import { soundFx } from './audio.js';
 
 export const SEARCH_ENGINES = {
     google: { name: 'Google', url: 'https://www.google.com/search?q=', icon: 'iconos/google.webp' },
     duckduckgo: { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=', icon: 'iconos/duckduckgo.webp' },
     perplexity: { name: 'Perplexity', url: 'https://www.perplexity.ai/search?q=', icon: 'iconos/perplexity.webp' },
-    bing: { name: 'Bing', url: 'https://www.bing.com/search?q=', icon: 'iconos/bing.webp' },
-    youtube: { name: 'YouTube', url: 'https://www.youtube.com/results?search_query=', icon: 'iconos/youtube.webp' },
-    github: { name: 'GitHub', url: 'https://github.com/search?q=', icon: 'iconos/github.webp' }
+    bing: { name: 'Bing', url: 'https://www.bing.com/search?q=', icon: 'iconos/bing.webp' }
 };
 
 export class SearchEngineManager {
     constructor() {
+        this.searchInput = document.getElementById('main-search') || document.getElementById('search-input');
+        this.searchClear = document.getElementById('search-clear-btn') || document.getElementById('search-clear');
         this.engineBtn = document.getElementById('engine-btn');
         this.engineMenu = document.getElementById('engine-menu');
-        this.engineIcon = document.querySelector('#engine-icon-current img') || document.getElementById('engine-icon-current');
+        this.engineIcon = document.getElementById('engine-icon-current');
         this.engineName = document.getElementById('engine-name-current');
         this.engineOptions = document.querySelectorAll('.engine-opt');
-        this.searchInput = document.getElementById('main-search');
-        this.clearSearchBtn = document.getElementById('clear-search');
-        this.pillButtons = document.querySelectorAll('.pill-btn');
-        this.noResultsMsg = document.getElementById('no-results-msg') || document.getElementById('no-results');
+        this.filterPills = document.querySelectorAll('.filter-pill');
         this.calcBanner = document.getElementById('search-calc-banner');
-        this.currentEngineKey = state.searchEngine;
-        this.focusedCardIndex = -1;
+        this.currentEngineKey = state.searchEngine || 'google';
     }
 
     init() {
         this.setEngine(this.currentEngineKey);
         this.bindEvents();
         this.updatePillCounts();
-        
-        // Sync active pill visually with state.activeFilter
-        this.syncPillUI();
-        this.filterShortcuts();
 
-        state.on('language:changed', () => this.updatePlaceholders());
-        state.on('shortcuts:changed', () => {
-            this.filterShortcuts();
+        state.on('shortcuts:changed', () => this.updatePillCounts());
+        state.on('categories:changed', () => this.updatePillCounts());
+        state.on('language:changed', () => {
+            this.updatePlaceholders();
             this.updatePillCounts();
-        });
-        state.on('dashboard:rendered', () => {
-            this.filterShortcuts();
-        });
-    }
-
-    syncPillUI() {
-        this.pillButtons.forEach(btn => {
-            btn.classList.toggle('active', btn.getAttribute('data-filter') === state.activeFilter);
         });
     }
 
@@ -59,13 +44,14 @@ export class SearchEngineManager {
         if (!SEARCH_ENGINES[key]) key = 'google';
         this.currentEngineKey = key;
         state.searchEngine = key;
-        localStorage.setItem('app_search_engine', key);
+        state.setItem('app_search_engine', key);
 
         const engine = SEARCH_ENGINES[key];
         if (this.engineIcon) {
-            if (this.engineIcon.tagName === 'IMG') {
-                this.engineIcon.src = engine.icon;
-                this.engineIcon.alt = engine.name;
+            const img = this.engineIcon.querySelector('img');
+            if (img) {
+                img.src = engine.icon;
+                img.alt = engine.name;
             } else {
                 this.engineIcon.innerHTML = `<img src="${engine.icon}" class="engine-icon-img" alt="${engine.name}">`;
             }
@@ -93,11 +79,19 @@ export class SearchEngineManager {
     }
 
     filterShortcuts() {
-        const query = this.searchInput ? this.searchInput.value.toLowerCase().trim() : '';
+        const rawQuery = this.searchInput ? this.searchInput.value.trim() : '';
+        const query = rawQuery.toLowerCase();
         const categories = document.querySelectorAll('.categoria');
         let totalVisible = 0;
 
-        // Check arithmetic evaluation
+        // 1. Check DevTools Omnibox Banner (case-sensitive)
+        const handledByDevTools = devTools.renderBanner(rawQuery, this.calcBanner);
+        if (handledByDevTools) {
+            if (this.calcBanner) this.calcBanner.classList.remove('hidden');
+            return;
+        }
+
+        // 2. Check Arithmetic Calculator
         const calcResult = evaluateArithmetic(query);
         if (this.calcBanner) {
             if (calcResult !== null) {
@@ -109,6 +103,7 @@ export class SearchEngineManager {
             }
         }
 
+        // 3. Filter Shortcut Cards
         categories.forEach(cat => {
             const group = cat.getAttribute('data-group');
             const matchesPill = (state.activeFilter === 'all' || state.activeFilter === group);
@@ -144,111 +139,94 @@ export class SearchEngineManager {
                 }
             }
         });
+    }
 
-        if (this.noResultsMsg) {
-            this.noResultsMsg.classList.toggle('hidden', totalVisible > 0);
+    executeSearch(query) {
+        const trimmed = query.trim();
+        if (!trimmed) return;
+
+        // Check Bang Query
+        const bangInfo = parseBangQuery(trimmed);
+        if (bangInfo.isBang && bangInfo.targetUrl) {
+            soundFx.play('click');
+            window.open(bangInfo.targetUrl, '_blank', 'noopener,noreferrer');
+            return;
         }
-        if (this.clearSearchBtn) {
-            this.clearSearchBtn.classList.toggle('hidden', query.length === 0);
-        }
-        this.focusedCardIndex = -1;
+
+        // Standard Web Search
+        const engine = SEARCH_ENGINES[this.currentEngineKey] || SEARCH_ENGINES.google;
+        const searchUrl = `${engine.url}${encodeURIComponent(trimmed)}`;
+        soundFx.play('click');
+        window.open(searchUrl, '_blank', 'noopener,noreferrer');
     }
 
     bindEvents() {
-        if (this.engineBtn) {
-            this.engineBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                soundFx.play('click');
-                this.engineMenu.classList.toggle('active');
-            });
-        }
-
-        this.engineOptions.forEach(opt => {
-            opt.addEventListener('click', () => {
-                soundFx.play('click');
-                this.setEngine(opt.getAttribute('data-engine'));
-                this.engineMenu.classList.remove('active');
-            });
-        });
-
-        document.addEventListener('click', (e) => {
-            if (this.engineMenu && this.engineMenu.classList.contains('active') && !this.engineMenu.contains(e.target) && !this.engineBtn.contains(e.target)) {
-                this.engineMenu.classList.remove('active');
-            }
-        });
-
         if (this.searchInput) {
-            this.searchInput.addEventListener('input', () => this.filterShortcuts());
-            this.searchInput.addEventListener('keydown', (e) => this.handleSearchKeydown(e));
-        }
+            this.searchInput.addEventListener('input', () => {
+                if (this.searchClear) {
+                    this.searchClear.classList.toggle('hidden', !this.searchInput.value);
+                }
+                this.filterShortcuts();
+            });
 
-        if (this.clearSearchBtn) {
-            this.clearSearchBtn.addEventListener('click', () => {
-                soundFx.play('click');
-                if (this.searchInput) {
+            this.searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.executeSearch(this.searchInput.value);
+                }
+                if (e.key === 'Escape') {
                     this.searchInput.value = '';
+                    if (this.searchClear) this.searchClear.classList.add('hidden');
                     this.filterShortcuts();
-                    this.searchInput.focus();
                 }
             });
         }
 
-        this.pillButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
+        if (this.searchClear) {
+            this.searchClear.addEventListener('click', () => {
                 soundFx.play('click');
-                this.pillButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                state.activeFilter = btn.getAttribute('data-filter') || 'all';
-                localStorage.setItem('active_pill_filter', state.activeFilter);
+                this.searchInput.value = '';
+                this.searchClear.classList.add('hidden');
+                this.filterShortcuts();
+                this.searchInput.focus();
+            });
+        }
+
+        if (this.engineBtn && this.engineMenu) {
+            this.engineBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                soundFx.play('click');
+                const isOpen = !this.engineMenu.classList.contains('hidden');
+                this.engineMenu.classList.toggle('hidden', isOpen);
+                this.engineBtn.setAttribute('aria-expanded', !isOpen);
+            });
+
+            document.addEventListener('click', () => {
+                this.engineMenu.classList.add('hidden');
+                this.engineBtn.setAttribute('aria-expanded', 'false');
+            });
+        }
+
+        this.engineOptions.forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                e.stopPropagation();
+                soundFx.play('click');
+                const key = opt.getAttribute('data-engine');
+                this.setEngine(key);
+                this.engineMenu.classList.add('hidden');
+                this.engineBtn.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        this.filterPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                soundFx.play('click');
+                const filter = pill.getAttribute('data-filter');
+                this.filterPills.forEach(p => p.classList.toggle('active', p === pill));
+                state.activeFilter = filter;
+                state.setItem('active_pill_filter', filter);
                 this.filterShortcuts();
             });
         });
-    }
-
-    handleSearchKeydown(e) {
-        const visibleCards = Array.from(document.querySelectorAll('.enlace-icono:not(.hidden-by-filter):not(.no-match)'));
-
-        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-            if (visibleCards.length > 0) {
-                e.preventDefault();
-                this.focusedCardIndex = (this.focusedCardIndex + 1) % visibleCards.length;
-                visibleCards[this.focusedCardIndex].focus();
-                soundFx.play('hover');
-            }
-        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-            if (visibleCards.length > 0) {
-                e.preventDefault();
-                this.focusedCardIndex = (this.focusedCardIndex - 1 + visibleCards.length) % visibleCards.length;
-                visibleCards[this.focusedCardIndex].focus();
-                soundFx.play('hover');
-            }
-        } else if (e.key === 'Enter') {
-            const raw = this.searchInput.value.trim();
-            if (!raw) return;
-
-            // 1. Check Bang Command
-            const bangParsed = parseBangQuery(raw);
-            if (bangParsed.isBang) {
-                soundFx.play('click');
-                window.open(bangParsed.targetUrl, '_blank');
-                return;
-            }
-
-            // 2. If card is focused or visible
-            const firstVisible = visibleCards[0];
-            if (firstVisible && !raw.includes(' ') && raw.length <= 15) {
-                soundFx.play('click');
-                window.open(firstVisible.getAttribute('href'), '_blank');
-            } else {
-                // Search active engine
-                soundFx.play('click');
-                const engine = SEARCH_ENGINES[this.currentEngineKey];
-                window.open(`${engine.url}${encodeURIComponent(raw)}`, '_blank');
-            }
-        } else if (e.key === 'Escape') {
-            this.searchInput.value = '';
-            this.filterShortcuts();
-            this.searchInput.blur();
-        }
     }
 }

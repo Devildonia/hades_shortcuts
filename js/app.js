@@ -1,3 +1,4 @@
+import { devTools } from './devtools.js';
 // js/app.js - Master Orchestrator for HaDeS' Shortcuts Next-Gen
 
 import { state } from './state.js';
@@ -188,6 +189,7 @@ export function initApp() {
     weather.init();
     search.init();
     widgets.init();
+    devTools.init();
     postits.init();
     dragDropManager.init();
     shortcutManager.init();

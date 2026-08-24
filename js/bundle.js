@@ -419,7 +419,14 @@ const BANGS_MAP = {
     '!civitai': { name: 'Civitai', url: 'https://civitai.com/?query=' },
     '!tr': { name: 'Traductor', url: 'https://translate.google.com/?text=' },
     '!npm': { name: 'NPM', url: 'https://www.npmjs.com/search?q=' },
-    '!ddg': { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=' }
+    '!ddg': { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=' },
+    '!uuid': { name: 'UUID Generator', isDevTool: true },
+    '!qr': { name: 'QR Code Generator', isDevTool: true },
+    '!color': { name: 'Color Converter', isDevTool: true },
+    '!b64': { name: 'Base64 Encode', isDevTool: true },
+    '!b64d': { name: 'Base64 Decode', isDevTool: true },
+    '!epoch': { name: 'Epoch Time Converter', isDevTool: true },
+    '!time': { name: 'Date & Time', isDevTool: true }
 };
 
 const parseBangQuery = (rawQuery) => {
@@ -515,6 +522,223 @@ const evaluateArithmetic = (expression) => {
     } catch (e) {}
     return null;
 };
+
+
+// --- Module: js/devtools.js ---
+// js/devtools.js - Built-in DevTools Omnibox Engine & QR Code Visualizer
+
+
+class DevToolsEngine {
+    constructor() {
+        this.qrModal = document.getElementById('qr-modal');
+        this.qrCanvas = document.getElementById('qr-canvas');
+        this.qrTextDisplay = document.getElementById('qr-text-display');
+        this.qrDownloadBtn = document.getElementById('qr-download-btn');
+        this.qrCopyBtn = document.getElementById('qr-copy-btn');
+        this.qrCloseBtn = document.getElementById('close-qr-modal');
+    }
+
+    init() {
+        if (this.qrCloseBtn) this.qrCloseBtn.addEventListener('click', () => this.closeQRModal());
+        if (this.qrModal) {
+            this.qrModal.addEventListener('click', (e) => {
+                if (e.target === this.qrModal) this.closeQRModal();
+            });
+        }
+        if (this.qrDownloadBtn) this.qrDownloadBtn.addEventListener('click', () => this.downloadQR());
+        if (this.qrCopyBtn) this.qrCopyBtn.addEventListener('click', () => this.copyQRToClipboard());
+    }
+
+    generateUUID() {
+        if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+            const r = Math.random() * 16 | 0;
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+    }
+
+    encodeBase64(str) {
+        try { return btoa(unescape(encodeURIComponent(str))); } catch (e) { return 'Error Base64'; }
+    }
+
+    decodeBase64(str) {
+        try { return decodeURIComponent(escape(atob(str))); } catch (e) { return 'Error: Base64 no válida'; }
+    }
+
+    parseColor(input) {
+        const str = input.trim();
+        const testEl = document.createElement('div');
+        testEl.style.color = str;
+        if (!testEl.style.color) return null;
+
+        document.body.appendChild(testEl);
+        const computed = window.getComputedStyle(testEl).color;
+        document.body.removeChild(testEl);
+
+        const rgbMatch = computed.match(/\d+/g);
+        if (!rgbMatch || rgbMatch.length < 3) return null;
+
+        const r = parseInt(rgbMatch[0], 10), g = parseInt(rgbMatch[1], 10), b = parseInt(rgbMatch[2], 10);
+        const hex = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+        
+        const rN = r / 255, gN = g / 255, bN = b / 255;
+        const max = Math.max(rN, gN, bN), min = Math.min(rN, gN, bN);
+        let h = 0, s = 0, l = (max + min) / 2;
+
+        if (max !== min) {
+            const d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch (max) {
+                case rN: h = (gN - bN) / d + (gN < bN ? 6 : 0); break;
+                case gN: h = (bN - rN) / d + 2; break;
+                case bN: h = (rN - gN) / d + 4; break;
+            }
+            h /= 6;
+        }
+
+        const hsl = `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
+        return { hex, rgb: `rgb(${r}, ${g}, ${b})`, hsl };
+    }
+
+    parseEpoch(input) {
+        const val = input.trim().toLowerCase();
+        let date = new Date();
+
+        if (val && val !== 'now') {
+            const num = parseInt(val, 10);
+            if (!isNaN(num)) {
+                date = num < 10000000000 ? new Date(num * 1000) : new Date(num);
+            } else {
+                date = new Date(val);
+            }
+        }
+        if (isNaN(date.getTime())) return null;
+
+        return {
+            epochSec: Math.floor(date.getTime() / 1000),
+            iso: date.toISOString(),
+            local: date.toLocaleString()
+        };
+    }
+
+    renderBanner(query, bannerEl) {
+        if (!bannerEl) return false;
+
+        if (query.startsWith('!uuid')) {
+            const uuid = this.generateUUID();
+            bannerEl.innerHTML = `<div class="devtool-result-row"><span>🔑 <strong>UUIDv4:</strong></span> <code class="devtool-code">${uuid}</code> <button class="devtool-copy-btn" data-copy="${uuid}">📋 Copiar</button></div>`;
+            this.bindCopyBtns(bannerEl);
+            return true;
+        }
+        if (query.startsWith('!b64d ')) {
+            const decoded = this.decodeBase64(query.slice(6).trim());
+            bannerEl.innerHTML = `<div class="devtool-result-row"><span>🔓 <strong>Base64 Decoded:</strong></span> <code class="devtool-code">${escapeHtml(decoded)}</code> <button class="devtool-copy-btn" data-copy="${escapeHtml(decoded)}">📋 Copiar</button></div>`;
+            this.bindCopyBtns(bannerEl);
+            return true;
+        }
+        if (query.startsWith('!b64 ')) {
+            const encoded = this.encodeBase64(query.slice(5).trim());
+            bannerEl.innerHTML = `<div class="devtool-result-row"><span>🔒 <strong>Base64 Encoded:</strong></span> <code class="devtool-code">${encoded}</code> <button class="devtool-copy-btn" data-copy="${encoded}">📋 Copiar</button></div>`;
+            this.bindCopyBtns(bannerEl);
+            return true;
+        }
+        if (query.startsWith('!color ')) {
+            const color = this.parseColor(query.slice(7).trim());
+            if (color) {
+                bannerEl.innerHTML = `<div class="devtool-result-row"><span class="color-preview-chip" style="background: ${color.hex}"></span> <span><strong>${color.hex}</strong> | ${color.rgb} | ${color.hsl}</span> <button class="devtool-copy-btn" data-copy="${color.hex}">📋 Copiar</button></div>`;
+            } else {
+                bannerEl.innerHTML = `<span>🎨 <em>Color no reconocido (ej: !color #00f2fe, rgb(0,242,254), cyan)</em></span>`;
+            }
+            this.bindCopyBtns(bannerEl);
+            return true;
+        }
+        if (query.startsWith('!epoch') || query.startsWith('!time')) {
+            const tInfo = this.parseEpoch(query.replace(/^!(epoch|time)\s*/, ''));
+            if (tInfo) {
+                bannerEl.innerHTML = `<div class="devtool-result-row"><span>⏰ <strong>Fecha:</strong> ${tInfo.local}</span> <span>(UNIX: <code>${tInfo.epochSec}</code>)</span> <button class="devtool-copy-btn" data-copy="${tInfo.epochSec}">📋 Copiar</button></div>`;
+                this.bindCopyBtns(bannerEl);
+                return true;
+            }
+        }
+        if (query.startsWith('!qr ')) {
+            const text = query.slice(4).trim();
+            bannerEl.innerHTML = `<div class="devtool-result-row"><span>📱 <strong>Código QR para:</strong> <em>${escapeHtml(text)}</em></span> <button class="devtool-action-btn" id="open-qr-trigger">⚡ Abrir QR</button></div>`;
+            const trigger = document.getElementById('open-qr-trigger');
+            if (trigger) trigger.onclick = () => this.openQRModal(text);
+            return true;
+        }
+        return false;
+    }
+
+    bindCopyBtns(container) {
+        container.querySelectorAll('.devtool-copy-btn').forEach(btn => {
+            btn.onclick = () => {
+                const text = btn.getAttribute('data-copy');
+                if (text && navigator.clipboard) {
+                    navigator.clipboard.writeText(text);
+                    soundFx.play('click');
+                    const original = btn.textContent;
+                    btn.textContent = '✓ Copiado';
+                    setTimeout(() => { btn.textContent = original; }, 1800);
+                }
+            };
+        });
+    }
+
+    openQRModal(text) {
+        if (!text) return;
+        soundFx.play('click');
+        if (this.qrTextDisplay) this.qrTextDisplay.textContent = text;
+        this.renderQR(text);
+        if (this.qrModal) this.qrModal.classList.remove('hidden');
+    }
+
+    closeQRModal() {
+        soundFx.play('click');
+        if (this.qrModal) this.qrModal.classList.add('hidden');
+    }
+
+    renderQR(text) {
+        if (!this.qrCanvas) return;
+        const ctx = this.qrCanvas.getContext('2d');
+        const size = 256;
+        this.qrCanvas.width = size;
+        this.qrCanvas.height = size;
+
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = () => ctx.drawImage(img, 0, 0, size, size);
+        img.src = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&bgcolor=0a0f1d&color=00f2fe&margin=10`;
+    }
+
+    downloadQR() {
+        if (!this.qrCanvas) return;
+        soundFx.play('click');
+        const link = document.createElement('a');
+        link.download = 'hades-qr-code.png';
+        link.href = this.qrCanvas.toDataURL('image/png');
+        link.click();
+    }
+
+    async copyQRToClipboard() {
+        if (!this.qrCanvas) return;
+        soundFx.play('click');
+        try {
+            this.qrCanvas.toBlob(async (blob) => {
+                if (blob && navigator.clipboard && navigator.clipboard.write) {
+                    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                    if (this.qrCopyBtn) {
+                        const original = this.qrCopyBtn.textContent;
+                        this.qrCopyBtn.textContent = '✓ ¡Copiado!';
+                        setTimeout(() => { this.qrCopyBtn.textContent = original; }, 2000);
+                    }
+                }
+            });
+        } catch (e) {}
+    }
+}
+
+const devTools = new DevToolsEngine();
 
 
 // --- Module: js/weather.js ---
@@ -1883,7 +2107,7 @@ class DragDropManager {
 
 
 // --- Module: js/shortcut-manager.js ---
-// js/shortcut-manager.js - Add / Edit / Delete Shortcut Modal
+// js/shortcut-manager.js - Add / Edit / Delete Shortcut Modal with Smart Favicon HD
 
 
 class ShortcutManager {
@@ -1907,6 +2131,7 @@ class ShortcutManager {
         this.populateCategorySelect();
         this.populateIconPresets();
         this.bindEvents();
+        this.bindSmartFaviconAutoDerive();
 
         window.addEventListener('shortcut:edit', (e) => this.openEditModal(e.detail));
         window.addEventListener('shortcut:delete', (e) => this.deleteShortcut(e.detail.id));
@@ -1964,21 +2189,24 @@ class ShortcutManager {
         this.titleInput.value = sc.title;
         this.urlInput.value = sc.url;
         this.catSelect.value = sc.category;
+        this.descInput.value = sc.desc || '';
+        this.tagsInput.value = sc.tags || '';
+
         if (sc.icon.startsWith('iconos/')) {
             this.iconSelect.value = sc.icon;
             this.customIconInput.value = '';
         } else {
             this.customIconInput.value = sc.icon;
         }
-        this.descInput.value = sc.desc || '';
-        this.tagsInput.value = sc.tags || '';
+
         if (this.deleteBtn) this.deleteBtn.classList.remove('hidden');
         document.getElementById('sc-modal-title').textContent = (i18nDictionaries[state.language] || i18nDictionaries.es).shortcut_editor.edit_title;
         this.modal.classList.remove('hidden');
     }
 
     closeModal() {
-        if (this.modal) this.modal.classList.add('hidden');
+        this.modal.classList.add('hidden');
+        this.editingShortcutId = null;
     }
 
     saveShortcut() {
@@ -1986,24 +2214,22 @@ class ShortcutManager {
         const url = this.urlInput.value.trim();
         if (!title || !url) return;
 
-        const icon = this.customIconInput.value.trim() || this.iconSelect.value || 'iconos/google.webp';
-        const category = this.catSelect.value || 'cat_tools';
+        let icon = this.customIconInput.value.trim() || this.iconSelect.value;
+        const category = this.catSelect.value;
         const desc = this.descInput.value.trim();
         const tags = this.tagsInput.value.trim();
 
         if (this.editingShortcutId) {
-            const updated = state.shortcuts.map(s => {
+            const list = state.shortcuts.map(s => {
                 if (s.id === this.editingShortcutId) {
                     return { ...s, title, url, icon, category, desc, tags };
                 }
                 return s;
             });
-            state.saveShortcuts(updated);
+            state.saveShortcuts(list);
         } else {
-            const newSc = {
-                id: `custom_${Date.now()}`,
-                title, url, icon, category, desc, tags
-            };
+            const newId = 'sc_' + Date.now();
+            const newSc = { id: newId, title, url, icon, category, desc, tags };
             state.saveShortcuts([...state.shortcuts, newSc]);
         }
 
@@ -2012,12 +2238,36 @@ class ShortcutManager {
     }
 
     deleteShortcut(id) {
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).shortcut_editor;
-        if (confirm(t.delete_confirm)) {
-            const updated = state.shortcuts.filter(s => s.id !== id);
-            state.saveShortcuts(updated);
-            this.closeModal();
-            this.renderer.render();
+        const list = state.shortcuts.filter(s => s.id !== id);
+        state.saveShortcuts(list);
+        this.closeModal();
+        this.renderer.render();
+    }
+
+    bindSmartFaviconAutoDerive() {
+        if (this.urlInput) {
+            this.urlInput.addEventListener('input', () => {
+                const val = this.urlInput.value.trim();
+                if (!val) return;
+                try {
+                    let formattedUrl = val;
+                    if (!val.startsWith('http://') && !val.startsWith('https://')) {
+                        formattedUrl = 'https://' + val;
+                    }
+                    const parsed = new URL(formattedUrl);
+                    const domain = parsed.hostname.replace(/^www\./, '');
+                    
+                    if (this.titleInput && !this.titleInput.value.trim()) {
+                        const name = domain.split('.')[0];
+                        this.titleInput.value = name.charAt(0).toUpperCase() + name.slice(1);
+                    }
+
+                    const hdFavicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+                    if (this.customIconInput) {
+                        this.customIconInput.value = hdFavicon;
+                    }
+                } catch (e) {}
+            });
         }
     }
 
@@ -2134,56 +2384,40 @@ class BackupManager {
 
 
 // --- Module: js/search.js ---
-// js/search.js - Multi-Engine Search, Bangs, Safe Calculator & Arrow Navigation
+// js/search.js - Multi-Engine Omnibox, Category Filters, Bangs & DevTools
 
 
 const SEARCH_ENGINES = {
     google: { name: 'Google', url: 'https://www.google.com/search?q=', icon: 'iconos/google.webp' },
     duckduckgo: { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=', icon: 'iconos/duckduckgo.webp' },
     perplexity: { name: 'Perplexity', url: 'https://www.perplexity.ai/search?q=', icon: 'iconos/perplexity.webp' },
-    bing: { name: 'Bing', url: 'https://www.bing.com/search?q=', icon: 'iconos/bing.webp' },
-    youtube: { name: 'YouTube', url: 'https://www.youtube.com/results?search_query=', icon: 'iconos/youtube.webp' },
-    github: { name: 'GitHub', url: 'https://github.com/search?q=', icon: 'iconos/github.webp' }
+    bing: { name: 'Bing', url: 'https://www.bing.com/search?q=', icon: 'iconos/bing.webp' }
 };
 
 class SearchEngineManager {
     constructor() {
+        this.searchInput = document.getElementById('main-search') || document.getElementById('search-input');
+        this.searchClear = document.getElementById('search-clear-btn') || document.getElementById('search-clear');
         this.engineBtn = document.getElementById('engine-btn');
         this.engineMenu = document.getElementById('engine-menu');
-        this.engineIcon = document.querySelector('#engine-icon-current img') || document.getElementById('engine-icon-current');
+        this.engineIcon = document.getElementById('engine-icon-current');
         this.engineName = document.getElementById('engine-name-current');
         this.engineOptions = document.querySelectorAll('.engine-opt');
-        this.searchInput = document.getElementById('main-search');
-        this.clearSearchBtn = document.getElementById('clear-search');
-        this.pillButtons = document.querySelectorAll('.pill-btn');
-        this.noResultsMsg = document.getElementById('no-results-msg') || document.getElementById('no-results');
+        this.filterPills = document.querySelectorAll('.filter-pill');
         this.calcBanner = document.getElementById('search-calc-banner');
-        this.currentEngineKey = state.searchEngine;
-        this.focusedCardIndex = -1;
+        this.currentEngineKey = state.searchEngine || 'google';
     }
 
     init() {
         this.setEngine(this.currentEngineKey);
         this.bindEvents();
         this.updatePillCounts();
-        
-        // Sync active pill visually with state.activeFilter
-        this.syncPillUI();
-        this.filterShortcuts();
 
-        state.on('language:changed', () => this.updatePlaceholders());
-        state.on('shortcuts:changed', () => {
-            this.filterShortcuts();
+        state.on('shortcuts:changed', () => this.updatePillCounts());
+        state.on('categories:changed', () => this.updatePillCounts());
+        state.on('language:changed', () => {
+            this.updatePlaceholders();
             this.updatePillCounts();
-        });
-        state.on('dashboard:rendered', () => {
-            this.filterShortcuts();
-        });
-    }
-
-    syncPillUI() {
-        this.pillButtons.forEach(btn => {
-            btn.classList.toggle('active', btn.getAttribute('data-filter') === state.activeFilter);
         });
     }
 
@@ -2191,13 +2425,14 @@ class SearchEngineManager {
         if (!SEARCH_ENGINES[key]) key = 'google';
         this.currentEngineKey = key;
         state.searchEngine = key;
-        localStorage.setItem('app_search_engine', key);
+        state.setItem('app_search_engine', key);
 
         const engine = SEARCH_ENGINES[key];
         if (this.engineIcon) {
-            if (this.engineIcon.tagName === 'IMG') {
-                this.engineIcon.src = engine.icon;
-                this.engineIcon.alt = engine.name;
+            const img = this.engineIcon.querySelector('img');
+            if (img) {
+                img.src = engine.icon;
+                img.alt = engine.name;
             } else {
                 this.engineIcon.innerHTML = `<img src="${engine.icon}" class="engine-icon-img" alt="${engine.name}">`;
             }
@@ -2225,11 +2460,19 @@ class SearchEngineManager {
     }
 
     filterShortcuts() {
-        const query = this.searchInput ? this.searchInput.value.toLowerCase().trim() : '';
+        const rawQuery = this.searchInput ? this.searchInput.value.trim() : '';
+        const query = rawQuery.toLowerCase();
         const categories = document.querySelectorAll('.categoria');
         let totalVisible = 0;
 
-        // Check arithmetic evaluation
+        // 1. Check DevTools Omnibox Banner (case-sensitive)
+        const handledByDevTools = devTools.renderBanner(rawQuery, this.calcBanner);
+        if (handledByDevTools) {
+            if (this.calcBanner) this.calcBanner.classList.remove('hidden');
+            return;
+        }
+
+        // 2. Check Arithmetic Calculator
         const calcResult = evaluateArithmetic(query);
         if (this.calcBanner) {
             if (calcResult !== null) {
@@ -2241,6 +2484,7 @@ class SearchEngineManager {
             }
         }
 
+        // 3. Filter Shortcut Cards
         categories.forEach(cat => {
             const group = cat.getAttribute('data-group');
             const matchesPill = (state.activeFilter === 'all' || state.activeFilter === group);
@@ -2276,112 +2520,95 @@ class SearchEngineManager {
                 }
             }
         });
+    }
 
-        if (this.noResultsMsg) {
-            this.noResultsMsg.classList.toggle('hidden', totalVisible > 0);
+    executeSearch(query) {
+        const trimmed = query.trim();
+        if (!trimmed) return;
+
+        // Check Bang Query
+        const bangInfo = parseBangQuery(trimmed);
+        if (bangInfo.isBang && bangInfo.targetUrl) {
+            soundFx.play('click');
+            window.open(bangInfo.targetUrl, '_blank', 'noopener,noreferrer');
+            return;
         }
-        if (this.clearSearchBtn) {
-            this.clearSearchBtn.classList.toggle('hidden', query.length === 0);
-        }
-        this.focusedCardIndex = -1;
+
+        // Standard Web Search
+        const engine = SEARCH_ENGINES[this.currentEngineKey] || SEARCH_ENGINES.google;
+        const searchUrl = `${engine.url}${encodeURIComponent(trimmed)}`;
+        soundFx.play('click');
+        window.open(searchUrl, '_blank', 'noopener,noreferrer');
     }
 
     bindEvents() {
-        if (this.engineBtn) {
-            this.engineBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                soundFx.play('click');
-                this.engineMenu.classList.toggle('active');
-            });
-        }
-
-        this.engineOptions.forEach(opt => {
-            opt.addEventListener('click', () => {
-                soundFx.play('click');
-                this.setEngine(opt.getAttribute('data-engine'));
-                this.engineMenu.classList.remove('active');
-            });
-        });
-
-        document.addEventListener('click', (e) => {
-            if (this.engineMenu && this.engineMenu.classList.contains('active') && !this.engineMenu.contains(e.target) && !this.engineBtn.contains(e.target)) {
-                this.engineMenu.classList.remove('active');
-            }
-        });
-
         if (this.searchInput) {
-            this.searchInput.addEventListener('input', () => this.filterShortcuts());
-            this.searchInput.addEventListener('keydown', (e) => this.handleSearchKeydown(e));
-        }
+            this.searchInput.addEventListener('input', () => {
+                if (this.searchClear) {
+                    this.searchClear.classList.toggle('hidden', !this.searchInput.value);
+                }
+                this.filterShortcuts();
+            });
 
-        if (this.clearSearchBtn) {
-            this.clearSearchBtn.addEventListener('click', () => {
-                soundFx.play('click');
-                if (this.searchInput) {
+            this.searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.executeSearch(this.searchInput.value);
+                }
+                if (e.key === 'Escape') {
                     this.searchInput.value = '';
+                    if (this.searchClear) this.searchClear.classList.add('hidden');
                     this.filterShortcuts();
-                    this.searchInput.focus();
                 }
             });
         }
 
-        this.pillButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
+        if (this.searchClear) {
+            this.searchClear.addEventListener('click', () => {
                 soundFx.play('click');
-                this.pillButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                state.activeFilter = btn.getAttribute('data-filter') || 'all';
-                localStorage.setItem('active_pill_filter', state.activeFilter);
+                this.searchInput.value = '';
+                this.searchClear.classList.add('hidden');
+                this.filterShortcuts();
+                this.searchInput.focus();
+            });
+        }
+
+        if (this.engineBtn && this.engineMenu) {
+            this.engineBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                soundFx.play('click');
+                const isOpen = !this.engineMenu.classList.contains('hidden');
+                this.engineMenu.classList.toggle('hidden', isOpen);
+                this.engineBtn.setAttribute('aria-expanded', !isOpen);
+            });
+
+            document.addEventListener('click', () => {
+                this.engineMenu.classList.add('hidden');
+                this.engineBtn.setAttribute('aria-expanded', 'false');
+            });
+        }
+
+        this.engineOptions.forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                e.stopPropagation();
+                soundFx.play('click');
+                const key = opt.getAttribute('data-engine');
+                this.setEngine(key);
+                this.engineMenu.classList.add('hidden');
+                this.engineBtn.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        this.filterPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                soundFx.play('click');
+                const filter = pill.getAttribute('data-filter');
+                this.filterPills.forEach(p => p.classList.toggle('active', p === pill));
+                state.activeFilter = filter;
+                state.setItem('active_pill_filter', filter);
                 this.filterShortcuts();
             });
         });
-    }
-
-    handleSearchKeydown(e) {
-        const visibleCards = Array.from(document.querySelectorAll('.enlace-icono:not(.hidden-by-filter):not(.no-match)'));
-
-        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-            if (visibleCards.length > 0) {
-                e.preventDefault();
-                this.focusedCardIndex = (this.focusedCardIndex + 1) % visibleCards.length;
-                visibleCards[this.focusedCardIndex].focus();
-                soundFx.play('hover');
-            }
-        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-            if (visibleCards.length > 0) {
-                e.preventDefault();
-                this.focusedCardIndex = (this.focusedCardIndex - 1 + visibleCards.length) % visibleCards.length;
-                visibleCards[this.focusedCardIndex].focus();
-                soundFx.play('hover');
-            }
-        } else if (e.key === 'Enter') {
-            const raw = this.searchInput.value.trim();
-            if (!raw) return;
-
-            // 1. Check Bang Command
-            const bangParsed = parseBangQuery(raw);
-            if (bangParsed.isBang) {
-                soundFx.play('click');
-                window.open(bangParsed.targetUrl, '_blank');
-                return;
-            }
-
-            // 2. If card is focused or visible
-            const firstVisible = visibleCards[0];
-            if (firstVisible && !raw.includes(' ') && raw.length <= 15) {
-                soundFx.play('click');
-                window.open(firstVisible.getAttribute('href'), '_blank');
-            } else {
-                // Search active engine
-                soundFx.play('click');
-                const engine = SEARCH_ENGINES[this.currentEngineKey];
-                window.open(`${engine.url}${encodeURIComponent(raw)}`, '_blank');
-            }
-        } else if (e.key === 'Escape') {
-            this.searchInput.value = '';
-            this.filterShortcuts();
-            this.searchInput.blur();
-        }
     }
 }
 
@@ -2718,6 +2945,7 @@ function initApp() {
     weather.init();
     search.init();
     widgets.init();
+    devTools.init();
     postits.init();
     dragDropManager.init();
     shortcutManager.init();

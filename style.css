@@ -2931,3 +2931,94 @@ input:checked + .slider:before {
     outline: 2px dashed var(--accent-primary) !important;
     opacity: 0.92;
 }
+
+
+/* ==========================================================================
+   DevTools Omnibox & Interactive QR Modal
+   ========================================================================== */
+.devtool-result-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 0.92rem;
+}
+
+.devtool-code {
+    font-family: var(--font-mono);
+    background: rgba(0, 242, 254, 0.12);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    color: var(--accent-primary);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.devtool-copy-btn, .devtool-action-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.devtool-copy-btn:hover, .devtool-action-btn:hover {
+    background: var(--accent-primary);
+    color: #000000;
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.color-preview-chip {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    display: inline-block;
+}
+
+/* QR Modal Styles */
+.qr-modal-card {
+    max-width: 360px;
+    text-align: center;
+}
+
+.qr-target-text {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 12px;
+}
+
+.qr-canvas-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.1);
+}
+
+.qr-canvas-wrapper canvas {
+    max-width: 100%;
+    border-radius: 6px;
+}
+
+.qr-hint {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 10px;
+}
