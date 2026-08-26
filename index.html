@@ -35,6 +35,8 @@
 </head>
 <body>
     <canvas id="aurora-bg-canvas" class="aurora-canvas"></canvas>
+    <div id="custom-bg-layer" class="custom-bg-layer"></div>
+    <div id="custom-bg-dim-overlay" class="custom-bg-dim-overlay"></div>
 
     <!-- Ambient Glow & Texture -->
     <div class="ambient-glow glow-1"></div>
@@ -999,6 +1001,62 @@
                     </div>
                 </div>
 
+                                <!-- Background Studio Section -->
+                <div class="settings-section">
+                    <h4 data-i18n="bg_studio.title">Estilo de Fondo de Pantalla</h4>
+                    <div class="bg-mode-selector-grid">
+                        <button class="bg-mode-chip active" data-bg-mode="aurora" data-i18n="bg_studio.mode_aurora">🌌 Aurora Canvas</button>
+                        <button class="bg-mode-chip" data-bg-mode="gradient" data-i18n="bg_studio.mode_gradient">🎨 Color / Gradiente</button>
+                        <button class="bg-mode-chip" data-bg-mode="image" data-i18n="bg_studio.mode_image">🖼️ Imagen / Unsplash</button>
+                    </div>
+
+                    <!-- Gradient/Color Subpanel -->
+                    <div id="bg-panel-gradient" class="bg-subpanel hidden">
+                        <label class="settings-hint" data-i18n="bg_studio.gradient_preset_label">Presets de Color / Gradiente:</label>
+                        <div class="bg-gradient-presets-row">
+                            <button class="bg-grad-btn" data-grad="linear-gradient(135deg, #0f172a 0%, #020617 100%)" style="background: linear-gradient(135deg, #0f172a, #020617);">Midnight</button>
+                            <button class="bg-grad-btn" data-grad="linear-gradient(135deg, #050811 0%, #001f3f 50%, #000000 100%)" style="background: linear-gradient(135deg, #050811, #001f3f);">Cyberpunk</button>
+                            <button class="bg-grad-btn" data-grad="linear-gradient(135deg, #18002e 0%, #090014 100%)" style="background: linear-gradient(135deg, #18002e, #090014);">Velvet</button>
+                            <button class="bg-grad-btn" data-grad="linear-gradient(135deg, #001a14 0%, #000a08 100%)" style="background: linear-gradient(135deg, #001a14, #000a08);">Emerald</button>
+                            <button class="bg-grad-btn" data-grad="#000000" style="background: #000000;">OLED Black</button>
+                        </div>
+                    </div>
+
+                    <!-- Image/Unsplash Subpanel -->
+                    <div id="bg-panel-image" class="bg-subpanel hidden">
+                        <div class="settings-field-group">
+                            <label data-i18n="bg_studio.unsplash_topic">Temática Unsplash:</label>
+                            <select id="bg-unsplash-topic-select">
+                                <option value="cyberpunk" data-i18n="bg_studio.topic_cyberpunk">Cyberpunk & Tech</option>
+                                <option value="space" data-i18n="bg_studio.topic_space">Espacio Profundo</option>
+                                <option value="nature" data-i18n="bg_studio.topic_nature">Naturaleza & Montañas</option>
+                                <option value="architecture" data-i18n="bg_studio.topic_arch">Arquitectura Minimalista</option>
+                            </select>
+                        </div>
+                        <div class="settings-field-group" style="display: flex; gap: 10px; align-items: center;">
+                            <label class="control-btn" style="cursor: pointer; display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; font-size: 0.8rem;">
+                                <span data-i18n="bg_studio.upload_local">📁 Cargar Archivo Local</span>
+                                <input type="file" id="bg-file-upload-input" accept="image/*" style="display: none;">
+                            </label>
+                            <button class="settings-action-btn secondary" id="bg-refresh-unsplash-btn" style="padding: 6px 12px; font-size: 0.78rem;">🔄 Foto Aleatoria</button>
+                        </div>
+                        <div class="settings-field-group">
+                            <label data-i18n="bg_studio.custom_url">URL de Imagen Personalizada</label>
+                            <input type="url" id="bg-custom-url-input" placeholder="https://images.unsplash.com/..." data-i18n-placeholder="bg_studio.custom_url_placeholder" autocomplete="off">
+                        </div>
+                        <!-- Blur & Dim Sliders -->
+                        <div class="macro-form-row">
+                            <div class="macro-form-field" style="flex: 1;">
+                                <label><span data-i18n="bg_studio.blur_label">Desenfoque (Blur):</span> <span id="bg-blur-val-display">0px</span></label>
+                                <input type="range" id="bg-blur-slider" min="0" max="20" value="0" class="ambient-slider">
+                            </div>
+                            <div class="macro-form-field" style="flex: 1;">
+                                <label><span data-i18n="bg_studio.dim_label">Oscurecimiento (Dim):</span> <span id="bg-dim-val-display">20%</span></label>
+                                <input type="range" id="bg-dim-slider" min="0" max="80" value="20" class="ambient-slider">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="settings-section">
                     <div class="settings-toggle-row">
                         <div>

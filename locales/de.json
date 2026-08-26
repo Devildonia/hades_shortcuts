@@ -383,5 +383,22 @@
     "save_btn": "Termin Speichern",
     "cancel_btn": "Abbrechen",
     "add_tooltip": "Manuellen Termin hinzufügen"
+  },
+  "bg_studio": {
+    "title": "Hintergrund- & Wallpaper-Stil",
+    "mode_aurora": "🌌 Aurora Canvas",
+    "mode_gradient": "🎨 Farbe / Farbverlauf",
+    "mode_image": "🖼️ Bild / Unsplash",
+    "unsplash_topic": "Unsplash-Thema:",
+    "topic_cyberpunk": "Cyberpunk & Tech",
+    "topic_space": "Tiefer Weltraum",
+    "topic_nature": "Natur & Berge",
+    "topic_arch": "Minimalistische Architektur",
+    "upload_local": "📁 Lokale Datei laden",
+    "custom_url": "Benutzerdefinierte Bild-URL",
+    "custom_url_placeholder": "https://images.unsplash.com/...",
+    "blur_label": "Weichzeichnung (Blur):",
+    "dim_label": "Abdunklung (Dim):",
+    "gradient_preset_label": "Farb- & Verlaufsvorlagen:"
   }
 }

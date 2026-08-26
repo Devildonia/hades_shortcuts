@@ -383,5 +383,22 @@
     "save_btn": "Enregistrer l'Événement",
     "cancel_btn": "Annuler",
     "add_tooltip": "Ajouter un Événement Manuel"
+  },
+  "bg_studio": {
+    "title": "Style de Fond d'Écran",
+    "mode_aurora": "🌌 Aurora Canvas",
+    "mode_gradient": "🎨 Couleur / Dégradé",
+    "mode_image": "🖼️ Image / Unsplash",
+    "unsplash_topic": "Thème Unsplash :",
+    "topic_cyberpunk": "Cyberpunk & Tech",
+    "topic_space": "Espace Profond",
+    "topic_nature": "Nature & Montagnes",
+    "topic_arch": "Architecture Minimaliste",
+    "upload_local": "📁 Téléverser un Fichier",
+    "custom_url": "URL d'Image Personnalisée",
+    "custom_url_placeholder": "https://images.unsplash.com/...",
+    "blur_label": "Effet de Flou :",
+    "dim_label": "Assombrissement :",
+    "gradient_preset_label": "Préréglages de Couleur :"
   }
 }

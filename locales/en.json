@@ -383,5 +383,22 @@
     "save_btn": "Save Event",
     "cancel_btn": "Cancel",
     "add_tooltip": "Add Manual Event"
+  },
+  "bg_studio": {
+    "title": "Wallpaper & Background Style",
+    "mode_aurora": "🌌 Aurora Canvas",
+    "mode_gradient": "🎨 Solid / Gradient",
+    "mode_image": "🖼️ Image / Unsplash",
+    "unsplash_topic": "Unsplash Topic:",
+    "topic_cyberpunk": "Cyberpunk & Tech",
+    "topic_space": "Deep Space",
+    "topic_nature": "Nature & Mountains",
+    "topic_arch": "Minimalist Architecture",
+    "upload_local": "📁 Upload Local File",
+    "custom_url": "Custom Image URL",
+    "custom_url_placeholder": "https://images.unsplash.com/...",
+    "blur_label": "Blur Effect:",
+    "dim_label": "Dim / Vignette:",
+    "gradient_preset_label": "Color & Gradient Presets:"
   }
 }

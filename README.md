@@ -150,6 +150,15 @@ Pure mathematical acoustic synthesis using modern **Web Audio API** nodes (`Audi
 - ☕ **Binaural Alpha Waves (432 Hz)**: Dual stereo sine wave oscillators producing an 8 Hz Alpha brainwave beat.
 - 🌊 **Cosmic Waves**: 10-second rhythmic ocean wave breathing cycle.
 
+### 🖼️ Dynamic Background Studio (Unsplash 4K / Local File / Gradients)
+- **3 Visual Atmosphere Modes**:
+  - 🌌 **Aurora Canvas**: Procedural WebGL mesh responsive to cursor and solar cycle.
+  - 🎨 **Solid Color & Gradients**: Deep Cyberpunk, Midnight Blue, Velvet Purple, Emerald Matrix, and OLED Pure Black (100% GPU/battery saving).
+  - 🖼️ **Image & Unsplash Wallpapers**:
+    - **Curated Unsplash Topics**: Cyberpunk & Tech, Deep Space, Mountain Nature, and Minimal Architecture.
+    - **Local File Upload**: Load your custom wallpaper directly from disk.
+    - **Legibility Filters**: Live **Blur (0-20px)** and **Dim (0-80%)** sliders to ensure optimal card contrast.
+
 ### ⚡ Visual Macro Studio & Custom Workflow Engine (No-Code Routine Creator)
 - **100% Visual Custom Routine Builder**:
   - 🎛️ **No-Code Macro Studio**: Create, edit, and duplicate custom productivity macros in 20 seconds from *Settings > Macros* without touching JSON or code.
