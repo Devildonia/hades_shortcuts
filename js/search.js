@@ -1,5 +1,5 @@
 // js/search.js - Multi-Engine Omnibox, Category Filters, Bangs & DevTools
-import { state } from './state.js';
+import { state, escapeHtml, bindIconFallback } from './state.js';
 import { tagsFilter } from './tags-filter.js';
 import { neuralSearch } from './neural-search.js';
 import { macroEngine } from './macros.js';
@@ -7,6 +7,7 @@ import { i18nDictionaries } from './i18n.js';
 import { parseBangQuery, evaluateArithmetic } from './bangs.js';
 import { devTools } from './devtools.js';
 import { soundFx } from './audio.js';
+import { focusMode } from './focus-mode.js';
 
 export const SEARCH_ENGINES = {
     google: { name: 'Google', url: 'https://www.google.com/search?q=', icon: 'iconos/google.webp' },
@@ -19,8 +20,8 @@ export const SEARCH_ENGINES = {
 
 export class SearchEngineManager {
     constructor() {
-        this.searchInput = document.getElementById('main-search') || document.getElementById('search-input');
-        this.searchClear = document.getElementById('search-clear-btn') || document.getElementById('search-clear');
+        this.searchInput = document.getElementById('main-search') || document.getElementById('search-input') || document.querySelector('.search-input');
+        this.searchClear = document.getElementById('clear-search') || document.getElementById('search-clear-btn') || document.getElementById('search-clear');
         this.engineBtn = document.getElementById('engine-btn');
         this.engineMenu = document.getElementById('engine-menu');
         this.engineIcon = document.getElementById('engine-icon-current');
@@ -50,6 +51,7 @@ export class SearchEngineManager {
             this.updatePlaceholders();
             this.updatePillCounts();
         });
+        state.on('filter:changed', () => this.filterShortcuts());
     }
 
     syncActiveFilterPill() {
@@ -71,8 +73,10 @@ export class SearchEngineManager {
             if (img) {
                 img.src = engine.icon;
                 img.alt = engine.name;
+                bindIconFallback(img, engine.url);
             } else {
-                this.engineIcon.innerHTML = `<img src="${engine.icon}" class="engine-icon-img" alt="${engine.name}">`;
+                this.engineIcon.innerHTML = `<img src="${escapeHtml(engine.icon)}" class="engine-icon-img" alt="${escapeHtml(engine.name)}">`;
+                bindIconFallback(this.engineIcon.querySelector('img'), engine.url);
             }
         }
         if (this.engineName) this.engineName.textContent = engine.name;
@@ -106,7 +110,7 @@ export class SearchEngineManager {
         const macro = macroEngine.getMacro(query);
         if (macro) {
             if (this.calcBanner) {
-                this.calcBanner.innerHTML = `<div class="devtool-result-row"><span>⚡ <strong>Macro detectada:</strong> ${macro.icon} ${macro.name}</span> <button class="devtool-action-btn" id="run-macro-trigger">🚀 Ejecutar Rutina</button></div>`;
+                this.calcBanner.innerHTML = `<div class="devtool-result-row"><span>⚡ <strong>Macro detectada:</strong> ${escapeHtml(macro.icon || '')} ${escapeHtml(macro.name)}</span> <button class="devtool-action-btn" id="run-macro-trigger">🚀 Ejecutar Rutina</button></div>`;
                 this.calcBanner.classList.remove('hidden');
                 const trigger = document.getElementById('run-macro-trigger');
                 if (trigger) trigger.onclick = () => macroEngine.executeMacro(query);
@@ -146,13 +150,22 @@ export class SearchEngineManager {
             let visibleInCat = 0;
 
             cardsInCat.forEach(card => {
+                const sid = card.getAttribute('data-id');
+                const shortcut = (state.shortcuts || []).find(item => item.id === sid) || {
+                    id: sid,
+                    title: card.getAttribute('data-title') || '',
+                    tags: card.getAttribute('data-tags') || '',
+                    desc: card.getAttribute('data-desc') || '',
+                    category: cat.getAttribute('data-cat-id'),
+                    url: card.getAttribute('href') || ''
+                };
                 const title = (card.getAttribute('data-title') || '').toLowerCase();
                 const tags = (card.getAttribute('data-tags') || '').toLowerCase();
                 const desc = (card.getAttribute('data-desc') || '').toLowerCase();
                 const text = (card.innerText || card.textContent || '').toLowerCase();
 
                 const parsedFilter = tagsFilter.parseQuery(query);
-            const matchesQuery = !query || tagsFilter.matches(s, parsedFilter) || title.includes(query) || tags.includes(query) || desc.includes(query) || text.includes(query);
+                const matchesQuery = !query || tagsFilter.matches(shortcut, parsedFilter) || title.includes(query) || tags.includes(query) || desc.includes(query) || text.includes(query);
 
                 if (matchesPill && matchesQuery) {
                     card.classList.remove('hidden-by-filter', 'no-match');
@@ -189,14 +202,19 @@ export class SearchEngineManager {
         const bangInfo = parseBangQuery(trimmed);
         if (bangInfo.isBang && bangInfo.targetUrl) {
             soundFx.play('click');
-            window.open(bangInfo.targetUrl, '_blank', 'noopener,noreferrer');
+            this.openExternal(bangInfo.targetUrl);
             return;
         }
 
         const engine = SEARCH_ENGINES[this.currentEngineKey] || SEARCH_ENGINES.google;
         const searchUrl = `${engine.url}${encodeURIComponent(trimmed)}`;
         soundFx.play('click');
-        window.open(searchUrl, '_blank', 'noopener,noreferrer');
+        this.openExternal(searchUrl);
+    }
+
+    openExternal(url) {
+        if (focusMode && typeof focusMode.openUrl === 'function') focusMode.openUrl(url);
+        else window.open(url, '_blank', 'noopener,noreferrer');
     }
 
     bindEvents() {

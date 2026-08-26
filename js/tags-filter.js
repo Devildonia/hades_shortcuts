@@ -1,7 +1,8 @@
 // js/tags-filter.js - Advanced Multi-Tag Query Engine & Saved Smart Views (Linear-style CMDK)
 
-import { state } from './state.js';
+import { state, normalizeTags, escapeHtml, persistJson } from './state.js';
 import { soundFx } from './audio.js';
+import { personalAnalytics } from './personal-analytics.js';
 
 export class TagsFilterEngine {
     constructor() {
@@ -41,7 +42,7 @@ export class TagsFilterEngine {
     }
 
     saveViews() {
-        try { localStorage.setItem(this.viewsKey, JSON.stringify(this.savedViews)); } catch (e) {}
+        persistJson(this.viewsKey, this.savedViews);
         this.renderSavedViews();
     }
 
@@ -85,7 +86,7 @@ export class TagsFilterEngine {
 
         // 1. Tag matching (AND logic for multiple tags)
         if (parsedQuery.tags.length > 0) {
-            const itemTags = (shortcut.tags || []).map(t => (t || '').toLowerCase().replace(/^#/, ''));
+            const itemTags = normalizeTags(shortcut.tags);
             const matchesAllTags = parsedQuery.tags.every(reqTag => itemTags.includes(reqTag));
             if (!matchesAllTags) return false;
         }
@@ -99,21 +100,24 @@ export class TagsFilterEngine {
 
         // 3. Favorite filter
         if (parsedQuery.isFav && !shortcut.favorite) {
-            return false;
+            const counts = (personalAnalytics && personalAnalytics.data && personalAnalytics.data.shortcutCounts) || {};
+            const ranked = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([id]) => id);
+            if (!ranked.includes(shortcut.id)) return false;
         }
 
-        // 4. Frequency filter (top usage count >= 5)
+        // 4. Frequency filter
         if (parsedQuery.freqTop) {
-            const launches = shortcut.launchCount || 0;
+            const launches = (personalAnalytics && personalAnalytics.data && personalAnalytics.data.shortcutCounts && personalAnalytics.data.shortcutCounts[shortcut.id]) || shortcut.launchCount || 0;
             if (launches < 3) return false;
         }
 
         // 5. Free text tokens
         if (parsedQuery.text.length > 0) {
             const title = (shortcut.title || '').toLowerCase();
-            const desc = (shortcut.description || '').toLowerCase();
+            const desc = (shortcut.description || shortcut.desc || '').toLowerCase();
             const url = (shortcut.url || '').toLowerCase();
-            const matchesAllText = parsedQuery.text.every(t => title.includes(t) || desc.includes(t) || url.includes(t));
+            const tagStr = normalizeTags(shortcut.tags).join(' ');
+            const matchesAllText = parsedQuery.text.every(t => title.includes(t) || desc.includes(t) || url.includes(t) || tagStr.includes(t));
             if (!matchesAllText) return false;
         }
 
@@ -140,7 +144,7 @@ export class TagsFilterEngine {
     }
 
     renderSavedViews() {
-        const container = document.getElementById('category-filter-bar');
+        const container = document.getElementById('category-filter-bar') || document.getElementById('filter-pills');
         if (!container) return;
 
         // Remove old saved view pills
@@ -150,7 +154,7 @@ export class TagsFilterEngine {
             const pill = document.createElement('button');
             pill.className = 'filter-pill saved-view-pill';
             pill.setAttribute('data-filter-view', view.id);
-            pill.innerHTML = `<span class="view-icon">${view.icon}</span> <span>${view.name}</span> <span class="delete-view-x" title="Eliminar vista">×</span>`;
+            pill.innerHTML = `<span class="view-icon">${escapeHtml(view.icon)}</span> <span>${escapeHtml(view.name)}</span> <span class="delete-view-x" title="Eliminar vista">×</span>`;
             
             pill.addEventListener('click', (e) => {
                 if (e.target.classList.contains('delete-view-x')) {
@@ -159,7 +163,7 @@ export class TagsFilterEngine {
                     return;
                 }
                 soundFx.play('click');
-                const searchInp = document.getElementById('search-input') || document.querySelector('.search-input');
+                const searchInp = document.getElementById('main-search') || document.getElementById('search-input') || document.querySelector('.search-input');
                 if (searchInp) {
                     searchInp.value = view.query;
                     searchInp.dispatchEvent(new Event('input', { bubbles: true }));
@@ -183,7 +187,7 @@ export class TagsFilterEngine {
 
         if (saveViewBtn) {
             saveViewBtn.addEventListener('click', () => {
-                const searchInp = document.getElementById('search-input') || document.querySelector('.search-input');
+                const searchInp = document.getElementById('main-search') || document.getElementById('search-input') || document.querySelector('.search-input');
                 const q = searchInp ? searchInp.value.trim() : '';
                 if (!q) { alert('Escribe primero una búsqueda o etiquetas para guardar la vista.'); return; }
                 if (viewQueryInp) viewQueryInp.value = q;

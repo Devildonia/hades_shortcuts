@@ -1,6 +1,6 @@
 // js/importer.js - Universal Bookmarks.html Parser & Importer
 
-import { state } from './state.js';
+import { state, faviconForUrl } from './state.js';
 import { i18nDictionaries } from './i18n.js';
 
 export class BookmarksImporter {
@@ -45,7 +45,7 @@ export class BookmarksImporter {
                     id: `imp_${Date.now()}_${idx}`,
                     title: title.slice(0, 30),
                     url: url,
-                    icon: 'iconos/google.webp',
+                    icon: faviconForUrl(url),
                     category: 'cat_tools',
                     tags: 'imported, bookmark',
                     desc: title
@@ -61,7 +61,7 @@ export class BookmarksImporter {
         // Merge mode
         const updated = [...state.shortcuts, ...imported];
         state.saveShortcuts(updated);
-        this.renderer.render();
+        if (this.renderer && this.renderer.render) this.renderer.render();
 
         const successText = this.getMsg('success_msg').replace('{count}', imported.length);
         this.showStatus(successText, 'success');

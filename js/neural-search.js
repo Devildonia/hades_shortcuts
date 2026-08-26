@@ -61,8 +61,8 @@ export class NeuralSearchEngine {
         const trimmed = query.trim();
         const t = (i18nDictionaries[state.language] || i18nDictionaries.es).neural || {};
 
-        if (trimmed.startsWith('!ai ')) {
-            const prompt = trimmed.slice(4).trim();
+        if (trimmed.startsWith('!ai ') || trimmed.startsWith('!ask ')) {
+            const prompt = trimmed.replace(/^!(ai|ask)\s+/, '').trim();
             if (!prompt) return false;
             
             // Immediate local response

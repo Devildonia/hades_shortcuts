@@ -21,17 +21,19 @@
     <meta name="twitter:image" content="https://devildonia.github.io/hades_shortcuts/og-preview.png">
 
     <!-- Favicon & Fonts -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="iconos/pwa-192.png">
+    <link rel="apple-touch-icon" href="iconos/pwa-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=5.0.0">
+    <link rel="stylesheet" href="style.css?v=6.0.0">
 
     <!-- Master Script Module -->
-    <script defer src="js/bundle.js?v=5.0.0"></script>
+    <script type="module" src="js/app.js?v=6.0.0"></script>
 </head>
 <body>
     <canvas id="aurora-bg-canvas" class="aurora-canvas"></canvas>
@@ -64,7 +66,7 @@
                     <span class="telemetry-status-text" id="telemetry-status-text">ONLINE</span>
                 </span>
                 <span class="telemetry-item" title="Latencia / Ping"><span class="telemetry-icon">📶</span> <span id="telemetry-ping-val">28ms</span></span>
-                <span class="telemetry-item" title="Tasa de Refresco"><span class="telemetry-icon">⚡</span> <span id="telemetry-fps-val">60 FPS</span></span>
+                <span class="telemetry-item" title="Fotogramas por segundo"><span class="telemetry-icon">⚡</span> <span id="telemetry-fps-val">60 FPS</span></span>
                 <span class="telemetry-item" title="Batería"><span class="telemetry-icon">🔋</span> <span id="telemetry-battery-val">100%</span></span>
             </div>
 
@@ -81,6 +83,7 @@
                     <span class="brand-user-name" id="brand-user-name" title="Haz clic para cambiar tu nombre de usuario" role="button" tabindex="0">HaDeS</span><span class="brand-user-suffix" id="brand-user-suffix">'</span> <span class="accent-text">SHORTCUTS</span>
                 </h1>
                 <p class="brand-greeting" id="greeting-text">Bienvenido al Centro de Mando</p>
+                <div id="spaces-switcher-bar" class="spaces-switcher-bar"></div>
             </div>
         </div>
 
@@ -152,18 +155,19 @@
                     </div>
                 </div>
 
-                <input type="text" id="main-search" placeholder="Buscar en la web o filtrar atajos..." autocomplete="off">
+                <input type="text" id="main-search" class="search-input" placeholder="Buscar en la web o filtrar atajos..." autocomplete="off">
                 <button class="clear-search-btn hidden" id="clear-search" aria-label="Limpiar búsqueda">✕</button>
-                <kbd class="search-key-badge">/</kbd>
+                <kbd class="search-key-badge">Ctrl K</kbd>
             </div>
 
             <!-- Quick Filter Tags / Pills -->
-            <div class="filter-pills-container" id="filter-pills">
+            <div class="filter-pills-container" id="category-filter-bar">
                 <button class="pill-btn active" data-filter="all"><span data-i18n="filters.all">Todos</span> <span class="pill-count">45</span></button>
                 <button class="pill-btn" data-filter="ia-creativa" data-i18n="filters.ia_creativa">IA & 3D</button>
                 <button class="pill-btn" data-filter="arte-media" data-i18n="filters.arte_media">Arte & Multimedia</button>
                 <button class="pill-btn" data-filter="productividad" data-i18n="filters.productividad">Google & Herramientas</button>
                 <button class="pill-btn" data-filter="social-compras" data-i18n="filters.social_compras">Social & Compras</button>
+                <button class="pill-btn save-view-trigger" id="save-search-view-btn" type="button" title="Guardar vista inteligente">🔖</button>
             </div>
             <div class="smart-suggestion-banner hidden" id="smart-suggestion-banner"></div>
                 <div class="search-calc-banner hidden" id="search-calc-banner"></div>
@@ -1078,6 +1082,16 @@
                             <span class="slider round"></span>
                         </label>
                     </div>
+                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                        <div>
+                            <span class="settings-toggle-title" data-i18n="settings_hub.appearance.solar_label">Iluminación Solar Circadiana</span>
+                            <p class="settings-hint" data-i18n="settings_hub.appearance.solar_desc" style="margin: 4px 0 0 0;">Adapta el resplandor según la hora del día.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="setting-solar-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
                 </div>
 
                 <!-- Custom Theme Studio Section -->
@@ -1223,6 +1237,23 @@
                             <p class="macro-item-desc">Abre Discord, X (Twitter) e Instagram en pestañas secundarias.</p>
                             <button class="settings-action-btn secondary macro-run-btn" data-macro="!social">▶ Probar</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-tab-pane" id="tab-pane-analytics">
+                <div class="settings-section">
+                    <h4 data-i18n="analytics.title">Métricas de Uso y Hábitos (100% Local)</h4>
+                    <p class="settings-hint" data-i18n="analytics.desc">Estadísticas privadas calculadas únicamente en tu navegador.</p>
+                    <div class="analytics-stats-row" style="display:flex; gap:16px; flex-wrap:wrap; margin: 12px 0;">
+                        <div><strong id="analytics-total-launches">0</strong><div class="settings-hint" data-i18n="analytics.total_launches">Lanzamientos</div></div>
+                        <div><strong id="analytics-streak-days">1</strong><div class="settings-hint" data-i18n="analytics.streak">Racha</div></div>
+                        <div><strong id="analytics-peak-hour">10:00</strong><div class="settings-hint" data-i18n="analytics.peak_hour">Hora pico</div></div>
+                    </div>
+                    <div id="analytics-chart-box"></div>
+                    <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+                        <button class="settings-action-btn secondary" id="export-analytics-btn" type="button" data-i18n="analytics.export_btn">Exportar JSON</button>
+                        <button class="settings-action-btn secondary" id="reset-analytics-btn" type="button" data-i18n="analytics.reset_btn">Borrar historial</button>
                     </div>
                 </div>
             </div>

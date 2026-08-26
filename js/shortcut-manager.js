@@ -186,14 +186,14 @@ export class ShortcutManager {
         }
 
         this.closeModal();
-        this.renderer.render();
+        if (this.renderer && this.renderer.render) this.renderer.render();
     }
 
     deleteShortcut(id) {
         const list = state.shortcuts.filter(s => s.id !== id);
         state.saveShortcuts(list);
         this.closeModal();
-        this.renderer.render();
+        if (this.renderer && this.renderer.render) this.renderer.render();
     }
 
     bindSmartFaviconAutoDerive() {

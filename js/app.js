@@ -112,7 +112,7 @@ export function initGlobalShortcuts() {
 
         if (e.key === '/' && !isEditing) {
             e.preventDefault();
-            const searchInput = document.getElementById('search-input');
+            const searchInput = document.getElementById('main-search') || document.getElementById('search-input');
             if (searchInput) {
                 searchInput.focus();
                 searchInput.select();
@@ -121,25 +121,37 @@ export function initGlobalShortcuts() {
         }
 
         if (e.key === 'Escape') {
-            const modals = document.querySelectorAll('.modal-overlay:not(.hidden)');
+            const modals = document.querySelectorAll('.modal-overlay:not(.hidden), .settings-drawer-backdrop:not(.hidden), [role="dialog"]:not(.hidden)');
+            const drawer = document.getElementById('settings-drawer');
+            if (drawer && !drawer.classList.contains('hidden')) {
+                drawer.classList.add('hidden');
+                return;
+            }
             if (modals.length > 0) {
                 modals.forEach(m => m.classList.add('hidden'));
                 return;
             }
-            const drawer = document.getElementById('settings-drawer');
-            if (drawer && drawer.classList.contains('open')) {
-                drawer.classList.remove('open');
-                const overlay = document.getElementById('settings-overlay');
-                if (overlay) overlay.classList.add('hidden');
-                return;
-            }
-            const searchInput = document.getElementById('search-input');
+            const searchInput = document.getElementById('main-search') || document.getElementById('search-input');
             if (searchInput && document.activeElement === searchInput) {
                 searchInput.value = '';
                 searchInput.blur();
-                state.filterQuery = '';
                 state.emit('filter:changed', '');
             }
+        }
+
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+            e.preventDefault();
+            const searchInput = document.getElementById('main-search') || document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.focus();
+                searchInput.select();
+            }
+            return;
+        }
+
+        if ((e.ctrlKey || e.metaKey) && e.key === ',') {
+            e.preventDefault();
+            document.getElementById('settings-btn')?.click();
         }
     });
 }
@@ -156,13 +168,13 @@ export function initApp() {
     const layoutManager = new LayoutManager();
     const search = new SearchEngineManager();
     const widgets = new WidgetsManager();
-    const shortcutManager = new ShortcutManager();
-    const backupManager = new BackupManager();
+    const shortcutManager = new ShortcutManager(renderer);
+    const backupManager = new BackupManager(renderer);
     const themeStudio = new ThemeStudio();
-    const importer = new BookmarksImporter();
+    const importer = new BookmarksImporter(renderer);
     const postits = new PostItManager();
     const dragDropManager = new DragDropManager();
-    const cryptoSync = new CryptoSyncEngine();
+    const cryptoSync = new CryptoSyncEngine(renderer);
     const settingsHub = new SettingsHub(renderer, shortcutManager, backupManager, importer, themeStudio);
 
     initUserNameSystem(weather, settingsHub);
@@ -189,11 +201,22 @@ export function initApp() {
     techRadar.init();
     neuralSearch.init();
     spacesManager.init();
-        macroEngine.init();
-        aiAgent.init();
+    macroEngine.init();
+    aiAgent.init();
     calendarAgenda.init();
     tagsFilter.init();
     focusMode.init();
+
+    state.on('shortcuts:changed', () => {
+        renderer.render();
+        layoutManager.applyPositions();
+    });
+
+    const suggestionBanner = document.getElementById('smart-suggestion-banner');
+    if (suggestionBanner) personalAnalytics.renderSmartChip(suggestionBanner);
+
+    const glowOn = localStorage.getItem('ambient_glow_enabled') !== 'false';
+    document.querySelectorAll('.ambient-glow').forEach((el) => el.classList.toggle('hidden', !glowOn));
 
     window.themeStudio = themeStudio;
     window.ambientAudio = ambientAudio;
@@ -216,10 +239,17 @@ export function initApp() {
     miniHud.init();
 
     loadLocaleAsync(state.language).then(() => {
+        document.documentElement.lang = state.language || 'es';
         updateDocumentLocalization();
+        search.updatePlaceholders();
         renderer.render();
         layoutManager.applyPositions();
+        if (suggestionBanner) personalAnalytics.renderSmartChip(suggestionBanner);
     });
+
+    if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
 
     const splash = document.getElementById('splash-screen');
     if (splash) {

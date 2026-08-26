@@ -102,7 +102,11 @@ export class AppState {
     setItem(k, v) {
         try {
             if (typeof localStorage !== 'undefined') localStorage.setItem(k, v);
-        } catch (e) {}
+            return true;
+        } catch (e) {
+            showToast('No se pudo guardar (almacenamiento lleno o bloqueado).', 'error');
+            return false;
+        }
     }
 
     removeItem(k) {
@@ -192,6 +196,7 @@ export class AppState {
         if (!['es', 'en', 'fr', 'de'].includes(langCode)) langCode = 'es';
         this.language = langCode;
         this.setItem('app_language', langCode);
+        if (typeof document !== 'undefined') document.documentElement.lang = langCode;
         this.emit('language:changed', langCode);
     }
 
@@ -201,9 +206,21 @@ export class AppState {
     }
 
     saveShortcuts(list) {
-        this.shortcuts = [...list];
+        const next = Array.isArray(list) ? list : this.shortcuts;
+        this.shortcuts = [...next];
         this.setItem('custom_shortcuts_v2', JSON.stringify(this.shortcuts));
         this.emit('shortcuts:changed', this.shortcuts);
+    }
+
+    saveCategories(catsOrIds) {
+        if (!Array.isArray(catsOrIds) || catsOrIds.length === 0) return;
+        if (typeof catsOrIds[0] === 'string') {
+            this.saveCategoriesOrder(catsOrIds);
+            return;
+        }
+        this.categories = catsOrIds.map((c) => ({ ...c }));
+        this.setItem('category_order_v2', JSON.stringify(this.categories.map((c) => c.id)));
+        this.emit('categories:changed', this.categories);
     }
 
     saveCategoriesOrder(catIds) {
@@ -229,6 +246,15 @@ export class AppState {
         this.listeners.get(event).push(callback);
     }
 
+    off(event, callback) {
+        if (!this.listeners.has(event)) return;
+        if (!callback) {
+            this.listeners.delete(event);
+            return;
+        }
+        this.listeners.set(event, this.listeners.get(event).filter((cb) => cb !== callback));
+    }
+
     emit(event, data) {
         if (this.listeners.has(event)) {
             this.listeners.get(event).forEach(cb => cb(data));
@@ -239,5 +265,105 @@ export class AppState {
 export const state = new AppState();
 
 export const escapeHtml = (str) => {
-    return String(str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return String(str || '')
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
 };
+
+export const PLACEHOLDER_ICON = "data:image/svg+xml;utf8," + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#111827"/><path d="M32 12l8 18h-6l4 22-14-20h8z" fill="#00f2fe"/></svg>'
+);
+
+export function normalizeTags(tags) {
+    const raw = Array.isArray(tags)
+        ? tags.map((t) => String(t).trim().toLowerCase().replace(/^#/, '')).filter(Boolean)
+        : (typeof tags === 'string' ? tags.split(/[,#]+/).map((t) => t.trim().toLowerCase()).filter(Boolean) : []);
+    const extra = [];
+    raw.forEach((t) => {
+        if (t === 'ia' && !raw.includes('ai')) extra.push('ai');
+        if (t === 'ai' && !raw.includes('ia')) extra.push('ia');
+    });
+    return [...raw, ...extra];
+}
+
+export function safeHttpUrl(url) {
+    try {
+        const u = new URL(String(url || ''), typeof location !== 'undefined' ? location.href : 'https://local.invalid');
+        if (u.protocol === 'http:' || u.protocol === 'https:') return u.href;
+    } catch (e) {}
+    return '';
+}
+
+export function faviconForUrl(url) {
+    const href = safeHttpUrl(url);
+    if (!href) return PLACEHOLDER_ICON;
+    try {
+        return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(new URL(href).hostname)}&sz=128`;
+    } catch (e) {
+        return PLACEHOLDER_ICON;
+    }
+}
+
+export function bindIconFallback(img, shortcutOrUrl) {
+    if (!img) return;
+    const url = typeof shortcutOrUrl === 'string' ? shortcutOrUrl : (shortcutOrUrl && shortcutOrUrl.url);
+    const goPlaceholder = () => { img.src = PLACEHOLDER_ICON; };
+    const goFavicon = () => {
+        const next = faviconForUrl(url);
+        if (!next || img.src === next) {
+            goPlaceholder();
+            return;
+        }
+        img.addEventListener('error', goPlaceholder, { once: true });
+        img.src = next;
+    };
+    if (img.complete && img.naturalWidth === 0 && img.src && !img.src.startsWith('data:')) {
+        goFavicon();
+        return;
+    }
+    img.addEventListener('error', goFavicon, { once: true });
+}
+
+export function showToast(msg, type = 'info') {
+    if (typeof document === 'undefined') return;
+    let el = document.getElementById('hades-toast');
+    if (!el) {
+        el = document.createElement('div');
+        el.id = 'hades-toast';
+        document.body.appendChild(el);
+    }
+    el.textContent = String(msg || '');
+    el.className = `hades-toast ${type} visible`;
+    clearTimeout(el._hideTimer);
+    el._hideTimer = setTimeout(() => el.classList.remove('visible'), 3200);
+}
+
+export function persistJson(key, value) {
+    return state.setItem(key, JSON.stringify(value));
+}
+
+export function readJsonStorage(key, fallback) {
+    try {
+        const raw = typeof localStorage !== 'undefined' ? localStorage.getItem(key) : null;
+        if (!raw) return fallback;
+        return JSON.parse(raw);
+    } catch (e) {
+        return fallback;
+    }
+}
+
+export async function fetchTextMaybeProxy(url, signal) {
+    try {
+        const res = await fetch(url, { signal });
+        if (res.ok) return await res.text();
+    } catch (e) {
+        if (e && e.name === 'AbortError') throw e;
+    }
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+    const resProxy = await fetch(proxyUrl, { signal });
+    if (!resProxy.ok) throw new Error('fetch_failed');
+    return await resProxy.text();
+}

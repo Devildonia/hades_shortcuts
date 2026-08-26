@@ -1,10 +1,9 @@
 import { tagsFilter } from './tags-filter.js';
 import { personalAnalytics } from './personal-analytics.js';
-// js/render.js - Dynamic Bento Grid & Shortcut Card Renderer
-
-import { state, escapeHtml } from './state.js';
+import { state, escapeHtml, normalizeTags, safeHttpUrl, bindIconFallback } from './state.js';
 import { i18nDictionaries } from './i18n.js';
 import { soundFx } from './audio.js';
+import { focusMode } from './focus-mode.js';
 
 export class DashboardRenderer {
     constructor() {
@@ -57,44 +56,52 @@ export class DashboardRenderer {
 
             shortcutsInCat.forEach(shortcut => {
                 const card = document.createElement('a');
-                card.href = shortcut.url;
+                const href = safeHttpUrl(shortcut.url) || '#';
+                card.href = href;
                 card.target = '_blank';
                 card.rel = 'noopener noreferrer';
                 card.className = 'enlace-icono';
-                card.addEventListener('click', () => {
+                card.addEventListener('click', (e) => {
+                    if (focusMode && focusMode.isActive && focusMode.isUrlBlocked(href)) {
+                        e.preventDefault();
+                        focusMode.showZenShield(href);
+                        return;
+                    }
                     try {
                         const stats = JSON.parse(localStorage.getItem('shortcut_usage_stats_v1') || '{}');
                         stats[shortcut.id] = (stats[shortcut.id] || 0) + 1;
                         localStorage.setItem('shortcut_usage_stats_v1', JSON.stringify(stats));
                         personalAnalytics.logLaunch(shortcut.id, shortcut.title);
-                    } catch (e) {}
+                    } catch (err) {}
                 });
                 card.setAttribute('data-id', shortcut.id);
                 card.setAttribute('data-title', shortcut.title);
                 card.setAttribute('data-app-key', shortcut.id);
-                card.setAttribute('data-tags', shortcut.tags || '');
+                const tagList = normalizeTags(shortcut.tags);
+                card.setAttribute('data-tags', tagList.join(', '));
 
                 const desc = t.shortcuts[shortcut.id] || shortcut.desc || '';
                 card.setAttribute('data-desc', desc);
 
-                // Edit / Delete buttons in edit mode
                 const editButtons = state.editMode ? `
                     <div class="card-edit-actions">
-                        <button class="card-action-btn edit-btn" data-action="edit" data-id="${shortcut.id}" title="Editar">✏️</button>
-                        <button class="card-action-btn delete-btn" data-action="delete" data-id="${shortcut.id}" title="Eliminar">🗑️</button>
+                        <button class="card-action-btn edit-btn" data-action="edit" data-id="${escapeHtml(shortcut.id)}" title="Editar">✏️</button>
+                        <button class="card-action-btn delete-btn" data-action="delete" data-id="${escapeHtml(shortcut.id)}" title="Eliminar">🗑️</button>
                     </div>
                 ` : '';
 
-                        const tagsHtml = (Array.isArray(shortcut.tags) && shortcut.tags.length > 0)
-            ? `<div class="shortcut-tags-row">${shortcut.tags.slice(0, 3).map(t => `<span class="shortcut-tag-chip" style="--tag-color: ${tagsFilter.getTagColor(t)}">#${t}</span>`).join('')}</div>`
-            : '';
-        card.innerHTML = `
+                const tagsHtml = tagList.length > 0
+                    ? `<div class="shortcut-tags-row">${tagList.slice(0, 3).map(tag => `<span class="shortcut-tag-chip" style="--tag-color: ${escapeHtml(tagsFilter.getTagColor(tag))}">#${escapeHtml(tag)}</span>`).join('')}</div>`
+                    : '';
+                card.innerHTML = `
                     ${editButtons}
                     <div class="icon-img-wrapper">
-                        <img src="${shortcut.icon}" alt="${escapeHtml(shortcut.title)}" width="60" height="60" loading="lazy">
+                        <img src="${escapeHtml(shortcut.icon || '')}" alt="${escapeHtml(shortcut.title)}" width="60" height="60" loading="lazy">
                     </div>
                     <span class="icon-title">${escapeHtml(shortcut.title)}</span>
+                    ${tagsHtml}
                 `;
+                bindIconFallback(card.querySelector('img'), shortcut);
 
                 this.bindCardInteractions(card, shortcut);
                 grid.appendChild(card);
@@ -181,20 +188,18 @@ export class DashboardRenderer {
             this.smartTooltip.classList.remove('visible');
             this.smartTooltip.classList.add('hidden');
             this.smartTooltip.setAttribute('aria-hidden', 'true');
-            this.smartTooltip.setAttribute('aria-hidden', 'true');
         }
     }
 
     initSpotlight() {
-        const cards = document.querySelectorAll('.enlace-icono, .categoria, .nav-widget, .search-container');
-        cards.forEach(el => {
-            el.addEventListener('mousemove', (e) => {
-                const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                el.style.setProperty('--mouse-x', `${x}px`);
-                el.style.setProperty('--mouse-y', `${y}px`);
-            });
+        if (this._spotlightBound || !this.gridContainer) return;
+        this._spotlightBound = true;
+        this.gridContainer.addEventListener('mousemove', (e) => {
+            const el = e.target.closest('.enlace-icono, .categoria');
+            if (!el) return;
+            const rect = el.getBoundingClientRect();
+            el.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+            el.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
         });
     }
 }

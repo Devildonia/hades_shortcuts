@@ -13,7 +13,31 @@ export class ExtensionAPIEngine {
         if (!platform.isExtension) return;
         this.bindBackgroundMessages();
         this.initSyncObserver();
+        this.drainPendingShortcuts();
+        this.ensureContextMenuPermission();
         this.isReady = true;
+    }
+
+    drainPendingShortcuts() {
+        if (!chrome.storage || !chrome.storage.local) return;
+        chrome.storage.local.get({ pending_shortcuts: [] }, (data) => {
+            const pending = data.pending_shortcuts || [];
+            if (!pending.length) return;
+            pending.forEach((item) => {
+                if (item && item.url && !state.shortcuts.some((s) => s.url === item.url)) {
+                    state.shortcuts.push(item);
+                }
+            });
+            state.saveShortcuts(state.shortcuts);
+            chrome.storage.local.set({ pending_shortcuts: [] });
+        });
+    }
+
+    async ensureContextMenuPermission() {
+        const granted = await platform.requestPermission('contextMenus');
+        if (granted && chrome.runtime && chrome.runtime.sendMessage) {
+            chrome.runtime.sendMessage({ action: 'ensure_context_menu' }).catch(() => {});
+        }
     }
 
     async importTopSitesToShortcuts() {
@@ -33,7 +57,7 @@ export class ExtensionAPIEngine {
                     id: 'ext_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
                     title: site.title || domain,
                     url: site.url,
-                    category: 'productividad',
+                category: 'cat_tools',
                     icon: `https://www.google.com/s2/favicons?domain=${encodeURIComponent(site.url)}&sz=64`,
                     desc: `Importado de tus sitios frecuentes de Chrome`,
                     tags: 'extension topsites chrome'
@@ -43,8 +67,7 @@ export class ExtensionAPIEngine {
         });
 
         if (addedCount > 0) {
-            state.saveShortcuts();
-            state.emit('shortcuts:changed');
+            state.saveShortcuts(state.shortcuts);
         }
         return addedCount;
     }
@@ -54,8 +77,7 @@ export class ExtensionAPIEngine {
         chrome.runtime.onMessage.addListener((request) => {
             if (request.action === 'add_shortcut' && request.data) {
                 state.shortcuts.push(request.data);
-                state.saveShortcuts();
-                state.emit('shortcuts:changed');
+                state.saveShortcuts(state.shortcuts);
                 soundFx.play('chime');
             }
         });

@@ -1,8 +1,9 @@
 // js/macros.js - Contextual Multi-Action Macro & Routine Engine (Visual No-Code Studio)
 
-import { state, escapeHtml } from './state.js';
+import { state, escapeHtml, persistJson } from './state.js';
 import { soundFx } from './audio.js';
 import { ambientAudio } from './ambient-audio.js';
+import { focusMode } from './focus-mode.js';
 
 export const DEFAULT_MACROS = {
     '!work': {
@@ -12,6 +13,14 @@ export const DEFAULT_MACROS = {
         ambient: 'rain',
         pomodoro: 'start',
         icon: '💻'
+    },
+    '!focus': {
+        name: 'Modo Focus',
+        desc: 'Alias de !work: Deep Focus + herramientas de desarrollo',
+        shortcuts: ['github', 'claude', 'chatgpt'],
+        ambient: 'rain',
+        pomodoro: 'start',
+        icon: '🎯'
     },
     '!chill': {
         name: 'Modo Relax & Audio',
@@ -57,11 +66,9 @@ export class MacroEngine {
     }
 
     saveCustomMacros(customObj) {
-        try {
-            localStorage.setItem(this.storageKey, JSON.stringify(customObj));
-            this.customMacros = customObj;
-            this.macros = { ...DEFAULT_MACROS, ...customObj };
-        } catch (e) {}
+        persistJson(this.storageKey, customObj);
+        this.customMacros = customObj;
+        this.macros = { ...DEFAULT_MACROS, ...customObj };
     }
 
     getMacro(trigger) {
@@ -88,7 +95,10 @@ export class MacroEngine {
         if (Array.isArray(macro.shortcuts)) {
             macro.shortcuts.forEach((key) => {
                 const s = (state.shortcuts || []).find(item => (item.id || item.title.toLowerCase().replace(/\s+/g, '')) === key.toLowerCase() || item.title.toLowerCase() === key.toLowerCase());
-                if (s && s.url) window.open(s.url, '_blank', 'noopener,noreferrer');
+                if (s && s.url) {
+                    if (focusMode && focusMode.openUrl) focusMode.openUrl(s.url);
+                    else window.open(s.url, '_blank', 'noopener,noreferrer');
+                }
             });
         }
         return true;
@@ -112,9 +122,9 @@ export class MacroEngine {
                 </div>
                 <p class="macro-item-desc">${escapeHtml(macro.desc || (macro.shortcuts || []).join(', '))}</p>
                 <div class="macro-card-actions">
-                    <button class="control-btn macro-run-btn" data-trigger="${trigger}">▶ Ejecutar</button>
-                    <button class="control-btn macro-edit-btn" data-trigger="${trigger}">✏️ Editar</button>
-                    ${isCustom ? `<button class="control-btn macro-del-btn" data-trigger="${trigger}">🗑️ Eliminar</button>` : ''}
+                    <button class="control-btn macro-run-btn" data-trigger="${escapeHtml(trigger)}">▶ Ejecutar</button>
+                    <button class="control-btn macro-edit-btn" data-trigger="${escapeHtml(trigger)}">✏️ Editar</button>
+                    ${isCustom ? `<button class="control-btn macro-del-btn" data-trigger="${escapeHtml(trigger)}">🗑️ Eliminar</button>` : ''}
                 </div>
             `;
 
@@ -212,11 +222,13 @@ export class MacroEngine {
         this.renderMacroList();
         const createBtn = document.getElementById('create-macro-btn');
         const saveBtn = document.getElementById('macro-form-save-btn');
-        const cancelBtn = document.getElementById('close-macro-modal');
+        const cancelBtn = document.getElementById('cancel-macro-modal') || document.getElementById('close-macro-modal');
+        const closeX = document.getElementById('close-macro-modal');
 
         if (createBtn) createBtn.addEventListener('click', () => this.openEditor(null));
         if (saveBtn) saveBtn.addEventListener('click', () => this.saveFromForm());
         if (cancelBtn) cancelBtn.addEventListener('click', () => this.closeEditor());
+        if (closeX && closeX !== cancelBtn) closeX.addEventListener('click', () => this.closeEditor());
     }
 }
 

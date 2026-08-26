@@ -1,6 +1,6 @@
 // js/calendar-agenda.js - Bento Calendar & Agenda Engine (RFC 5545 iCal Parser & Manual Event Creator)
 
-import { state, escapeHtml } from './state.js';
+import { state, escapeHtml, fetchTextMaybeProxy, safeHttpUrl, persistJson } from './state.js';
 import { soundFx } from './audio.js';
 
 export class CalendarAgendaEngine {
@@ -25,7 +25,7 @@ export class CalendarAgendaEngine {
     }
 
     saveConfig() {
-        try { localStorage.setItem(this.storageKey, JSON.stringify(this.config)); } catch (e) {}
+        persistJson(this.storageKey, this.config);
     }
 
     loadCachedEvents() {
@@ -36,21 +36,22 @@ export class CalendarAgendaEngine {
         const today = new Date();
         const y = today.getFullYear(), m = today.getMonth(), d = today.getDate();
         return [
-            { id: 'ev_1', title: 'Daily Standup & Sync', start: new Date(y, m, d, 9, 30).toISOString(), end: new Date(y, m, d, 10, 0).toISOString(), link: 'https://meet.google.com/abc-defg-hij', category: 'work' },
-            { id: 'ev_2', title: 'Deep Work & Code Review', start: new Date(y, m, d, 11, 0).toISOString(), end: new Date(y, m, d, 13, 0).toISOString(), category: 'focus' },
-            { id: 'ev_3', title: 'Diseño 3D & AI Pipelines', start: new Date(y, m, d + 1, 16, 0).toISOString(), end: new Date(y, m, d + 1, 17, 30).toISOString(), link: 'https://zoom.us/j/123456789', category: 'creative' }
+            { id: 'ev_1', title: 'Daily Standup & Sync', start: new Date(y, m, d, 9, 30).toISOString(), end: new Date(y, m, d, 10, 0).toISOString(), link: 'https://meet.google.com/abc-defg-hij', category: 'work', source: 'demo' },
+            { id: 'ev_2', title: 'Deep Work & Code Review', start: new Date(y, m, d, 11, 0).toISOString(), end: new Date(y, m, d, 13, 0).toISOString(), category: 'focus', source: 'demo' },
+            { id: 'ev_3', title: 'Diseño 3D & AI Pipelines', start: new Date(y, m, d + 1, 16, 0).toISOString(), end: new Date(y, m, d + 1, 17, 30).toISOString(), link: 'https://zoom.us/j/123456789', category: 'creative', source: 'demo' }
         ];
     }
 
     saveEvents(evList) {
         this.events = evList;
-        try { localStorage.setItem(this.cacheKey, JSON.stringify(evList)); } catch (e) {}
+        persistJson(this.cacheKey, evList);
         this.render();
     }
 
     parseICS(icsText) {
         const events = [];
-        const lines = icsText.split(/\r?\n/);
+        const unfolded = String(icsText || '').replace(/\r\n/g, '\n').replace(/\n[ \t]/g, '');
+        const lines = unfolded.split('\n');
         let inEvent = false, current = {};
 
         lines.forEach(line => {
@@ -58,12 +59,12 @@ export class CalendarAgendaEngine {
             else if (line.startsWith('END:VEVENT')) {
                 if (current.title && current.start) events.push(current);
                 inEvent = false;
-            } else if (inEvent) {
+            }             else if (inEvent) {
                 if (line.startsWith('SUMMARY:')) current.title = line.slice(8).trim();
                 if (line.startsWith('LOCATION:')) current.location = line.slice(9).trim();
                 if (line.startsWith('DESCRIPTION:')) current.desc = line.slice(12).trim();
-                if (line.startsWith('DTSTART')) current.start = this.parseICSDate(line.split(':')[1] || '');
-                if (line.startsWith('DTEND')) current.end = this.parseICSDate(line.split(':')[1] || '');
+                if (line.startsWith('DTSTART')) current.start = this.parseICSDate((line.split(':').pop() || '').trim());
+                if (line.startsWith('DTEND')) current.end = this.parseICSDate((line.split(':').pop() || '').trim());
             }
         });
 
@@ -91,18 +92,17 @@ export class CalendarAgendaEngine {
         if (!this.config.feedUrl) { this.openConfigModal(); return; }
         soundFx.play('click');
         try {
-            const res = await fetch(this.config.feedUrl);
-            if (!res.ok) throw new Error('Error feed');
-            const text = await res.text();
-            const parsed = this.parseICS(text);
+            const text = await fetchTextMaybeProxy(this.config.feedUrl);
+            const parsed = this.parseICS(text).map((ev, i) => ({ ...ev, id: ev.id || ('ics_' + i + '_' + (ev.start || '')), source: 'ics' }));
             if (parsed.length > 0) {
                 this.config.lastSync = Date.now();
                 this.saveConfig();
-                this.saveEvents(parsed);
+                const manuals = (this.events || []).filter((e) => e.source === 'manual');
+                this.saveEvents([...manuals, ...parsed]);
                 soundFx.play('chime');
             }
         } catch (e) {
-            alert('No se pudo sincronizar el feed iCal. Verifica la URL.');
+            alert('No se pudo sincronizar el feed iCal. Verifica la URL o CORS.');
         }
     }
 
@@ -142,7 +142,7 @@ export class CalendarAgendaEngine {
         const start = new Date(y, m - 1, d, hr, min).toISOString();
         const end = new Date(y, m - 1, d, hr + 1, min).toISOString();
 
-        const newEv = { id: 'ev_' + Date.now(), title, start, end, link, category };
+        const newEv = { id: 'ev_' + Date.now(), title, start, end, link: safeHttpUrl(link), category, source: 'manual' };
         const updated = [...this.events, newEv];
         this.saveEvents(updated);
         soundFx.play('chime');
@@ -175,7 +175,7 @@ export class CalendarAgendaEngine {
                     ${isImminent ? `<span class="event-alert-tag">⏰ En ${diffMin}m</span>` : ''}
                 </div>
                 <div style="display: flex; gap: 4px; align-items: center;">
-                    ${ev.link ? `<a href="${escapeHtml(ev.link)}" target="_blank" rel="noopener noreferrer" class="meet-link-btn" title="Entrar a reunión">🚀</a>` : ''}
+                    ${ev.link && safeHttpUrl(ev.link) ? `<a href="${escapeHtml(safeHttpUrl(ev.link))}" target="_blank" rel="noopener noreferrer" class="meet-link-btn" title="Entrar a reunión">🚀</a>` : ''}
                     <button class="event-del-btn" data-ev-id="${ev.id}" title="Eliminar evento" style="background:none; border:none; color:rgba(255,255,255,0.4); cursor:pointer; font-size:0.75rem; padding:2px 4px;">✕</button>
                 </div>
             `;

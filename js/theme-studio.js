@@ -1,6 +1,7 @@
 // js/theme-studio.js - Custom Dynamic Color Theme & Dynamic Background Studio
 
 import { soundFx } from './audio.js';
+import { persistJson } from './state.js';
 
 export const UNSPLASH_PRESETS = {
     cyberpunk: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80',
@@ -43,11 +44,13 @@ export class ThemeStudio {
     }
 
     saveBgConfig() {
-        try { localStorage.setItem('hades_bg_config_v1', JSON.stringify(this.bgConfig)); } catch (e) {}
+        persistJson('hades_bg_config_v1', this.bgConfig);
         this.applyBackground();
     }
 
     init() {
+        if (this._inited) return;
+        this._inited = true;
         this.primaryInput = document.getElementById('custom-theme-primary');
         this.secondaryInput = document.getElementById('custom-theme-secondary');
         this.resetBtn = document.getElementById('reset-theme-colors-btn');

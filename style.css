@@ -5994,3 +5994,48 @@ body.focus-mode-active .category-filter-bar {
     transform: scale(1.05);
     box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
 }
+
+.hades-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    max-width: 360px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(8, 12, 20, 0.92);
+    color: #e8eef7;
+    font-size: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.hades-toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hades-toast.error {
+    border-color: rgba(255, 107, 107, 0.55);
+}
+
+.hades-toast.success {
+    border-color: rgba(16, 185, 129, 0.55);
+}
+
+.shortcut-tags-row {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 4px;
+}
+
+.shortcut-tag-chip {
+    font-size: 0.62rem;
+    color: var(--tag-color, #94a3b8);
+    opacity: 0.85;
+}

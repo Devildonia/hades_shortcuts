@@ -1,6 +1,6 @@
 // js/radial-hud.js - Radial HUD Action Wheel (360° Gestural Quick Access)
 
-import { state } from './state.js';
+import { state, escapeHtml, bindIconFallback, faviconForUrl } from './state.js';
 import { soundFx } from './audio.js';
 import { ambientAudio } from './ambient-audio.js';
 import { i18nDictionaries } from './i18n.js';
@@ -107,8 +107,17 @@ export class RadialHUDEngine {
             subBtn.title = sc.title || 'Favorito';
             subBtn.style.setProperty('--sub-x', `${pos.x}px`);
             subBtn.style.setProperty('--sub-y', `${pos.y}px`);
-            const iconSrc = sc.icon || `https://www.google.com/s2/favicons?domain=${encodeURIComponent(sc.url)}&sz=64`;
-            subBtn.innerHTML = `<img src="${iconSrc}" class="radial-sub-icon-img" alt="${sc.title}" onerror="this.src='iconos/google.webp'"><span class="radial-sub-fav-tooltip">${sc.title}</span>`;
+            const iconSrc = sc.icon && (sc.icon.startsWith('http') || sc.icon.startsWith('data:')) ? sc.icon : faviconForUrl(sc.url);
+            const img = document.createElement('img');
+            img.className = 'radial-sub-icon-img';
+            img.alt = sc.title || '';
+            img.src = sc.icon || iconSrc;
+            bindIconFallback(img, sc);
+            const tip = document.createElement('span');
+            tip.className = 'radial-sub-fav-tooltip';
+            tip.textContent = sc.title || '';
+            subBtn.appendChild(img);
+            subBtn.appendChild(tip);
             subBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 soundFx.play('click');

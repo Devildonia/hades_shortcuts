@@ -22,6 +22,20 @@
     "topSites",
     "contextMenus"
   ],
+  "host_permissions": [
+    "https://api.github.com/*",
+    "https://api.open-meteo.com/*",
+    "https://geocoding-api.open-meteo.com/*",
+    "https://images.unsplash.com/*",
+    "https://hn.algolia.com/*",
+    "https://api.allorigins.win/*",
+    "https://www.google.com/*",
+    "https://www.cloudflare.com/*",
+    "https://1.1.1.1/*"
+  ],
+  "optional_host_permissions": [
+    "*://*/*"
+  ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
   }

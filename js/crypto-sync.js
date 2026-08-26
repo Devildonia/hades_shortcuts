@@ -1,6 +1,6 @@
 // js/crypto-sync.js - Zero-Knowledge E2EE Multi-Device Cloud Sync (AES-256-GCM + GitHub Gist)
 
-import { state } from './state.js';
+import { state, showToast, readJsonStorage } from './state.js';
 import { soundFx } from './audio.js';
 
 export class CryptoSyncEngine {
@@ -98,13 +98,13 @@ export class CryptoSyncEngine {
 
     getPackagePayload() {
         return {
-            version: '5.0.0',
+            version: '6.0.0',
             timestamp: Date.now(),
             shortcuts: state.shortcuts,
             categories: state.categories,
-            canvasPositions: JSON.parse(localStorage.getItem('canvas_positions_v1') || '{}'),
-            postits: JSON.parse(localStorage.getItem('glass_postits_v1') || '[]'),
-            customMacros: JSON.parse(localStorage.getItem('custom_macros_v1') || '{}'),
+            canvasPositions: readJsonStorage('canvas_positions_v1', {}),
+            postits: readJsonStorage('glass_postits_v1', []),
+            customMacros: readJsonStorage('custom_macros_v1', {}),
             userName: state.userName,
             theme: state.theme,
             soundEnabled: state.soundEnabled,
@@ -121,6 +121,7 @@ export class CryptoSyncEngine {
         if (data.customMacros) localStorage.setItem('custom_macros_v1', JSON.stringify(data.customMacros));
         if (data.userName) state.setUserName(data.userName);
         if (data.theme) state.setTheme(data.theme);
+        if (typeof data.soundEnabled === 'boolean') state.setSoundEnabled(data.soundEnabled);
         if (data.language) state.setLanguage(data.language);
 
         this.lastSync = Date.now().toString();
@@ -217,7 +218,8 @@ export class CryptoSyncEngine {
             this.applyPackagePayload(parsed);
             soundFx.play('chime');
         } catch (err) {
-            this.updateStatus(`Error al restaurar: Contraseña incorrecta o datos corruptos.`, true);
+            this.updateStatus(`Error al restaurar: ${err && err.message ? err.message : 'contraseña o datos no válidos'}`, true);
+            showToast('No se pudo restaurar el Gist.', 'error');
         }
     }
 

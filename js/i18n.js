@@ -28,6 +28,7 @@ export const getTranslation = (path, lang = state.language) => {
 
 export const updateDocumentLocalization = () => {
     const lang = state.language;
+    if (typeof document !== 'undefined') document.documentElement.lang = lang;
 
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -55,14 +56,26 @@ export const updateDocumentLocalization = () => {
 };
 
 export async function loadLocaleAsync(lang) {
-    if (i18nDictionaries[lang]) return i18nDictionaries[lang];
     try {
         const res = await fetch(`./locales/${lang}.json`);
         if (res.ok) {
             const data = await res.json();
-            i18nDictionaries[lang] = data;
-            return data;
+            i18nDictionaries[lang] = deepMerge(i18nDictionaries[lang] || {}, data);
+            return i18nDictionaries[lang];
         }
     } catch (e) {}
-    return i18nDictionaries.es;
+    return i18nDictionaries[lang] || i18nDictionaries.es;
+}
+
+function deepMerge(base, overlay) {
+    if (!overlay || typeof overlay !== 'object' || Array.isArray(overlay)) return overlay;
+    const out = { ...(base || {}) };
+    Object.keys(overlay).forEach((k) => {
+        if (overlay[k] && typeof overlay[k] === 'object' && !Array.isArray(overlay[k])) {
+            out[k] = deepMerge(out[k] || {}, overlay[k]);
+        } else {
+            out[k] = overlay[k];
+        }
+    });
+    return out;
 }

@@ -1,7 +1,7 @@
 import { i18nDictionaries } from './i18n.js';
 // js/focus-mode.js - Deep Work Focus Mode & Zen Distraction Shield
 
-import { state } from './state.js';
+import { state, persistJson } from './state.js';
 import { soundFx } from './audio.js';
 
 export class FocusModeEngine {
@@ -29,7 +29,7 @@ export class FocusModeEngine {
     }
 
     saveConfig() {
-        try { localStorage.setItem(this.storageKey, JSON.stringify(this.config)); } catch (e) {}
+        persistJson(this.storageKey, this.config);
     }
 
     activateFocus(durationMinutes = 25) {
@@ -69,13 +69,21 @@ export class FocusModeEngine {
         }
 
         state.emit('focus:deactivated', { completed });
-        state.on('language:changed', () => this.updateUI());
         this.updateUI();
     }
 
     toggleFocus() {
         if (this.isActive) this.deactivateFocus();
         else this.activateFocus();
+    }
+
+    openUrl(url, target = '_blank') {
+        if (this.isUrlBlocked(url)) {
+            this.showZenShield(url);
+            return false;
+        }
+        window.open(url, target, 'noopener,noreferrer');
+        return true;
     }
 
     isUrlBlocked(url) {
@@ -156,6 +164,9 @@ export class FocusModeEngine {
                 this.toggleFocus();
             }
         });
+
+        state.on('language:changed', () => this.updateUI());
+        this.updateUI();
     }
 }
 

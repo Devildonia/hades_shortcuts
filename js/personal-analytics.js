@@ -1,6 +1,6 @@
 // js/personal-analytics.js - 100% Local Personal Analytics & Predictive Context Engine
 
-import { state } from './state.js';
+import { state, escapeHtml, persistJson } from './state.js';
 import { soundFx } from './audio.js';
 import { i18nDictionaries } from './i18n.js';
 
@@ -26,9 +26,7 @@ export class PersonalAnalyticsEngine {
     }
 
     saveData() {
-        try {
-            localStorage.setItem(this.storageKey, JSON.stringify(this.data));
-        } catch (e) {}
+        persistJson(this.storageKey, this.data);
     }
 
     logLaunch(shortcutId, shortcutTitle) {
@@ -102,7 +100,7 @@ export class PersonalAnalyticsEngine {
 
         const t = (i18nDictionaries[state.language] || i18nDictionaries.es).analytics || {};
         const hourFmt = `${suggestion.hour.toString().padStart(2, '0')}:00`;
-        const textPrompt = (t.suggestion_text || 'Sueles abrir {title} a las {hour}').replace('{title}', `<strong>${suggestion.shortcut.title}</strong>`).replace('{hour}', hourFmt);
+        const textPrompt = (t.suggestion_text || 'Sueles abrir {title} a las {hour}').replace('{title}', `<strong>${escapeHtml(suggestion.shortcut.title)}</strong>`).replace('{hour}', hourFmt);
 
         containerEl.innerHTML = `
             <div class="smart-suggestion-pill">

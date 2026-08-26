@@ -28,17 +28,20 @@ export class TelemetryEngine {
     }
 
     async measurePing() {
-        const start = performance.now();
-        try {
-            // Non-blocking lightweight ping probe
-            const res = await fetch('https://www.google.com/favicon.ico', { mode: 'no-cors', cache: 'no-store' });
-            const latency = Math.round(performance.now() - start);
-            this.lastPing = Math.min(latency, 999);
-        } catch (e) {
-            this.lastPing = Math.round(performance.now() - start);
-            if (this.lastPing > 400) this.lastPing = 45; // Graceful fallback
+        const endpoints = [
+            { url: 'https://www.cloudflare.com/cdn-cgi/trace', mode: 'cors' },
+            { url: 'https://1.1.1.1/cdn-cgi/trace', mode: 'no-cors' }
+        ];
+        for (const ep of endpoints) {
+            const start = performance.now();
+            try {
+                await fetch(ep.url, { mode: ep.mode, cache: 'no-store' });
+                this.lastPing = Math.min(Math.round(performance.now() - start), 999);
+                if (this.pingEl) this.pingEl.textContent = `${this.lastPing}ms`;
+                return;
+            } catch (e) {}
         }
-        if (this.pingEl) this.pingEl.textContent = `${this.lastPing}ms`;
+        if (this.pingEl) this.pingEl.textContent = '—';
     }
 
     async initBatteryMonitor() {

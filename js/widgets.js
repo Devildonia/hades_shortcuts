@@ -6,7 +6,7 @@ import { i18nDictionaries } from './i18n.js';
 
 export class WidgetsManager {
     constructor() {
-        this.scratchpadText = localStorage.getItem('bento_scratchpad_notes') || '';
+        this.scratchpadText = localStorage.getItem('bento_scratchpad_notes') || localStorage.getItem('hades_scratchpad_content') || '';
         this.pomodoroState = {
             duration: 25 * 60,
             remaining: 25 * 60,
@@ -29,7 +29,8 @@ export class WidgetsManager {
         textarea.value = this.scratchpadText;
         textarea.addEventListener('input', () => {
             this.scratchpadText = textarea.value;
-            localStorage.setItem('bento_scratchpad_notes', this.scratchpadText);
+            state.setItem('bento_scratchpad_notes', this.scratchpadText);
+            state.setItem('hades_scratchpad_content', this.scratchpadText);
         });
     }
 

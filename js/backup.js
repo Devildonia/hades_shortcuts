@@ -1,7 +1,8 @@
 // js/backup.js - JSON Backup & Restore Engine
 
-import { state } from './state.js';
+import { state, readJsonStorage } from './state.js';
 import { i18nDictionaries } from './i18n.js';
+import { soundFx } from './audio.js';
 
 export class BackupManager {
     constructor(renderer) {
@@ -19,19 +20,20 @@ export class BackupManager {
 
     exportBackup() {
         const data = {
-            version: '3.0.0',
+            version: '6.0.0',
             exportedAt: new Date().toISOString(),
             settings: {
                 userName: state.userName,
                 theme: state.theme,
                 soundEnabled: state.soundEnabled,
                 language: state.language,
-                weatherCity: localStorage.getItem('weather_manual_city')
+                weatherCity: localStorage.getItem('weather_manual_city'),
+                soundPreset: soundFx.preset
             },
             categoriesOrder: state.categories.map(c => c.id),
             layoutMatrix: state.layoutMatrix,
-            postits: JSON.parse(localStorage.getItem('glass_postits_v1') || '[]'),
-            canvasPositions: JSON.parse(localStorage.getItem('canvas_positions_v1') || '{}'),
+            postits: readJsonStorage('glass_postits_v1', []),
+            canvasPositions: readJsonStorage('canvas_positions_v1', {}),
             shortcuts: state.shortcuts
         };
 
@@ -72,9 +74,12 @@ export class BackupManager {
                         if (data.settings.userName) state.setUserName(data.settings.userName);
                         if (data.settings.theme) state.setTheme(data.settings.theme);
                         if (data.settings.language) state.setLanguage(data.settings.language);
+                        if (typeof data.settings.soundEnabled === 'boolean') state.setSoundEnabled(data.settings.soundEnabled);
+                        if (data.settings.weatherCity) localStorage.setItem('weather_manual_city', data.settings.weatherCity);
+                        if (data.settings.soundPreset && soundFx.setPreset) soundFx.setPreset(data.settings.soundPreset);
                     }
                     alert(t.import_success);
-                    this.renderer.render();
+                    if (this.renderer && this.renderer.render) this.renderer.render();
                 } else {
                     alert(t.import_error);
                 }
@@ -89,7 +94,7 @@ export class BackupManager {
         const t = (i18nDictionaries[state.language] || i18nDictionaries.es).settings_hub.backup;
         if (confirm(t.reset_confirm)) {
             state.resetToDefaults();
-            this.renderer.render();
+            if (this.renderer && this.renderer.render) this.renderer.render();
             alert('Valores restablecidos.');
         }
     }

@@ -1,6 +1,6 @@
 // js/spaces.js - Arc-Inspired Multi-Profile Contextual Spaces Engine
 
-import { state } from './state.js';
+import { state, persistJson } from './state.js';
 import { soundFx } from './audio.js';
 import { i18nDictionaries } from './i18n.js';
 
@@ -18,6 +18,10 @@ export class SpacesEngine {
 
         // Default Initial Preset Spaces
         const defaultShortcuts = state.shortcuts || [];
+        const byGroup = (groups) => defaultShortcuts.filter((s) => {
+            const cat = (state.categories || []).find((c) => c.id === s.category);
+            return cat && groups.includes(cat.group);
+        });
         return {
             activeSpaceId: 'space_work',
             spaces: [
@@ -34,7 +38,9 @@ export class SpacesEngine {
                     name: 'Personal & Ocio',
                     icon: '🏠',
                     theme: 'nebula',
-                    shortcuts: defaultShortcuts.filter(s => ['social-compras', 'productividad'].includes(s.category) || ['google', 'youtube', 'amazon'].some(k => s.id.includes(k))),
+                    shortcuts: byGroup(['social-compras', 'productividad']).length
+                        ? byGroup(['social-compras', 'productividad'])
+                        : defaultShortcuts.filter((s) => ['google', 'youtube', 'amazon'].some((k) => (s.id || '').includes(k))),
                     scratchpad: 'Ideas personales, compras y lecturas pendientes...'
                 },
                 {
@@ -42,7 +48,9 @@ export class SpacesEngine {
                     name: '3D & Creación IA',
                     icon: '🎨',
                     theme: 'sunset',
-                    shortcuts: defaultShortcuts.filter(s => ['ia-creativa', 'arte-media'].includes(s.category) || ['meshy', 'tripo', 'suno', 'kling'].some(k => s.id.includes(k))),
+                    shortcuts: byGroup(['ia-creativa', 'arte-media']).length
+                        ? byGroup(['ia-creativa', 'arte-media'])
+                        : defaultShortcuts.filter((s) => ['meshy', 'tripo', 'suno', 'kling'].some((k) => (s.id || '').includes(k))),
                     scratchpad: 'Prompts creativos, texturas y referencias de modelado...'
                 }
             ]
@@ -50,9 +58,7 @@ export class SpacesEngine {
     }
 
     saveSpaces() {
-        try {
-            localStorage.setItem(this.storageKey, JSON.stringify(this.data));
-        } catch (e) {}
+        persistJson(this.storageKey, this.data);
     }
 
     getActiveSpace() {
@@ -92,6 +98,7 @@ export class SpacesEngine {
         const padInput = document.getElementById('scratchpad-input');
         if (padInput && target.scratchpad !== undefined) {
             padInput.value = target.scratchpad;
+            localStorage.setItem('bento_scratchpad_notes', target.scratchpad);
             localStorage.setItem('hades_scratchpad_content', target.scratchpad);
         }
 

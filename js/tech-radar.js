@@ -1,7 +1,8 @@
 // js/tech-radar.js - Multi-Channel Tech Radar & Native RSS/Atom Feed Reader (DOMParser 0 KB)
 
 import { soundFx } from './audio.js';
-import { state, escapeHtml } from './state.js';
+import { state, escapeHtml, fetchTextMaybeProxy, safeHttpUrl, persistJson } from './state.js';
+import { focusMode } from './focus-mode.js';
 
 export class TechRadarEngine {
     constructor() {
@@ -30,7 +31,7 @@ export class TechRadarEngine {
     }
 
     saveFeeds() {
-        try { localStorage.setItem(this.feedsKey, JSON.stringify(this.feeds)); } catch (e) {}
+        persistJson(this.feedsKey, this.feeds);
         this.renderChannelBar();
     }
 
@@ -108,12 +109,9 @@ export class TechRadarEngine {
             } else {
                 let text = '';
                 try {
-                    const res = await fetch(feed.url, { signal: controller.signal });
-                    if (res.ok) text = await res.text();
+                    text = await fetchTextMaybeProxy(feed.url, controller.signal);
                 } catch (e) {
-                    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(feed.url)}`;
-                    const resProxy = await fetch(proxyUrl, { signal: controller.signal });
-                    if (resProxy.ok) text = await resProxy.text();
+                    text = '';
                 }
                 if (text) items = this.parseXMLFeed(text, feed.name);
             }
@@ -129,12 +127,13 @@ export class TechRadarEngine {
         }
 
         cache[feed.id] = { timestamp: now, items: items.slice(0, 6) };
-        try { localStorage.setItem(this.cacheKey, JSON.stringify(cache)); } catch (e) {}
+        persistJson(this.cacheKey, cache);
 
         return items.slice(0, 6);
     }
 
     async loadAndRender(force = false) {
+        if (!force && focusMode && focusMode.isActive && focusMode.config && focusMode.config.pauseRadar) return;
         this.radarList = document.getElementById('tech-radar-list');
         this.channelBar = document.getElementById('radar-channel-bar');
         if (!this.radarList) return;
@@ -154,8 +153,9 @@ export class TechRadarEngine {
         articles.forEach(art => {
             const row = document.createElement('div');
             row.className = 'radar-item';
+            const href = safeHttpUrl(art.url);
             row.innerHTML = `
-                <a href="${art.url}" target="_blank" rel="noopener noreferrer" class="radar-link">
+                <a href="${href ? escapeHtml(href) : '#'}" target="_blank" rel="noopener noreferrer" class="radar-link">
                     <span class="radar-bullet">›</span>
                     <span class="radar-title">${escapeHtml(art.title)}</span>
                 </a>
@@ -183,7 +183,7 @@ export class TechRadarEngine {
             const btn = document.createElement('button');
             const isActive = f.id === this.activeFeedId;
             btn.className = `radar-channel-pill ${isActive ? 'active' : ''}`;
-            btn.innerHTML = `<span class="radar-pill-icon">${f.icon}</span> <span class="radar-pill-name">${f.name}</span>`;
+            btn.innerHTML = `<span class="radar-pill-icon">${escapeHtml(f.icon)}</span> <span class="radar-pill-name">${escapeHtml(f.name)}</span>`;
             btn.onclick = () => {
                 soundFx.play('click');
                 this.activeFeedId = f.id;
@@ -211,6 +211,12 @@ export class TechRadarEngine {
         this.modal = document.getElementById('rss-modal');
 
         this.loadAndRender();
+        state.on('focus:activated', () => {
+            if (this.refreshBtn) this.refreshBtn.disabled = true;
+        });
+        state.on('focus:deactivated', () => {
+            if (this.refreshBtn) this.refreshBtn.disabled = false;
+        });
         if (this.refreshBtn) {
             this.refreshBtn.addEventListener('click', () => {
                 soundFx.play('click');

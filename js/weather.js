@@ -116,7 +116,7 @@ export class WeatherEngine {
                 const isDay = data.current.is_day === 1;
                 this.renderWeatherUI(cityName, temp, code, isDay);
                 localStorage.setItem('weather_cache_v2', JSON.stringify({
-                    city: cityName, temp, code, isDay, timestamp: Date.now()
+                    city: cityName, temp, code, isDay, timestamp: Date.now(), lat, lon
                 }));
             }
         } catch (e) {}

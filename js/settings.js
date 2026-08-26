@@ -4,7 +4,7 @@ import { macroEngine } from './macros.js';
 // js/settings.js - Slide-Over Settings Drawer Hub
 
 import { state } from './state.js';
-import { updateDocumentLocalization } from './i18n.js';
+import { updateDocumentLocalization, loadLocaleAsync } from './i18n.js';
 import { soundFx } from './audio.js';
 
 export class SettingsHub {
@@ -29,6 +29,7 @@ export class SettingsHub {
         this.toggleScratchpad = document.getElementById('toggle-widget-scratchpad');
         this.togglePomodoro = document.getElementById('toggle-widget-pomodoro');
         this.auroraToggle = document.getElementById('setting-aurora-toggle');
+        this.solarToggle = document.getElementById('setting-solar-toggle');
     }
 
     init() {
@@ -52,6 +53,22 @@ export class SettingsHub {
                 auroraCanvas.toggle(this.auroraToggle.checked);
             });
         }
+        if (this.glowToggle) {
+            const glowOn = localStorage.getItem('ambient_glow_enabled') !== 'false';
+            this.glowToggle.checked = glowOn;
+            this.applyGlow(glowOn);
+            this.glowToggle.addEventListener('change', () => {
+                soundFx.play('click');
+                this.applyGlow(this.glowToggle.checked);
+            });
+        }
+        if (this.solarToggle) {
+            this.solarToggle.checked = localStorage.getItem('solar_lighting_enabled') === 'true';
+            this.solarToggle.addEventListener('change', () => {
+                soundFx.play('click');
+                state.emit('settings:solar_toggle', this.solarToggle.checked);
+            });
+        }
         const exportAnalyticsBtn = document.getElementById('export-analytics-btn');
         const resetAnalyticsBtn = document.getElementById('reset-analytics-btn');
         if (exportAnalyticsBtn) {
@@ -63,6 +80,7 @@ export class SettingsHub {
                 a.href = url;
                 a.download = 'hades-personal-analytics.json';
                 a.click();
+                URL.revokeObjectURL(url);
             };
         }
         if (resetAnalyticsBtn) {
@@ -75,7 +93,6 @@ export class SettingsHub {
             };
         }
         if (this.importer) this.importer.init();
-        if (this.themeStudio) this.themeStudio.init();
     }
 
     open() {
@@ -90,6 +107,13 @@ export class SettingsHub {
         if (!this.drawer) return;
         soundFx.play('click');
         this.drawer.classList.add('hidden');
+    }
+
+    applyGlow(enabled) {
+        localStorage.setItem('ambient_glow_enabled', enabled ? 'true' : 'false');
+        document.querySelectorAll('.ambient-glow').forEach((el) => {
+            el.classList.toggle('hidden', !enabled);
+        });
     }
 
     syncUIState() {
@@ -170,15 +194,29 @@ export class SettingsHub {
             });
         }
 
-        // Language Radios in Settings
+        // Language select or radios
+        const langSelect = document.getElementById('setting-lang-select');
+        if (langSelect) {
+            langSelect.value = state.language;
+            langSelect.addEventListener('change', (e) => {
+                soundFx.play('click');
+                state.setLanguage(e.target.value);
+                loadLocaleAsync(e.target.value).then(() => {
+                    updateDocumentLocalization();
+                    this.renderer.render();
+                });
+            });
+        }
         const langRadios = document.querySelectorAll('input[name="setting-lang"]');
         langRadios.forEach(radio => {
             radio.checked = (radio.value === state.language);
             radio.addEventListener('change', (e) => {
                 soundFx.play('click');
                 state.setLanguage(e.target.value);
-                updateDocumentLocalization();
-                this.renderer.render();
+                loadLocaleAsync(e.target.value).then(() => {
+                    updateDocumentLocalization();
+                    this.renderer.render();
+                });
             });
         });
     }

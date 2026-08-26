@@ -22,6 +22,8 @@ export class AIAgentEngine {
             provider: 'local_heuristic', // 'local_heuristic', 'ollama', 'anthropic', 'openai'
             ollamaEndpoint: 'http://localhost:11434/api/generate',
             ollamaModel: 'llama3.2',
+            openaiApiKey: '',
+            openaiModel: 'gpt-4o-mini',
             anthropicApiKey: '',
             anthropicModel: 'claude-3-5-sonnet-latest'
         };
@@ -36,7 +38,7 @@ export class AIAgentEngine {
             title: s.title,
             url: s.url,
             category: s.category,
-            tags: s.tags || []
+            tags: Array.isArray(s.tags) ? s.tags : String(s.tags || '').split(',').map((t) => t.trim()).filter(Boolean)
         }));
 
         return {
@@ -83,9 +85,10 @@ export class AIAgentEngine {
         const aiMsgDiv = this.appendMessage('ai', 'Pensando...');
 
         try {
+            const ctx = this.buildSystemContext();
+            const systemPrompt = `Eres el Asistente IA de HaDeS. Contexto de atajos del usuario: ${JSON.stringify(ctx.shortcuts)}. Responde en español conciso.`;
+
             if (this.config.provider === 'ollama') {
-                const ctx = this.buildSystemContext();
-                const systemPrompt = `Eres el Asistente IA de HaDeS. Contexto de atajos del usuario: ${JSON.stringify(ctx.shortcuts)}. Responde en español conciso.`;
                 const res = await fetch(this.config.ollamaEndpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -93,8 +96,41 @@ export class AIAgentEngine {
                 });
                 const data = await res.json();
                 aiMsgDiv.innerHTML = this.formatMarkdown(data.response || 'Sin respuesta del modelo Ollama.');
+            } else if (this.config.provider === 'openai' && this.config.openaiApiKey) {
+                const res = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.config.openaiApiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: this.config.openaiModel || 'gpt-4o-mini',
+                        messages: [
+                            { role: 'system', content: systemPrompt },
+                            { role: 'user', content: userText }
+                        ]
+                    })
+                });
+                const data = await res.json();
+                aiMsgDiv.innerHTML = this.formatMarkdown(data.choices?.[0]?.message?.content || 'Sin respuesta de OpenAI.');
+            } else if (this.config.provider === 'anthropic' && this.config.anthropicApiKey) {
+                const res = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': this.config.anthropicApiKey,
+                        'anthropic-version': '2023-06-01'
+                    },
+                    body: JSON.stringify({
+                        model: this.config.anthropicModel || 'claude-3-5-sonnet-latest',
+                        max_tokens: 1024,
+                        messages: [{ role: 'user', content: `${systemPrompt}\n\n${userText}` }]
+                    })
+                });
+                const data = await res.json();
+                const text = (data.content || []).map((c) => c.text || '').join('\n');
+                aiMsgDiv.innerHTML = this.formatMarkdown(text || 'Sin respuesta de Anthropic.');
             } else {
-                // Local intelligent heuristic
                 const resp = await this.generateLocalHeuristicResponse(userText);
                 aiMsgDiv.innerHTML = this.formatMarkdown(resp);
             }
