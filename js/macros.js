@@ -12,40 +12,40 @@ const MACRO_ICON_DEL = '<svg class="macro-action-icon" viewBox="0 0 24 24" fill=
 
 export const DEFAULT_MACROS = {
     '!work': {
-        name: 'Modo Trabajo & Dev',
-        desc: 'Abre GitHub, Claude y ChatGPT, activa Pomodoro y sonido de lluvia',
+        name: 'Work & Dev mode',
+        desc: 'Opens GitHub, Claude and ChatGPT, starts Pomodoro and rain audio',
         shortcuts: ['github', 'claude', 'chatgpt'],
         ambient: 'rain',
         pomodoro: 'start',
         icon: '💻'
     },
     '!focus': {
-        name: 'Modo Focus',
-        desc: 'Alias de !work: Deep Focus + herramientas de desarrollo',
+        name: 'Focus mode',
+        desc: 'Alias of !work: Deep Focus plus development tools',
         shortcuts: ['github', 'claude', 'chatgpt'],
         ambient: 'rain',
         pomodoro: 'start',
         icon: '🎯'
     },
     '!chill': {
-        name: 'Modo Relax & Audio',
-        desc: 'Abre YouTube y Suno, y activa el sonido de oleaje cósmico',
+        name: 'Relax & Audio mode',
+        desc: 'Opens YouTube and Suno, and starts cosmic surf audio',
         shortcuts: ['youtube', 'suno'],
         ambient: 'waves',
         pomodoro: 'reset',
         icon: '☕'
     },
     '!3d': {
-        name: 'Modo 3D & Generación IA',
-        desc: 'Abre Meshy AI, Tripo 3D y Civitai con sonido de espacio profundo',
+        name: '3D & AI Generation mode',
+        desc: 'Opens Meshy AI, Tripo 3D and Civitai with deep-space audio',
         shortcuts: ['meshy', 'tripo3d', 'civitai'],
         ambient: 'space',
         pomodoro: 'start',
         icon: '🎨'
     },
     '!social': {
-        name: 'Modo Comunidad & Redes',
-        desc: 'Abre Discord, X (Twitter) e Instagram',
+        name: 'Community & Social mode',
+        desc: 'Opens Discord, X (Twitter) and Instagram',
         shortcuts: ['discord', 'x', 'instagram'],
         ambient: null,
         pomodoro: null,
@@ -78,6 +78,16 @@ export class MacroEngine {
 
     getMacro(trigger) {
         return this.macros[(trigger || '').toLowerCase().trim()] || null;
+    }
+
+    displayCopy(trigger, macro) {
+        const key = String(trigger || '').replace(/^!/, '');
+        if (!this.customMacros[trigger]) {
+            const name = getTranslation(`macros_seed.${key}.name`);
+            const desc = getTranslation(`macros_seed.${key}.desc`);
+            if (name) return { name, desc: desc || macro?.desc || '' };
+        }
+        return { name: macro?.name || trigger, desc: macro?.desc || '' };
     }
 
     executeMacro(trigger) {
@@ -123,18 +133,19 @@ export class MacroEngine {
             const card = document.createElement('div');
             card.className = 'macro-item-card';
             const isCustom = !!this.customMacros[trigger];
+            const copy = this.displayCopy(trigger, macro);
 
-            const runLabel = getTranslation('macros_studio.run_btn') || 'Ejecutar';
-            const editLabel = getTranslation('macros_studio.edit_btn') || 'Editar';
-            const delLabel = getTranslation('macros_studio.delete_btn') || 'Eliminar';
+            const runLabel = getTranslation('macros_studio.run_btn') || 'Run';
+            const editLabel = getTranslation('macros_studio.edit_btn') || 'Edit';
+            const delLabel = getTranslation('macros_studio.delete_btn') || 'Delete';
 
             card.innerHTML = `
                 <div class="macro-item-header">
                     <span class="macro-badge">${escapeHtml(trigger)}</span>
                     <span style="font-size: 1.2rem;">${macro.icon || '⚡'}</span>
-                    <h4 style="margin: 0; font-size: 0.95rem; color: var(--text-primary);">${escapeHtml(macro.name)}</h4>
+                    <h4 style="margin: 0; font-size: 0.95rem; color: var(--text-primary);">${escapeHtml(copy.name)}</h4>
                 </div>
-                <p class="macro-item-desc">${escapeHtml(macro.desc || (macro.shortcuts || []).join(', '))}</p>
+                <p class="macro-item-desc">${escapeHtml(copy.desc || (macro.shortcuts || []).join(', '))}</p>
                 <div class="macro-card-actions">
                     <button type="button" class="macro-action-btn macro-run-btn" data-trigger="${escapeHtml(trigger)}">${MACRO_ICON_PLAY}<span>${escapeHtml(runLabel)}</span></button>
                     <button type="button" class="macro-action-btn macro-edit-btn" data-trigger="${escapeHtml(trigger)}">${MACRO_ICON_EDIT}<span>${escapeHtml(editLabel)}</span></button>
@@ -155,8 +166,9 @@ export class MacroEngine {
         if (!this.modal) return;
 
         const macro = trigger ? this.getMacro(trigger) : { name: '', icon: '🎮', shortcuts: [], ambient: '', pomodoro: '' };
+        const copy = trigger && macro ? this.displayCopy(trigger, macro) : { name: '' };
         document.getElementById('macro-form-trigger').value = trigger || '!';
-        document.getElementById('macro-form-name').value = macro.name || '';
+        document.getElementById('macro-form-name').value = copy.name || macro.name || '';
         document.getElementById('macro-form-icon').value = macro.icon || '⚡';
         document.getElementById('macro-form-ambient').value = macro.ambient || '';
         document.getElementById('macro-form-pomodoro').value = macro.pomodoro || '';
@@ -205,9 +217,10 @@ export class MacroEngine {
         });
 
         const custom = this.loadCustomMacros();
+        const opensTpl = getTranslation('macros_studio.opens') || 'Opens {list}';
         custom[trigger] = {
             name,
-            desc: `Abre ${checkedShortcuts.join(', ')}`,
+            desc: opensTpl.replace('{list}', checkedShortcuts.join(', ')),
             shortcuts: checkedShortcuts,
             ambient,
             pomodoro,

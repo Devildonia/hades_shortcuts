@@ -118,7 +118,9 @@
       "snow_showers": "Snow showers",
       "thunderstorm": "Thunderstorm",
       "hail_thunderstorm": "Thunderstorm with hail"
-    }
+    },
+    "no_cities": "No cities found.",
+    "search_error": "Could not search for that city."
   },
   "cmdk": {
     "placeholder": "Search shortcut, tool or quick command...",
@@ -239,7 +241,9 @@
   "bangs": {
     "calc_title": "Calculation Result",
     "direct_search": "Search on {service}",
-    "suggestions_title": "Quick Bang Commands"
+    "suggestions_title": "Quick Bang Commands",
+    "macro_detected": "Macro detected:",
+    "run_routine": "Run routine"
   },
   "widgets": {
     "scratchpad_title": "Glass Scratchpad",
@@ -267,7 +271,15 @@
     "toggle_calendar": "Show Agenda & Calendar",
     "toggle_ambient": "Show Ambient Audio",
     "toggle_radar": "Show Tech Radar & RSS",
-    "toggle_telemetry": "Show System Telemetry"
+    "toggle_telemetry": "Show System Telemetry",
+    "ambient_rain": "Rain",
+    "ambient_space": "Space",
+    "ambient_binaural": "432Hz",
+    "ambient_waves": "Waves",
+    "ambient_rain_title": "Cyberpunk rain",
+    "ambient_space_title": "Spatial brown noise",
+    "ambient_binaural_title": "432 Hz alpha waves",
+    "ambient_waves_title": "Cosmic surf"
   },
   "audio": {
     "preset_label": "Haptic Sound Preset",
@@ -326,7 +338,8 @@
   },
   "tech_radar": {
     "loading": "Loading headlines...",
-    "pin_tooltip": "Pin to Post-it"
+    "pin_tooltip": "Pin to Post-it",
+    "empty": "Could not load articles. Press refresh to retry."
   },
   "neural": {
     "ai_answer_title": "Local AI Assistant",
@@ -376,7 +389,8 @@
     "ambient_waves": "🌊 Waves",
     "pomodoro_none": "No change",
     "pomodoro_start": "▶ Start 25m",
-    "pomodoro_reset": "🔄 Reset"
+    "pomodoro_reset": "🔄 Reset",
+    "opens": "Opens {list}"
   },
   "calendar_modal": {
     "add_title": "Add Event to Agenda",
@@ -393,7 +407,10 @@
     "cat_personal": "☕ Personal",
     "save_btn": "Save Event",
     "cancel_btn": "Cancel",
-    "add_tooltip": "Add Manual Event"
+    "add_tooltip": "Add Manual Event",
+    "meet_join": "Join meeting",
+    "delete_event": "Delete event",
+    "imminent": "In {n}m"
   },
   "bg_studio": {
     "title": "Wallpaper & Background Style",
@@ -418,7 +435,10 @@
     "weather_error": "Could not refresh weather. Keeping the last known reading.",
     "invalid_url": "The URL must start with http:// or https://.",
     "ai_network_error": "Could not reach the online assistant. Try again later.",
-    "sync_push_error": "Could not sync with chrome.storage."
+    "sync_push_error": "Could not sync with chrome.storage.",
+    "reset_done": "Factory defaults restored.",
+    "postit_limit": "You reached the 25 floating-note limit. Delete one to pin another.",
+    "save_view_empty": "Type a search or tags first to save a smart view."
   },
   "calendar_feed": {
     "title": "Configure Calendar Feed (iCal / ICS)",
@@ -474,7 +494,10 @@
     "opt_local": "Local (heuristic)",
     "opt_ollama": "Ollama",
     "opt_openai": "OpenAI",
-    "opt_anthropic": "Anthropic"
+    "opt_anthropic": "Anthropic",
+    "prompt_3d": "Which 3D or AI tools do I have saved?",
+    "prompt_suggest": "Recommend 3 new productivity tools",
+    "prompt_focus": "How do I turn on Focus Mode?"
   },
   "spaces": {
     "label": "Profiles",
@@ -482,5 +505,27 @@
     "space_work": "Work & Dev",
     "space_personal": "Personal & Leisure",
     "space_3d": "3D & AI Creation"
+  },
+  "macros_seed": {
+    "work": {
+      "name": "Work & Dev mode",
+      "desc": "Opens GitHub, Claude and ChatGPT, starts Pomodoro and rain audio"
+    },
+    "focus": {
+      "name": "Focus mode",
+      "desc": "Alias of !work: Deep Focus plus development tools"
+    },
+    "chill": {
+      "name": "Relax & Audio mode",
+      "desc": "Opens YouTube and Suno, and starts cosmic surf audio"
+    },
+    "3d": {
+      "name": "3D & AI Generation mode",
+      "desc": "Opens Meshy AI, Tripo 3D and Civitai with deep-space audio"
+    },
+    "social": {
+      "name": "Community & Social mode",
+      "desc": "Opens Discord, X (Twitter) and Instagram"
+    }
   }
 }

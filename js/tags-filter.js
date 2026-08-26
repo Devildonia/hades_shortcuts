@@ -1,6 +1,7 @@
 // js/tags-filter.js - Advanced Multi-Tag Query Engine & Saved Smart Views (Linear-style CMDK)
 
-import { state, normalizeTags, escapeHtml, persistJson } from './state.js';
+import { state, normalizeTags, escapeHtml, persistJson, showToast } from './state.js';
+import { getTranslation } from './i18n.js';
 import { soundFx } from './audio.js';
 import { personalAnalytics } from './personal-analytics.js';
 
@@ -189,7 +190,7 @@ export class TagsFilterEngine {
             saveViewBtn.addEventListener('click', () => {
                 const searchInp = document.getElementById('main-search') || document.getElementById('search-input') || document.querySelector('.search-input');
                 const q = searchInp ? searchInp.value.trim() : '';
-                if (!q) { alert('Escribe primero una búsqueda o etiquetas para guardar la vista.'); return; }
+                if (!q) { showToast(getTranslation('toasts.save_view_empty') || 'Type a search or tags first to save a smart view.', 'error'); return; }
                 if (viewQueryInp) viewQueryInp.value = q;
                 if (saveModal) saveModal.classList.remove('hidden');
             });

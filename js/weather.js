@@ -240,17 +240,17 @@ export class WeatherEngine {
                         });
                         this.weatherCityResults.classList.remove('hidden');
                     } else {
-                        this.weatherCityResults.innerHTML = '<div style="padding: 8px 12px; font-size: 0.82rem; color: var(--text-muted); text-align: center;">No se encontraron ciudades.</div>';
+                        this.weatherCityResults.innerHTML = `<div style="padding: 8px 12px; font-size: 0.82rem; color: var(--text-muted); text-align: center;">${escapeHtml(getTranslation('weather.no_cities') || 'No cities found.')}</div>`;
                         this.weatherCityResults.classList.remove('hidden');
                     }
                 }
             } catch (err) {
                 if (this.weatherCityResults) {
-                    this.weatherCityResults.innerHTML = '<div style="padding: 8px 12px; font-size: 0.82rem; color: #ff6b6b; text-align: center;">Error al buscar ciudad.</div>';
+                    this.weatherCityResults.innerHTML = `<div style="padding: 8px 12px; font-size: 0.82rem; color: #ff6b6b; text-align: center;">${escapeHtml(getTranslation('weather.search_error') || 'Could not search for that city.')}</div>`;
                     this.weatherCityResults.classList.remove('hidden');
                 }
             } finally {
-                if (this.weatherSearchBtn) this.weatherSearchBtn.textContent = 'Buscar';
+                if (this.weatherSearchBtn) this.weatherSearchBtn.textContent = getTranslation('weather.search_btn') || 'Search';
             }
         };
 

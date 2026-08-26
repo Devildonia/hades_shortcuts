@@ -25,9 +25,6 @@
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" type="image/png" href="iconos/pwa-192.png">
     <link rel="apple-touch-icon" href="iconos/pwa-192.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css?v=1.0.0-rc-1">
@@ -208,13 +205,13 @@
                         <h3 data-i18n="widgets.calendar_title">Agenda & Calendario</h3>
                     </div>
                     <div class="widget-header-actions">
-                        <button class="calendar-tool-btn" id="calendar-add-event-btn" title="Añadir Evento Manual" data-i18n-title="calendar_modal.add_tooltip" aria-label="Añadir evento">
+                        <button class="calendar-tool-btn" id="calendar-add-event-btn" title="Add Manual Event" data-i18n-title="calendar_modal.add_tooltip" data-i18n-aria="calendar_modal.add_tooltip" aria-label="Add event">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
                         </button>
-                        <button class="calendar-tool-btn" id="calendar-sync-btn" title="Sincronizar Feed" aria-label="Sincronizar">
+                        <button class="calendar-tool-btn" id="calendar-sync-btn" title="Sync" data-i18n-title="widgets.calendar_sync" data-i18n-aria="widgets.calendar_sync" aria-label="Sync">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.3-6M21 4v6h-6"></path></svg>
                         </button>
-                        <button class="calendar-tool-btn" id="calendar-config-btn" title="Configurar iCal" aria-label="Configurar calendario">
+                        <button class="calendar-tool-btn" id="calendar-config-btn" title="Configure iCal Feed" data-i18n-title="widgets.calendar_config" data-i18n-aria="widgets.calendar_config" aria-label="Configure calendar">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15H4a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 5.4 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68V4a2 2 0 0 1 4 0v.09A1.65 1.65 0 0 0 15 5.4a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9H20a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                         </button>
                     </div>
@@ -240,10 +237,10 @@
                 </div>
                 <div class="ambient-body">
                     <div class="ambient-presets-grid">
-                        <button class="ambient-chip active" data-preset="rain" title="Lluvia Cyberpunk">Lluvia</button>
-                        <button class="ambient-chip" data-preset="space" title="Ruido Marrón Espacial">Espacio</button>
-                        <button class="ambient-chip" data-preset="binaural" title="Ondas Alfa 432 Hz">432Hz</button>
-                        <button class="ambient-chip" data-preset="waves" title="Oleaje Cósmico">Olas</button>
+                        <button class="ambient-chip active" data-preset="rain" title="Cyberpunk rain" data-i18n="widgets.ambient_rain" data-i18n-title="widgets.ambient_rain_title">Lluvia</button>
+                        <button class="ambient-chip" data-preset="space" title="Spatial brown noise" data-i18n="widgets.ambient_space" data-i18n-title="widgets.ambient_space_title">Espacio</button>
+                        <button class="ambient-chip" data-preset="binaural" title="432 Hz alpha waves" data-i18n="widgets.ambient_binaural" data-i18n-title="widgets.ambient_binaural_title">432Hz</button>
+                        <button class="ambient-chip" data-preset="waves" title="Cosmic surf" data-i18n="widgets.ambient_waves" data-i18n-title="widgets.ambient_waves_title">Olas</button>
                     </div>
                     <div class="ambient-volume-row">
                         <span class="ambient-vol-icon" aria-hidden="true">
@@ -471,9 +468,9 @@
                 <button class="ai-agent-close" id="close-ai-agent-drawer" aria-label="Cerrar Asistente IA">✕</button>
             </div>
             <div class="ai-prompt-chips-row">
-                <button class="ai-prompt-chip" data-prompt="¿Qué herramientas de 3D o IA tengo guardadas?" data-i18n="ai_agent.chip_3d">Mis herramientas 3D</button>
-                <button class="ai-prompt-chip" data-prompt="Recomiéndame 3 herramientas nuevas de productividad" data-i18n="ai_agent.chip_suggest">Sugerir nuevas apps</button>
-                <button class="ai-prompt-chip" data-prompt="¿Cómo activo el modo Focus?" data-i18n="ai_agent.chip_focus">Modo Focus</button>
+                <button class="ai-prompt-chip" data-prompt="Which 3D or AI tools do I have saved?" data-i18n="ai_agent.chip_3d" data-i18n-prompt="ai_agent.prompt_3d">Mis herramientas 3D</button>
+                <button class="ai-prompt-chip" data-prompt="Recommend 3 new productivity tools" data-i18n="ai_agent.chip_suggest" data-i18n-prompt="ai_agent.prompt_suggest">Sugerir nuevas apps</button>
+                <button class="ai-prompt-chip" data-prompt="How do I turn on Focus Mode?" data-i18n="ai_agent.chip_focus" data-i18n-prompt="ai_agent.prompt_focus">Modo Focus</button>
             </div>
             <div class="ai-agent-messages" id="ai-agent-messages">
                 <div class="ai-msg-bubble ai" data-i18n="ai_agent.hello">

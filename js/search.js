@@ -3,7 +3,7 @@ import { state, escapeHtml, bindIconFallback, openSafeUrl } from './state.js';
 import { tagsFilter } from './tags-filter.js';
 import { neuralSearch } from './neural-search.js';
 import { macroEngine } from './macros.js';
-import { i18nDictionaries } from './i18n.js';
+import { i18nDictionaries, getTranslation } from './i18n.js';
 import { parseBangQuery, evaluateArithmetic } from './bangs.js';
 import { devTools } from './devtools.js';
 import { soundFx } from './audio.js';
@@ -52,6 +52,7 @@ export class SearchEngineManager {
         state.on('language:changed', () => {
             this.updatePlaceholders();
             this.updatePillCounts();
+            this.filterShortcuts();
         });
         state.on('filter:changed', () => this.filterShortcuts());
     }
@@ -124,7 +125,10 @@ export class SearchEngineManager {
         const macro = macroEngine.getMacro(query);
         if (macro) {
             if (this.calcBanner) {
-                this.calcBanner.innerHTML = `<div class="devtool-result-row"><span>⚡ <strong>Macro detectada:</strong> ${escapeHtml(macro.icon || '')} ${escapeHtml(macro.name)}</span> <button class="devtool-action-btn" id="run-macro-trigger">🚀 Ejecutar Rutina</button></div>`;
+                const copy = macroEngine.displayCopy(query, macro);
+                const detected = getTranslation('bangs.macro_detected') || 'Macro detected:';
+                const runLabel = getTranslation('bangs.run_routine') || 'Run routine';
+                this.calcBanner.innerHTML = `<div class="devtool-result-row"><span>⚡ <strong>${escapeHtml(detected)}</strong> ${escapeHtml(macro.icon || '')} ${escapeHtml(copy.name)}</span> <button class="devtool-action-btn" id="run-macro-trigger">🚀 ${escapeHtml(runLabel)}</button></div>`;
                 this.calcBanner.classList.remove('hidden');
                 const trigger = document.getElementById('run-macro-trigger');
                 if (trigger) trigger.onclick = () => macroEngine.executeMacro(query);

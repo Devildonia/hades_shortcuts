@@ -118,7 +118,9 @@
       "snow_showers": "Averses de neige",
       "thunderstorm": "Orage",
       "hail_thunderstorm": "Orage avec grêle"
-    }
+    },
+    "no_cities": "Aucune ville trouvée.",
+    "search_error": "Impossible de rechercher cette ville."
   },
   "cmdk": {
     "placeholder": "Rechercher un raccourci, un outil ou une commande rapide...",
@@ -239,7 +241,9 @@
   "bangs": {
     "calc_title": "Résultat du Calcul",
     "direct_search": "Rechercher sur {service}",
-    "suggestions_title": "Commandes Bang Rapides"
+    "suggestions_title": "Commandes Bang Rapides",
+    "macro_detected": "Macro détectée :",
+    "run_routine": "Exécuter la routine"
   },
   "widgets": {
     "scratchpad_title": "Bloc-notes Glass",
@@ -267,7 +271,15 @@
     "toggle_calendar": "Afficher l'Agenda & Calendrier",
     "toggle_ambient": "Afficher l'Audio Ambiant",
     "toggle_radar": "Afficher Tech Radar & RSS",
-    "toggle_telemetry": "Afficher la Télémétrie Système"
+    "toggle_telemetry": "Afficher la Télémétrie Système",
+    "ambient_rain": "Pluie",
+    "ambient_space": "Espace",
+    "ambient_binaural": "432Hz",
+    "ambient_waves": "Vagues",
+    "ambient_rain_title": "Pluie cyberpunk",
+    "ambient_space_title": "Bruit brun spatial",
+    "ambient_binaural_title": "Ondes alpha 432 Hz",
+    "ambient_waves_title": "Resac cosmique"
   },
   "audio": {
     "preset_label": "Effet Sonore Haptique",
@@ -326,7 +338,8 @@
   },
   "tech_radar": {
     "loading": "Chargement des titres...",
-    "pin_tooltip": "Épingler sur Post-it"
+    "pin_tooltip": "Épingler sur Post-it",
+    "empty": "Impossible de charger les articles. Appuyez sur actualiser pour réessayer."
   },
   "neural": {
     "ai_answer_title": "Assistant IA Local",
@@ -376,7 +389,8 @@
     "ambient_waves": "🌊 Vagues",
     "pomodoro_none": "Aucun changement",
     "pomodoro_start": "▶ Démarrer 25m",
-    "pomodoro_reset": "🔄 Réinitialiser"
+    "pomodoro_reset": "🔄 Réinitialiser",
+    "opens": "Ouvre {list}"
   },
   "calendar_modal": {
     "add_title": "Ajouter un Événement à l'Agenda",
@@ -393,7 +407,10 @@
     "cat_personal": "☕ Personnel",
     "save_btn": "Enregistrer l'Événement",
     "cancel_btn": "Annuler",
-    "add_tooltip": "Ajouter un Événement Manuel"
+    "add_tooltip": "Ajouter un Événement Manuel",
+    "meet_join": "Rejoindre la réunion",
+    "delete_event": "Supprimer l'événement",
+    "imminent": "Dans {n} min"
   },
   "bg_studio": {
     "title": "Style de Fond d'Écran",
@@ -418,7 +435,10 @@
     "weather_error": "Impossible de mettre à jour la météo. Dernière donnée conservée.",
     "invalid_url": "L'URL doit commencer par http:// ou https://.",
     "ai_network_error": "Impossible de joindre l'assistant en ligne. Réessayez plus tard.",
-    "sync_push_error": "Impossible de synchroniser avec chrome.storage."
+    "sync_push_error": "Impossible de synchroniser avec chrome.storage.",
+    "reset_done": "Valeurs d'usine restaurées.",
+    "postit_limit": "Limite de 25 notes flottantes atteinte. Supprimez-en une pour en épingler une autre.",
+    "save_view_empty": "Saisissez d'abord une recherche ou des tags pour enregistrer la vue."
   },
   "calendar_feed": {
     "title": "Configurer le flux calendrier (iCal / ICS)",
@@ -474,7 +494,10 @@
     "opt_local": "Local (heuristique)",
     "opt_ollama": "Ollama",
     "opt_openai": "OpenAI",
-    "opt_anthropic": "Anthropic"
+    "opt_anthropic": "Anthropic",
+    "prompt_3d": "Quels outils 3D ou IA ai-je enregistrés ?",
+    "prompt_suggest": "Recommande 3 nouveaux outils de productivité",
+    "prompt_focus": "Comment activer le mode Focus ?"
   },
   "spaces": {
     "label": "Profils",
@@ -482,5 +505,27 @@
     "space_work": "Travail & Dev",
     "space_personal": "Personnel & Loisirs",
     "space_3d": "3D & Création IA"
+  },
+  "macros_seed": {
+    "work": {
+      "name": "Mode Travail & Dev",
+      "desc": "Ouvre GitHub, Claude et ChatGPT, lance Pomodoro et la pluie"
+    },
+    "focus": {
+      "name": "Mode Focus",
+      "desc": "Alias de !work : Deep Focus et outils de développement"
+    },
+    "chill": {
+      "name": "Mode Détente & Audio",
+      "desc": "Ouvre YouTube et Suno, et lance le resac cosmique"
+    },
+    "3d": {
+      "name": "Mode 3D & Génération IA",
+      "desc": "Ouvre Meshy AI, Tripo 3D et Civitai avec audio spatial"
+    },
+    "social": {
+      "name": "Mode Communauté & Réseaux",
+      "desc": "Ouvre Discord, X (Twitter) et Instagram"
+    }
   }
 }

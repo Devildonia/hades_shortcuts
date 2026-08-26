@@ -48,7 +48,16 @@ const STATIC_ASSETS = [
     './locales/es.json',
     './locales/en.json',
     './locales/fr.json',
-    './locales/de.json'
+    './locales/de.json',
+    './fonts/outfit-latin-400-normal.woff2',
+    './fonts/outfit-latin-600-normal.woff2',
+    './fonts/outfit-latin-700-normal.woff2',
+    './fonts/audiowide-latin-400-normal.woff2',
+    './fonts/plus-jakarta-sans-latin-400-normal.woff2',
+    './fonts/plus-jakarta-sans-latin-600-normal.woff2',
+    './fonts/plus-jakarta-sans-latin-700-normal.woff2',
+    './fonts/jetbrains-mono-latin-400-normal.woff2',
+    './fonts/jetbrains-mono-latin-500-normal.woff2'
 ];
 
 self.addEventListener('install', (e) => {

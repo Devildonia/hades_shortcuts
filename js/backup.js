@@ -1,7 +1,7 @@
 // js/backup.js - JSON Backup & Restore Engine
 
-import { state, readJsonStorage } from './state.js';
-import { i18nDictionaries } from './i18n.js';
+import { state, readJsonStorage, showToast } from './state.js';
+import { i18nDictionaries, getTranslation } from './i18n.js';
 import { soundFx } from './audio.js';
 
 export class BackupManager {
@@ -78,13 +78,13 @@ export class BackupManager {
                         if (data.settings.weatherCity) localStorage.setItem('weather_manual_city', data.settings.weatherCity);
                         if (data.settings.soundPreset && soundFx.setPreset) soundFx.setPreset(data.settings.soundPreset);
                     }
-                    alert(t.import_success);
+                    showToast(t.import_success, 'success');
                     if (this.renderer && this.renderer.render) this.renderer.render();
                 } else {
-                    alert(t.import_error);
+                    showToast(t.import_error, 'error');
                 }
             } catch (err) {
-                alert(t.import_error);
+                showToast(t.import_error, 'error');
             }
         };
         reader.readAsText(file);
@@ -95,7 +95,7 @@ export class BackupManager {
         if (confirm(t.reset_confirm)) {
             state.resetToDefaults();
             if (this.renderer && this.renderer.render) this.renderer.render();
-            alert('Valores restablecidos.');
+            showToast(getTranslation('toasts.reset_done') || 'Factory defaults restored.', 'success');
         }
     }
 }

@@ -1,7 +1,8 @@
 // js/postits.js - Floating Glass Post-it System
 
 import { soundFx } from './audio.js';
-import { escapeHtml, persistJson } from './state.js';
+import { escapeHtml, persistJson, showToast } from './state.js';
+import { getTranslation } from './i18n.js';
 
 export class PostItManager {
     constructor() {
@@ -69,7 +70,7 @@ export class PostItManager {
         createPostIt(text, x = null, y = null, color = 'cyan') {
         if (this.postits.length >= 25) {
             soundFx.play('click');
-            alert('Has alcanzado el límite máximo de 25 notas flotantes. Elimina alguna nota para fijar una nueva.');
+            showToast(getTranslation('toasts.postit_limit') || 'You reached the 25 floating-note limit.', 'error');
             return;
         }
         soundFx.play('click');

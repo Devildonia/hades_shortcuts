@@ -3,6 +3,7 @@
 import { soundFx } from './audio.js';
 import { state, escapeHtml, fetchTextMaybeProxy, safeHttpUrl, persistJson } from './state.js';
 import { focusMode } from './focus-mode.js';
+import { getTranslation } from './i18n.js';
 
 export class TechRadarEngine {
     constructor() {
@@ -150,7 +151,8 @@ export class TechRadarEngine {
 
         this.radarList.innerHTML = '';
         if (!articles || articles.length === 0) {
-            this.radarList.innerHTML = '<div class="radar-empty"><span>No se pudieron cargar artículos. Pulsa actualizar para reintentar.</span></div>';
+            const emptyLabel = getTranslation('tech_radar.empty') || 'Could not load articles. Press refresh to retry.';
+            this.radarList.innerHTML = `<div class="radar-empty"><span>${escapeHtml(emptyLabel)}</span></div>`;
             return;
         }
 
@@ -158,13 +160,14 @@ export class TechRadarEngine {
             const row = document.createElement('div');
             row.className = 'radar-item';
             const href = safeHttpUrl(art.url);
+            const pinLabel = getTranslation('tech_radar.pin_tooltip') || 'Pin to Post-it';
             row.innerHTML = `
                 <a href="${href ? escapeHtml(href) : '#'}" target="_blank" rel="noopener noreferrer" class="radar-link">
                     <span class="radar-bullet">›</span>
                     <span class="radar-title">${escapeHtml(art.title)}</span>
                 </a>
                 <span class="radar-source-tag">${escapeHtml(art.source || currentFeed.name)}</span>
-                <button class="radar-pin-btn" title="Fijar como Post-it" aria-label="Fijar como Post-it">
+                <button class="radar-pin-btn" title="${escapeHtml(pinLabel)}" aria-label="${escapeHtml(pinLabel)}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"></path><path d="M9 3h6l1 7H8L9 3z"></path><path d="M8 10h8v2a4 4 0 0 1-8 0v-2z"></path></svg>
                 </button>
             `;
@@ -217,6 +220,7 @@ export class TechRadarEngine {
         this.modal = document.getElementById('rss-modal');
 
         this.loadAndRender();
+        state.on('language:changed', () => this.loadAndRender());
         state.on('focus:activated', () => {
             if (this.refreshBtn) this.refreshBtn.disabled = true;
         });

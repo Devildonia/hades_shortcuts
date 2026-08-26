@@ -2,6 +2,70 @@
    HaDeS' Shortcuts · Ultra-Code Design System (Diamond Standard 2026)
    ========================================================================== */
 
+@font-face {
+    font-family: 'Audiowide';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./fonts/audiowide-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./fonts/outfit-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('./fonts/outfit-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('./fonts/outfit-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./fonts/plus-jakarta-sans-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('./fonts/plus-jakarta-sans-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('./fonts/plus-jakarta-sans-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('./fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2');
+}
+
 :root {
     /* Base Font Stacks */
     --font-brand: 'Audiowide', sans-serif;

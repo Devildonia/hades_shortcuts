@@ -118,7 +118,9 @@
       "snow_showers": "Schneeschauer",
       "thunderstorm": "Gewitter",
       "hail_thunderstorm": "Gewitter mit Hagel"
-    }
+    },
+    "no_cities": "Keine Städte gefunden.",
+    "search_error": "Stadt konnte nicht gesucht werden."
   },
   "cmdk": {
     "placeholder": "Verknüpfung, Tool oder Schnellbefehl suchen...",
@@ -239,7 +241,9 @@
   "bangs": {
     "calc_title": "Berechnungsergebnis",
     "direct_search": "Auf {service} suchen",
-    "suggestions_title": "Schnelle Bang-Befehle"
+    "suggestions_title": "Schnelle Bang-Befehle",
+    "macro_detected": "Makro erkannt:",
+    "run_routine": "Routine ausführen"
   },
   "widgets": {
     "scratchpad_title": "Glass-Notizblock",
@@ -267,7 +271,15 @@
     "toggle_calendar": "Terminkalender anzeigen",
     "toggle_ambient": "Umgebungs-Audio anzeigen",
     "toggle_radar": "Tech Radar & RSS anzeigen",
-    "toggle_telemetry": "System-Telemetrie anzeigen"
+    "toggle_telemetry": "System-Telemetrie anzeigen",
+    "ambient_rain": "Regen",
+    "ambient_space": "Weltall",
+    "ambient_binaural": "432Hz",
+    "ambient_waves": "Wellen",
+    "ambient_rain_title": "Cyberpunk-Regen",
+    "ambient_space_title": "Räumliches Braunrauschen",
+    "ambient_binaural_title": "432-Hz-Alphawellen",
+    "ambient_waves_title": "Kosmischer Seegang"
   },
   "audio": {
     "preset_label": "Haptischer Sound-Effekt",
@@ -326,7 +338,8 @@
   },
   "tech_radar": {
     "loading": "Schlagzeilen laden...",
-    "pin_tooltip": "Auf Post-it heften"
+    "pin_tooltip": "Auf Post-it heften",
+    "empty": "Artikel konnten nicht geladen werden. Aktualisieren und erneut versuchen."
   },
   "neural": {
     "ai_answer_title": "Lokaler KI-Assistent",
@@ -376,7 +389,8 @@
     "ambient_waves": "🌊 Wellen",
     "pomodoro_none": "Keine Änderung",
     "pomodoro_start": "▶ 25m Starten",
-    "pomodoro_reset": "🔄 Zurücksetzen"
+    "pomodoro_reset": "🔄 Zurücksetzen",
+    "opens": "Öffnet {list}"
   },
   "calendar_modal": {
     "add_title": "Termin zum Kalender hinzufügen",
@@ -393,7 +407,10 @@
     "cat_personal": "☕ Privat",
     "save_btn": "Termin Speichern",
     "cancel_btn": "Abbrechen",
-    "add_tooltip": "Manuellen Termin hinzufügen"
+    "add_tooltip": "Manuellen Termin hinzufügen",
+    "meet_join": "Meeting beitreten",
+    "delete_event": "Termin löschen",
+    "imminent": "In {n} Min."
   },
   "bg_studio": {
     "title": "Hintergrund- & Wallpaper-Stil",
@@ -418,7 +435,10 @@
     "weather_error": "Wetter konnte nicht aktualisiert werden. Letzter Stand bleibt.",
     "invalid_url": "Die URL muss mit http:// oder https:// beginnen.",
     "ai_network_error": "Online-Assistent nicht erreichbar. Später erneut versuchen.",
-    "sync_push_error": "Synchronisierung mit chrome.storage fehlgeschlagen."
+    "sync_push_error": "Synchronisierung mit chrome.storage fehlgeschlagen.",
+    "reset_done": "Werkseinstellungen wiederhergestellt.",
+    "postit_limit": "Limit von 25 Notizen erreicht. Lösche eine, um eine neue anzuheften.",
+    "save_view_empty": "Gib zuerst eine Suche oder Tags ein, um die Ansicht zu speichern."
   },
   "calendar_feed": {
     "title": "Kalender-Feed konfigurieren (iCal / ICS)",
@@ -474,7 +494,10 @@
     "opt_local": "Lokal (Heuristik)",
     "opt_ollama": "Ollama",
     "opt_openai": "OpenAI",
-    "opt_anthropic": "Anthropic"
+    "opt_anthropic": "Anthropic",
+    "prompt_3d": "Welche 3D- oder KI-Tools habe ich gespeichert?",
+    "prompt_suggest": "Empfiehl 3 neue Produktivitätstools",
+    "prompt_focus": "Wie aktiviere ich den Fokusmodus?"
   },
   "spaces": {
     "label": "Profile",
@@ -482,5 +505,27 @@
     "space_work": "Arbeit & Dev",
     "space_personal": "Privat & Freizeit",
     "space_3d": "3D & KI-Creation"
+  },
+  "macros_seed": {
+    "work": {
+      "name": "Arbeit & Dev-Modus",
+      "desc": "Öffnet GitHub, Claude und ChatGPT, startet Pomodoro und Regen-Audio"
+    },
+    "focus": {
+      "name": "Fokusmodus",
+      "desc": "Alias von !work: Deep Focus plus Entwicklungstools"
+    },
+    "chill": {
+      "name": "Relax- & Audio-Modus",
+      "desc": "Öffnet YouTube und Suno und startet kosmisches Wellen-Audio"
+    },
+    "3d": {
+      "name": "3D- & KI-Generierungsmodus",
+      "desc": "Öffnet Meshy AI, Tripo 3D und Civitai mit Weltraum-Audio"
+    },
+    "social": {
+      "name": "Community- & Social-Modus",
+      "desc": "Öffnet Discord, X (Twitter) und Instagram"
+    }
   }
 }
