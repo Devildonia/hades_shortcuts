@@ -178,6 +178,21 @@
             </div>
 
             
+                        <!-- Widget 4: Calendar & Agenda Hub (RFC 5545 iCal / Google Calendar) -->
+            <div class="mini-widget-card widget-calendar" id="widget-calendar-card" data-tile-id="tile-calendar">
+                <div class="widget-header">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="widget-icon">📅</span>
+                        <h3 data-i18n="widgets.calendar_title">Agenda & Calendario</h3>
+                    </div>
+                    <div style="display: flex; gap: 6px;">
+                        <button class="calendar-tool-btn" id="calendar-sync-btn" title="Sincronizar Feed">🔄</button>
+                        <button class="calendar-tool-btn" id="calendar-config-btn" title="Configurar iCal">⚙️</button>
+                    </div>
+                </div>
+                <div class="calendar-events-list" id="calendar-events-list"></div>
+            </div>
+
             <!-- Widget 3: Ambient Focus Audio Generator (0 KB Procedural Web Audio API) -->
             <div class="mini-widget-card widget-ambient" id="widget-ambient-card" data-tile-id="tile-ambient">
                 <div class="widget-header">
@@ -677,6 +692,24 @@
             </div>
             <div class="user-modal-preview">
                 Vista previa: <strong id="user-preview-text">HaDeS' SHORTCUTS</strong>
+            </div>
+        </div>
+    </div>
+
+        <!-- Calendar iCal Feed Configuration Modal -->
+    <div class="calendar-modal-backdrop hidden" id="calendar-modal" role="dialog" aria-modal="true" aria-label="Configurar Feed de Calendario">
+        <div class="calendar-modal-card">
+            <div class="calendar-modal-header">
+                <h3>Configurar Feed de Calendario (iCal / ICS)</h3>
+                <button class="calendar-modal-close" id="close-calendar-modal" aria-label="Cerrar modal">✕</button>
+            </div>
+            <p class="calendar-modal-desc">Pega la URL de suscripción iCal / ICS secreta de tu calendario (Google Calendar, Outlook, Nextcloud o Proton):</p>
+            <div class="calendar-modal-input-wrapper">
+                <input type="url" id="calendar-feed-url-input" placeholder="https://calendar.google.com/calendar/ical/.../basic.ics" autocomplete="off">
+                <button class="calendar-save-btn" id="save-calendar-feed-btn">Guardar y Sincronizar</button>
+            </div>
+            <div class="calendar-modal-hint">
+                🔒 <strong>100% Privado:</strong> Los eventos se descargan y analizan directamente en tu navegador sin intermediarios.
             </div>
         </div>
     </div>

@@ -242,7 +242,11 @@
     "ambient_title": "Ambient Focus Audio",
     "ambient_play": "Play",
     "ambient_pause": "Pause",
-    "techradar_title": "Tech Radar Live"
+    "techradar_title": "Tech Radar Live",
+    "calendar_title": "Agenda & Calendar",
+    "calendar_sync": "Sync",
+    "calendar_config": "Configure iCal Feed",
+    "calendar_empty": "No upcoming events. Time to focus!"
   },
   "audio": {
     "preset_label": "Haptic Sound Preset",

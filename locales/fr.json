@@ -242,7 +242,11 @@
     "ambient_title": "Audio Ambiant Focus",
     "ambient_play": "Lire",
     "ambient_pause": "Pause",
-    "techradar_title": "Radar Tech & IA"
+    "techradar_title": "Radar Tech & IA",
+    "calendar_title": "Agenda & Calendrier",
+    "calendar_sync": "Synchroniser",
+    "calendar_config": "Configurer le flux iCal",
+    "calendar_empty": "Aucun événement à venir. Concentrez-vous !"
   },
   "audio": {
     "preset_label": "Effet Sonore Haptique",

@@ -1,3 +1,4 @@
+import { calendarAgenda } from './calendar-agenda.js';
 import { spacesManager } from './spaces.js';
 import { personalAnalytics } from './personal-analytics.js';
 import { platform } from './platform.js';
@@ -217,6 +218,7 @@ export function initApp() {
         techRadar.init();
         neuralSearch.init();
         spacesManager.init();
+        calendarAgenda.init();
     window.ambientAudio = ambientAudio;
     window.radialHUD = radialHUD;
     window.solarEngine = solarEngine;
@@ -228,6 +230,7 @@ export function initApp() {
     window.extensionApi = extensionApi;
     window.personalAnalytics = personalAnalytics;
     window.spacesManager = spacesManager;
+    window.calendarAgenda = calendarAgenda;
     extensionApi.init();
     miniHud.init();
 

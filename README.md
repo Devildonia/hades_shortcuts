@@ -105,6 +105,13 @@
     - `!ai <prompt>`: Instant client-side intelligent answers.
     - `!t <text>`: Fast multilingual translation helper.
 
+### 📅 Bento Calendar & Agenda Hub («Universal Schedule Hub»)
+- **Zero-Knowledge Universal Calendar Integration**:
+  - 🔄 **Direct RFC 5545 iCal/ICS Parsing**: Client-side parsing of private iCal subscription URLs from Google Calendar, Microsoft Outlook, Apple iCloud, Nextcloud, or Proton Calendar (0 external proxy servers).
+  - 🚨 **15-Minute Meeting Proximity Radar**: The bento card pulses with a neon warning halo (`.meeting-pulse-alert`) when an event is starting within 15 minutes.
+  - 🚀 **1-Click Video Call Access**: Automatically parses and detects meeting links for **Google Meet**, **Zoom**, **Microsoft Teams**, and **Discord**.
+  - 📐 **Full Bento Freeform Support**: Drag, resize (`tile-calendar`), or toggle visibility with `LayoutManager`.
+
 ### 🪐 Arc-Inspired Multi-Profile Spaces («Contextual Workspaces»)
 - **Isolated Digital Profiles**: Switch between custom workflow environments in one click (<kbd>Alt</kbd> + <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd>):
   - 💼 **Work & Dev Space**: Development shortcuts, Git tools, productivity apps, and clean daylight theme.
@@ -275,6 +282,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── app.js               # Main orchestrator & lifecycle manager
 │   ├── platform.js          # Universal platform abstraction (Web/PWA vs Extension)
 │   ├── spaces.js            # Arc-inspired multi-profile spaces manager & hotkeys
+│   ├── calendar-agenda.js   # RFC 5545 iCal/Google calendar parser & proximity radar
 │   ├── personal-analytics.js# 100% local usage analytics, 7-day SVG chart & smart suggestions
 │   ├── extension-api.js     # Native TopSites & background context menu bridge
 │   ├── sw-extension.js      # Manifest V3 background service worker

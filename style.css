@@ -4748,3 +4748,178 @@ input:checked + .slider:before {
     0% { opacity: 0.85; filter: blur(2px); transform: scale(0.995); }
     100% { opacity: 1; filter: blur(0); transform: scale(1); }
 }
+
+/* --- Bento Calendar & Agenda Hub --- */
+.widget-calendar {
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-tool-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.calendar-tool-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.calendar-events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+    flex: 1;
+}
+
+.calendar-event-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.calendar-event-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(0, 242, 254, 0.3);
+}
+
+.calendar-event-item.imminent {
+    background: rgba(255, 170, 0, 0.1);
+    border-color: rgba(255, 170, 0, 0.5);
+}
+
+.event-time-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #00f2fe;
+    background: rgba(0, 242, 254, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.event-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.event-title {
+    font-size: 0.84rem;
+    color: var(--text-primary, #ffffff);
+}
+
+.event-alert-tag {
+    font-size: 0.72rem;
+    color: #ffaa00;
+    font-weight: 700;
+}
+
+.meet-link-btn {
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    color: #050811;
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform 0.2s;
+}
+
+.meet-link-btn:hover {
+    transform: scale(1.1);
+}
+
+.meeting-pulse-alert {
+    animation: meetingPulse 2s infinite ease-in-out;
+    border-color: rgba(255, 170, 0, 0.6) !important;
+}
+
+@keyframes meetingPulse {
+    0%, 100% { box-shadow: 0 0 15px rgba(255, 170, 0, 0.2); }
+    50% { box-shadow: 0 0 30px rgba(255, 170, 0, 0.55); }
+}
+
+.calendar-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 17, 0.75);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.calendar-modal-card {
+    background: rgba(10, 15, 29, 0.95);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.calendar-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.calendar-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.calendar-modal-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+}
+
+.calendar-modal-input-wrapper {
+    display: flex;
+    gap: 8px;
+}
+
+.calendar-modal-input-wrapper input {
+    flex: 1;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.85rem;
+}
+
+.calendar-save-btn {
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    color: #050811;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    padding: 0 16px;
+    cursor: pointer;
+}
+
+.calendar-modal-hint {
+    margin-top: 14px;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.6);
+}
