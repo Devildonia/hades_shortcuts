@@ -821,14 +821,15 @@
     </div>
 
             <!-- Manual Calendar Event Modal -->
-    <div class="modal-overlay hidden" id="calendar-event-modal" role="dialog" aria-modal="true" aria-label="Añadir Evento">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3 data-i18n="calendar_modal.add_title">Añadir Evento a la Agenda</h3>
-                <button class="modal-close" id="close-event-modal" aria-label="Cerrar">✕</button>
+    <!-- Manual Calendar Event Modal -->
+    <div class="calendar-modal-backdrop hidden" id="calendar-event-modal" role="dialog" aria-modal="true" aria-label="Añadir Evento">
+        <div class="calendar-modal-card">
+            <div class="calendar-modal-header">
+                <h3 data-i18n="calendar_modal.add_title" style="margin: 0; font-size: 1.1rem; color: #ffffff;">Añadir Evento a la Agenda</h3>
+                <button class="calendar-modal-close" id="close-event-modal" aria-label="Cerrar">✕</button>
             </div>
-            <div class="modal-body">
-                <div class="settings-field-group">
+            <div class="calendar-form-body" style="margin-top: 14px;">
+                <div class="macro-form-field">
                     <label data-i18n="calendar_modal.title_label">Título del Evento</label>
                     <input type="text" id="event-form-title" placeholder="Ej: Reunión de Diseño, Sprint Review..." data-i18n-placeholder="calendar_modal.title_placeholder" autocomplete="off">
                 </div>
@@ -842,6 +843,26 @@
                         <input type="time" id="event-form-time" value="09:30">
                     </div>
                 </div>
+                <div class="macro-form-field">
+                    <label data-i18n="calendar_modal.link_label">Enlace de Videollamada (Meet / Zoom / Teams)</label>
+                    <input type="url" id="event-form-link" placeholder="https://meet.google.com/..." data-i18n-placeholder="calendar_modal.link_placeholder" autocomplete="off">
+                </div>
+                <div class="macro-form-field">
+                    <label data-i18n="calendar_modal.cat_label">Categoría</label>
+                    <select id="event-form-category">
+                        <option value="work" data-i18n="calendar_modal.cat_work">💼 Trabajo</option>
+                        <option value="focus" data-i18n="calendar_modal.cat_focus">🎯 Enfoque / Código</option>
+                        <option value="creative" data-i18n="calendar_modal.cat_creative">🎨 Creativo / 3D</option>
+                        <option value="personal" data-i18n="calendar_modal.cat_personal">☕ Personal</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px;">
+                <button class="settings-action-btn secondary" id="cancel-event-modal" data-i18n="calendar_modal.cancel_btn" style="padding: 8px 16px; font-size: 0.82rem;">Cancelar</button>
+                <button class="settings-action-btn primary" id="save-manual-event-btn" data-i18n="calendar_modal.save_btn" style="padding: 8px 18px; font-size: 0.82rem;">Guardar Evento</button>
+            </div>
+        </div>
+    </div>
                 <div class="settings-field-group">
                     <label data-i18n="calendar_modal.link_label">Enlace de Videollamada (Meet / Zoom / Teams)</label>
                     <input type="url" id="event-form-link" placeholder="https://meet.google.com/..." data-i18n-placeholder="calendar_modal.link_placeholder" autocomplete="off">
