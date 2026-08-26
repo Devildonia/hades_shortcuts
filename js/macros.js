@@ -1,6 +1,6 @@
-// js/macros.js - Contextual Multi-Action Macro & Routine Engine
+// js/macros.js - Contextual Multi-Action Macro & Routine Engine (Visual No-Code Studio)
 
-import { state } from './state.js';
+import { state, escapeHtml } from './state.js';
 import { soundFx } from './audio.js';
 import { ambientAudio } from './ambient-audio.js';
 
@@ -41,27 +41,31 @@ export const DEFAULT_MACROS = {
 
 export class MacroEngine {
     constructor() {
-        this.macros = this.loadMacros();
+        this.storageKey = 'custom_macros_v1';
+        this.customMacros = this.loadCustomMacros();
+        this.macros = { ...DEFAULT_MACROS, ...this.customMacros };
+        this.modal = document.getElementById('macro-editor-modal');
+        this.editingTrigger = null;
     }
 
-    loadMacros() {
+    loadCustomMacros() {
         try {
-            const saved = localStorage.getItem('custom_macros_v1');
-            if (saved) return { ...DEFAULT_MACROS, ...JSON.parse(saved) };
+            const saved = localStorage.getItem(this.storageKey);
+            if (saved) return JSON.parse(saved);
         } catch (e) {}
-        return { ...DEFAULT_MACROS };
+        return {};
     }
 
     saveCustomMacros(customObj) {
         try {
-            localStorage.setItem('custom_macros_v1', JSON.stringify(customObj));
+            localStorage.setItem(this.storageKey, JSON.stringify(customObj));
+            this.customMacros = customObj;
             this.macros = { ...DEFAULT_MACROS, ...customObj };
         } catch (e) {}
     }
 
     getMacro(trigger) {
-        const key = trigger.toLowerCase().trim();
-        return this.macros[key] || null;
+        return this.macros[(trigger || '').toLowerCase().trim()] || null;
     }
 
     executeMacro(trigger) {
@@ -69,48 +73,150 @@ export class MacroEngine {
         if (!macro) return false;
 
         soundFx.play('chime');
+        if (macro.ambient && ambientAudio) {
+            if (ambientAudio.setPreset) ambientAudio.setPreset(macro.ambient);
+            if (ambientAudio.play && !ambientAudio.isPlaying) ambientAudio.play();
+        }
 
-        // 1. Open shortcuts
-        if (macro.shortcuts && macro.shortcuts.length) {
-            macro.shortcuts.forEach(id => {
-                const sc = state.shortcuts.find(s => s.id === id);
-                if (sc && sc.url) {
-                    window.open(sc.url, '_blank', 'noopener,noreferrer');
-                }
+        if (macro.pomodoro) {
+            const startBtn = document.getElementById('pomodoro-start-btn');
+            const resetBtn = document.getElementById('pomodoro-reset-btn');
+            if (macro.pomodoro === 'start' && startBtn) startBtn.click();
+            if (macro.pomodoro === 'reset' && resetBtn) resetBtn.click();
+        }
+
+        if (Array.isArray(macro.shortcuts)) {
+            macro.shortcuts.forEach((key) => {
+                const s = (state.shortcuts || []).find(item => (item.id || item.title.toLowerCase().replace(/\s+/g, '')) === key.toLowerCase() || item.title.toLowerCase() === key.toLowerCase());
+                if (s && s.url) window.open(s.url, '_blank', 'noopener,noreferrer');
             });
         }
-
-        // 2. Control Ambient Sound
-        if (macro.ambient && ambientAudio) {
-            ambientAudio.setPreset(macro.ambient);
-            if (!ambientAudio.isPlaying) ambientAudio.play();
-        }
-
-        // 3. Control Pomodoro Timer
-        if (macro.pomodoro === 'start') {
-            const startBtn = document.getElementById('pomodoro-start-btn');
-            if (startBtn && startBtn.textContent.includes('Iniciar')) {
-                startBtn.click();
-            }
-        } else if (macro.pomodoro === 'reset') {
-            const resetBtn = document.getElementById('pomodoro-reset-btn');
-            if (resetBtn) resetBtn.click();
-        }
-
-        this.showMacroNotification(macro);
         return true;
     }
 
-    showMacroNotification(macro) {
-        const banner = document.getElementById('search-calc-banner');
-        if (banner) {
-            banner.innerHTML = `<div class="devtool-result-row"><span>${macro.icon} <strong>Macro Ejecutada:</strong> ${macro.name}</span> <span style="font-size:0.8rem; opacity:0.8;">(${macro.desc})</span></div>`;
-            banner.classList.remove('hidden');
-            setTimeout(() => {
-                const searchInput = document.getElementById('main-search');
-                if (searchInput && !searchInput.value) banner.classList.add('hidden');
-            }, 4000);
-        }
+    renderMacroList() {
+        const container = document.getElementById('macros-list-container');
+        if (!container) return;
+        container.innerHTML = '';
+
+        Object.entries(this.macros).forEach(([trigger, macro]) => {
+            const card = document.createElement('div');
+            card.className = 'macro-item-card';
+            const isCustom = !!this.customMacros[trigger];
+
+            card.innerHTML = `
+                <div class="macro-item-header">
+                    <span class="macro-badge">${escapeHtml(trigger)}</span>
+                    <span style="font-size: 1.2rem;">${macro.icon || '⚡'}</span>
+                    <h4 style="margin: 0; font-size: 0.95rem; color: var(--text-primary);">${escapeHtml(macro.name)}</h4>
+                </div>
+                <p class="macro-item-desc">${escapeHtml(macro.desc || (macro.shortcuts || []).join(', '))}</p>
+                <div class="macro-card-actions">
+                    <button class="control-btn macro-run-btn" data-trigger="${trigger}">▶ Ejecutar</button>
+                    <button class="control-btn macro-edit-btn" data-trigger="${trigger}">✏️ Editar</button>
+                    ${isCustom ? `<button class="control-btn macro-del-btn" data-trigger="${trigger}">🗑️ Eliminar</button>` : ''}
+                </div>
+            `;
+
+            card.querySelector('.macro-run-btn')?.addEventListener('click', () => this.executeMacro(trigger));
+            card.querySelector('.macro-edit-btn')?.addEventListener('click', () => this.openEditor(trigger));
+            card.querySelector('.macro-del-btn')?.addEventListener('click', () => this.deleteMacro(trigger));
+            container.appendChild(card);
+        });
+    }
+
+    openEditor(trigger = null) {
+        this.editingTrigger = trigger;
+        this.modal = document.getElementById('macro-editor-modal');
+        if (!this.modal) return;
+
+        const macro = trigger ? this.getMacro(trigger) : { name: '', icon: '🎮', shortcuts: [], ambient: '', pomodoro: '' };
+        document.getElementById('macro-form-trigger').value = trigger || '!';
+        document.getElementById('macro-form-name').value = macro.name || '';
+        document.getElementById('macro-form-icon').value = macro.icon || '⚡';
+        document.getElementById('macro-form-ambient').value = macro.ambient || '';
+        document.getElementById('macro-form-pomodoro').value = macro.pomodoro || '';
+
+        this.populateShortcutsGrid(macro.shortcuts || []);
+        this.modal.classList.remove('hidden');
+    }
+
+    populateShortcutsGrid(selectedKeys = []) {
+        const grid = document.getElementById('macro-form-shortcuts-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+
+        (state.shortcuts || []).forEach(s => {
+            const key = (s.id || s.title.toLowerCase().replace(/\s+/g, '')).toLowerCase();
+            const isChecked = selectedKeys.map(k => k.toLowerCase()).includes(key) || selectedKeys.map(k => k.toLowerCase()).includes(s.title.toLowerCase());
+
+            const item = document.createElement('label');
+            item.className = `macro-shortcut-checkbox-item ${isChecked ? 'selected' : ''}`;
+            item.innerHTML = `
+                <input type="checkbox" value="${escapeHtml(key)}" ${isChecked ? 'checked' : ''}>
+                <span class="macro-shortcut-name">${escapeHtml(s.title)}</span>
+                <span class="macro-shortcut-cat">#${escapeHtml(s.category)}</span>
+            `;
+            item.querySelector('input').addEventListener('change', (e) => {
+                item.classList.toggle('selected', e.target.checked);
+            });
+            grid.appendChild(item);
+        });
+    }
+
+    saveFromForm() {
+        const triggerInput = document.getElementById('macro-form-trigger');
+        let trigger = (triggerInput.value || '').trim().toLowerCase();
+        if (!trigger.startsWith('!')) trigger = '!' + trigger;
+        if (trigger.length <= 1) return;
+
+        const name = (document.getElementById('macro-form-name').value || '').trim() || trigger;
+        const icon = (document.getElementById('macro-form-icon').value || '').trim() || '⚡';
+        const ambient = document.getElementById('macro-form-ambient').value || null;
+        const pomodoro = document.getElementById('macro-form-pomodoro').value || null;
+
+        const checkedShortcuts = [];
+        document.querySelectorAll('#macro-form-shortcuts-grid input:checked').forEach(cb => {
+            checkedShortcuts.push(cb.value);
+        });
+
+        const custom = this.loadCustomMacros();
+        custom[trigger] = {
+            name,
+            desc: `Abre ${checkedShortcuts.join(', ')}`,
+            shortcuts: checkedShortcuts,
+            ambient,
+            pomodoro,
+            icon
+        };
+
+        this.saveCustomMacros(custom);
+        soundFx.play('chime');
+        this.closeEditor();
+        this.renderMacroList();
+    }
+
+    deleteMacro(trigger) {
+        const custom = this.loadCustomMacros();
+        delete custom[trigger];
+        this.saveCustomMacros(custom);
+        soundFx.play('click');
+        this.renderMacroList();
+    }
+
+    closeEditor() {
+        if (this.modal) this.modal.classList.add('hidden');
+    }
+
+    init() {
+        this.renderMacroList();
+        const createBtn = document.getElementById('create-macro-btn');
+        const saveBtn = document.getElementById('macro-form-save-btn');
+        const cancelBtn = document.getElementById('close-macro-modal');
+
+        if (createBtn) createBtn.addEventListener('click', () => this.openEditor(null));
+        if (saveBtn) saveBtn.addEventListener('click', () => this.saveFromForm());
+        if (cancelBtn) cancelBtn.addEventListener('click', () => this.closeEditor());
     }
 }
 

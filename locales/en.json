@@ -332,5 +332,29 @@
   },
   "sync": {
     "token_session_notice": "Your GitHub token is stored exclusively in session memory (sessionStorage) and is automatically wiped when you close the browser."
+  },
+  "macros_studio": {
+    "title": "Macros & Workflow Studio",
+    "create_btn": "➕ New Macro",
+    "edit_title": "Visual Macro Editor",
+    "trigger_label": "Trigger Command (e.g. !gaming)",
+    "name_label": "Workflow Name",
+    "icon_label": "Emoji Icon",
+    "shortcuts_label": "Select Shortcuts to Open:",
+    "ambient_label": "Ambient Audio:",
+    "pomodoro_label": "Pomodoro Action:",
+    "save_btn": "Save Macro",
+    "cancel_btn": "Cancel",
+    "run_btn": "▶ Run",
+    "edit_btn": "✏️ Edit",
+    "delete_btn": "🗑️ Delete",
+    "ambient_none": "None",
+    "ambient_rain": "🌧️ Rain",
+    "ambient_space": "🚀 Space",
+    "ambient_binaural": "☕ 432Hz",
+    "ambient_waves": "🌊 Waves",
+    "pomodoro_none": "No change",
+    "pomodoro_start": "▶ Start 25m",
+    "pomodoro_reset": "🔄 Reset"
   }
 }

@@ -150,6 +150,17 @@ Pure mathematical acoustic synthesis using modern **Web Audio API** nodes (`Audi
 - ☕ **Binaural Alpha Waves (432 Hz)**: Dual stereo sine wave oscillators producing an 8 Hz Alpha brainwave beat.
 - 🌊 **Cosmic Waves**: 10-second rhythmic ocean wave breathing cycle.
 
+### ⚡ Visual Macro Studio & Custom Workflow Engine (No-Code Routine Creator)
+- **100% Visual Custom Routine Builder**:
+  - 🎛️ **No-Code Macro Studio**: Create, edit, and duplicate custom productivity macros in 20 seconds from *Settings > Macros* without touching JSON or code.
+  - 📦 **Compound Action Composition**:
+    - **Trigger Command**: Assign any custom bang (e.g. `!gaming`, `!study`, `!crypto`).
+    - **Visual Identity**: Emoji icon & custom routine title.
+    - **Multi-Shortcut Selector**: Checkbox grid to launch 1 to 10 apps simultaneously.
+    - **Ambient Audio Sync**: Auto-starts focus soundscapes (🌧️ Rain, 🚀 Space, ☕ 432Hz, 🌊 Waves).
+    - **Pomodoro Action**: Auto-triggers 25m focus countdown or resets timers.
+  - ⚡ **Omnibox & 1-Click Run**: Trigger routines via search bar (`!gaming`) or the interactive `[ ▶ Run ]` test button in settings.
+
 ### 🔒 Zero-Knowledge Encrypted Cloud Sync (E2EE)
 - **Client-Side PBKDF2 + AES-256-GCM**: Derive 256-bit encryption keys with 100,000 PBKDF2 iterations using native `window.crypto.subtle`.
 - **Private GitHub Gist Backup**: Safely synchronize all your custom shortcuts, 360° canvas positions, glass post-its, and theme settings with zero server tracking.
@@ -270,7 +281,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── telemetry.js         # Real-time ping, battery, fps & offline monitor (109 lines)
 │   ├── tech-radar.js        # Multi-channel RSS/Atom feed reader & aggregator (248 lines)
 │   ├── neural-search.js     # Local semantic vector search & AI assistant (155 lines)
-│   ├── macros.js            # Compound multi-action macro & routine engine (117 lines)
+│   ├── macros.js            # Visual Macro Studio No-Code & routine engine (220 lines)
 │   ├── crypto-sync.js       # Zero-knowledge AES-256-GCM + GitHub Gist sync (228 lines)
 │   ├── bangs.js             # Bang commands parser & safe math calculator (115 lines)
 │   ├── devtools.js          # Built-in DevTools Omnibox & Canvas 2D QR Generator (252 lines)

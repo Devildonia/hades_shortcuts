@@ -332,5 +332,29 @@
   },
   "sync": {
     "token_session_notice": "Ihr GitHub-Token wird ausschließlich im flüchtigen Sitzungsspeicher (sessionStorage) gespeichert und beim Schließen des Browsers automatisch gelöscht."
+  },
+  "macros_studio": {
+    "title": "Makro- & Routine-Studio",
+    "create_btn": "➕ Neues Makro",
+    "edit_title": "Visueller Makro-Editor",
+    "trigger_label": "Trigger-Befehl (z.B. !gaming)",
+    "name_label": "Routinenname",
+    "icon_label": "Emoji-Symbol",
+    "shortcuts_label": "Verknüpfungen auswählen:",
+    "ambient_label": "Umgebungs-Audio:",
+    "pomodoro_label": "Pomodoro-Aktion:",
+    "save_btn": "Makro Speichern",
+    "cancel_btn": "Abbrechen",
+    "run_btn": "▶ Ausführen",
+    "edit_btn": "✏️ Bearbeiten",
+    "delete_btn": "🗑️ Löschen",
+    "ambient_none": "Keins",
+    "ambient_rain": "🌧️ Regen",
+    "ambient_space": "🚀 Weltall",
+    "ambient_binaural": "☕ 432Hz",
+    "ambient_waves": "🌊 Wellen",
+    "pomodoro_none": "Keine Änderung",
+    "pomodoro_start": "▶ 25m Starten",
+    "pomodoro_reset": "🔄 Zurücksetzen"
   }
 }

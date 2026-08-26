@@ -332,5 +332,29 @@
   },
   "sync": {
     "token_session_notice": "Votre jeton GitHub est stocké uniquement dans la mémoire de session (sessionStorage) et s'efface automatiquement à la fermeture du navigateur."
+  },
+  "macros_studio": {
+    "title": "Studio de Macros & Routines",
+    "create_btn": "➕ Nouvelle Macro",
+    "edit_title": "Éditeur Visuel de Macro",
+    "trigger_label": "Commande Trigger (ex: !gaming)",
+    "name_label": "Nom de la Routine",
+    "icon_label": "Icône Emoji",
+    "shortcuts_label": "Sélectionner les Raccourcis :",
+    "ambient_label": "Audio Ambiant :",
+    "pomodoro_label": "Action Pomodoro :",
+    "save_btn": "Enregistrer",
+    "cancel_btn": "Annuler",
+    "run_btn": "▶ Exécuter",
+    "edit_btn": "✏️ Modifier",
+    "delete_btn": "🗑️ Supprimer",
+    "ambient_none": "Aucun",
+    "ambient_rain": "🌧️ Pluie",
+    "ambient_space": "🚀 Espace",
+    "ambient_binaural": "☕ 432Hz",
+    "ambient_waves": "🌊 Vagues",
+    "pomodoro_none": "Aucun changement",
+    "pomodoro_start": "▶ Démarrer 25m",
+    "pomodoro_reset": "🔄 Réinitialiser"
   }
 }

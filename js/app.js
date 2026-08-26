@@ -1,3 +1,4 @@
+import { macroEngine } from './macros.js';
 import { aiAgent } from './ai-agent.js';
 // js/app.js - Master Orchestrator for HaDeS' Shortcuts Next-Gen
 import { state } from './state.js';
@@ -187,6 +188,7 @@ export function initApp() {
     techRadar.init();
     neuralSearch.init();
     spacesManager.init();
+        macroEngine.init();
         aiAgent.init();
     calendarAgenda.init();
     tagsFilter.init();
@@ -203,6 +205,7 @@ export function initApp() {
     window.extensionApi = extensionApi;
     window.personalAnalytics = personalAnalytics;
     window.spacesManager = spacesManager;
+    window.macroEngine = macroEngine;
     window.aiAgent = aiAgent;
     window.calendarAgenda = calendarAgenda;
     window.tagsFilter = tagsFilter;

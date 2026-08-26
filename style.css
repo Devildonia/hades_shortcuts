@@ -5797,3 +5797,110 @@ body.focus-mode-active .category-filter-bar {
     font-size: 1.1rem;
     flex-shrink: 0;
 }
+
+/* --- Visual Macro Studio & Editor Modal --- */
+.create-macro-btn {
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(168, 85, 247, 0.25));
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    color: #00f2fe;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.create-macro-btn:hover {
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.35), rgba(168, 85, 247, 0.4));
+    box-shadow: 0 0 14px rgba(0, 242, 254, 0.3);
+}
+
+.macro-card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.macro-card-actions button {
+    padding: 4px 10px;
+    font-size: 0.74rem;
+    border-radius: 6px;
+}
+
+.macro-editor-card {
+    max-width: 580px !important;
+    width: 92%;
+}
+
+.macro-form-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.macro-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.macro-form-field label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.macro-form-field input, .macro-form-field select {
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.85rem;
+}
+
+.macro-shortcuts-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 8px;
+    max-height: 160px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.macro-shortcut-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+    font-size: 0.76rem;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.macro-shortcut-checkbox-item.selected {
+    background: rgba(0, 242, 254, 0.12);
+    border-color: rgba(0, 242, 254, 0.4);
+    color: #00f2fe;
+}
+
+.macro-shortcut-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.macro-shortcut-cat {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+}
