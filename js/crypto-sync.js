@@ -6,7 +6,8 @@ import { soundFx } from './audio.js';
 export class CryptoSyncEngine {
     constructor(renderer) {
         this.renderer = renderer;
-        this.githubToken = sessionStorage.getItem('sync_github_token') || localStorage.getItem('sync_github_token') || '';
+        this.githubToken = sessionStorage.getItem('sync_github_token') || '';
+        try { localStorage.removeItem('sync_github_token'); } catch (e) {}
         this.gistId = localStorage.getItem('sync_gist_id') || '';
         this.password = '';
         this.lastSync = localStorage.getItem('sync_last_timestamp') || null;

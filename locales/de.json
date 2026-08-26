@@ -329,5 +329,8 @@
     "ai_agent": "KI-Agent",
     "focus_mode": "Fokus-Modus",
     "focus_active": "Fokus Aktiv"
+  },
+  "sync": {
+    "token_session_notice": "Ihr GitHub-Token wird ausschließlich im flüchtigen Sitzungsspeicher (sessionStorage) gespeichert und beim Schließen des Browsers automatisch gelöscht."
   }
 }

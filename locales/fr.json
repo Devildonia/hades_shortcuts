@@ -329,5 +329,8 @@
     "ai_agent": "Agent IA",
     "focus_mode": "Mode Focus",
     "focus_active": "Focus Actif"
+  },
+  "sync": {
+    "token_session_notice": "Votre jeton GitHub est stocké uniquement dans la mémoire de session (sessionStorage) et s'efface automatiquement à la fermeture du navigateur."
   }
 }
