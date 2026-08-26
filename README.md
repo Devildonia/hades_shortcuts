@@ -5,6 +5,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Online%20Preview-brightgreen?logo=github)](https://devildonia.github.io/hades_shortcuts/)
+[![Chrome Extension](https://img.shields.io/badge/Chrome%20Extension-Manifest%20V3-blue?logo=googlechrome)](dist/hades-shortcuts-chrome-v6.0.0.zip)
 [![PWA Ready](https://img.shields.io/badge/PWA-Installable%20Desktop-orange?logo=pwa)](https://devildonia.github.io/hades_shortcuts/)
 [![Pure Vanilla](https://img.shields.io/badge/Stack-Vanilla%20HTML%20%2F%20CSS%20%2F%20JS-yellow.svg)](https://developer.mozilla.org/en-US/)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20Zero-brightgreen.svg)]()
@@ -28,14 +29,13 @@
 
 [Live Demo](https://devildonia.github.io/hades_shortcuts/) •
 [Features](#-key-features) •
-[DevTools & Bangs](#-devtools-omnibox--bang-commands) •
-[Freeform & Post-its](#-freeform-canvas--floating-glass-post-its) •
-[Ambient Audio](#-procedural-ambient-focus-sound-engine-0-kb-100-offline) •
-[Macros](#-contextual-multi-action-macros-work-chill-3d-social) •
-[E2EE Cloud Sync](#-zero-knowledge-encrypted-cloud-sync-e2ee) •
-[Mini HUD Launcher](#-mini-hud-launcher-alt--space) •
-[Gallery](#-visual-showcase) •
-[Quick Start](#-quick-start) •
+[Spaces](#-arc-inspired-multi-profile-spaces-contextual-workspaces) •
+[Deep Focus & Zen Shield](#-deep-focus-mode--zen-distraction-shield) •
+[Calendar Hub](#-bento-calendar--agenda-hub-universal-schedule-hub) •
+[Tech Radar & RSS](#-live-tech-radar--multi-channel-rssatom-reader) •
+[Tags & Smart Views](#-multi-tag-compound-search--saved-smart-views-linear-style-cmdk) •
+[Personal Analytics](#-100-local-personal-analytics--predictive-context-engine-my-dashboard-knows-me) •
+[DevTools & Bangs](#-devtools-omnibox--bang-commands-cheatsheet) •
 [Keyboard Shortcuts](#-keyboard-shortcuts) •
 [Architecture](#-project-architecture-anti-god-file-modular-design)
 
@@ -67,6 +67,47 @@
 
 ## 🌟 Key Features
 
+### 🪐 Arc-Inspired Multi-Profile Spaces («Contextual Workspaces»)
+- **Isolated Digital Profiles**: Switch between custom workflow environments in one click or keyboard shortcut (<kbd>Alt</kbd> + <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd>):
+  - 💼 **Work & Dev Space**: Development shortcuts, Git tools, productivity apps, and clean daylight theme.
+  - 🏠 **Personal & Leisure Space**: Social media, entertainment, shopping, and deep nebula theme.
+  - 🎨 **3D & AI Media Space**: Fast access to 3D generators (Meshy, Tripo3D), GLSL shaders, audio/video generation, and cyber amber theme.
+  - ⚡ **Instant In-Place Morphing**: Switches shortcuts, themes, scratchpad notes, and canvas positions without full page reload.
+
+### 🧘 Deep Focus Mode & Zen Distraction Shield
+- **Holistic Concentration Architecture**:
+  - ⚡ **!work / !focus Bang Sync**: Trigger a 25-minute deep focus session via `!work` or <kbd>Alt</kbd> + <kbd>F</kbd>.
+  - 🌫️ **Zen Morphing**: Temporarily dims background distractions, freezes Tech Radar headlines, and spotlights only your active work tools and countdown clock.
+  - 🛡️ **Zen Shield Distraction Blocker**: Intercepts attempts to open distracting social media (Twitter/X, Instagram, Reddit, TikTok) and displays a 4-7-8 breathing pacer with live timer.
+  - 🔔 **Seamless Break Transition**: Smoothly restores full dashboard visibility upon timer completion with an ambient chime.
+
+### 📅 Bento Calendar & Agenda Hub («Universal Schedule Hub»)
+- **Zero-Knowledge Universal Calendar Integration**:
+  - 🔄 **Direct RFC 5545 iCal/ICS Parsing**: Client-side parsing of private iCal subscription URLs from Google Calendar, Microsoft Outlook, Apple iCloud, Nextcloud, or Proton Calendar (0 external proxy servers).
+  - 🚨 **15-Minute Meeting Proximity Radar**: The bento card pulses with a neon warning halo (`.meeting-pulse-alert`) when an event is starting within 15 minutes.
+  - 🚀 **1-Click Video Call Access**: Automatically parses and detects meeting links for **Google Meet**, **Zoom**, **Microsoft Teams**, and **Discord**.
+  - 📐 **Full Bento Freeform Support**: Drag, resize (`tile-calendar`), or toggle visibility with `LayoutManager`.
+
+### 📡 Live Tech Radar & Multi-Channel RSS/Atom Reader
+- **Zero-Dependency Universal Feed Aggregator**:
+  - 📰 **Native DOMParser XML Engine (0 KB)**: Parses any RSS 2.0 or Atom 1.0 feed (HackerNews, Hugging Face, Ars Technica, Blender/3D News, Substack, Reddit) directly in the browser.
+  - 🎛️ **Horizontal Channel Selector**: Toggle between custom feeds with high-speed cached switching (<kbd>30 min TTL</kbd>).
+  - ➕ **Custom Feeds Manager**: Add unlimited custom RSS feeds with custom names and emoji icons.
+  - 📌 **1-Click Post-it Pinning**: Click 📌 on any headline to immediately spawn a floating translucent Glass Post-it on your dashboard.
+
+### 🏷️ Multi-Tag Compound Search & Saved Smart Views («Linear-Style CMDK»)
+- **Professional Multi-Dimensional Filtering**:
+  - 🔍 **Compound Boolean Operators**: Query shortcuts with `tag:<name>` / `#<name>`, `cat:<category>`, `is:fav`, and `freq:top` in a single search string (e.g. `tag:ia tag:3d freq:top`).
+  - 🎨 **Dynamic Color Tag Badges**: Assign vibrant neon hex tags to shortcuts (`#ia`, `#3d`, `#dev`, `#tools`, `#design`).
+  - 🔖 **Saved Smart Views**: Pin any complex search query as a permanent pill in the category bar with 1 click (`🔖 [ 🤖 IA & 3D Top ]`).
+
+### 📈 100% Local Personal Analytics & Predictive Context Engine («My Dashboard Knows Me»)
+- **Privacy-First Zero-Telemetry Intelligence**: All usage statistics are computed in-memory and sliding-window `localStorage` without sending a single byte to external servers:
+  - 🔮 **Time-Aware Smart Suggestions**: Learns your daily habits and displays an interactive context chip (e.g. *"You usually open GitHub & Gmail at 09:00 — Launch now?"*).
+  - 📊 **Procedural 7-Day SVG Activity Chart**: Ultra-lightweight native vector chart (< 2 KB, 0 external chart libraries) tracking your daily launch volume.
+  - 🔥 **Productivity Streak & Peak Hour Detection**: Displays active day streaks and identifies your peak productivity windows (e.g. `10:00 AM`).
+  - 🛡️ **Full Data Sovereignty**: 1-click JSON metrics export and full history wipe with confirmation.
+
 ### 🛸 Radial HUD Action Wheel (360° Gestural Quick Access)
 - **Holographic Circular Menu**: Press <kbd>Middle-Click</kbd> anywhere on the background or <kbd>Alt</kbd> + <kbd>C</kbd> to deploy an 8-node radial wheel orbiting your cursor:
   1. ⚡ **Top Favorites**: Instant launch of your most-used shortcut.
@@ -79,7 +120,7 @@
   8. ⚙️ **Floating Settings**: Open centered configuration modal.
 
 ### ☀️ Dynamic Solar Lighting & Circadian Rhythm Engine
-- **Astronomical Solar Synthesis**: Calculates true solar elevation angle and solar time according to your geographic coordinates (e.g. San Francisco `37.7749`, `-122.4194`):
+- **Astronomical Solar Synthesis**: Calculates true solar elevation angle and solar time according to your geographic coordinates:
   - 🌅 **Golden Dawn (06:00 - 10:00)**: Warm amber gold tones and gentle sunrise glows.
   - ☀️ **High Noon (10:00 - 18:00)**: High-contrast sapphire cyan and crystal daylight mesh.
   - 🌆 **Cyber Twilight (18:00 - 22:00)**: Vibrant neon magenta, sunset violet, and twilight auroras.
@@ -92,114 +133,16 @@
   - 🖥️ **Refresh Rate Monitor**: Real-time display refresh rate detector (60Hz, 120Hz, 144Hz).
   - 🌐 **Instant Offline Auto-Failover**: Dynamic detection of offline states with auto-cached local fallbacks.
 
-### 📡 Live Tech Radar & Multi-Channel RSS/Atom Reader
-- **Zero-Dependency Universal Feed Aggregator**:
-  - 📰 **Native DOMParser XML Engine (0 KB)**: Parses any RSS 2.0 or Atom 1.0 feed (HackerNews, Hugging Face, Ars Technica, Blender/3D News, Substack, Reddit) directly in the browser.
-  - 🎛️ **Horizontal Channel Selector**: Toggle between custom feeds with high-speed cached switching (<kbd>30 min TTL</kbd>).
-  - ➕ **Custom Feeds Manager**: Add unlimited custom RSS feeds with custom names and emoji icons.
-  - 📌 **1-Click Post-it Pinning**: Click 📌 on any headline to immediately spawn a floating translucent Glass Post-it on your dashboard.
-
-- **Real-Time Curated Tech & AI Streams**:
-  - Direct live integration with **HackerNews Top Stories** and AI Radars via zero-backend asynchronous fetch with a 15-minute `localStorage` cache.
-  - **1-Click Post-it Pinning**: Click 📌 on any trending headline to instantly pin it as a floating Glass Post-it for later reading.
-
-### 🧠 Neural WebGPU & Semantic Vector Search Engine
-- **In-Browser Local Semantic Vector Indexing**:
-  - Instant cosine vector similarity matching across all titles, tags, and categories.
-  - Type natural language queries like *"tools for generating 3d models"* or *"where to edit photos with ai"* to automatically highlight matching apps.
-  - **Omnibox AI Assistant**:
-    - `!ai <prompt>`: Instant client-side intelligent answers.
-    - `!t <text>`: Fast multilingual translation helper.
-
-### 🧘 Deep Focus Mode & Zen Distraction Shield
-- **Holistic Concentration Architecture**:
-  - ⚡ **!work / !focus Bang Sync**: Trigger a 25-minute deep focus session via `!work` or <kbd>Alt</kbd> + <kbd>F</kbd>.
-  - 🌫️ **Zen Morphing**: Temporarily dims background distractions, freezes Tech Radar headlines, and spotlights only your active work tools and countdown clock.
-  - 🛡️ **Zen Shield Distraction Blocker**: Intercepts attempts to open distracting social media (Twitter/X, Instagram, Reddit, TikTok) and displays a 4-7-8 breathing pacer with live timer.
-  - 🔔 **Seamless Break Transition**: Smoothly restores full dashboard visibility upon timer completion with an ambient chime.
-
-### 🏷️ Multi-Tag Compound Search & Saved Smart Views («Linear-Style CMDK»)
-- **Professional Multi-Dimensional Filtering**:
-  - 🔍 **Compound Boolean Operators**: Query shortcuts with `tag:<name>` / `#<name>`, `cat:<category>`, `is:fav`, and `freq:top` in a single search string (e.g. `tag:ia tag:3d freq:top`).
-  - 🎨 **Dynamic Color Tag Badges**: Assign vibrant neon hex tags to shortcuts (`#ia`, `#3d`, `#dev`, `#tools`, `#design`).
-  - 🔖 **Saved Smart Views**: Pin any complex search query as a permanent pill in the category bar with 1 click (`🔖 [ 🤖 IA & 3D Top ]`).
-
-### 📅 Bento Calendar & Agenda Hub («Universal Schedule Hub»)
-- **Zero-Knowledge Universal Calendar Integration**:
-  - 🔄 **Direct RFC 5545 iCal/ICS Parsing**: Client-side parsing of private iCal subscription URLs from Google Calendar, Microsoft Outlook, Apple iCloud, Nextcloud, or Proton Calendar (0 external proxy servers).
-  - 🚨 **15-Minute Meeting Proximity Radar**: The bento card pulses with a neon warning halo (`.meeting-pulse-alert`) when an event is starting within 15 minutes.
-  - 🚀 **1-Click Video Call Access**: Automatically parses and detects meeting links for **Google Meet**, **Zoom**, **Microsoft Teams**, and **Discord**.
-  - 📐 **Full Bento Freeform Support**: Drag, resize (`tile-calendar`), or toggle visibility with `LayoutManager`.
-
-### 🪐 Arc-Inspired Multi-Profile Spaces («Contextual Workspaces»)
-- **Isolated Digital Profiles**: Switch between custom workflow environments in one click (<kbd>Alt</kbd> + <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd>):
-  - 💼 **Work & Dev Space**: Development shortcuts, Git tools, productivity apps, and clean daylight theme.
-  - 🏠 **Personal & Leisure Space**: Social media, entertainment, shopping, and deep nebula theme.
-  - 🎨 **3D & AI Media Space**: Fast access to 3D generators (Meshy, Tripo3D), GLSL shaders, audio/video generation, and cyber amber theme.
-  - ⚡ **Instant In-Place Morphing**: Switches shortcuts, themes, scratchpad notes, and canvas positions without full page reload.
-
-### 📈 100% Local Personal Analytics & Predictive Context Engine («My Dashboard Knows Me»)
-- **Privacy-First Zero-Telemetry Intelligence**: All usage statistics are computed in-memory and sliding-window `localStorage` without sending a single byte to external servers:
-  - 🔮 **Time-Aware Smart Suggestions**: Learns your daily habits and displays an interactive context chip (e.g. *"You usually open GitHub & Gmail at 09:00 — Launch now?"*).
-  - 📊 **Procedural 7-Day SVG Activity Chart**: Ultra-lightweight native vector chart (< 2 KB, 0 external chart libraries) tracking your daily launch volume.
-  - 🔥 **Productivity Streak & Peak Hour Detection**: Displays active day streaks and identifies your peak productivity windows (e.g. `10:00 AM`).
-  - 🛡️ **Full Data Sovereignty**: 1-click JSON metrics export and full history wipe with confirmation.
-
-### 🛠️ DevTools Omnibox & «Swiss Army Knife»
-Transform your search bar into an instant utility suite:
-- **`!uuid`**: Generates cryptographically secure UUIDv4 with 1-click clipboard copy.
-- **`!color <value>`**: Full two-way color converter (HEX ⇄ RGB ⇄ HSL) with visual color chips.
-- **`!b64 <text>` / `!b64d <hash>`**: Safe Base64 encoder and decoder in real time.
-- **`!epoch` / `!time <timestamp>`**: Instant UNIX timestamp to readable ISO & relative date converter.
-- **`!qr <text or url>`**: Generates high-resolution **Interactive Glass QR Modal** with PNG download and clipboard copy to seamlessly beam links to your smartphone.
-
-### 🎨 Freeform Canvas & Floating Glass Post-its
-- **Freeform Screen Positioning**: Move any category box, clock, weather, or notes anywhere across the 360° screen canvas with 1:1 cursor lock (`LayoutManager`).
-- **Corner Resize Handles (`↘`)**: Dynamically resize width and height of any widget on the fly.
-- **Glass Post-its**: Pin floating translucent sticky notes with custom neon color cycling, live in-place editing, and persistent positioning.
-
-### 🔍 Smart HD Favicon Auto-Derivation
-- When adding any URL (e.g. `https://figma.com`), the system automatically derives:
-  - Official platform title (`Figma`).
-  - High-Definition 128×128 px official favicon (`Google S2 / IconHorse HD API`).
-
 ### 🎧 Procedural Ambient Focus Sound Engine (0 KB, 100% Offline)
-Pure mathematical acoustic synthesis using modern **Web Audio API** nodes (`AudioContext`, `BiquadFilterNode`, `BufferSourceNode`, `OscillatorNode`) with **0 KB external MP3s, zero streaming and 0% data consumption**:
-- 🌧️ **Cyber Rain**: Algorithmic white/pink noise filtered through a 900 Hz low-pass filter with simulated randomized rainfall gusts.
-- 🚀 **Deep Space (Brown Noise)**: Ultra-low frequency integration (200 Hz cutoff) designed for deep focus, sensory calming, and ADHD symptom relief.
-- ☕ **Binaural Alpha Waves (432 Hz)**: Dual stereo sine wave oscillators (432 Hz left / 440 Hz right) producing a soothing 8 Hz Alpha brainwave beat for sustained creative flow.
-- 🌊 **Cosmic Waves**: Low-frequency oscillator (0.1 Hz) slowly sweeping a resonant bandpass filter across pink noise to create a 10-second rhythmic ocean wave breathing cycle.
-- 🎚️ **Smooth Linear Gain**: Prevents acoustic clicks on start/stop with progressive audio envelope ramping.
-
-### ⚡ Contextual Multi-Action Macros (`!work`, `!chill`, `!3d`, `!social`)
-Execute complete productivity routines with a single compound command:
-- **`!work`**: Launches your dev apps (**GitHub + Claude + ChatGPT**), starts 25-min Pomodoro timer, and turns on 🌧️ Cyber Rain focus audio.
-- **`!chill`**: Opens **YouTube + Suno**, resets timers, and engages 🌊 Cosmic Waves ambient sound.
-- **`!3d`**: Launches **Meshy AI + Tripo 3D + Civitai** with 🚀 Deep Space Brown Noise.
-- **`!social`**: Launches **Discord + X (Twitter) + Instagram** in background tabs.
+Pure mathematical acoustic synthesis using modern **Web Audio API** nodes (`AudioContext`, `BiquadFilterNode`, `BufferSourceNode`, `OscillatorNode`):
+- 🌧️ **Cyber Rain**: Algorithmic noise with randomized rainfall gusts.
+- 🚀 **Deep Space (Brown Noise)**: Ultra-low frequency integration (200 Hz cutoff) for ADHD calming and deep focus.
+- ☕ **Binaural Alpha Waves (432 Hz)**: Dual stereo sine wave oscillators producing an 8 Hz Alpha brainwave beat.
+- 🌊 **Cosmic Waves**: 10-second rhythmic ocean wave breathing cycle.
 
 ### 🔒 Zero-Knowledge Encrypted Cloud Sync (E2EE)
-- **Client-Side PBKDF2 + AES-256-GCM**: Derive 256-bit encryption keys from your master password with 100,000 PBKDF2 iterations using native `window.crypto.subtle`.
-- **Private GitHub Gist Backup**: Safely synchronize all your custom shortcuts, 360° canvas positions, glass post-its, and theme settings across multiple devices with zero server tracking.
-
-### 🌌 Reactive Aurora Canvas Mesh & Mini-HUD Launcher
-- **Pointer-Reactive Fluid Mesh**: Generates multi-layer organic gradient wave curtains that subtly gravitate towards your mouse pointer.
-- **Mini-HUD Launcher (<kbd>Alt</kbd> + <kbd>Space</kbd>)**: Compact glass launcher overlay with instant fuzzy search and quick app launch chips for ultra-minimalist workflows.
-
-### 📝 Bento Mini-Widgets ("Liquid Cards")
-- **Glass Scratchpad**: Fast persistent notepad with auto-save in `localStorage` for ideas, checklists, and tasks.
-- **Pomodoro Focus Timer**: 25 min focus / 5 min break timer with SVG circular progress ring and gentle acoustic alarm chimes.
-- **Ambient Audio Widget**: Integrated audio panel with 1-click sound presets and smooth volume control.
-- **Configurable Visibility**: Toggle widgets on/off anytime from the *Layout & Shortcuts* settings tab.
-
-### 🎨 Custom Theme Studio
-- Live color picker in *Settings > Appearance* to customize primary accent and secondary glow colors with instant CSS variable re-calculation.
-
-### 📥 Universal Browser Bookmarks Importer
-- Import `bookmarks.html` exported from **Google Chrome, Mozilla Firefox, Microsoft Edge, Brave, or Safari** with one click.
-
-### 📱 PWA & Offline Support
-- Fully installable Progressive Web App (`manifest.json` + `sw.js`) for a distraction-free standalone desktop experience on Windows, macOS, and Linux.
+- **Client-Side PBKDF2 + AES-256-GCM**: Derive 256-bit encryption keys with 100,000 PBKDF2 iterations using native `window.crypto.subtle`.
+- **Private GitHub Gist Backup**: Safely synchronize all your custom shortcuts, 360° canvas positions, glass post-its, and theme settings with zero server tracking.
 
 ---
 
@@ -207,26 +150,26 @@ Execute complete productivity routines with a single compound command:
 
 | Command | Action / Destination Service | Example |
 | :--- | :--- | :--- |
-| `!work` | Routine: Open Dev Apps + Start Pomodoro + Rain Audio | `!work` |
-| `!chill` | Routine: Open Media + Cosmic Waves Audio | `!chill` |
-| `!3d` | Routine: Open 3D AI Apps + Space Audio | `!3d` |
+| `!work` / `!focus` | Start 25-min Deep Focus session + Zen Shield blocker | `!work` |
+| `!chill` | Routine: Open Media Apps + Cosmic Waves Audio | `!chill` |
+| `!3d` | Routine: Open 3D AI Tools + Deep Space Audio | `!3d` |
 | `!social` | Routine: Open Community & Social Apps | `!social` |
-| `!uuid` | Generate UUIDv4 with 1-click copy | `!uuid` |
-| `!color <val>` | Color converter & visual preview swatch | `!color #00f2fe` or `!color rgb(0,242,254)` |
-| `!b64 <text>` | Real-time UTF-8 Base64 Encoder | `!b64 Cyberpunk 2077` |
+| `!uuid` | Generate UUIDv4 with 1-click clipboard copy | `!uuid` |
+| `!color <val>` | Color converter & visual preview swatch | `!color #00f2fe` |
+| `!b64 <text>` | Real-time UTF-8 Base64 Encoder | `!b64 Cyberpunk` |
 | `!b64d <hash>` | Real-time Base64 Decoder | `!b64d Q3liZXJwdW5r` |
-| `!time` / `!epoch` | UNIX epoch to local date & relative time | `!time` or `!epoch 1787589157` |
-| `!qr <link>` | Generate Interactive Glass QR Code Modal | `!qr https://github.com` |
+| `!time` / `!epoch` | UNIX epoch to local date & relative time | `!epoch 1787589157` |
+| `!qr <link>` | Generate 100% Client-Side Canvas 2D QR Code | `!qr https://github.com` |
 | `!yt <query>` | YouTube Search | `!yt lofi hip hop` |
 | `!gh <query>` | GitHub Repositories | `!gh three.js` |
 | `!w <query>` | Wikipedia (ES) | `!w James Webb` |
 | `!r <query>` | Reddit Search | `!r webdev` |
 | `!m <query>` | Google Maps | `!m Vigo, Spain` |
 | `!civitai <query>` | Civitai Model Hub | `!civitai cyberpunk` |
-| `!tr <text>` | Google Translate | `!tr thank you so much` |
+| `!tr <text>` | Google Translate | `!tr thank you` |
 | `!npm <pkg>` | NPM Registry | `!npm canvas-confetti` |
-| `!ddg <query>` | DuckDuckGo Direct | `!ddg privacy tools` |
-| `<math expr>` | Instant Math Calculator | `150 * 1.21` or `(45 + 15) / 2` |
+| `!ddg <query>` | DuckDuckGo Direct | `!ddg privacy` |
+| `<math expr>` | Instant Math Calculator | `150 * 1.21` |
 
 ---
 
@@ -234,6 +177,9 @@ Execute complete productivity routines with a single compound command:
 
 | Shortcut | Action |
 | :--- | :--- |
+| <kbd>Alt</kbd> + <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd> | Switch Spaces (*Trabajo & Dev*, *Personal*, *3D & IA*) |
+| <kbd>Alt</kbd> + <kbd>F</kbd> | Toggle Deep Focus Mode & Zen Shield |
+| <kbd>Alt</kbd> + <kbd>C</kbd> / <kbd>Middle-Click</kbd> | Open 360° Radial HUD Action Wheel |
 | <kbd>Alt</kbd> + <kbd>Space</kbd> / <kbd>Ctrl</kbd> + <kbd>Space</kbd> | Open / Close Mini-HUD Launcher Overlay |
 | <kbd>Ctrl</kbd> + <kbd>K</kbd> / <kbd>Cmd</kbd> + <kbd>K</kbd> | Focus the main search bar instantly |
 | <kbd>/</kbd> | Focus search bar (when not typing in an input/textarea) |
@@ -251,29 +197,26 @@ Execute complete productivity routines with a single compound command:
 Test and use the production dashboard directly in your browser without any installation:
 👉 **[https://devildonia.github.io/hades_shortcuts/](https://devildonia.github.io/hades_shortcuts/)**
 
-### Option 2: Direct Local File (Offline)
-Simply clone the repository and double-click [`index.html`](index.html) in your browser. All assets, sounds, and dictionaries run 100% offline without any server setup.
+### Option 2: 🧩 Chrome / Edge / Brave Extension (Manifest V3)
+Transform every new browser tab into HaDeS with 1 click:
+1. Download the pre-built package: [`dist/hades-shortcuts-chrome-v6.0.0.zip`](dist/hades-shortcuts-chrome-v6.0.0.zip) (or clone the repository).
+2. Open `chrome://extensions/` in your Chromium-based browser (Chrome, Edge, Brave, Opera).
+3. Enable **Developer Mode** (toggle in the top-right corner).
+4. Click **Load unpacked** (*Cargar descomprimida*) and select this project folder.
+5. Press <kbd>Ctrl</kbd> + <kbd>T</kbd> to enjoy your instant command center in every new tab!
 
 ### Option 3: Local HTTP Server
-Run the included `local server.bat` script or launch a simple Python server:
 ```bash
 # Launch a lightweight local server
 python -m http.server 8080
 ```
-Then visit `http://localhost:8080` in your favorite browser.
-
-### Option 4: 🧩 Chrome / Edge / Brave Extension (Manifest V3)
-Transform every new browser tab into HaDeS with 1 click:
-1. Open `chrome://extensions/` in your Chromium-based browser (Chrome, Edge, Brave, Opera).
-2. Enable **Developer Mode** (toggle in the top-right corner).
-3. Click **Load unpacked** (*Cargar descomprimida*) and select this project folder.
-4. Press <kbd>Ctrl</kbd> + <kbd>T</kbd> to enjoy your instant command center in every new tab!
+Then visit `http://localhost:8080` in your browser.
 
 ---
 
 ## 🌍 Internationalization (i18n)
 
-All interface strings, category titles, greetings, widgets, and shortcut tooltips are fully localized:
+All interface strings, category titles, greetings, widgets, and shortcut tooltips are fully localized with 100% dictionary parity:
 
 ```
 locales/
@@ -287,52 +230,52 @@ locales/
 
 ## 🏛️ Project Architecture (Anti-God File Modular Design)
 
-The project enforces a strict Single Responsibility Principle (SRP) with native ES6 modules under `/js/` (~50–270 lines each, 0 god files):
+The project enforces a strict Single Responsibility Principle (SRP) with native ES6 modules under `/js/` (~40–270 lines each, 0 god files):
 
 ```
-├── manifest.json            # PWA manifest for desktop installation
+├── manifest.json            # Chrome Extension Manifest V3 & PWA manifest
 ├── sw.js                    # Service Worker for offline cache & performance
 ├── index.html               # Clean, accessible semantic DOM structure
 ├── style.css                # Fluid CSS design tokens, themes & animations
 ├── locales/                 # i18n translation dictionaries (ES, EN, FR, DE)
-├── docs/
-│   └── screenshots/         # High-res previews & animated demo GIF
+├── dist/
+│   └── hades-shortcuts-chrome-v6.0.0.zip # Chrome Extension release package
 ├── js/
-│   ├── app.js               # Main orchestrator & lifecycle manager
-│   ├── platform.js          # Universal platform abstraction (Web/PWA vs Extension)
-│   ├── spaces.js            # Arc-inspired multi-profile spaces manager & hotkeys
-│   ├── focus-mode.js        # Deep Focus Mode, !work bang & Zen Shield distraction blocker
-│   ├── tags-filter.js       # Multi-tag compound query tokenizer & saved smart views
-│   ├── calendar-agenda.js   # RFC 5545 iCal/Google calendar parser & proximity radar
-│   ├── personal-analytics.js# 100% local usage analytics, 7-day SVG chart & smart suggestions
-│   ├── extension-api.js     # Native TopSites & background context menu bridge
-│   ├── sw-extension.js      # Manifest V3 background service worker
-│   ├── state.js             # Reactive central state & localStorage sync
-│   ├── audio.js             # Procedural Web Audio API synthesizer (0 KB)
-│   ├── ambient-audio.js     # Procedural focus ambient soundscapes (0 KB)
-│   ├── aurora-canvas.js     # Reactive Aurora Canvas mesh & Mini-HUD launcher
-│   ├── solar-engine.js      # Astronomical solar elevation & circadian lighting
-│   ├── radial-hud.js        # 360° holographic action wheel & sub-orbital favs
-│   ├── telemetry.js         # Real-time ping, battery, fps & offline monitor
-│   ├── tech-radar.js        # Live HackerNews/AI tech radar bento capsule
-│   ├── neural-search.js     # Local semantic vector search & AI assistant
-│   ├── macros.js            # Compound multi-action macro & routine engine
-│   ├── crypto-sync.js       # Zero-knowledge AES-256-GCM + GitHub Gist sync
-│   ├── bangs.js             # Bang commands parser & safe math calculator
-│   ├── devtools.js          # Built-in DevTools Omnibox & QR Code Generator
-│   ├── postits.js           # Floating Glass Post-its manager
-│   ├── layout.js            # Freeform Canvas & Corner Resize Engine (rAF)
-│   ├── widgets.js           # Bento widgets manager (Scratchpad + Pomodoro)
-│   ├── theme-studio.js      # Real-time custom theme color palette generator
-│   ├── importer.js          # Universal HTML bookmarks parser (Chrome/Firefox)
-│   ├── i18n.js              # Localization engine & dynamic loader
-│   ├── weather.js           # Precision clock & Open-Meteo weather geocoder
-│   ├── search.js            # Multi-engine search, bangs & arrow navigation
-│   ├── render.js            # Dynamic Bento grid, cards & smart tooltips
-│   ├── dragdrop.js          # Inner card reordering drag & drop manager
-│   ├── shortcut-manager.js  # Add / Edit / Delete modal & HD Favicon engine
-│   ├── backup.js            # JSON export, import & factory reset
-│   └── settings.js          # Floating settings modal controller
+│   ├── app.js               # Main orchestrator & lifecycle manager (229 lines)
+│   ├── platform.js          # Universal platform abstraction: Web vs Extension (40 lines)
+│   ├── spaces.js            # Arc-inspired multi-profile spaces manager (154 lines)
+│   ├── focus-mode.js        # Deep Focus Mode, !work bang & Zen Shield blocker (155 lines)
+│   ├── tags-filter.js       # Multi-tag compound query tokenizer & saved smart views (212 lines)
+│   ├── calendar-agenda.js   # RFC 5545 iCal/Google calendar parser & proximity radar (188 lines)
+│   ├── personal-analytics.js# 100% local usage analytics, 7-day SVG chart & suggestions (207 lines)
+│   ├── extension-api.js     # Native TopSites & background context menu bridge (79 lines)
+│   ├── sw-extension.js      # Manifest V3 background service worker (30 lines)
+│   ├── state.js             # Reactive central state & localStorage sync (231 lines)
+│   ├── audio.js             # Procedural Web Audio API synthesizer (100 lines)
+│   ├── ambient-audio.js     # Procedural focus ambient soundscapes (252 lines)
+│   ├── aurora-canvas.js     # Reactive Aurora Canvas mesh & Mini-HUD launcher (212 lines)
+│   ├── solar-engine.js      # Astronomical solar elevation & circadian lighting (63 lines)
+│   ├── radial-hud.js        # 360° holographic action wheel & sub-orbital favs (228 lines)
+│   ├── telemetry.js         # Real-time ping, battery, fps & offline monitor (109 lines)
+│   ├── tech-radar.js        # Multi-channel RSS/Atom feed reader & aggregator (248 lines)
+│   ├── neural-search.js     # Local semantic vector search & AI assistant (155 lines)
+│   ├── macros.js            # Compound multi-action macro & routine engine (117 lines)
+│   ├── crypto-sync.js       # Zero-knowledge AES-256-GCM + GitHub Gist sync (228 lines)
+│   ├── bangs.js             # Bang commands parser & safe math calculator (115 lines)
+│   ├── devtools.js          # Built-in DevTools Omnibox & Canvas 2D QR Generator (252 lines)
+│   ├── postits.js           # Floating Glass Post-its manager (238 lines)
+│   ├── layout.js            # Freeform Canvas & Corner Resize Engine (269 lines)
+│   ├── widgets.js           # Bento widgets manager: Scratchpad + Pomodoro (140 lines)
+│   ├── theme-studio.js      # Real-time custom theme color palette generator (69 lines)
+│   ├── importer.js          # Universal HTML bookmarks parser (84 lines)
+│   ├── i18n.js              # Localization engine & dynamic loader (68 lines)
+│   ├── weather.js           # Precision clock & Open-Meteo weather geocoder (275 lines)
+│   ├── search.js            # Multi-engine search, bangs & arrow navigation (271 lines)
+│   ├── render.js            # Dynamic Bento grid, cards & smart tooltips (194 lines)
+│   ├── dragdrop.js          # Inner card reordering drag & drop manager (111 lines)
+│   ├── shortcut-manager.js  # Add / Edit / Delete modal & HD Favicon engine (254 lines)
+│   ├── backup.js            # JSON export, import & factory reset (96 lines)
+│   └── settings.js          # Floating settings modal controller (215 lines)
 ├── iconos/                  # 48 optimized WebP icon assets (60x60)
 └── sounds/                  # Haptic audio fallback assets
 ```
