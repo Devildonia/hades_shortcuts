@@ -18,6 +18,9 @@ with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
         if os.path.exists(d):
             for root, _, files in os.walk(d):
                 for f in files:
+                    if f == 'bundle.js':
+                        print(f"Skipped stale bundle: {os.path.join(root, f)}")
+                        continue
                     full_path = os.path.join(root, f)
                     rel_path = os.path.relpath(full_path, '.')
                     zipf.write(full_path, rel_path)

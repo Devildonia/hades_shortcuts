@@ -1,6 +1,6 @@
 // js/layout.js - Freeform Canvas & Resize Layout Manager (rAF Throttled & Exact Cursor Lock)
 
-import { state } from './state.js';
+import { state, persistJson } from './state.js';
 import { soundFx } from './audio.js';
 
 export class LayoutManager {
@@ -21,9 +21,7 @@ export class LayoutManager {
     }
 
     savePositions() {
-        try {
-            localStorage.setItem('canvas_positions_v1', JSON.stringify(this.positions));
-        } catch (e) {}
+        persistJson('canvas_positions_v1', this.positions);
     }
 
     init() {

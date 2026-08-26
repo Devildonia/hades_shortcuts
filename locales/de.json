@@ -188,7 +188,7 @@
       "import_desc": "Laden Sie eine zuvor exportierte JSON-Sicherungsdatei.",
       "import_btn": "📤 Aus Datei wiederherstellen",
       "reset_title": "Werkseinstellungen",
-      "reset_desc": "Stellt die ursprünglichen 45 Standard-Verknüpfungen wieder her.",
+      "reset_desc": "Stellt die ursprünglichen 50 Standard-Verknüpfungen wieder her.",
       "reset_btn": "⚠️ Auf Standard zurücksetzen",
       "reset_confirm": "Möchten Sie wirklich die Werkseinstellungen wiederherstellen?",
       "import_success": "Sicherung erfolgreich wiederhergestellt!",

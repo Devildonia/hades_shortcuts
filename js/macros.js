@@ -92,6 +92,11 @@ export class MacroEngine {
             if (macro.pomodoro === 'reset' && resetBtn) resetBtn.click();
         }
 
+        const triggerKey = (trigger || '').toLowerCase().trim();
+        if ((triggerKey === '!work' || triggerKey === '!focus') && focusMode && !focusMode.isActive) {
+            focusMode.activateFocus(25);
+        }
+
         if (Array.isArray(macro.shortcuts)) {
             macro.shortcuts.forEach((key) => {
                 const s = (state.shortcuts || []).find(item => (item.id || item.title.toLowerCase().replace(/\s+/g, '')) === key.toLowerCase() || item.title.toLowerCase() === key.toLowerCase());

@@ -41,15 +41,23 @@ export class FocusModeEngine {
         document.body.classList.add('focus-mode-active');
         state.emit('focus:activated', { duration: durationMinutes });
 
-        // Timer interval
-        clearInterval(this.timerId);
-        this.timerId = setInterval(() => {
-            this.remainingSeconds--;
-            this.updateShieldTimer();
-            if (this.remainingSeconds <= 0) {
-                this.deactivateFocus(true);
-            }
-        }, 1000);
+        const wm = window.widgetsManager;
+        if (wm && wm.pomodoroState) {
+            wm.pomodoroState.mode = 'focus';
+            wm.pomodoroState.duration = durationMinutes * 60;
+            wm.pomodoroState.remaining = this.remainingSeconds;
+            if (!wm.pomodoroState.isRunning) wm.startPomodoro();
+            else wm.updatePomodoroDisplay();
+            const startBtn = document.getElementById('pomodoro-start-btn');
+            if (startBtn) startBtn.textContent = wm.getLabel('pause');
+        } else {
+            clearInterval(this.timerId);
+            this.timerId = setInterval(() => {
+                this.remainingSeconds--;
+                this.updateShieldTimer();
+                if (this.remainingSeconds <= 0) this.deactivateFocus(true);
+            }, 1000);
+        }
 
         this.updateUI();
     }
@@ -66,6 +74,12 @@ export class FocusModeEngine {
             alert('🎉 ¡Sesión de Deep Work completada con éxito! Tómate un respiro.');
         } else {
             soundFx.play('click');
+            const wm = window.widgetsManager;
+            if (wm && wm.pomodoroState && wm.pomodoroState.isRunning) {
+                wm.pausePomodoro();
+                const startBtn = document.getElementById('pomodoro-start-btn');
+                if (startBtn) startBtn.textContent = wm.getLabel('start');
+            }
         }
 
         state.emit('focus:deactivated', { completed });

@@ -28,8 +28,11 @@ export class DashboardRenderer {
         this.gridContainer.innerHTML = '';
         const t = i18nDictionaries[state.language] || i18nDictionaries.es;
 
+        const spaces = window.spacesManager;
         state.categories.forEach(cat => {
+            if (spaces && typeof spaces.allowsCategory === 'function' && !spaces.allowsCategory(cat.id)) return;
             const shortcutsInCat = state.shortcuts.filter(s => s.category === cat.id);
+            if (!shortcutsInCat.length && !state.editMode) return;
             const section = document.createElement('section');
             const isFeatured = shortcutsInCat.length > 6 || cat.featured;
             section.className = `categoria ${isFeatured ? 'categoria-featured' : ''}`;
@@ -67,12 +70,7 @@ export class DashboardRenderer {
                         focusMode.showZenShield(href);
                         return;
                     }
-                    try {
-                        const stats = JSON.parse(localStorage.getItem('shortcut_usage_stats_v1') || '{}');
-                        stats[shortcut.id] = (stats[shortcut.id] || 0) + 1;
-                        localStorage.setItem('shortcut_usage_stats_v1', JSON.stringify(stats));
-                        personalAnalytics.logLaunch(shortcut.id, shortcut.title);
-                    } catch (err) {}
+                    personalAnalytics.logLaunch(shortcut.id, shortcut.title);
                 });
                 card.setAttribute('data-id', shortcut.id);
                 card.setAttribute('data-title', shortcut.title);

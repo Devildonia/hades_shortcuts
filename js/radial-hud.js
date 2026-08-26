@@ -4,6 +4,7 @@ import { state, escapeHtml, bindIconFallback, faviconForUrl } from './state.js';
 import { soundFx } from './audio.js';
 import { ambientAudio } from './ambient-audio.js';
 import { i18nDictionaries } from './i18n.js';
+import { personalAnalytics } from './personal-analytics.js';
 
 export class RadialHUDEngine {
     constructor() {
@@ -72,8 +73,7 @@ export class RadialHUDEngine {
     }
 
     getMostUsedShortcuts() {
-        let stats = {};
-        try { stats = JSON.parse(localStorage.getItem('shortcut_usage_stats_v1') || '{}'); } catch (e) {}
+        const stats = (personalAnalytics && personalAnalytics.data && personalAnalytics.data.shortcutCounts) || {};
         const all = [...(state.shortcuts || [])];
         all.sort((a, b) => (stats[b.id] || 0) - (stats[a.id] || 0));
 

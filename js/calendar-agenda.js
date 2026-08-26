@@ -172,11 +172,11 @@ export class CalendarAgendaEngine {
                 <span class="event-time-badge">${escapeHtml(dayLabel)} ${escapeHtml(timeFmt)}</span>
                 <div class="event-info">
                     <strong class="event-title">${escapeHtml(ev.title)}</strong>
-                    ${isImminent ? `<span class="event-alert-tag">⏰ En ${diffMin}m</span>` : ''}
+                    ${isImminent ? `<span class="event-alert-tag">En ${diffMin}m</span>` : ''}
                 </div>
-                <div style="display: flex; gap: 4px; align-items: center;">
-                    ${ev.link && safeHttpUrl(ev.link) ? `<a href="${escapeHtml(safeHttpUrl(ev.link))}" target="_blank" rel="noopener noreferrer" class="meet-link-btn" title="Entrar a reunión">🚀</a>` : ''}
-                    <button class="event-del-btn" data-ev-id="${ev.id}" title="Eliminar evento" style="background:none; border:none; color:rgba(255,255,255,0.4); cursor:pointer; font-size:0.75rem; padding:2px 4px;">✕</button>
+                <div class="event-actions">
+                    ${ev.link && safeHttpUrl(ev.link) ? `<a href="${escapeHtml(safeHttpUrl(ev.link))}" target="_blank" rel="noopener noreferrer" class="meet-link-btn" title="Entrar a reunión" aria-label="Entrar a reunión"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l2.12-2.12a5 5 0 0 0-7.07-7.07L11 5"></path><path d="M14 11a5 5 0 0 0-7.07 0L4.81 13.12a5 5 0 0 0 7.07 7.07L13 19"></path></svg></a>` : ''}
+                    <button class="event-del-btn" data-ev-id="${ev.id}" title="Eliminar evento" aria-label="Eliminar evento">✕</button>
                 </div>
             `;
             row.querySelector('.event-del-btn')?.addEventListener('click', () => this.deleteEvent(ev.id));

@@ -22,6 +22,7 @@ export class SearchEngineManager {
     constructor() {
         this.searchInput = document.getElementById('main-search') || document.getElementById('search-input') || document.querySelector('.search-input');
         this.searchClear = document.getElementById('clear-search') || document.getElementById('search-clear-btn') || document.getElementById('search-clear');
+        this.searchBox = document.querySelector('.search-box-wrapper');
         this.engineBtn = document.getElementById('engine-btn');
         this.engineMenu = document.getElementById('engine-menu');
         this.engineIcon = document.getElementById('engine-icon-current');
@@ -36,6 +37,7 @@ export class SearchEngineManager {
         this.setEngine(this.currentEngineKey);
         this.syncActiveFilterPill();
         this.bindEvents();
+        this.syncClearButton();
         this.updatePillCounts();
         this.filterShortcuts();
 
@@ -93,6 +95,17 @@ export class SearchEngineManager {
         if (this.searchInput) {
             this.searchInput.placeholder = t.search.placeholder.replace('{engine}', engine.name);
         }
+        if (this.searchClear) {
+            const clearLabel = (t.search && t.search.clear) || 'Limpiar búsqueda';
+            this.searchClear.setAttribute('aria-label', clearLabel);
+            this.searchClear.setAttribute('title', clearLabel);
+        }
+    }
+
+    syncClearButton() {
+        const hasValue = !!(this.searchInput && this.searchInput.value);
+        if (this.searchClear) this.searchClear.classList.toggle('hidden', !hasValue);
+        if (this.searchBox) this.searchBox.classList.toggle('is-filled', hasValue);
     }
 
     updatePillCounts() {
@@ -107,6 +120,7 @@ export class SearchEngineManager {
         const categories = document.querySelectorAll('.categoria');
         let totalVisible = 0;
 
+        let commandMode = false;
         const macro = macroEngine.getMacro(query);
         if (macro) {
             if (this.calcBanner) {
@@ -115,33 +129,33 @@ export class SearchEngineManager {
                 const trigger = document.getElementById('run-macro-trigger');
                 if (trigger) trigger.onclick = () => macroEngine.executeMacro(query);
             }
-            return;
+            commandMode = true;
         }
 
-        // 1. Check DevTools Omnibox Banner (case-sensitive)
-        const handledByDevTools = devTools.renderBanner(rawQuery, this.calcBanner);
+        const handledByDevTools = !commandMode && devTools.renderBanner(rawQuery, this.calcBanner);
         if (handledByDevTools) {
             if (this.calcBanner) this.calcBanner.classList.remove('hidden');
-            return;
+            commandMode = true;
         }
 
-        // 2. Check Arithmetic Calculator
-        // Check AI & Translation Commands
-        const isAIHandled = neuralSearch.handleAICommands(query, this.calcBanner);
-        if (isAIHandled) {
-            return;
-        }
+        const isAIHandled = !commandMode && neuralSearch.handleAICommands(query, this.calcBanner);
+        if (isAIHandled) commandMode = true;
 
-        const calcResult = evaluateArithmetic(query);
-        if (this.calcBanner) {
-            if (calcResult !== null) {
-                const t = (i18nDictionaries[state.language] || i18nDictionaries.es).bangs || {};
-                this.calcBanner.innerHTML = `<span>🔢 <strong>${t.calc_title || 'Resultado'}:</strong></span> <span class="calc-val">${calcResult}</span>`;
-                this.calcBanner.classList.remove('hidden');
-            } else {
-                this.calcBanner.classList.add('hidden');
+        if (!commandMode) {
+            const calcResult = evaluateArithmetic(query);
+            if (this.calcBanner) {
+                if (calcResult !== null) {
+                    const t = (i18nDictionaries[state.language] || i18nDictionaries.es).bangs || {};
+                    this.calcBanner.innerHTML = `<span>🔢 <strong>${t.calc_title || 'Resultado'}:</strong></span> <span class="calc-val">${calcResult}</span>`;
+                    this.calcBanner.classList.remove('hidden');
+                } else {
+                    this.calcBanner.classList.add('hidden');
+                }
             }
         }
+
+        const semanticHits = (!commandMode && query.length >= 3) ? (neuralSearch.semanticSearch(rawQuery) || []) : [];
+        const semanticIds = new Set(semanticHits.filter((h) => h.score >= 35).map((h) => h.id));
 
         categories.forEach(cat => {
             const group = cat.getAttribute('data-group');
@@ -165,7 +179,7 @@ export class SearchEngineManager {
                 const text = (card.innerText || card.textContent || '').toLowerCase();
 
                 const parsedFilter = tagsFilter.parseQuery(query);
-                const matchesQuery = !query || tagsFilter.matches(shortcut, parsedFilter) || title.includes(query) || tags.includes(query) || desc.includes(query) || text.includes(query);
+                const matchesQuery = !commandMode && (!query || tagsFilter.matches(shortcut, parsedFilter) || title.includes(query) || tags.includes(query) || desc.includes(query) || text.includes(query) || semanticIds.has(sid));
 
                 if (matchesPill && matchesQuery) {
                     card.classList.remove('hidden-by-filter', 'no-match');
@@ -188,6 +202,9 @@ export class SearchEngineManager {
                 }
             }
         });
+
+        const noRes = document.getElementById('no-results-msg');
+        if (noRes) noRes.classList.toggle('hidden', commandMode || !query || totalVisible > 0);
     }
 
     executeSearch(query) {
@@ -220,21 +237,29 @@ export class SearchEngineManager {
     bindEvents() {
         if (this.searchInput) {
             this.searchInput.addEventListener('input', () => {
-                if (this.searchClear) {
-                    this.searchClear.classList.toggle('hidden', !this.searchInput.value);
-                }
+                this.syncClearButton();
                 this.filterShortcuts();
             });
 
             this.searchInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
+                    const focused = document.querySelector('.enlace-icono.bento-kbd-focus:not(.hidden-by-filter)');
+                    if (focused && focused.href) {
+                        this.openExternal(focused.href);
+                        return;
+                    }
                     this.executeSearch(this.searchInput.value);
                 }
                 if (e.key === 'Escape') {
                     this.searchInput.value = '';
-                    if (this.searchClear) this.searchClear.classList.add('hidden');
+                    this.syncClearButton();
                     this.filterShortcuts();
+                }
+                if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.moveCardFocus(e.key);
                 }
             });
         }
@@ -243,7 +268,7 @@ export class SearchEngineManager {
             this.searchClear.addEventListener('click', () => {
                 soundFx.play('click');
                 this.searchInput.value = '';
-                this.searchClear.classList.add('hidden');
+                this.syncClearButton();
                 this.filterShortcuts();
                 this.searchInput.focus();
             });
@@ -285,5 +310,33 @@ export class SearchEngineManager {
                 this.filterShortcuts();
             });
         });
+
+        document.addEventListener('keydown', (e) => {
+            if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+            const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+            if (tag === 'input' || tag === 'textarea' || (document.activeElement && document.activeElement.isContentEditable)) return;
+            e.preventDefault();
+            this.moveCardFocus(e.key);
+        });
+    }
+
+    visibleCards() {
+        return [...document.querySelectorAll('.enlace-icono')].filter((c) =>
+            !c.classList.contains('hidden-by-filter') && !c.classList.contains('no-match') && c.offsetParent
+        );
+    }
+
+    moveCardFocus(key) {
+        const cards = this.visibleCards();
+        if (!cards.length) return;
+        let idx = cards.findIndex((c) => c.classList.contains('bento-kbd-focus'));
+        if (idx < 0) idx = (key === 'ArrowLeft' || key === 'ArrowUp') ? cards.length - 1 : 0;
+        else if (key === 'ArrowRight' || key === 'ArrowDown') idx = (idx + 1) % cards.length;
+        else idx = (idx - 1 + cards.length) % cards.length;
+        cards.forEach((c) => c.classList.remove('bento-kbd-focus'));
+        cards[idx].classList.add('bento-kbd-focus');
+        cards[idx].setAttribute('tabindex', '0');
+        cards[idx].focus();
+        cards[idx].scrollIntoView({ block: 'nearest', inline: 'nearest' });
     }
 }

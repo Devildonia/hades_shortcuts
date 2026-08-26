@@ -1,6 +1,6 @@
 // js/aurora-canvas.js - Interactive Aurora Fluid Canvas Mesh & Mini-HUD Launcher (Phase 5)
 
-import { state } from './state.js';
+import { state, escapeHtml, safeHttpUrl, normalizeTags } from './state.js';
 import { soundFx } from './audio.js';
 
 export class AuroraCanvasEngine {
@@ -172,14 +172,23 @@ export class MiniHudManager {
     renderHudShortcuts(query) {
         if (!this.hudResults) return;
         const q = query.toLowerCase().trim();
-        const list = state.shortcuts.filter(s => !q || s.title.toLowerCase().includes(q) || (s.tags && s.tags.toLowerCase().includes(q))).slice(0, 8);
+        const list = state.shortcuts.filter((s) => {
+            if (!q) return true;
+            const tags = normalizeTags(s.tags).join(' ');
+            return (s.title || '').toLowerCase().includes(q) || tags.includes(q);
+        }).slice(0, 8);
 
-        this.hudResults.innerHTML = list.map(s => `
-            <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="hud-item-chip">
-                <img src="${s.icon}" alt="${s.title}" class="hud-item-icon" onerror="this.src='favicon.ico'">
-                <span>${s.title}</span>
-            </a>
-        `).join('');
+        this.hudResults.innerHTML = list.map((s) => {
+            const href = safeHttpUrl(s.url) || '#';
+            return `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" class="hud-item-chip">
+                <img src="${escapeHtml(s.icon || '')}" alt="${escapeHtml(s.title)}" class="hud-item-icon">
+                <span>${escapeHtml(s.title)}</span>
+            </a>`;
+        }).join('');
+        this.hudResults.querySelectorAll('img').forEach((img, i) => {
+            img.addEventListener('error', () => { img.src = 'favicon.ico'; }, { once: true });
+            if (list[i]) img.alt = list[i].title || '';
+        });
     }
 
     bindEvents() {

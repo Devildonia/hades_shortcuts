@@ -15,7 +15,6 @@ export class CryptoSyncEngine {
         this.tokenInput = document.getElementById('sync-token-input');
         this.gistInput = document.getElementById('sync-gist-input');
         this.passInput = document.getElementById('sync-pass-input');
-        this.syncBtn = document.getElementById('sync-now-btn');
         this.pushBtn = document.getElementById('sync-push-btn');
         this.pullBtn = document.getElementById('sync-pull-btn');
         this.statusEl = document.getElementById('sync-status-msg');
@@ -226,6 +225,5 @@ export class CryptoSyncEngine {
     bindEvents() {
         if (this.pushBtn) this.pushBtn.addEventListener('click', () => this.pushToGist());
         if (this.pullBtn) this.pullBtn.addEventListener('click', () => this.pullFromGist());
-        if (this.syncBtn) this.syncBtn.addEventListener('click', () => this.pushToGist());
     }
 }

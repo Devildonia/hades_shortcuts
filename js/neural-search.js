@@ -1,5 +1,6 @@
-// js/neural-search.js - Neural WebGPU & Semantic Vector Search Engine with Live AI Answers & Translator
+// js/neural-search.js - Token-overlap semantic search, live AI answers & translator
 
+import { aiAgent } from './ai-agent.js';
 import { state, escapeHtml } from './state.js';
 import { i18nDictionaries } from './i18n.js';
 
@@ -64,16 +65,12 @@ export class NeuralSearchEngine {
         if (trimmed.startsWith('!ai ') || trimmed.startsWith('!ask ')) {
             const prompt = trimmed.replace(/^!(ai|ask)\s+/, '').trim();
             if (!prompt) return false;
-            
-            // Immediate local response
-            const quickAnswer = this.generateLocalQuickAnswer(prompt);
-            if (bannerEl) {
-                bannerEl.innerHTML = `<span>🧠 <strong>${t.ai_answer_title || 'Asistente IA'}:</strong></span> <span>${quickAnswer}</span>`;
+            if (aiAgent && typeof aiAgent.openAndQuery === 'function') {
+                aiAgent.openAndQuery(prompt);
+            } else if (bannerEl) {
+                bannerEl.innerHTML = `<span>🧠 <strong>${t.ai_answer_title || 'Asistente IA'}:</strong></span> <span>${this.generateLocalQuickAnswer(prompt)}</span>`;
                 bannerEl.classList.remove('hidden');
             }
-
-            // Async fetch rich knowledge from DuckDuckGo Instant API
-            this.fetchLiveInstantKnowledge(prompt, bannerEl);
             return true;
         }
 

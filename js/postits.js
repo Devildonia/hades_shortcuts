@@ -1,7 +1,7 @@
 // js/postits.js - Floating Glass Post-it System
 
 import { soundFx } from './audio.js';
-import { escapeHtml } from './state.js';
+import { escapeHtml, persistJson } from './state.js';
 
 export class PostItManager {
     constructor() {
@@ -63,9 +63,7 @@ export class PostItManager {
     }
 
     savePostIts() {
-        try {
-            localStorage.setItem('glass_postits_v1', JSON.stringify(this.postits));
-        } catch (e) {}
+        persistJson('glass_postits_v1', this.postits);
     }
 
         createPostIt(text, x = null, y = null, color = 'cyan') {

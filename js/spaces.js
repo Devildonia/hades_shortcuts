@@ -1,8 +1,34 @@
 // js/spaces.js - Arc-Inspired Multi-Profile Contextual Spaces Engine
 
-import { state, persistJson } from './state.js';
+import { state, persistJson, escapeHtml, DEFAULT_SHORTCUTS } from './state.js';
 import { soundFx } from './audio.js';
-import { i18nDictionaries } from './i18n.js';
+
+export const SPACE_PRESETS = {
+    space_work: {
+        id: 'space_work',
+        name: 'Trabajo & Dev',
+        theme: 'cyber',
+        accent: '#00f2fe',
+        categoryIds: null,
+        scratchpad: 'Notas de trabajo y proyectos activos...'
+    },
+    space_personal: {
+        id: 'space_personal',
+        name: 'Personal & Ocio',
+        theme: 'nebula',
+        accent: '#c084fc',
+        categoryIds: ['cat_social', 'cat_shopping', 'cat_gaming', 'cat_google', 'cat_tools', 'cat_video'],
+        scratchpad: 'Ideas personales, compras y lecturas pendientes...'
+    },
+    space_3d: {
+        id: 'space_3d',
+        name: '3D & Creación IA',
+        theme: 'sunset',
+        accent: '#fb923c',
+        categoryIds: ['cat_3d', 'cat_ai', 'cat_art', 'cat_audio', 'cat_video', 'cat_google'],
+        scratchpad: 'Prompts creativos, texturas y referencias de modelado...'
+    }
+};
 
 export class SpacesEngine {
     constructor() {
@@ -10,51 +36,47 @@ export class SpacesEngine {
         this.data = this.loadSpaces();
     }
 
+    defaultSpaces() {
+        return Object.values(SPACE_PRESETS).map((preset) => ({
+            id: preset.id,
+            name: preset.name,
+            theme: preset.theme,
+            accent: preset.accent,
+            categoryIds: preset.categoryIds ? [...preset.categoryIds] : null,
+            scratchpad: preset.scratchpad
+        }));
+    }
+
     loadSpaces() {
+        let parsed = null;
         try {
             const raw = localStorage.getItem(this.storageKey);
-            if (raw) return JSON.parse(raw);
+            if (raw) parsed = JSON.parse(raw);
         } catch (e) {}
 
-        // Default Initial Preset Spaces
-        const defaultShortcuts = state.shortcuts || [];
-        const byGroup = (groups) => defaultShortcuts.filter((s) => {
-            const cat = (state.categories || []).find((c) => c.id === s.category);
-            return cat && groups.includes(cat.group);
+        const defaults = this.defaultSpaces();
+        if (!parsed || !Array.isArray(parsed.spaces) || !parsed.spaces.length) {
+            return { activeSpaceId: 'space_work', spaces: defaults };
+        }
+
+        const byId = new Map(parsed.spaces.map((s) => [s.id, s]));
+        const spaces = defaults.map((preset) => {
+            const saved = byId.get(preset.id) || {};
+            return {
+                ...preset,
+                name: saved.name || preset.name,
+                theme: saved.theme || preset.theme,
+                accent: preset.accent,
+                categoryIds: preset.categoryIds ? [...preset.categoryIds] : null,
+                scratchpad: saved.scratchpad !== undefined ? saved.scratchpad : preset.scratchpad,
+                shortcuts: saved.shortcuts
+            };
         });
-        return {
-            activeSpaceId: 'space_work',
-            spaces: [
-                {
-                    id: 'space_work',
-                    name: 'Trabajo & Dev',
-                    icon: '💼',
-                    theme: 'cyber',
-                    shortcuts: defaultShortcuts,
-                    scratchpad: 'Notas de trabajo y proyectos activos...'
-                },
-                {
-                    id: 'space_personal',
-                    name: 'Personal & Ocio',
-                    icon: '🏠',
-                    theme: 'nebula',
-                    shortcuts: byGroup(['social-compras', 'productividad']).length
-                        ? byGroup(['social-compras', 'productividad'])
-                        : defaultShortcuts.filter((s) => ['google', 'youtube', 'amazon'].some((k) => (s.id || '').includes(k))),
-                    scratchpad: 'Ideas personales, compras y lecturas pendientes...'
-                },
-                {
-                    id: 'space_3d',
-                    name: '3D & Creación IA',
-                    icon: '🎨',
-                    theme: 'sunset',
-                    shortcuts: byGroup(['ia-creativa', 'arte-media']).length
-                        ? byGroup(['ia-creativa', 'arte-media'])
-                        : defaultShortcuts.filter((s) => ['meshy', 'tripo', 'suno', 'kling'].some((k) => (s.id || '').includes(k))),
-                    scratchpad: 'Prompts creativos, texturas y referencias de modelado...'
-                }
-            ]
-        };
+
+        const activeSpaceId = spaces.some((s) => s.id === parsed.activeSpaceId)
+            ? parsed.activeSpaceId
+            : 'space_work';
+        return { activeSpaceId, spaces };
     }
 
     saveSpaces() {
@@ -62,39 +84,62 @@ export class SpacesEngine {
     }
 
     getActiveSpace() {
-        return this.data.spaces.find(s => s.id === this.data.activeSpaceId) || this.data.spaces[0];
+        return this.data.spaces.find((s) => s.id === this.data.activeSpaceId) || this.data.spaces[0];
+    }
+
+    allowsCategory(catId) {
+        const space = this.getActiveSpace();
+        if (!space || !Array.isArray(space.categoryIds) || space.categoryIds.length === 0) return true;
+        return space.categoryIds.includes(catId);
+    }
+
+    hydrateCatalog() {
+        const byId = new Map();
+        (state.shortcuts || []).forEach((s) => {
+            if (s && s.id) byId.set(s.id, s);
+        });
+        this.data.spaces.forEach((sp) => {
+            (sp.shortcuts || []).forEach((s) => {
+                if (s && s.id && !byId.has(s.id)) byId.set(s.id, s);
+            });
+        });
+        const ensureCats = new Set(['cat_gaming', 'cat_ai', 'cat_google']);
+        DEFAULT_SHORTCUTS.forEach((s) => {
+            if (ensureCats.has(s.category) && !byId.has(s.id)) byId.set(s.id, { ...s });
+        });
+        const merged = [...byId.values()];
+        state.shortcuts = merged;
+        persistJson('custom_shortcuts_v2', merged);
+    }
+
+    applySpaceChrome() {
+        const space = this.getActiveSpace();
+        document.body.setAttribute('data-active-space', space ? space.id : 'space_work');
+        if (space && space.accent) {
+            document.body.style.setProperty('--space-accent', space.accent);
+        }
     }
 
     switchSpace(spaceId) {
         if (spaceId === this.data.activeSpaceId) return;
-        const target = this.data.spaces.find(s => s.id === spaceId);
+        const target = this.data.spaces.find((s) => s.id === spaceId);
         if (!target) return;
 
         soundFx.play('chime');
 
-        // 1. Save current active space state
         const current = this.getActiveSpace();
         if (current) {
-            current.shortcuts = [...(state.shortcuts || [])];
             current.theme = state.theme;
             const padInput = document.getElementById('scratchpad-input');
             if (padInput) current.scratchpad = padInput.value;
         }
 
-        // 2. Set new active space ID
         this.data.activeSpaceId = spaceId;
         this.saveSpaces();
+        this.applySpaceChrome();
 
-        // 3. Hydrate state with target space data
-        if (target.shortcuts && target.shortcuts.length > 0) {
-            state.shortcuts = [...target.shortcuts];
-            state.saveShortcuts(state.shortcuts);
-        }
-        if (target.theme) {
-            state.setTheme(target.theme);
-        }
+        if (target.theme) state.setTheme(target.theme);
 
-        // 4. Update Scratchpad
         const padInput = document.getElementById('scratchpad-input');
         if (padInput && target.scratchpad !== undefined) {
             padInput.value = target.scratchpad;
@@ -102,11 +147,9 @@ export class SpacesEngine {
             localStorage.setItem('hades_scratchpad_content', target.scratchpad);
         }
 
-        // 5. Emit events and re-render
-        state.emit('shortcuts:changed');
         this.renderHeaderSwitcher();
+        state.emit('space:changed', spaceId);
 
-        // Visual flash morph feedback
         document.body.classList.add('space-transition-flash');
         setTimeout(() => document.body.classList.remove('space-transition-flash'), 300);
     }
@@ -118,17 +161,30 @@ export class SpacesEngine {
         const activeId = this.data.activeSpaceId;
         container.innerHTML = '';
 
+        const cluster = document.createElement('div');
+        cluster.className = 'spaces-cluster';
+
+        const label = document.createElement('span');
+        label.className = 'spaces-label';
+        label.textContent = 'Perfiles';
+        cluster.appendChild(label);
+
         const capsule = document.createElement('div');
         capsule.className = 'spaces-capsule';
+        capsule.setAttribute('role', 'tablist');
+        capsule.setAttribute('aria-label', 'Perfiles independientes');
 
         this.data.spaces.forEach((sp, idx) => {
             const btn = document.createElement('button');
             const isActive = sp.id === activeId;
+            btn.type = 'button';
             btn.className = `space-pill ${isActive ? 'active' : ''}`;
             btn.setAttribute('data-space-id', sp.id);
-            btn.setAttribute('title', `${sp.name} (Alt+${idx + 1})`);
-            btn.innerHTML = `<span class="space-icon">${sp.icon}</span><span class="space-name">${sp.name}</span>`;
-            
+            btn.setAttribute('role', 'tab');
+            btn.setAttribute('aria-selected', String(isActive));
+            btn.setAttribute('title', `${sp.name} · Alt+${idx + 1}`);
+            btn.innerHTML = `<span class="space-glyph" aria-hidden="true"></span><span class="space-name">${escapeHtml(sp.name)}</span>`;
+
             btn.addEventListener('click', () => {
                 soundFx.play('click');
                 this.switchSpace(sp.id);
@@ -136,13 +192,14 @@ export class SpacesEngine {
             capsule.appendChild(btn);
         });
 
-        container.appendChild(capsule);
+        cluster.appendChild(capsule);
+        container.appendChild(cluster);
     }
 
     bindKeyboardShortcuts() {
         document.addEventListener('keydown', (e) => {
             if (e.altKey && !e.ctrlKey && !e.shiftKey) {
-                const num = parseInt(e.key);
+                const num = parseInt(e.key, 10);
                 if (num >= 1 && num <= this.data.spaces.length) {
                     e.preventDefault();
                     const targetSpace = this.data.spaces[num - 1];
@@ -153,8 +210,11 @@ export class SpacesEngine {
     }
 
     init() {
+        this.hydrateCatalog();
+        this.applySpaceChrome();
         this.renderHeaderSwitcher();
         this.bindKeyboardShortcuts();
+        this.saveSpaces();
     }
 }
 

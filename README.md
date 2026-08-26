@@ -114,7 +114,7 @@
   - 🧠 **Ground-Truth Context Injection**: The AI Agent dynamically knows all your active shortcuts, tags, spaces, calendar events, focus state, and Tech Radar feeds.
   - 🔌 **Dual Connectivity**:
     - 🦙 **100% Local & Private (Ollama / LM Studio)**: Connects to `http://localhost:11434` for zero-cost, offline inference (*Llama 3, Mistral, Qwen 2.5, DeepSeek-R1*).
-    - 🔮 **Anthropic Claude 3.5 Sonnet / OpenAI**: Client-side API key integration with local AES-256 encryption.
+                - 🔮 **Anthropic Claude / OpenAI**: Client-side API keys live in `sessionStorage` for the tab session (they are not AES-encrypted). Cloud backup AES-256-GCM applies only to GitHub Gist sync of dashboard data.
     - ⚡ **Local Heuristic Fallback**: Instant offline contextual answers and shortcut recommendations even with 0 API keys configured.
   - 💬 **Glass AI Assistant Drawer (`#ai-agent-drawer`)**: Real-time streaming markdown bubbles, suggested prompt chips, and 1-click launch chips (`[ 🚀 Abrir Atajo ]`).
   - ⚡ **Omnibox Bang Integration**: Trigger instant queries via `!ai <prompt>` or `!ask <prompt>`.
@@ -188,7 +188,9 @@ Pure mathematical acoustic synthesis using modern **Web Audio API** nodes (`Audi
 ### 🔒 Security & Privacy-First Architecture
 - **100% Offline Canvas QR Generator (`js/devtools.js`)**: Pure 2D Canvas matrix rendering (0 network calls, 0 third-party APIs like `api.qrserver.com`) with instant PNG download and clipboard copy.
 - **SessionStorage Token Isolation (`js/crypto-sync.js`)**: GitHub Personal Access Tokens reside strictly in `sessionStorage` (wiped immediately when the browser tab closes).
-- **Client-Side PBKDF2 + AES-256-GCM**: Derive 256-bit encryption keys with 100,000 PBKDF2 iterations using native `window.crypto.subtle`.
+- **Client-Side PBKDF2 + AES-256-GCM**: Used for GitHub Gist cloud sync of dashboard JSON (shortcuts, notes, layout). API keys for OpenAI/Anthropic stay in `sessionStorage` for the tab session.
+- **50 bundled shortcuts** across 10 categories (3D, AI, Art, Audio, Google, Tools, Social, Shopping, Gaming, Video).
+- **Local semantic filter**: `neural-search.js` ranks shortcuts by token overlap in title/tags/description — not WebGPU embeddings.
 
 ---
 
@@ -279,7 +281,8 @@ locales/
 The project enforces a strict Single Responsibility Principle (SRP) with native ES6 modules under `/js/` (~40–275 lines each, 0 god files):
 
 ```
-├── manifest.json            # Chrome Extension Manifest V3 & PWA manifest
+├── manifest.json            # Chrome Extension Manifest V3
+├── site.webmanifest         # PWA install manifest (icons, standalone display)
 ├── sw.js                    # Service Worker for offline cache & performance
 ├── index.html               # Clean, accessible semantic DOM structure
 ├── style.css                # Fluid CSS design tokens, themes & animations
@@ -305,7 +308,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── radial-hud.js        # 360° holographic action wheel & sub-orbital favs (242 lines)
 │   ├── telemetry.js         # Real-time ping, battery, fps & offline monitor (109 lines)
 │   ├── tech-radar.js        # Multi-channel RSS/Atom feed reader & aggregator (248 lines)
-│   ├── neural-search.js     # Local semantic vector search & AI assistant (155 lines)
+│   ├── neural-search.js     # Token-overlap semantic filter & !ai drawer bridge
 │   ├── macros.js            # Visual Macro Studio No-Code & routine engine (223 lines)
 │   ├── crypto-sync.js       # Zero-knowledge AES-256-GCM + GitHub Gist sync (229 lines)
 │   ├── bangs.js             # Bang commands parser & safe math calculator (116 lines)

@@ -1,6 +1,6 @@
 // js/ai-agent.js - Contextual Dashboard AI Agent (Ground-Truth Context, Ollama & Claude API)
 
-import { state, escapeHtml } from './state.js';
+import { state, escapeHtml, persistJson } from './state.js';
 import { soundFx } from './audio.js';
 
 export class AIAgentEngine {
@@ -14,23 +14,40 @@ export class AIAgentEngine {
     }
 
     loadConfig() {
+        let stored = {};
         try {
             const raw = localStorage.getItem(this.storageKey);
-            if (raw) return JSON.parse(raw);
+            if (raw) stored = JSON.parse(raw);
+        } catch (e) {}
+        let keys = {};
+        try {
+            keys = JSON.parse(sessionStorage.getItem(this.storageKey + '_keys') || '{}');
         } catch (e) {}
         return {
-            provider: 'local_heuristic', // 'local_heuristic', 'ollama', 'anthropic', 'openai'
-            ollamaEndpoint: 'http://localhost:11434/api/generate',
-            ollamaModel: 'llama3.2',
-            openaiApiKey: '',
-            openaiModel: 'gpt-4o-mini',
-            anthropicApiKey: '',
-            anthropicModel: 'claude-3-5-sonnet-latest'
+            provider: stored.provider || 'local_heuristic',
+            ollamaEndpoint: stored.ollamaEndpoint || 'http://localhost:11434/api/generate',
+            ollamaModel: stored.ollamaModel || 'llama3.2',
+            openaiApiKey: keys.openaiApiKey || '',
+            openaiModel: stored.openaiModel || 'gpt-4o-mini',
+            anthropicApiKey: keys.anthropicApiKey || '',
+            anthropicModel: stored.anthropicModel || 'claude-3-5-sonnet-latest'
         };
     }
 
     saveConfig() {
-        try { localStorage.setItem(this.storageKey, JSON.stringify(this.config)); } catch (e) {}
+        persistJson(this.storageKey, {
+            provider: this.config.provider,
+            ollamaEndpoint: this.config.ollamaEndpoint,
+            ollamaModel: this.config.ollamaModel,
+            openaiModel: this.config.openaiModel,
+            anthropicModel: this.config.anthropicModel
+        });
+        try {
+            sessionStorage.setItem(this.storageKey + '_keys', JSON.stringify({
+                openaiApiKey: this.config.openaiApiKey || '',
+                anthropicApiKey: this.config.anthropicApiKey || ''
+            }));
+        } catch (e) {}
     }
 
     buildSystemContext() {
@@ -197,6 +214,8 @@ export class AIAgentEngine {
             });
         }
 
+        this.bindProviderUi();
+
         // Prompt suggestion chips
         document.querySelectorAll('.ai-prompt-chip').forEach(chip => {
             chip.addEventListener('click', () => {
@@ -204,6 +223,41 @@ export class AIAgentEngine {
                 this.sendQuery(text);
             });
         });
+    }
+
+    bindProviderUi() {
+        const providerSel = document.getElementById('ai-provider-select');
+        const openaiKey = document.getElementById('ai-openai-key');
+        const anthropicKey = document.getElementById('ai-anthropic-key');
+        const ollamaEndpoint = document.getElementById('ai-ollama-endpoint');
+        if (providerSel) {
+            providerSel.value = this.config.provider;
+            providerSel.addEventListener('change', () => {
+                this.config.provider = providerSel.value;
+                this.saveConfig();
+            });
+        }
+        if (openaiKey) {
+            openaiKey.value = this.config.openaiApiKey || '';
+            openaiKey.addEventListener('change', () => {
+                this.config.openaiApiKey = openaiKey.value.trim();
+                this.saveConfig();
+            });
+        }
+        if (anthropicKey) {
+            anthropicKey.value = this.config.anthropicApiKey || '';
+            anthropicKey.addEventListener('change', () => {
+                this.config.anthropicApiKey = anthropicKey.value.trim();
+                this.saveConfig();
+            });
+        }
+        if (ollamaEndpoint) {
+            ollamaEndpoint.value = this.config.ollamaEndpoint || '';
+            ollamaEndpoint.addEventListener('change', () => {
+                this.config.ollamaEndpoint = ollamaEndpoint.value.trim();
+                this.saveConfig();
+            });
+        }
     }
 }
 

@@ -10,12 +10,36 @@ export class ExtensionAPIEngine {
     }
 
     init() {
+        this.bindTopSitesButton();
         if (!platform.isExtension) return;
         this.bindBackgroundMessages();
         this.initSyncObserver();
         this.drainPendingShortcuts();
         this.ensureContextMenuPermission();
+        state.on('shortcuts:changed', () => this.pushShortcutsToSync());
         this.isReady = true;
+    }
+
+    bindTopSitesButton() {
+        const btn = document.getElementById('import-topsites-btn');
+        if (!btn) return;
+        btn.classList.toggle('hidden', !platform.isExtension);
+        btn.addEventListener('click', async () => {
+            const added = await this.importTopSitesToShortcuts();
+            const status = document.getElementById('import-bookmarks-status');
+            if (status) {
+                status.textContent = added === false
+                    ? 'Permiso de TopSites denegado o no disponible.'
+                    : (added > 0 ? `Se importaron ${added} sitios frecuentes.` : 'No había sitios nuevos que importar.');
+            }
+        });
+    }
+
+    pushShortcutsToSync() {
+        if (!platform.isExtension || !chrome.storage || !chrome.storage.sync) return;
+        try {
+            chrome.storage.sync.set({ custom_shortcuts_v2: state.shortcuts });
+        } catch (e) {}
     }
 
     drainPendingShortcuts() {
@@ -86,11 +110,11 @@ export class ExtensionAPIEngine {
     initSyncObserver() {
         if (!platform.isExtension || !chrome.storage || !chrome.storage.onChanged) return;
         chrome.storage.onChanged.addListener((changes, area) => {
-            if (area === 'sync' && changes.hades_shortcuts_state) {
-                const newShortcuts = changes.hades_shortcuts_state.newValue;
-                if (newShortcuts && JSON.stringify(newShortcuts) !== JSON.stringify(state.shortcuts)) {
+            if (area === 'sync' && changes.custom_shortcuts_v2) {
+                const newShortcuts = changes.custom_shortcuts_v2.newValue;
+                if (Array.isArray(newShortcuts) && JSON.stringify(newShortcuts) !== JSON.stringify(state.shortcuts)) {
                     state.shortcuts = newShortcuts;
-                    localStorage.setItem('hades_shortcuts_state', JSON.stringify(newShortcuts));
+                    localStorage.setItem('custom_shortcuts_v2', JSON.stringify(newShortcuts));
                     state.emit('shortcuts:changed');
                 }
             }

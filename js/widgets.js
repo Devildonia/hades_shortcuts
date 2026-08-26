@@ -64,10 +64,19 @@ export class WidgetsManager {
 
     startPomodoro() {
         this.pomodoroState.isRunning = true;
+        if (this.pomodoroState.timerId) clearInterval(this.pomodoroState.timerId);
         this.pomodoroState.timerId = setInterval(() => {
             this.pomodoroState.remaining--;
+            const fm = window.focusMode;
+            if (fm && fm.isActive) {
+                fm.remainingSeconds = this.pomodoroState.remaining;
+                fm.updateShieldTimer();
+            }
             if (this.pomodoroState.remaining <= 0) {
                 soundFx.play('chime');
+                if (fm && fm.isActive && this.pomodoroState.mode === 'focus') {
+                    fm.deactivateFocus(true);
+                }
                 if (this.pomodoroState.mode === 'focus') {
                     this.pomodoroState.mode = 'break';
                     this.pomodoroState.duration = 5 * 60;
@@ -139,3 +148,5 @@ export class WidgetsManager {
         }
     }
 }
+
+export const widgetsManager = new WidgetsManager();

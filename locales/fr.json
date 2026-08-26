@@ -188,7 +188,7 @@
       "import_desc": "Chargez un fichier de sauvegarde JSON préalablement exporté.",
       "import_btn": "📤 Restaurer depuis le Fichier",
       "reset_title": "Réinitialisation d'Usine",
-      "reset_desc": "Restaure les 45 raccourcis originaux par défaut.",
+      "reset_desc": "Restaure les 50 raccourcis originaux par défaut.",
       "reset_btn": "⚠️ Réinitialiser par Défaut",
       "reset_confirm": "Êtes-vous sûr de vouloir réinitialiser ? Les personnalisations seront perdues.",
       "import_success": "Sauvegarde restaurée avec succès !",

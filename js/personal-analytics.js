@@ -11,11 +11,7 @@ export class PersonalAnalyticsEngine {
     }
 
     loadData() {
-        try {
-            const raw = localStorage.getItem(this.storageKey);
-            if (raw) return JSON.parse(raw);
-        } catch (e) {}
-        return {
+        const data = {
             totalLaunches: 0,
             streakDays: 1,
             lastActiveDate: new Date().toISOString().slice(0, 10),
@@ -23,6 +19,33 @@ export class PersonalAnalyticsEngine {
             hourlyDistribution: {},
             shortcutCounts: {}
         };
+        try {
+            const raw = localStorage.getItem(this.storageKey);
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === 'object') {
+                    Object.assign(data, parsed);
+                    data.shortcutCounts = parsed.shortcutCounts && typeof parsed.shortcutCounts === 'object' ? parsed.shortcutCounts : {};
+                }
+            }
+        } catch (e) {}
+        this.migrateLegacyUsageStats(data);
+        return data;
+    }
+
+    migrateLegacyUsageStats(data) {
+        try {
+            const raw = localStorage.getItem('shortcut_usage_stats_v1');
+            if (!raw) return;
+            const old = JSON.parse(raw);
+            if (!old || typeof old !== 'object') return;
+            Object.entries(old).forEach(([id, count]) => {
+                const n = Number(count) || 0;
+                data.shortcutCounts[id] = Math.max(data.shortcutCounts[id] || 0, n);
+            });
+            localStorage.removeItem('shortcut_usage_stats_v1');
+            persistJson(this.storageKey, data);
+        } catch (e) {}
     }
 
     saveData() {

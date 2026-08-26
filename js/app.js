@@ -12,24 +12,24 @@ import { LayoutManager } from './layout.js';
 import { ShortcutManager } from './shortcut-manager.js';
 import { BackupManager } from './backup.js';
 import { SettingsHub } from './settings.js';
-import { WidgetsManager } from './widgets.js';
+import { widgetsManager } from './widgets.js';
 import { PostItManager } from './postits.js';
 import { ThemeStudio } from './theme-studio.js';
 import { BookmarksImporter } from './importer.js';
 import { devTools } from './devtools.js';
-import { ambientAudio } from './ambient-audio.js';
+import { ambientAudio } from './ambient-audio.js?v=6.2.3';
 import { CryptoSyncEngine } from './crypto-sync.js';
 import { auroraCanvas, miniHud } from './aurora-canvas.js';
 import { radialHUD } from './radial-hud.js';
 import { solarEngine } from './solar-engine.js';
 import { telemetry } from './telemetry.js';
-import { techRadar } from './tech-radar.js';
+import { techRadar } from './tech-radar.js?v=6.2.3';
 import { neuralSearch } from './neural-search.js';
 import { extensionApi } from './extension-api.js';
 import { platform } from './platform.js';
 import { personalAnalytics } from './personal-analytics.js';
 import { spacesManager } from './spaces.js';
-import { calendarAgenda } from './calendar-agenda.js';
+import { calendarAgenda } from './calendar-agenda.js?v=6.2.3';
 import { tagsFilter } from './tags-filter.js';
 import { focusMode } from './focus-mode.js';
 
@@ -167,7 +167,7 @@ export function initApp() {
     const renderer = new DashboardRenderer();
     const layoutManager = new LayoutManager();
     const search = new SearchEngineManager();
-    const widgets = new WidgetsManager();
+    const widgets = widgetsManager;
     const shortcutManager = new ShortcutManager(renderer);
     const backupManager = new BackupManager(renderer);
     const themeStudio = new ThemeStudio();
@@ -180,6 +180,11 @@ export function initApp() {
     initUserNameSystem(weather, settingsHub);
     initGlobalShortcuts();
 
+    window.widgetsManager = widgetsManager;
+    window.focusMode = focusMode;
+
+    window.spacesManager = spacesManager;
+    spacesManager.init();
     renderer.render();
     layoutManager.init();
     weather.init();
@@ -200,7 +205,6 @@ export function initApp() {
     telemetry.init();
     techRadar.init();
     neuralSearch.init();
-    spacesManager.init();
     macroEngine.init();
     aiAgent.init();
     calendarAgenda.init();
@@ -210,6 +214,18 @@ export function initApp() {
     state.on('shortcuts:changed', () => {
         renderer.render();
         layoutManager.applyPositions();
+        search.filterShortcuts();
+    });
+    state.on('space:changed', () => {
+        renderer.render();
+        layoutManager.applyPositions();
+        search.filterShortcuts();
+        search.updatePillCounts();
+    });
+    state.on('editmode:changed', () => {
+        renderer.render();
+        layoutManager.applyPositions();
+        search.filterShortcuts();
     });
 
     const suggestionBanner = document.getElementById('smart-suggestion-banner');
@@ -235,6 +251,7 @@ export function initApp() {
     window.calendarAgenda = calendarAgenda;
     window.tagsFilter = tagsFilter;
     window.focusMode = focusMode;
+    window.widgetsManager = widgetsManager;
     extensionApi.init();
     miniHud.init();
 
@@ -249,14 +266,6 @@ export function initApp() {
 
     if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
-    }
-
-    const splash = document.getElementById('splash-screen');
-    if (splash) {
-        setTimeout(() => {
-            splash.classList.add('fade-out');
-            setTimeout(() => splash.remove(), 500);
-        }, 150);
     }
 }
 

@@ -31,7 +31,12 @@
     "https://api.allorigins.win/*",
     "https://www.google.com/*",
     "https://www.cloudflare.com/*",
-    "https://1.1.1.1/*"
+    "https://1.1.1.1/*",
+    "https://api.duckduckgo.com/*",
+    "https://api.mymemory.translated.net/*",
+    "https://api.openai.com/*",
+    "https://api.anthropic.com/*",
+    "https://ipwho.is/*"
   ],
   "optional_host_permissions": [
     "*://*/*"

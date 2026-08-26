@@ -13,7 +13,6 @@ export class AmbientSoundEngine {
 
         this.card = document.getElementById('widget-ambient-card');
         this.playBtn = document.getElementById('ambient-play-btn');
-        this.playIcon = document.getElementById('ambient-play-icon');
         this.playText = document.getElementById('ambient-play-text');
         this.chips = document.querySelectorAll('.ambient-chip');
         this.slider = document.getElementById('ambient-volume-slider');
@@ -48,7 +47,7 @@ export class AmbientSoundEngine {
     }
 
     updatePlayBtnVisuals() {
-        if (this.playIcon) this.playIcon.textContent = this.isPlaying ? '⏸' : '▶';
+        if (this.playBtn) this.playBtn.classList.toggle('is-playing', this.isPlaying);
         if (this.playText) this.playText.textContent = this.isPlaying ? 'Pausar' : 'Reproducir';
         if (this.card) this.card.classList.toggle('is-playing', this.isPlaying);
     }

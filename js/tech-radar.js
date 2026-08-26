@@ -18,16 +18,20 @@ export class TechRadarEngine {
     }
 
     loadFeeds() {
+        let feeds = null;
         try {
             const raw = localStorage.getItem(this.feedsKey);
-            if (raw) return JSON.parse(raw);
+            if (raw) feeds = JSON.parse(raw);
         } catch (e) {}
-        return [
-            { id: 'hackernews', name: 'HackerNews', icon: '🔥', url: 'https://news.ycombinator.com/rss' },
-            { id: 'huggingface', name: 'Hugging Face', icon: '🤖', url: 'https://huggingface.co/blog/feed.xml' },
-            { id: 'arstechnica', name: 'Ars Technica', icon: '💻', url: 'https://feeds.arstechnica.com/arstechnica/index' },
-            { id: 'blendernation', name: 'Blender & 3D', icon: '🎨', url: 'https://www.blendernation.com/feed/' }
-        ];
+        if (!Array.isArray(feeds) || !feeds.length) {
+            feeds = [
+                { id: 'hackernews', name: 'HackerNews', url: 'https://news.ycombinator.com/rss' },
+                { id: 'huggingface', name: 'Hugging Face', url: 'https://huggingface.co/blog/feed.xml' },
+                { id: 'arstechnica', name: 'Ars Technica', url: 'https://feeds.arstechnica.com/arstechnica/index' },
+                { id: 'blendernation', name: 'Blender & 3D', url: 'https://www.blendernation.com/feed/' }
+            ];
+        }
+        return feeds.map((f) => ({ ...f, icon: '' }));
     }
 
     saveFeeds() {
@@ -146,7 +150,7 @@ export class TechRadarEngine {
 
         this.radarList.innerHTML = '';
         if (!articles || articles.length === 0) {
-            this.radarList.innerHTML = '<div class="radar-empty"><span>No se pudieron cargar artículos. Pulsa 🔄 para reintentar.</span></div>';
+            this.radarList.innerHTML = '<div class="radar-empty"><span>No se pudieron cargar artículos. Pulsa actualizar para reintentar.</span></div>';
             return;
         }
 
@@ -160,7 +164,9 @@ export class TechRadarEngine {
                     <span class="radar-title">${escapeHtml(art.title)}</span>
                 </a>
                 <span class="radar-source-tag">${escapeHtml(art.source || currentFeed.name)}</span>
-                <button class="radar-pin-btn" title="Fijar como Post-it">📌</button>
+                <button class="radar-pin-btn" title="Fijar como Post-it" aria-label="Fijar como Post-it">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"></path><path d="M9 3h6l1 7H8L9 3z"></path><path d="M8 10h8v2a4 4 0 0 1-8 0v-2z"></path></svg>
+                </button>
             `;
             const pinBtn = row.querySelector('.radar-pin-btn');
             if (pinBtn) {
@@ -183,7 +189,7 @@ export class TechRadarEngine {
             const btn = document.createElement('button');
             const isActive = f.id === this.activeFeedId;
             btn.className = `radar-channel-pill ${isActive ? 'active' : ''}`;
-            btn.innerHTML = `<span class="radar-pill-icon">${escapeHtml(f.icon)}</span> <span class="radar-pill-name">${escapeHtml(f.name)}</span>`;
+            btn.innerHTML = `<span class="radar-pill-name">${escapeHtml(f.name)}</span>`;
             btn.onclick = () => {
                 soundFx.play('click');
                 this.activeFeedId = f.id;
@@ -237,7 +243,7 @@ export class TechRadarEngine {
                     const newFeed = {
                         id: 'rss_' + Date.now(),
                         name: nameInp.value.trim() || 'Custom Feed',
-                        icon: (iconInp ? iconInp.value.trim() : '') || '📰',
+                        icon: (iconInp ? iconInp.value.trim() : '') || '',
                         url: urlInp.value.trim()
                     };
                     this.feeds.push(newFeed);

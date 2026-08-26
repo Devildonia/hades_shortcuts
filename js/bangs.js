@@ -1,5 +1,3 @@
-import { aiAgent } from './ai-agent.js';
-import { focusMode } from './focus-mode.js';
 // js/bangs.js - Bang Query Parser & Zero-Eval CSP-Compliant Math Evaluator
 
 export const BANGS_MAP = {

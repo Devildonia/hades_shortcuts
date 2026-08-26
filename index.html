@@ -30,10 +30,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=6.0.0">
+    <link rel="stylesheet" href="style.css?v=6.2.3">
 
     <!-- Master Script Module -->
-    <script type="module" src="js/app.js?v=6.0.0"></script>
+    <script type="module" src="js/app.js?v=6.2.4"></script>
 </head>
 <body>
     <canvas id="aurora-bg-canvas" class="aurora-canvas"></canvas>
@@ -49,18 +49,15 @@
     <!-- Top Navigation Bar & Widgets -->
     <header class="top-nav">
         <!-- Left Widgets: Clock + Telemetry Capsule + Focus Mode Button -->
-        <div class="nav-widgets-left modular-dropzone" id="zone-header-left">
-            <!-- Live Clock Widget -->
-            <div class="nav-widget widget-clock" id="clock-widget" data-tile-id="tile-clock">
+        <div class="nav-cluster nav-cluster-start modular-dropzone" id="zone-header-left">
+            <div class="nav-widget widget-clock glass-chip" id="clock-widget" data-tile-id="tile-clock">
                 <span class="pulse-dot"></span>
                 <div class="clock-details">
                     <span class="clock-time" id="live-time">19:45</span>
                     <span class="clock-date" id="live-date">Cargando fecha...</span>
                 </div>
             </div>
-
-            <!-- Telemetry Capsule (Status, Ping, FPS, Battery) -->
-            <div class="telemetry-capsule" id="telemetry-capsule" title="Telemetría en Vivo: Estado, Ping, FPS y Batería (Clic para refrescar)">
+            <div class="telemetry-capsule glass-chip" id="telemetry-capsule" title="Telemetría en Vivo: Estado, Ping, FPS y Batería (Clic para refrescar)">
                 <span class="telemetry-status-badge online" id="telemetry-status-badge">
                     <span class="telemetry-dot online" id="telemetry-status-dot"></span>
                     <span class="telemetry-status-text" id="telemetry-status-text">ONLINE</span>
@@ -69,17 +66,12 @@
                 <span class="telemetry-item" title="Fotogramas por segundo"><span class="telemetry-icon">⚡</span> <span id="telemetry-fps-val">60 FPS</span></span>
                 <span class="telemetry-item" title="Batería"><span class="telemetry-icon">🔋</span> <span id="telemetry-battery-val">100%</span></span>
             </div>
-
-            <!-- Deep Focus Header Button (Centered below Telemetry) -->
-            <button class="focus-toggle-btn focus-header-left-btn" id="focus-mode-toggle-btn" title="Modo Concentración Profunda (Alt+F)" aria-label="Modo Focus">
-                <span data-i18n="nav.focus_mode">Modo Focus</span>
-            </button>
         </div>
 
         <!-- Center Brand / Title + Subtitle Greeting -->
         <div class="brand-center modular-dropzone" id="zone-header-center">
             <div class="brand-tile-wrapper" data-tile-id="tile-brand">
-                <h1 class="brand-title" style="cursor: pointer;" title="Haz clic para cambiar tu nombre de usuario">
+                <h1 class="brand-title" title="Haz clic para cambiar tu nombre de usuario">
                     <span class="brand-user-name" id="brand-user-name" title="Haz clic para cambiar tu nombre de usuario" role="button" tabindex="0">HaDeS</span><span class="brand-user-suffix" id="brand-user-suffix">'</span> <span class="accent-text">SHORTCUTS</span>
                 </h1>
                 <p class="brand-greeting" id="greeting-text">Bienvenido al Centro de Mando</p>
@@ -88,9 +80,8 @@
         </div>
 
         <!-- Top Right Controls: Weather + AI Agent + Focus + Settings Button -->
-        <div class="nav-controls modular-dropzone" id="zone-header-right">
-            <!-- Weather Widget (Placed to the right of title) -->
-            <div class="nav-widget widget-weather" id="weather-widget" data-tile-id="tile-weather" title="Haz clic para cambiar o buscar tu ciudad" role="button" tabindex="0">
+        <div class="nav-cluster nav-cluster-end modular-dropzone" id="zone-header-right">
+            <div class="nav-widget widget-weather glass-chip" id="weather-widget" data-tile-id="tile-weather" title="Haz clic para cambiar o buscar tu ciudad" role="button" tabindex="0">
                 <span class="weather-icon" id="weather-icon">⛅</span>
                 <div class="weather-details">
                     <div class="weather-temp-row">
@@ -102,7 +93,10 @@
             </div>
 
             <!-- AI Agent Header Button -->
-            <button class="ai-agent-header-btn" id="open-ai-agent-btn" title="Asistente IA Contextual (!ai)" aria-label="Abrir Asistente IA">
+            <button class="nav-action-btn focus-toggle-btn" id="focus-mode-toggle-btn" title="Modo Concentración Profunda (Alt+F)" aria-label="Modo Focus">
+                <span data-i18n="nav.focus_mode">Modo Focus</span>
+            </button>
+            <button class="nav-action-btn ai-agent-header-btn" id="open-ai-agent-btn" title="Asistente IA Contextual (!ai)" aria-label="Abrir Asistente IA">
                 <span data-i18n="nav.ai_agent">Agente IA</span>
             </button>
 
@@ -133,7 +127,7 @@
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </button>
-                                        <div class="engine-menu" id="engine-menu">
+                    <div class="engine-menu" id="engine-menu">
                         <button class="engine-opt active" data-engine="google" data-name="Google" data-icon="iconos/google.webp" data-url="https://www.google.com/search?q=">
                             <img src="iconos/google.webp" class="engine-opt-img" alt="Google"> Google
                         </button>
@@ -156,13 +150,17 @@
                 </div>
 
                 <input type="text" id="main-search" class="search-input" placeholder="Buscar en la web o filtrar atajos..." autocomplete="off">
-                <button class="clear-search-btn hidden" id="clear-search" aria-label="Limpiar búsqueda">✕</button>
+                <button class="clear-search-btn hidden" id="clear-search" type="button" aria-label="Limpiar búsqueda" title="Limpiar búsqueda">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+                        <path d="M18 6L6 18M6 6l12 12"></path>
+                    </svg>
+                </button>
                 <kbd class="search-key-badge">Ctrl K</kbd>
             </div>
 
             <!-- Quick Filter Tags / Pills -->
             <div class="filter-pills-container" id="category-filter-bar">
-                <button class="pill-btn active" data-filter="all"><span data-i18n="filters.all">Todos</span> <span class="pill-count">45</span></button>
+                <button class="pill-btn active" data-filter="all"><span data-i18n="filters.all">Todos</span> <span class="pill-count">50</span></button>
                 <button class="pill-btn" data-filter="ia-creativa" data-i18n="filters.ia_creativa">IA & 3D</button>
                 <button class="pill-btn" data-filter="arte-media" data-i18n="filters.arte_media">Arte & Multimedia</button>
                 <button class="pill-btn" data-filter="productividad" data-i18n="filters.productividad">Google & Herramientas</button>
@@ -170,21 +168,26 @@
                 <button class="pill-btn save-view-trigger" id="save-search-view-btn" type="button" title="Guardar vista inteligente">🔖</button>
             </div>
             <div class="smart-suggestion-banner hidden" id="smart-suggestion-banner"></div>
-                <div class="search-calc-banner hidden" id="search-calc-banner"></div>
-</section>
+            <div class="search-calc-banner hidden" id="search-calc-banner"></div>
+        </section>
 
                 <!-- Mini-Widgets Bento Section -->
         <section class="mini-widgets-section modular-dropzone" id="zone-widgets">
             <!-- Widget 1: Scratchpad Glass (Col 1) -->
             <div class="mini-widget-card widget-scratchpad" id="widget-scratchpad-card" data-tile-id="tile-scratchpad">
                 <div class="widget-header">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span class="widget-icon">📝</span>
+                    <div class="widget-title-group">
+                        <span class="widget-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8a2 2 0 0 1 2 2v14l-6-3-6 3V6a2 2 0 0 1 2-2z"></path></svg>
+                        </span>
                         <h3 data-i18n="widgets.scratchpad_title">Bloc de Notas Glass</h3>
                     </div>
+                    <div class="widget-header-actions">
                     <button class="scratchpad-pin-btn" id="create-postit-btn" title="Fijar nota como Post-it flotante (Ctrl+Enter)">
-                        <span>📌</span> <span data-i18n="widgets.scratchpad_pin">Fijar Post-it</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"></path><path d="M9 3h6l1 7H8L9 3z"></path><path d="M8 10h8v2a4 4 0 0 1-8 0v-2z"></path></svg>
+                        <span data-i18n="widgets.scratchpad_pin">Fijar Post-it</span>
                     </button>
+                    </div>
                 </div>
                 <textarea id="scratchpad-input" class="scratchpad-textarea" placeholder="Escribe ideas o notas rápidas y fíjalas en pantalla..." data-i18n-placeholder="widgets.scratchpad_placeholder"></textarea>
                 <div class="scratchpad-footer">
@@ -196,68 +199,81 @@
             <!-- Widget 2: Calendar & Agenda Hub (Col 2) -->
             <div class="mini-widget-card widget-calendar" id="widget-calendar-card" data-tile-id="tile-calendar">
                 <div class="widget-header">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span class="widget-icon">📅</span>
+                    <div class="widget-title-group">
+                        <span class="widget-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>
+                        </span>
                         <h3 data-i18n="widgets.calendar_title">Agenda & Calendario</h3>
                     </div>
-                    <div style="display: flex; gap: 6px;">
-                        <button class="calendar-tool-btn" id="calendar-add-event-btn" title="Añadir Evento Manual" data-i18n-title="calendar_modal.add_tooltip">➕</button>
-                        <button class="calendar-tool-btn" id="calendar-sync-btn" title="Sincronizar Feed">🔄</button>
-                        <button class="calendar-tool-btn" id="calendar-config-btn" title="Configurar iCal">⚙️</button>
+                    <div class="widget-header-actions">
+                        <button class="calendar-tool-btn" id="calendar-add-event-btn" title="Añadir Evento Manual" data-i18n-title="calendar_modal.add_tooltip" aria-label="Añadir evento">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+                        </button>
+                        <button class="calendar-tool-btn" id="calendar-sync-btn" title="Sincronizar Feed" aria-label="Sincronizar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.3-6M21 4v6h-6"></path></svg>
+                        </button>
+                        <button class="calendar-tool-btn" id="calendar-config-btn" title="Configurar iCal" aria-label="Configurar calendario">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15H4a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 5.4 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68V4a2 2 0 0 1 4 0v.09A1.65 1.65 0 0 0 15 5.4a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9H20a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        </button>
                     </div>
                 </div>
                 <div class="calendar-events-list" id="calendar-events-list"></div>
             </div>
 
-            <!-- Widget 3 & 4: Dual Stack Column (Audio Ambiental + Temporizador Focus) (Col 3) -->
-            <div class="widgets-dual-column" id="widgets-dual-column">
-                <!-- Audio Ambiental Focus -->
-                <div class="mini-widget-card widget-ambient widget-compact" id="widget-ambient-card" data-tile-id="tile-ambient">
-                    <div class="widget-header">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span class="widget-icon">🎧</span>
-                            <h3 data-i18n="widgets.ambient_title">Audio Ambiental Focus</h3>
-                        </div>
+            <div class="mini-widget-card widget-ambient" id="widget-ambient-card" data-tile-id="tile-ambient">
+                <div class="widget-header">
+                    <div class="widget-title-group">
+                        <span class="widget-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"></path></svg>
+                        </span>
+                        <h3 data-i18n="widgets.ambient_title">Audio Ambiental Focus</h3>
+                    </div>
+                    <div class="widget-header-actions">
                         <button class="ambient-toggle-play-btn" id="ambient-play-btn" title="Reproducir / Pausar">
-                            <span id="ambient-play-icon">▶</span> <span id="ambient-play-text" data-i18n="widgets.ambient_play">Reproducir</span>
+                            <svg class="play-glyph" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                            <svg class="pause-glyph" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"></path></svg>
+                            <span id="ambient-play-text" data-i18n="widgets.ambient_play">Reproducir</span>
                         </button>
                     </div>
-                    <div class="ambient-body">
-                        <div class="ambient-presets-grid">
-                            <button class="ambient-chip active" data-preset="rain" title="Lluvia Cyberpunk">🌧️ Lluvia</button>
-                            <button class="ambient-chip" data-preset="space" title="Ruido Marrón Espacial">🚀 Espacio</button>
-                            <button class="ambient-chip" data-preset="binaural" title="Ondas Alfa 432 Hz">☕ 432Hz</button>
-                            <button class="ambient-chip" data-preset="waves" title="Oleaje Cósmico">🌊 Olas</button>
-                        </div>
-                        <div class="ambient-volume-row">
-                            <span class="ambient-vol-icon">🔉</span>
-                            <input type="range" id="ambient-volume-slider" min="0" max="100" value="50" class="ambient-slider" aria-label="Volumen ambiental">
-                            <span class="ambient-vol-val" id="ambient-vol-val">50%</span>
-                        </div>
+                </div>
+                <div class="ambient-body">
+                    <div class="ambient-presets-grid">
+                        <button class="ambient-chip active" data-preset="rain" title="Lluvia Cyberpunk">Lluvia</button>
+                        <button class="ambient-chip" data-preset="space" title="Ruido Marrón Espacial">Espacio</button>
+                        <button class="ambient-chip" data-preset="binaural" title="Ondas Alfa 432 Hz">432Hz</button>
+                        <button class="ambient-chip" data-preset="waves" title="Oleaje Cósmico">Olas</button>
+                    </div>
+                    <div class="ambient-volume-row">
+                        <span class="ambient-vol-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4h4l5 4V6L8 10H4z"></path><path d="M16 9.5a4 4 0 0 1 0 5"></path></svg>
+                        </span>
+                        <input type="range" id="ambient-volume-slider" min="0" max="100" value="50" class="ambient-slider" aria-label="Volumen ambiental">
+                        <span class="ambient-vol-val" id="ambient-vol-val">50%</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- Temporizador Focus -->
-                <div class="mini-widget-card widget-pomodoro widget-compact" id="widget-pomodoro-card" data-tile-id="tile-pomodoro">
-                    <div class="widget-header">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span class="widget-icon">⏳</span>
-                            <h3 data-i18n="widgets.pomodoro_title">Temporizador Focus</h3>
-                        </div>
-                        <span class="pomodoro-badge focus" id="pomodoro-mode-badge" data-i18n="widgets.pomodoro_focus">Enfoque</span>
+            <div class="mini-widget-card widget-pomodoro" id="widget-pomodoro-card" data-tile-id="tile-pomodoro">
+                <div class="widget-header">
+                    <div class="widget-title-group">
+                        <span class="widget-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l2.5 1.5M10 2h4M12 2v3"></path></svg>
+                        </span>
+                        <h3 data-i18n="widgets.pomodoro_title">Temporizador Focus</h3>
                     </div>
-                    <div class="pomodoro-body">
-                        <div class="pomodoro-ring-wrapper">
-                            <svg class="pomodoro-svg" viewBox="0 0 80 80">
-                                <circle class="pomodoro-bg-circle" cx="40" cy="40" r="36"></circle>
-                                <circle class="pomodoro-progress-circle" id="pomodoro-progress-circle" cx="40" cy="40" r="36"></circle>
-                            </svg>
-                            <span class="pomodoro-time" id="pomodoro-time-display">25:00</span>
-                        </div>
-                        <div class="pomodoro-controls">
-                            <button class="pomodoro-btn start" id="pomodoro-start-btn" data-i18n="widgets.pomodoro_start">Iniciar</button>
-                            <button class="pomodoro-btn reset" id="pomodoro-reset-btn" data-i18n="widgets.pomodoro_reset">Reiniciar</button>
-                        </div>
+                    <span class="pomodoro-badge focus" id="pomodoro-mode-badge" data-i18n="widgets.pomodoro_focus">Enfoque</span>
+                </div>
+                <div class="pomodoro-body">
+                    <div class="pomodoro-ring-wrapper">
+                        <svg class="pomodoro-svg" viewBox="0 0 80 80">
+                            <circle class="pomodoro-bg-circle" cx="40" cy="40" r="36"></circle>
+                            <circle class="pomodoro-progress-circle" id="pomodoro-progress-circle" cx="40" cy="40" r="36"></circle>
+                        </svg>
+                        <span class="pomodoro-time" id="pomodoro-time-display">25:00</span>
+                    </div>
+                    <div class="pomodoro-controls">
+                        <button class="pomodoro-btn start" id="pomodoro-start-btn" data-i18n="widgets.pomodoro_start">Iniciar</button>
+                        <button class="pomodoro-btn reset" id="pomodoro-reset-btn" data-i18n="widgets.pomodoro_reset">Reiniciar</button>
                     </div>
                 </div>
             </div>
@@ -265,13 +281,19 @@
             <!-- Widget 5: Live Tech Radar & Multi-Channel RSS (Col 4) -->
             <div class="mini-widget-card widget-tech-radar" id="widget-tech-radar-card" data-tile-id="tile-tech-radar">
                 <div class="widget-header">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span class="widget-icon">📡</span>
+                    <div class="widget-title-group">
+                        <span class="widget-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19a11 11 0 0 1 14 0"></path><path d="M8.5 15.5a6 6 0 0 1 7 0"></path><circle cx="12" cy="20" r="1.4" fill="currentColor" stroke="none"></circle></svg>
+                        </span>
                         <h3 data-i18n="widgets.tech_radar_title">Tech Radar & RSS</h3>
                     </div>
-                    <div style="display: flex; gap: 6px;">
-                        <button class="radar-tool-btn" id="radar-refresh-btn" title="Actualizar titulares">🔄</button>
-                        <button class="radar-tool-btn" id="radar-config-btn" title="Gestionar Feeds RSS">⚙️</button>
+                    <div class="widget-header-actions">
+                        <button class="radar-tool-btn" id="radar-refresh-btn" title="Actualizar titulares" aria-label="Actualizar titulares">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.3-6M21 4v6h-6"></path></svg>
+                        </button>
+                        <button class="radar-tool-btn" id="radar-config-btn" title="Gestionar Feeds RSS" aria-label="Gestionar feeds">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15H4a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 5.4 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68V4a2 2 0 0 1 4 0v.09A1.65 1.65 0 0 0 15 5.4a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9H20a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        </button>
                     </div>
                 </div>
                 <!-- Channel Selector Pills -->
@@ -282,376 +304,6 @@
 
         <!-- Bento Grid System -->
         <div class="categorias-contenedor modular-dropzone" id="shortcuts-grid">
-            
-            <!-- Category 1: 3D -->
-            <section class="categoria" data-group="ia-creativa">
-                <div class="categoria-header">
-                    <div class="cat-tag-indicator tag-cyan"></div>
-                    <h2 data-cat-key="cat_3d">3D Modeling & AI</h2>
-                    <span class="cat-badge">3 apps</span>
-                </div>
-                <div class="iconos-grupo">
-                    <a href="https://www.meshy.ai/discover" target="_blank" class="enlace-icono" data-title="Meshy AI" data-app-key="meshy" data-desc="Generación de modelos 3D y texturas con IA a partir de texto o imagen" data-tags="3d ia generador modelado" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/meshy.webp" alt="Meshy AI" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Meshy AI</span>
-                    </a>
-                    <a href="https://studio.tripo3d.ai/" target="_blank" class="enlace-icono" data-title="Tripo 3D" data-app-key="tripo3d" data-desc="Estudio rápido para generar modelos 3D listos para producción" data-tags="3d studio tripo ia modelado" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/tripo3d.webp" alt="Tripo 3D" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Tripo 3D</span>
-                    </a>
-                    <a href="https://ludo.ai" target="_blank" class="enlace-icono" data-title="Ludo.ai" data-app-key="ludoai" data-desc="Plataforma de IA para ideación, análisis de mercado e investigación de videojuegos" data-tags="3d ludo ai juegos generador" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/ludoai.webp" alt="Ludo.ai" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Ludo.ai</span>
-                    </a>
-                </div>
-        </section>
-
-            <!-- Category 2: AI -->
-            <section class="categoria categoria-featured" data-group="ia-creativa">
-                <div class="categoria-header">
-                    <div class="cat-tag-indicator tag-purple"></div>
-                    <h2 data-cat-key="cat_ai">Inteligencia Artificial</h2>
-                    <span class="cat-badge">5 apps</span>
-                </div>
-                <div class="iconos-grupo">
-                    <a href="https://chatgpt.com/" target="_blank" class="enlace-icono" data-title="ChatGPT" data-app-key="chatgpt" data-desc="Asistente conversacional avanzado y razonamiento con GPT-4o" data-tags="chatgpt openai gpt4 ia chatbot" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/chatgpt.webp" alt="ChatGPT" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">ChatGPT</span>
-                    </a>
-                    <a href="https://chat.deepseek.com/" target="_blank" class="enlace-icono" data-title="DeepSeek" data-app-key="deepseek" data-desc="Modelo de razonamiento profundo y generación de código de alta precisión" data-tags="deepseek ia razonamiento r1 code" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/deepseek.webp" alt="DeepSeek" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">DeepSeek</span>
-                    </a>
-                    <a href="https://claude.ai/" target="_blank" class="enlace-icono" data-title="Claude" data-app-key="claude" data-desc="Modelo de IA de Anthropic con gran ventana de contexto y análisis de código" data-tags="claude anthropic sonnet ia chat" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/claude.webp" alt="Claude" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Claude</span>
-                    </a>
-                    <a href="https://qwen.ai/home" target="_blank" class="enlace-icono" data-title="Qwen" data-app-key="qwen" data-desc="Modelos fundacionales y chat de Alibaba Cloud (Qwen 2.5)" data-tags="qwen alibaba ia llm chat qwen2 ai razonamiento" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/qwen.webp" alt="Qwen" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Qwen</span>
-                    </a>
-                    <a href="https://seaverse.ai/" target="_blank" class="enlace-icono" data-title="SeaVerse" data-app-key="seaverse" data-desc="Herramientas y generadores de IA para mundos virtuales y multimedia" data-tags="seaverse ai generacion" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/seaverse.webp" alt="SeaVerse" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">SeaVerse</span>
-                    </a>
-                </div>
-        </section>
-
-            <!-- Category 3: Arte Digital -->
-            <section class="categoria" data-group="arte-media">
-                <div class="categoria-header">
-                    <div class="cat-tag-indicator tag-pink"></div>
-                    <h2 data-cat-key="cat_art">Arte Digital & Modelos</h2>
-                    <span class="cat-badge">5 apps</span>
-                </div>
-                <div class="iconos-grupo">
-                    <a href="https://civitai.com/" target="_blank" class="enlace-icono" data-title="Civitai" data-app-key="civitai" data-desc="Comunidad y repositorio de modelos, Checkpoints y LoRAs para Stable Diffusion" data-tags="civitai stable diffusion lora checkpoints modelos" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/civitai.webp" alt="Civitai" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Civitai</span>
-                    </a>
-                    <a href="https://www.shakker.ai/" target="_blank" class="enlace-icono" data-title="Shakker" data-app-key="shakker" data-desc="Plataforma de generación y mezcla de imágenes de alta definición con IA" data-tags="shakker ia arte generacion" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/shakkerai.webp" alt="Shakker" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Shakker</span>
-                    </a>
-                    <a href="https://tensor.art/" target="_blank" class="enlace-icono" data-title="Tensor Art" data-app-key="tensorart" data-desc="Generador online de arte y modelos con créditos diarios gratuitos" data-tags="tensor art modelos generador" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/tensorart.webp" alt="Tensor Art" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Tensor Art</span>
-                    </a>
-                    <a href="https://www.seaart.ai/" target="_blank" class="enlace-icono" data-title="Sea Art" data-app-key="seaart" data-desc="Estudio de creación y renderizado artístico asistido por IA" data-tags="seaart ai imagen pintura arte" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/seaartai.webp" alt="Sea Art" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Sea Art</span>
-                    </a>
-                    <a href="https://www.shadertoy.com/" target="_blank" class="enlace-icono" data-title="Shadertoy" data-app-key="shadertoy" data-desc="Plataforma para programar, visualizar y compartir shaders GLSL en WebGL" data-tags="shadertoy shaders glsl webgl render arte codigo visual" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/shadertoy.webp" alt="Shadertoy" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Shadertoy</span>
-                    </a>
-                </div>
-        </section>
-
-            <!-- Category 4: Audio -->
-            <section class="categoria" data-group="arte-media">
-                <div class="categoria-header">
-                    <div class="cat-tag-indicator tag-amber"></div>
-                    <h2 data-cat-key="cat_audio">Generación de Audio</h2>
-                    <span class="cat-badge">3 apps</span>
-                </div>
-                <div class="iconos-grupo">
-                    <a href="https://www.minimax.io/audio/voices" target="_blank" class="enlace-icono" data-title="Minimax" data-app-key="minimax" data-desc="Generación y clonación de voces ultrarrealistas con IA" data-tags="minimax voz audio ia tts" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/MiniMax.webp" alt="Minimax" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Minimax</span>
-                    </a>
-                    <a href="https://app.suno.ai/" target="_blank" class="enlace-icono" data-title="Suno" data-app-key="suno" data-desc="Composición y generación de canciones completas con música y letra por IA" data-tags="suno musica canciones ia generador" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/suno.webp" alt="Suno" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Suno</span>
-                    </a>
-                    <a href="https://elevenlabs.io/es" target="_blank" class="enlace-icono" data-title="Eleven Labs" data-app-key="elevenlabs" data-desc="Síntesis de voz líder en el sector y traducción de audio" data-tags="elevenlabs voces sintesis tts clonar voz" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/elevenlabs.webp" alt="Eleven Labs" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Eleven Labs</span>
-                    </a>
-                </div>
-        </section>
-
-            <!-- Category 5: Google Suite -->
-            <section class="categoria categoria-featured" data-group="productividad">
-                <div class="categoria-header">
-                    <div class="cat-tag-indicator tag-blue"></div>
-                    <h2 data-cat-key="cat_google">Google Workspace & AI</h2>
-                    <span class="cat-badge">6 apps</span>
-                </div>
-                <div class="iconos-grupo">
-                    <a href="https://www.google.es/" target="_blank" class="enlace-icono" data-title="Google" data-app-key="google" data-desc="Motor de búsqueda web global y servicios integrados" data-tags="google buscador search web" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/google.webp" alt="Google" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Google</span>
-                    </a>
-                    <a href="https://mail.google.com/" target="_blank" class="enlace-icono" data-title="Gmail" data-app-key="gmail" data-desc="Servicio de correo electrónico seguro y sincronizado" data-tags="gmail correo email google mail" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/gmail.webp" alt="Gmail" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Gmail</span>
-                    </a>
-                    <a href="https://workspace.google.com/intl/es/products/drive/" target="_blank" class="enlace-icono" data-title="Google Drive" data-app-key="googledrive" data-desc="Almacenamiento en la nube y gestión de archivos colaborativa" data-tags="google drive nube archivos cloud" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/googledrive.webp" alt="Google Drive" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Drive</span>
-                    </a>
-                    <a href="https://gemini.google.com/" target="_blank" class="enlace-icono" data-title="Gemini" data-app-key="gemini" data-desc="Modelo multimodal de Google integrado en su ecosistema" data-tags="gemini google ia chatbot deepmind" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/gemini.webp" alt="Gemini" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Gemini</span>
-                    </a>
-                    <a href="https://aistudio.google.com/" target="_blank" class="enlace-icono" data-title="AI Studio" data-app-key="googleaistudio" data-desc="Entorno de desarrollo y prototipado rápido con APIs de Gemini" data-tags="google ai studio api llm tokens" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/googleaistudio.webp" alt="AI Studio" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">AI Studio</span>
-                    </a>
-                    <a href="https://notebooklm.google.com/" target="_blank" class="enlace-icono" data-title="NotebookLM" data-app-key="notebooklm" data-desc="Cuaderno inteligente de notas y resúmenes de audio con IA" data-tags="notebooklm google notas podcast audio ia" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/notebooklm.webp" alt="NotebookLM" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">NotebookLM</span>
-                    </a>
-                </div>
-        </section>
-
-            <!-- Category 6: Tools & Utilidades -->
-            <section class="categoria" data-group="productividad">
-                <div class="categoria-header">
-                    <div class="cat-tag-indicator tag-emerald"></div>
-                    <h2 data-cat-key="cat_tools">Herramientas & Dev</h2>
-                    <span class="cat-badge">6 apps</span>
-                </div>
-                <div class="iconos-grupo">
-                    <a href="https://birme.net" target="_blank" class="enlace-icono" data-title="Birme" data-app-key="birme" data-desc="Redimensionador y recortador por lotes flexible de imágenes" data-tags="birme redimensionar imagenes recortar fotos lote" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/birme.webp" alt="Birme" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Birme</span>
-                    </a>
-                    <a href="https://www.photoroom.com/es/herramientas/eliminador-de-fondos" target="_blank" class="enlace-icono" data-title="Photoroom" data-app-key="photoroom" data-desc="Eliminador de fondos profesional y edición rápida de fotos" data-tags="photoroom fondo quitar transparent cutout" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/photoroom.webp" alt="Photoroom" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Photoroom</span>
-                    </a>
-                    <a href="https://github.com/Devildonia" target="_blank" class="enlace-icono" data-title="GitHub" data-app-key="github" data-desc="Plataforma de desarrollo colaborativo y repositorios Git" data-tags="github codigo repositorios git devildonia dev" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/github.webp" alt="GitHub" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">GitHub</span>
-                    </a>
-                    <a href="https://itch.io/" target="_blank" class="enlace-icono" data-title="itch.io" data-app-key="itchio" data-desc="Mercado indie de videojuegos, assets, música y sprites" data-tags="itchio juegos assets indie sprites dev gamedev" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/itchio.webp" alt="itch.io" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">itch.io</span>
-                    </a>
-                    <a href="https://optimizeglb.com/dashboard" target="_blank" class="enlace-icono" data-title="OptimizeGLB" data-app-key="optimizeglb" data-desc="Compresión Draco y optimización de archivos 3D GLB/glTF" data-tags="optimizeglb glb gltf 3d optimizador compresion dev 3dmodel" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/OptimizeGLB.webp" alt="OptimizeGLB" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">OptimizeGLB</span>
-                    </a>
-                    <a href="https://translate.google.com/" target="_blank" class="enlace-icono" data-title="Traductor" data-app-key="translate" data-desc="Traducción instantánea de textos y páginas web en múltiples idiomas" data-tags="traductor google translate idiomas" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/translate.webp" alt="Traductor" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Traductor</span>
-                    </a>
-                </div>
-        </section>
-
-            <!-- Category 7: Redes Sociales -->
-            <section class="categoria" data-group="social-compras">
-                <div class="categoria-header">
-                    <div class="cat-tag-indicator tag-violet"></div>
-                    <h2 data-cat-key="cat_social">Comunidad & Redes</h2>
-                    <span class="cat-badge">9 apps</span>
-                </div>
-                <div class="iconos-grupo">
-                    <a href="https://www.instagram.com/" target="_blank" class="enlace-icono" data-title="Instagram" data-app-key="instagram" data-desc="Red social para compartir fotos, vídeos, historias y reels" data-tags="instagram fotos social meta ig" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/instagram.webp" alt="Instagram" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Instagram</span>
-                    </a>
-                    <a href="https://www.facebook.com/" target="_blank" class="enlace-icono" data-title="Facebook" data-app-key="facebook" data-desc="Red social para conectar con amigos, grupos y comunidades" data-tags="facebook fb social meta" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/facebook.webp" alt="Facebook" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Facebook</span>
-                    </a>
-                    <a href="https://x.com/" target="_blank" class="enlace-icono" data-title="X (Twitter)" data-app-key="x" data-desc="Red de microblogging para noticias y tendencias en tiempo real" data-tags="x twitter tweets social noticias" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/x.webp" alt="X" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">X</span>
-                    </a>
-                    <a href="https://www.tiktok.com/" target="_blank" class="enlace-icono" data-title="TikTok" data-app-key="tiktok" data-desc="Plataforma de vídeos cortos en formato vertical" data-tags="tiktok videos cortos clips" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/tiktok.webp" alt="TikTok" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">TikTok</span>
-                    </a>
-                    <a href="https://www.threads.net/?hl=es" target="_blank" class="enlace-icono" data-title="Threads" data-app-key="threads" data-desc="Plataforma de microblogging y debate vinculada a Instagram" data-tags="threads meta instagram posts" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/threads.webp" alt="Threads" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Threads</span>
-                    </a>
-                    <a href="https://www.patreon.com/home" target="_blank" class="enlace-icono" data-title="Patreon" data-app-key="patreon" data-desc="Membresías y suscripciones para creadores de contenido" data-tags="patreon creadores suscripcion donaciones" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/patreon.webp" alt="Patreon" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Patreon</span>
-                    </a>
-                    <a href="https://discord.com/channels/@me" target="_blank" class="enlace-icono" data-title="Discord" data-app-key="discord" data-desc="Servidores de chat de texto, voz y vídeo para comunidades" data-tags="discord chat voz servidores canales" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/discord.webp" alt="Discord" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Discord</span>
-                    </a>
-                    <a href="https://es.linkedin.com" target="_blank" class="enlace-icono" data-title="LinkedIn" data-app-key="linkedin" data-desc="Red social profesional para networking y empleo" data-tags="linkedin profesional empleo trabajo networking" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/linkedin.webp" alt="LinkedIn" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">LinkedIn</span>
-                    </a>
-                    <a href="https://www.exophase.com" target="_blank" class="enlace-icono" data-title="Exophase" data-app-key="exophase" data-desc="Seguimiento de logros, trofeos y estadísticas de perfiles gaming" data-tags="exophase logros gaming trofeos stats perfil videojuegos" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/exophase.webp" alt="Exophase" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Exophase</span>
-                    </a>
-                </div>
-        </section>
-
-            <!-- Category 8: Compras -->
-            <section class="categoria" data-group="social-compras">
-                <div class="categoria-header">
-                    <div class="cat-tag-indicator tag-orange"></div>
-                    <h2 data-cat-key="cat_shopping">Compras & Pagos</h2>
-                    <span class="cat-badge">5 apps</span>
-                </div>
-                <div class="iconos-grupo">
-                    <a href="https://www.amazon.es/" target="_blank" class="enlace-icono" data-title="Amazon" data-app-key="amazon" data-desc="Tienda online global de productos con entrega rápida" data-tags="amazon compras tienda online prime" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/amazon.webp" alt="Amazon" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Amazon</span>
-                    </a>
-                    <a href="https://www.aliexpress.com/" target="_blank" class="enlace-icono" data-title="AliExpress" data-app-key="aliexpress" data-desc="Plataforma de compras online con variedad y precios de fábrica" data-tags="aliexpress compras ofertas importacion" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/aliexpress.webp" alt="AliExpress" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">AliExpress</span>
-                    </a>
-                    <a href="https://www.pccomponentes.com" target="_blank" class="enlace-icono" data-title="PcComponentes" data-app-key="pccomponentes" data-desc="Tienda especializada en informática, hardware y tecnología" data-tags="pccomponentes hardware informatica pc tecnologia" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/pccomponentes.webp" alt="PcComponentes" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">PcComponentes</span>
-                    </a>
-                    <a href="https://www.paypal.com" target="_blank" class="enlace-icono" data-title="PayPal" data-app-key="paypal" data-desc="Pasarela de pagos en línea segura y transferencias" data-tags="paypal pagos dinero transferencias billetera" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/paypal.webp" alt="PayPal" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">PayPal</span>
-                    </a>
-                    <a href="https://es.wallapop.com/wall" target="_blank" class="enlace-icono" data-title="Wallapop" data-app-key="wallapop" data-desc="Plataforma de compraventa de productos de segunda mano" data-tags="wallapop segunda mano venta compras" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/wallapop.webp" alt="Wallapop" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Wallapop</span>
-                    </a>
-                </div>
-        </section>
-
-            <!-- Category 9: Vídeos & Generación -->
-            <section class="categoria" data-group="arte-media">
-                <div class="categoria-header">
-                    <div class="cat-tag-indicator tag-red"></div>
-                    <h2 data-cat-key="cat_video">Vídeo & Generación IA</h2>
-                    <span class="cat-badge">3 apps</span>
-                </div>
-                <div class="iconos-grupo">
-                    <a href="https://www.youtube.com/" target="_blank" class="enlace-icono" data-title="YouTube" data-app-key="youtube" data-desc="Plataforma de vídeo en streaming, tutoriales y directos" data-tags="youtube streaming videos clips musica" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/youtube.webp" alt="YouTube" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">YouTube</span>
-                    </a>
-                    <a href="https://app.klingai.com/global/" target="_blank" class="enlace-icono" data-title="Kling" data-app-key="kling" data-desc="Generación de vídeo cinemático con movimiento realista por IA" data-tags="kling ia generador videos clips" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/kling.webp" alt="Kling" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Kling</span>
-                    </a>
-                    <a href="https://hedra.com/" target="_blank" class="enlace-icono" data-title="Hedra" data-app-key="hedra" data-desc="Creación de avatares hablantes y personajes animados con IA" data-tags="hedra avatar video ia animacion" rel="noopener noreferrer">
-                        <div class="icon-img-wrapper">
-                            <img src="iconos/hedra.webp" alt="Hedra" loading="lazy" width="60" height="60">
-                        </div>
-                        <span class="icon-title">Hedra</span>
-                    </a>
-                </div>
-        </section>
-
         </div>
 
         <!-- No Results Fallback Indicator -->
@@ -661,8 +313,8 @@
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 <line x1="8" y1="11" x2="14" y2="11"></line>
             </svg>
-            <h3>No se encontraron accesos directos</h3>
-            <p>Prueba con otros términos o busca directamente en la web pulsando Enter.</p>
+            <h3 data-i18n="no_results.title">No se encontraron accesos directos</h3>
+            <p data-i18n="no_results.desc">Prueba con otros términos o busca directamente en la web pulsando Enter.</p>
         </div>
 
     </main>
@@ -745,7 +397,7 @@
             <p class="rss-modal-desc">Sigue cualquier blog, medio o repositorio en tu Tech Radar (100% en local):</p>
             <div class="rss-modal-form">
                 <div style="display: flex; gap: 8px; margin-bottom: 8px;">
-                    <input type="text" id="rss-feed-icon-input" placeholder="Icono (ej. 📰, 🚀)" maxlength="4" style="width: 80px;" value="📰">
+                    <input type="text" id="rss-feed-icon-input" placeholder="Opcional" maxlength="8" style="width: 80px;" value="">
                     <input type="text" id="rss-feed-name-input" placeholder="Nombre del Feed (ej. The Verge)" style="flex: 1;">
                 </div>
                 <input type="url" id="rss-feed-url-input" placeholder="https://www.theverge.com/rss/index.xml" style="width: 100%; margin-bottom: 12px;">
@@ -753,8 +405,8 @@
             </div>
             <div class="rss-modal-presets">
                 <span>Presets rápidos:</span>
-                <button class="rss-preset-chip" onclick="document.getElementById('rss-feed-name-input').value='The Verge';document.getElementById('rss-feed-url-input').value='https://www.theverge.com/rss/index.xml';document.getElementById('rss-feed-icon-input').value='📱';">The Verge</button>
-                <button class="rss-preset-chip" onclick="document.getElementById('rss-feed-name-input').value='GitHub Blog';document.getElementById('rss-feed-url-input').value='https://github.blog/feed/';document.getElementById('rss-feed-icon-input').value='🐙';">GitHub Blog</button>
+                <button class="rss-preset-chip" onclick="document.getElementById('rss-feed-name-input').value='The Verge';document.getElementById('rss-feed-url-input').value='https://www.theverge.com/rss/index.xml';document.getElementById('rss-feed-icon-input').value='';">The Verge</button>
+                <button class="rss-preset-chip" onclick="document.getElementById('rss-feed-name-input').value='GitHub Blog';document.getElementById('rss-feed-url-input').value='https://github.blog/feed/';document.getElementById('rss-feed-icon-input').value='';">GitHub Blog</button>
             </div>
         </div>
     </div>
@@ -822,6 +474,19 @@
             <div class="ai-agent-input-row">
                 <input type="text" id="ai-agent-input" placeholder="Pregúntame sobre tus atajos o pide recomendaciones..." autocomplete="off">
                 <button class="ai-agent-send-btn" id="ai-agent-send-btn">Enviar</button>
+            </div>
+            <div class="ai-agent-config-row" id="ai-agent-config">
+                <label class="ai-config-label">Proveedor
+                    <select id="ai-provider-select">
+                        <option value="local_heuristic">Local (heurística)</option>
+                        <option value="ollama">Ollama</option>
+                        <option value="openai">OpenAI</option>
+                        <option value="anthropic">Anthropic</option>
+                    </select>
+                </label>
+                <input type="password" id="ai-openai-key" placeholder="OpenAI API key (sesión)" autocomplete="off">
+                <input type="password" id="ai-anthropic-key" placeholder="Anthropic API key (sesión)" autocomplete="off">
+                <input type="text" id="ai-ollama-endpoint" placeholder="http://localhost:11434/api/generate" autocomplete="off">
             </div>
         </div>
     </div>
@@ -1293,6 +958,7 @@
                     <p class="settings-hint" data-i18n="importer.desc">Importa un archivo bookmarks.html exportado desde Chrome, Firefox, Edge o Brave:</p>
                     <input type="file" id="bookmark-file-input" accept=".html,.htm" style="display: none;">
                     <button class="settings-action-btn primary" id="import-bookmarks-btn" data-i18n="importer.select_file_btn">📁 Seleccionar Archivo HTML</button>
+                    <button class="settings-action-btn secondary hidden" id="import-topsites-btn" type="button">⭐ Importar sitios frecuentes de Chrome</button>
                     <div id="import-bookmarks-status" class="import-status-msg"></div>
                 </div>
 
@@ -1313,7 +979,7 @@
 
                 <div class="settings-section danger-section">
                     <h4 data-i18n="settings_hub.backup.reset_title">Restablecer de Fábrica</h4>
-                    <p class="settings-hint" data-i18n="settings_hub.backup.reset_desc">Restaura los 45 accesos directos originales predeterminados.</p>
+                    <p class="settings-hint" data-i18n="settings_hub.backup.reset_desc">Restaura los 50 accesos directos originales predeterminados.</p>
                     <button class="settings-action-btn danger" id="reset-defaults-btn" data-i18n="settings_hub.backup.reset_btn">⚠️ Restablecer Valores</button>
                 </div>
             </div>

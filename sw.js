@@ -1,6 +1,6 @@
 // sw.js - Service Worker for HaDeS' Shortcuts PWA (Network-First with Offline Cache & Stale-While-Revalidate Icons)
 
-const CACHE_NAME = 'hades-shortcuts-v6-0-cache';
+const CACHE_NAME = 'hades-shortcuts-v6-2-3-cache';
 const STATIC_ASSETS = [
     './',
     './index.html',
@@ -8,8 +8,41 @@ const STATIC_ASSETS = [
     './og-preview.png',
     './favicon.ico',
     './site.webmanifest',
-    './manifest.json',
     './js/app.js',
+    './js/state.js',
+    './js/i18n.js',
+    './js/audio.js',
+    './js/ambient-audio.js',
+    './js/weather.js',
+    './js/search.js',
+    './js/render.js',
+    './js/dragdrop.js',
+    './js/layout.js',
+    './js/shortcut-manager.js',
+    './js/backup.js',
+    './js/settings.js',
+    './js/widgets.js',
+    './js/postits.js',
+    './js/theme-studio.js',
+    './js/importer.js',
+    './js/devtools.js',
+    './js/crypto-sync.js',
+    './js/aurora-canvas.js',
+    './js/radial-hud.js',
+    './js/solar-engine.js',
+    './js/telemetry.js',
+    './js/tech-radar.js',
+    './js/neural-search.js',
+    './js/extension-api.js',
+    './js/platform.js',
+    './js/personal-analytics.js',
+    './js/spaces.js',
+    './js/macros.js',
+    './js/ai-agent.js',
+    './js/calendar-agenda.js',
+    './js/tags-filter.js',
+    './js/focus-mode.js',
+    './js/bangs.js',
     './iconos/pwa-192.png',
     './iconos/pwa-512.png',
     './locales/es.json',
@@ -22,7 +55,9 @@ self.addEventListener('install', (e) => {
     self.skipWaiting();
     e.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(STATIC_ASSETS).catch(() => {});
+            return cache.addAll(STATIC_ASSETS).catch(() =>
+                Promise.all(STATIC_ASSETS.map((url) => cache.add(url).catch(() => undefined)))
+            );
         })
     );
 });
@@ -41,10 +76,19 @@ self.addEventListener('activate', (e) => {
     );
 });
 
+function matchIgnoringSearch(request) {
+    return caches.match(request).then((hit) => {
+        if (hit) return hit;
+        const url = new URL(request.url);
+        if (!url.search) return undefined;
+        url.search = '';
+        return caches.match(url.href);
+    });
+}
+
 self.addEventListener('fetch', (e) => {
     const url = new URL(e.request.url);
 
-    // Stale-While-Revalidate strategy for icons (.webp, .png, .ico, /iconos/)
     if (url.pathname.includes('/iconos/') || url.pathname.endsWith('.webp') || url.pathname.endsWith('.png') || url.pathname.endsWith('.ico')) {
         e.respondWith(
             caches.open(CACHE_NAME).then((cache) => {
@@ -62,16 +106,20 @@ self.addEventListener('fetch', (e) => {
         return;
     }
 
-    // Network-First strategy for core app files
     e.respondWith(
         fetch(e.request)
             .then((res) => {
                 if (res && res.status === 200 && e.request.method === 'GET') {
-                    const clone = res.clone();
-                    caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
+                    const cloneA = res.clone();
+                    const cloneB = res.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(e.request, cloneA);
+                        const clean = new URL(e.request.url);
+                        if (clean.search) cache.put(clean.href, cloneB);
+                    });
                 }
                 return res;
             })
-            .catch(() => caches.match(e.request))
+            .catch(() => matchIgnoringSearch(e.request))
     );
 });
