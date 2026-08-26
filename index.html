@@ -169,7 +169,7 @@
 
                 <!-- Mini-Widgets Bento Section -->
         <section class="mini-widgets-section modular-dropzone" id="zone-widgets">
-            <!-- Widget 1: Scratchpad Glass -->
+            <!-- Widget 1: Scratchpad Glass (Col 1) -->
             <div class="mini-widget-card widget-scratchpad" id="widget-scratchpad-card" data-tile-id="tile-scratchpad">
                 <div class="widget-header">
                     <div style="display: flex; align-items: center; gap: 8px;">
@@ -187,8 +187,7 @@
                 </div>
             </div>
 
-            
-                        <!-- Widget 4: Calendar & Agenda Hub (RFC 5545 iCal / Google Calendar) -->
+            <!-- Widget 2: Calendar & Agenda Hub (Col 2) -->
             <div class="mini-widget-card widget-calendar" id="widget-calendar-card" data-tile-id="tile-calendar">
                 <div class="widget-header">
                     <div style="display: flex; align-items: center; gap: 8px;">
@@ -203,34 +202,60 @@
                 <div class="calendar-events-list" id="calendar-events-list"></div>
             </div>
 
-            <!-- Widget 3: Ambient Focus Audio Generator (0 KB Procedural Web Audio API) -->
-            <div class="mini-widget-card widget-ambient" id="widget-ambient-card" data-tile-id="tile-ambient">
-                <div class="widget-header">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span class="widget-icon">🎧</span>
-                        <h3 data-i18n="widgets.ambient_title">Audio Ambiental Focus</h3>
+            <!-- Widget 3 & 4: Dual Stack Column (Audio Ambiental + Temporizador Focus) (Col 3) -->
+            <div class="widgets-dual-column" id="widgets-dual-column">
+                <!-- Audio Ambiental Focus -->
+                <div class="mini-widget-card widget-ambient widget-compact" id="widget-ambient-card" data-tile-id="tile-ambient">
+                    <div class="widget-header">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="widget-icon">🎧</span>
+                            <h3 data-i18n="widgets.ambient_title">Audio Ambiental Focus</h3>
+                        </div>
+                        <button class="ambient-toggle-play-btn" id="ambient-play-btn" title="Reproducir / Pausar">
+                            <span id="ambient-play-icon">▶</span> <span id="ambient-play-text" data-i18n="widgets.ambient_play">Reproducir</span>
+                        </button>
                     </div>
-                    <button class="ambient-toggle-play-btn" id="ambient-play-btn" title="Reproducir / Pausar">
-                        <span id="ambient-play-icon">▶</span> <span id="ambient-play-text" data-i18n="widgets.ambient_play">Reproducir</span>
-                    </button>
+                    <div class="ambient-body">
+                        <div class="ambient-presets-grid">
+                            <button class="ambient-chip active" data-preset="rain" title="Lluvia Cyberpunk">🌧️ Lluvia</button>
+                            <button class="ambient-chip" data-preset="space" title="Ruido Marrón Espacial">🚀 Espacio</button>
+                            <button class="ambient-chip" data-preset="binaural" title="Ondas Alfa 432 Hz">☕ 432Hz</button>
+                            <button class="ambient-chip" data-preset="waves" title="Oleaje Cósmico">🌊 Olas</button>
+                        </div>
+                        <div class="ambient-volume-row">
+                            <span class="ambient-vol-icon">🔉</span>
+                            <input type="range" id="ambient-volume-slider" min="0" max="100" value="50" class="ambient-slider" aria-label="Volumen ambiental">
+                            <span class="ambient-vol-val" id="ambient-vol-val">50%</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="ambient-body">
-                    <div class="ambient-presets-grid">
-                        <button class="ambient-chip active" data-preset="rain" title="Lluvia Cyberpunk">🌧️ Lluvia</button>
-                        <button class="ambient-chip" data-preset="space" title="Ruido Marrón Espacial">🚀 Espacio</button>
-                        <button class="ambient-chip" data-preset="binaural" title="Ondas Alfa 432 Hz">☕ 432Hz</button>
-                        <button class="ambient-chip" data-preset="waves" title="Oleaje Cósmico">🌊 Olas</button>
+
+                <!-- Temporizador Focus -->
+                <div class="mini-widget-card widget-pomodoro widget-compact" id="widget-pomodoro-card" data-tile-id="tile-pomodoro">
+                    <div class="widget-header">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="widget-icon">⏳</span>
+                            <h3 data-i18n="widgets.pomodoro_title">Temporizador Focus</h3>
+                        </div>
+                        <span class="pomodoro-badge focus" id="pomodoro-mode-badge" data-i18n="widgets.pomodoro_focus">Enfoque</span>
                     </div>
-                    <div class="ambient-volume-row">
-                        <span class="ambient-vol-icon">🔉</span>
-                        <input type="range" id="ambient-volume-slider" min="0" max="100" value="50" class="ambient-slider" aria-label="Volumen ambiental">
-                        <span class="ambient-vol-val" id="ambient-vol-val">50%</span>
+                    <div class="pomodoro-body">
+                        <div class="pomodoro-ring-wrapper">
+                            <svg class="pomodoro-svg" viewBox="0 0 80 80">
+                                <circle class="pomodoro-bg-circle" cx="40" cy="40" r="36"></circle>
+                                <circle class="pomodoro-progress-circle" id="pomodoro-progress-circle" cx="40" cy="40" r="36"></circle>
+                            </svg>
+                            <span class="pomodoro-time" id="pomodoro-time-display">25:00</span>
+                        </div>
+                        <div class="pomodoro-controls">
+                            <button class="pomodoro-btn start" id="pomodoro-start-btn" data-i18n="widgets.pomodoro_start">Iniciar</button>
+                            <button class="pomodoro-btn reset" id="pomodoro-reset-btn" data-i18n="widgets.pomodoro_reset">Reiniciar</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            
-                        <!-- Widget 5: Live Tech Radar & Multi-Channel RSS Feed Reader -->
+            <!-- Widget 5: Live Tech Radar & Multi-Channel RSS (Col 4) -->
             <div class="mini-widget-card widget-tech-radar" id="widget-tech-radar-card" data-tile-id="tile-tech-radar">
                 <div class="widget-header">
                     <div style="display: flex; align-items: center; gap: 8px;">
@@ -245,28 +270,6 @@
                 <!-- Channel Selector Pills -->
                 <div class="radar-channel-bar" id="radar-channel-bar"></div>
                 <div class="tech-radar-list" id="tech-radar-list"></div>
-            </div>
-
-<!-- Widget 2: Pomodoro Focus Timer -->
-            <div class="mini-widget-card widget-pomodoro" id="widget-pomodoro-card" data-tile-id="tile-pomodoro">
-                <div class="widget-header">
-                    <span class="widget-icon">⏳</span>
-                    <h3 data-i18n="widgets.pomodoro_title">Temporizador Focus</h3>
-                    <span class="pomodoro-badge focus" id="pomodoro-mode-badge" data-i18n="widgets.pomodoro_focus">Enfoque</span>
-                </div>
-                <div class="pomodoro-body">
-                    <div class="pomodoro-ring-wrapper">
-                        <svg class="pomodoro-svg" viewBox="0 0 80 80">
-                            <circle class="pomodoro-bg-circle" cx="40" cy="40" r="36"></circle>
-                            <circle class="pomodoro-progress-circle" id="pomodoro-progress-circle" cx="40" cy="40" r="36"></circle>
-                        </svg>
-                        <span class="pomodoro-time" id="pomodoro-time-display">25:00</span>
-                    </div>
-                    <div class="pomodoro-controls">
-                        <button class="pomodoro-btn start" id="pomodoro-start-btn" data-i18n="widgets.pomodoro_start">Iniciar</button>
-                        <button class="pomodoro-btn reset" id="pomodoro-reset-btn" data-i18n="widgets.pomodoro_reset">Reiniciar</button>
-                    </div>
-                </div>
             </div>
         </section>
 
