@@ -32,7 +32,8 @@
     "cat_tools": "Tools & Dev",
     "cat_social": "Community & Social",
     "cat_shopping": "Shopping & Payments",
-    "cat_video": "Video & AI Generation"
+    "cat_video": "Video & AI Generation",
+    "cat_gaming": "Gaming & Platforms"
   },
   "badges": {
     "apps": "apps"
@@ -82,7 +83,11 @@
     "wallapop": "Peer-to-peer secondhand marketplace for buying and selling goods",
     "youtube": "Global streaming video platform, tutorials, music, and live broadcasts",
     "kling": "Cinematic video generation with realistic physics and camera motion",
-    "hedra": "AI-powered expressive talking avatar and animated video generation"
+    "hedra": "AI-powered expressive talking avatar and animated video generation",
+    "steam": "Leading PC gaming platform, digital store, community hub, and modding workshop",
+    "epic": "Epic Games Store, Unreal Engine launcher, and weekly free game distributions",
+    "gog": "100% DRM-free digital gaming store by CD Projekt with classic retro & modern titles",
+    "xbox": "Microsoft gaming ecosystem, Xbox Cloud Gaming, and PC Game Pass library"
   },
   "no_results": {
     "title": "No shortcuts found",

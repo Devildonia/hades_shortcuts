@@ -32,7 +32,8 @@
     "cat_tools": "Outils & Développeur",
     "cat_social": "Communauté & Réseaux",
     "cat_shopping": "Achats & Paiements",
-    "cat_video": "Vidéo & Génération IA"
+    "cat_video": "Vidéo & Génération IA",
+    "cat_gaming": "Gaming & Plateformes"
   },
   "badges": {
     "apps": "apps"
@@ -82,7 +83,11 @@
     "wallapop": "Plateforme d'achat et vente de produits d'occasion",
     "youtube": "Plateforme de streaming vidéo, tutoriels et diffusions en direct",
     "kling": "Génération de vidéos cinématographiques avec mouvements réalistes",
-    "hedra": "Création d'avatars expressifs parlants et de personnages animés par IA"
+    "hedra": "Création d'avatars expressifs parlants et de personnages animés par IA",
+    "steam": "Plateforme leader de jeux vidéo sur PC, magasin numérique, communauté et mods",
+    "epic": "Boutique Epic Games, lanceur Unreal Engine et jeux gratuits chaque semaine",
+    "gog": "Boutique de jeux vidéo 100% sans DRM par CD Projekt avec classiques rétro et titres récents",
+    "xbox": "Écosystème gaming de Microsoft, Xbox Cloud Gaming et catalogue PC Game Pass"
   },
   "no_results": {
     "title": "Aucun raccourci trouvé",

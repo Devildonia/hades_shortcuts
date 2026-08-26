@@ -32,7 +32,8 @@
     "cat_tools": "Tools & Entwickler",
     "cat_social": "Community & Soziales",
     "cat_shopping": "Shopping & Bezahlen",
-    "cat_video": "Video & KI-Generierung"
+    "cat_video": "Video & KI-Generierung",
+    "cat_gaming": "Gaming & Plattformen"
   },
   "badges": {
     "apps": "Apps"
@@ -82,7 +83,11 @@
     "wallapop": "Marktplatz für den Kauf und Verkauf von gebrauchten Artikeln",
     "youtube": "Streaming-Videoplattform, Tutorials, Musik und Live-Übertragungen",
     "kling": "Kinoreife Videogenerierung mit realistischen Bewegungen durch KI",
-    "hedra": "Erstellung sprechender Avatare und animierter Charaktere mit KI"
+    "hedra": "Erstellung sprechender Avatare und animierter Charaktere mit KI",
+    "steam": "Führende PC-Gaming-Plattform, digitaler Store, Community-Hub und Modding",
+    "epic": "Epic Games Store, Unreal Engine Launcher und wöchentliche kostenlose Spiele",
+    "gog": "100% DRM-freier digitaler Spiele-Store von CD Projekt mit Retro-Klassikern und Neuheiten",
+    "xbox": "Microsoft Gaming-Ökosystem, Xbox Cloud Gaming und PC Game Pass-Bibliothek"
   },
   "no_results": {
     "title": "Keine Verknüpfungen gefunden",

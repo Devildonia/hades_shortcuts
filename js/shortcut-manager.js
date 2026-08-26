@@ -5,16 +5,15 @@ import { i18nDictionaries } from './i18n.js';
 import { soundFx } from './audio.js';
 
 export const SORTED_PRESET_ICONS = [
-    'aliexpress.webp', 'amazon.webp', 'bing.webp', 'birme.webp', 'chatgpt.webp',
-    'civitai.webp', 'claude.webp', 'deepseek.webp', 'discord.webp', 'duckduckgo.webp',
-    'elevenlabs.webp', 'exophase.webp', 'facebook.webp', 'gemini.webp', 'github.webp',
-    'gmail.webp', 'google.webp', 'googleaistudio.webp', 'googledrive.webp', 'hedra.webp',
-    'instagram.webp', 'itchio.webp', 'kling.webp', 'linkedin.webp', 'ludoai.webp',
-    'meshy.webp', 'MiniMax.webp', 'notebooklm.webp', 'OptimizeGLB.webp', 'patreon.webp',
-    'paypal.webp', 'pccomponentes.webp', 'perplexity.webp', 'photoroom.webp', 'qwen.webp',
-    'seaartai.webp', 'seaverse.webp', 'shadertoy.webp', 'shakkerai.webp', 'suno.webp',
-    'tensorart.webp', 'threads.webp', 'tiktok.webp', 'translate.webp', 'tripo3d.webp',
-    'wallapop.webp', 'x.webp', 'youtube.webp'
+    'aliexpress.webp', 'amazon.webp', 'bing.webp', 'birme.webp', 'chatgpt.webp', 'civitai.webp',
+    'claude.webp', 'deepseek.webp', 'discord.webp', 'duckduckgo.webp', 'elevenlabs.webp', 'epic.webp',
+    'exophase.webp', 'facebook.webp', 'gemini.webp', 'github.webp', 'gmail.webp', 'gog.webp',
+    'google.webp', 'googleaistudio.webp', 'googledrive.webp', 'hedra.webp', 'instagram.webp', 'itchio.webp',
+    'kling.webp', 'linkedin.webp', 'ludoai.webp', 'meshy.webp', 'MiniMax.webp', 'notebooklm.webp',
+    'OptimizeGLB.webp', 'patreon.webp', 'paypal.webp', 'pccomponentes.webp', 'perplexity.webp', 'photoroom.webp',
+    'qwen.webp', 'seaartai.webp', 'seaverse.webp', 'shadertoy.webp', 'shakkerai.webp', 'steam.webp',
+    'suno.webp', 'tensorart.webp', 'threads.webp', 'tiktok.webp', 'translate.webp', 'tripo3d.webp',
+    'wallapop.webp', 'x.webp', 'xbox.webp', 'youtube.webp'
 ];
 
 export class ShortcutManager {

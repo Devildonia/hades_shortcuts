@@ -56,7 +56,8 @@ const DEFAULT_CATEGORIES = [
     { id: 'cat_tools', group: 'productividad', color: 'tag-emerald', defaultTitle: 'Herramientas & Dev' },
     { id: 'cat_social', group: 'social-compras', color: 'tag-cyan', defaultTitle: 'Comunidad & Redes' },
     { id: 'cat_shopping', group: 'social-compras', color: 'tag-orange', defaultTitle: 'Compras & Pagos' },
-    { id: 'cat_video', group: 'ia-creativa', color: 'tag-red', defaultTitle: 'Vídeo & Generación IA' }
+    { id: 'cat_video', group: 'ia-creativa', color: 'tag-red', defaultTitle: 'Vídeo & Generación IA' },
+    { id: 'cat_gaming', group: 'social-compras', color: 'tag-purple', defaultTitle: 'Gaming' }
 ];
 
 const DEFAULT_SHORTCUTS = [
@@ -110,6 +111,11 @@ const DEFAULT_SHORTCUTS = [
     { id: 'pccomponentes', title: 'PcComponentes', url: 'https://www.pccomponentes.com/', icon: 'iconos/pccomponentes.webp', category: 'cat_shopping', tags: 'hardware, tecnologia, pc, componentes' },
     { id: 'paypal', title: 'PayPal', url: 'https://www.paypal.com/', icon: 'iconos/paypal.webp', category: 'cat_shopping', tags: 'pagos, cartera, transferencias' },
     { id: 'wallapop', title: 'Wallapop', url: 'https://es.wallapop.com/', icon: 'iconos/wallapop.webp', category: 'cat_shopping', tags: 'segunda mano, compras, ventas' },
+    // Gaming
+    { id: 'steam', title: 'Steam', url: 'https://store.steampowered.com/', icon: 'iconos/steam.webp', category: 'cat_gaming', tags: 'gaming steam valve tienda juegos pc store' },
+    { id: 'epic', title: 'Epic Games', url: 'https://store.epicgames.com/', icon: 'iconos/epic.webp', category: 'cat_gaming', tags: 'gaming epic store juegos unreal fortnite' },
+    { id: 'gog', title: 'GOG.com', url: 'https://www.gog.com/', icon: 'iconos/gog.webp', category: 'cat_gaming', tags: 'gaming gog drmfree cdprojekt juegos retro' },
+    { id: 'xbox', title: 'Xbox', url: 'https://www.xbox.com/', icon: 'iconos/xbox.webp', category: 'cat_gaming', tags: 'gaming xbox microsoft gamepass consola juegos' },
     // Video
     { id: 'youtube', title: 'YouTube', url: 'https://www.youtube.com/', icon: 'iconos/youtube.webp', category: 'cat_video', tags: 'video, streaming, google, tutoriales' },
     { id: 'kling', title: 'Kling', url: 'https://klingai.com/', icon: 'iconos/kling.webp', category: 'cat_video', tags: 'video, ai, generacion, cinemica' },
@@ -156,12 +162,11 @@ class AppState {
             const saved = this.getItem('custom_shortcuts_v2', null);
             if (saved) {
                 const list = JSON.parse(saved);
-                // Clean invalid tool shortcuts regression
-                const hasInvalidIcons = list.some(s => s.id === 'iloveimg' || s.id === 'tinypng' || s.id === 'ezgif' || s.id === 'svgminify' || s.id === 'vectorizer');
-                if (hasInvalidIcons) {
-                    this.setItem('custom_shortcuts_v2', JSON.stringify(DEFAULT_SHORTCUTS));
-                    return [...DEFAULT_SHORTCUTS];
-                }
+                DEFAULT_SHORTCUTS.forEach(ds => {
+                    if (!list.some(s => s.id === ds.id)) {
+                        list.push(ds);
+                    }
+                });
                 return list;
             }
         } catch (e) {}
@@ -173,6 +178,9 @@ class AppState {
             const order = this.getItem('category_order_v2', null);
             if (order) {
                 const ids = JSON.parse(order);
+                DEFAULT_CATEGORIES.forEach(dc => {
+                    if (!ids.includes(dc.id)) ids.push(dc.id);
+                });
                 return [...DEFAULT_CATEGORIES].sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id));
             }
         } catch (e) {}
@@ -5347,16 +5355,58 @@ class DragDropManager {
 
 
 const SORTED_PRESET_ICONS = [
-    'aliexpress.webp', 'amazon.webp', 'bing.webp', 'birme.webp', 'chatgpt.webp',
-    'civitai.webp', 'claude.webp', 'deepseek.webp', 'discord.webp', 'duckduckgo.webp',
-    'elevenlabs.webp', 'exophase.webp', 'facebook.webp', 'gemini.webp', 'github.webp',
-    'gmail.webp', 'google.webp', 'googleaistudio.webp', 'googledrive.webp', 'hedra.webp',
-    'instagram.webp', 'itchio.webp', 'kling.webp', 'linkedin.webp', 'ludoai.webp',
-    'meshy.webp', 'MiniMax.webp', 'notebooklm.webp', 'OptimizeGLB.webp', 'patreon.webp',
-    'paypal.webp', 'pccomponentes.webp', 'perplexity.webp', 'photoroom.webp', 'qwen.webp',
-    'seaartai.webp', 'seaverse.webp', 'shadertoy.webp', 'shakkerai.webp', 'suno.webp',
-    'tensorart.webp', 'threads.webp', 'tiktok.webp', 'translate.webp', 'tripo3d.webp',
-    'wallapop.webp', 'x.webp', 'youtube.webp'
+    "MiniMax.webp",
+    "OptimizeGLB.webp",
+    "aliexpress.webp",
+    "amazon.webp",
+    "bing.webp",
+    "birme.webp",
+    "chatgpt.webp",
+    "civitai.webp",
+    "claude.webp",
+    "deepseek.webp",
+    "discord.webp",
+    "duckduckgo.webp",
+    "elevenlabs.webp",
+    "epic.webp",
+    "exophase.webp",
+    "facebook.webp",
+    "gemini.webp",
+    "github.webp",
+    "gmail.webp",
+    "gog.webp",
+    "google.webp",
+    "googleaistudio.webp",
+    "googledrive.webp",
+    "hedra.webp",
+    "instagram.webp",
+    "itchio.webp",
+    "kling.webp",
+    "linkedin.webp",
+    "ludoai.webp",
+    "meshy.webp",
+    "notebooklm.webp",
+    "patreon.webp",
+    "paypal.webp",
+    "pccomponentes.webp",
+    "perplexity.webp",
+    "photoroom.webp",
+    "qwen.webp",
+    "seaartai.webp",
+    "seaverse.webp",
+    "shadertoy.webp",
+    "shakkerai.webp",
+    "steam.webp",
+    "suno.webp",
+    "tensorart.webp",
+    "threads.webp",
+    "tiktok.webp",
+    "translate.webp",
+    "tripo3d.webp",
+    "wallapop.webp",
+    "x.webp",
+    "xbox.webp",
+    "youtube.webp"
 ];
 
 class ShortcutManager {

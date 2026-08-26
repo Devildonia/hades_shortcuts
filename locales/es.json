@@ -32,7 +32,8 @@
     "cat_tools": "Herramientas & Dev",
     "cat_social": "Comunidad & Redes",
     "cat_shopping": "Compras & Pagos",
-    "cat_video": "Vídeo & Generación IA"
+    "cat_video": "Vídeo & Generación IA",
+    "cat_gaming": "Gaming & Plataformas"
   },
   "badges": {
     "apps": "apps"
@@ -82,7 +83,11 @@
     "wallapop": "Plataforma de compraventa de productos de segunda mano",
     "youtube": "Plataforma de vídeo en streaming, tutoriales y directos",
     "kling": "Generación de vídeo cinemático con movimiento realista por IA",
-    "hedra": "Creación de avatares hablantes y personajes animados con IA"
+    "hedra": "Creación de avatares hablantes y personajes animados con IA",
+    "steam": "Plataforma líder de videojuegos para PC, descargas digitales, comunidad y mods",
+    "epic": "Tienda de juegos de Epic Games, lanzador de Unreal Engine y juegos gratuitos semanales",
+    "gog": "Tienda de juegos digitales 100% libres de DRM de CD Projekt y catálogo retro clásico",
+    "xbox": "Ecosistema gaming de Microsoft, Xbox Cloud Gaming y catálogo de PC Game Pass"
   },
   "no_results": {
     "title": "No se encontraron accesos directos",
