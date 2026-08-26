@@ -1,8 +1,8 @@
+// js/search.js - Multi-Engine Omnibox, Category Filters, Bangs & DevTools
+import { state } from './state.js';
+import { tagsFilter } from './tags-filter.js';
 import { neuralSearch } from './neural-search.js';
 import { macroEngine } from './macros.js';
-// js/search.js - Multi-Engine Omnibox, Category Filters, Bangs & DevTools
-
-import { state } from './state.js';
 import { i18nDictionaries } from './i18n.js';
 import { parseBangQuery, evaluateArithmetic } from './bangs.js';
 import { devTools } from './devtools.js';
@@ -103,7 +103,6 @@ export class SearchEngineManager {
         const categories = document.querySelectorAll('.categoria');
         let totalVisible = 0;
 
-                // Check Macro Triggers
         const macro = macroEngine.getMacro(query);
         if (macro) {
             if (this.calcBanner) {
@@ -140,7 +139,6 @@ export class SearchEngineManager {
             }
         }
 
-        // 3. Filter Shortcut Cards
         categories.forEach(cat => {
             const group = cat.getAttribute('data-group');
             const matchesPill = (state.activeFilter === 'all' || state.activeFilter === group);
@@ -153,7 +151,8 @@ export class SearchEngineManager {
                 const desc = (card.getAttribute('data-desc') || '').toLowerCase();
                 const text = (card.innerText || card.textContent || '').toLowerCase();
 
-                const matchesQuery = !query || title.includes(query) || tags.includes(query) || desc.includes(query) || text.includes(query);
+                const parsedFilter = tagsFilter.parseQuery(query);
+            const matchesQuery = !query || tagsFilter.matches(s, parsedFilter) || title.includes(query) || tags.includes(query) || desc.includes(query) || text.includes(query);
 
                 if (matchesPill && matchesQuery) {
                     card.classList.remove('hidden-by-filter', 'no-match');
@@ -182,13 +181,11 @@ export class SearchEngineManager {
         const trimmed = query.trim();
         if (!trimmed) return;
 
-                // Check Macro Query
         if (macroEngine.getMacro(trimmed)) {
             macroEngine.executeMacro(trimmed);
             return;
         }
 
-        // Check Bang Query
         const bangInfo = parseBangQuery(trimmed);
         if (bangInfo.isBang && bangInfo.targetUrl) {
             soundFx.play('click');
@@ -196,7 +193,6 @@ export class SearchEngineManager {
             return;
         }
 
-        // Standard Web Search
         const engine = SEARCH_ENGINES[this.currentEngineKey] || SEARCH_ENGINES.google;
         const searchUrl = `${engine.url}${encodeURIComponent(trimmed)}`;
         soundFx.play('click');

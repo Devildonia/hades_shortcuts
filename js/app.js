@@ -1,3 +1,4 @@
+import { tagsFilter } from './tags-filter.js';
 import { calendarAgenda } from './calendar-agenda.js';
 import { spacesManager } from './spaces.js';
 import { personalAnalytics } from './personal-analytics.js';
@@ -218,6 +219,7 @@ export function initApp() {
         techRadar.init();
         neuralSearch.init();
         spacesManager.init();
+        tagsFilter.init();
         calendarAgenda.init();
     window.ambientAudio = ambientAudio;
     window.radialHUD = radialHUD;
@@ -230,6 +232,7 @@ export function initApp() {
     window.extensionApi = extensionApi;
     window.personalAnalytics = personalAnalytics;
     window.spacesManager = spacesManager;
+    window.tagsFilter = tagsFilter;
     window.calendarAgenda = calendarAgenda;
     extensionApi.init();
     miniHud.init();

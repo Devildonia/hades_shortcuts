@@ -5197,3 +5197,113 @@ input:checked + .slider:before {
     font-size: 0.82rem;
     color: var(--text-secondary, rgba(255, 255, 255, 0.6));
 }
+
+/* --- Multi-Tag Badges & Saved Smart Views --- */
+.shortcut-tags-row {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.shortcut-tag-chip {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--tag-color, #00f2fe);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--tag-color, rgba(0, 242, 254, 0.3));
+    padding: 1px 5px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+}
+
+.saved-view-pill {
+    background: rgba(0, 242, 254, 0.08) !important;
+    border-color: rgba(0, 242, 254, 0.4) !important;
+    color: #00f2fe !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.saved-view-pill:hover {
+    background: rgba(0, 242, 254, 0.18) !important;
+    box-shadow: 0 0 12px rgba(0, 242, 254, 0.25);
+}
+
+.delete-view-x {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-left: 4px;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 0 3px;
+}
+
+.delete-view-x:hover {
+    color: #ff4757;
+    background: rgba(255, 71, 87, 0.2);
+}
+
+.save-view-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 17, 0.75);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.save-view-modal-card {
+    background: rgba(10, 15, 29, 0.95);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 440px;
+    width: 90%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.save-view-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.save-view-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.save-view-modal-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+}
+
+.save-view-modal-form input {
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.85rem;
+}
+
+.save-view-confirm-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    color: #050811;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+}

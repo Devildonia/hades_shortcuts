@@ -111,6 +111,12 @@
     - `!ai <prompt>`: Instant client-side intelligent answers.
     - `!t <text>`: Fast multilingual translation helper.
 
+### 🏷️ Multi-Tag Compound Search & Saved Smart Views («Linear-Style CMDK»)
+- **Professional Multi-Dimensional Filtering**:
+  - 🔍 **Compound Boolean Operators**: Query shortcuts with `tag:<name>` / `#<name>`, `cat:<category>`, `is:fav`, and `freq:top` in a single search string (e.g. `tag:ia tag:3d freq:top`).
+  - 🎨 **Dynamic Color Tag Badges**: Assign vibrant neon hex tags to shortcuts (`#ia`, `#3d`, `#dev`, `#tools`, `#design`).
+  - 🔖 **Saved Smart Views**: Pin any complex search query as a permanent pill in the category bar with 1 click (`🔖 [ 🤖 IA & 3D Top ]`).
+
 ### 📅 Bento Calendar & Agenda Hub («Universal Schedule Hub»)
 - **Zero-Knowledge Universal Calendar Integration**:
   - 🔄 **Direct RFC 5545 iCal/ICS Parsing**: Client-side parsing of private iCal subscription URLs from Google Calendar, Microsoft Outlook, Apple iCloud, Nextcloud, or Proton Calendar (0 external proxy servers).
@@ -288,6 +294,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── app.js               # Main orchestrator & lifecycle manager
 │   ├── platform.js          # Universal platform abstraction (Web/PWA vs Extension)
 │   ├── spaces.js            # Arc-inspired multi-profile spaces manager & hotkeys
+│   ├── tags-filter.js       # Multi-tag compound query tokenizer & saved smart views
 │   ├── calendar-agenda.js   # RFC 5545 iCal/Google calendar parser & proximity radar
 │   ├── personal-analytics.js# 100% local usage analytics, 7-day SVG chart & smart suggestions
 │   ├── extension-api.js     # Native TopSites & background context menu bridge

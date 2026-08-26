@@ -432,6 +432,219 @@ class SpacesEngine {
 const spacesManager = new SpacesEngine();
 
 
+// --- Module: js/tags-filter.js ---
+// js/tags-filter.js - Advanced Multi-Tag Query Engine & Saved Smart Views (Linear-style CMDK)
+
+
+class TagsFilterEngine {
+    constructor() {
+        this.tagsKey = 'hades_tags_registry_v1';
+        this.viewsKey = 'hades_saved_views_v1';
+        this.palette = {
+            ia: '#00f2fe',
+            '3d': '#ffaa00',
+            dev: '#a855f7',
+            tools: '#10b981',
+            social: '#ec4899',
+            design: '#f59e0b',
+            media: '#3b82f6',
+            work: '#06b6d4',
+            default: '#64748b'
+        };
+        this.tagRegistry = this.loadRegistry();
+        this.savedViews = this.loadSavedViews();
+    }
+
+    loadRegistry() {
+        try {
+            const raw = localStorage.getItem(this.tagsKey);
+            if (raw) return JSON.parse(raw);
+        } catch (e) {}
+        return { ...this.palette };
+    }
+
+    loadSavedViews() {
+        try {
+            const raw = localStorage.getItem(this.viewsKey);
+            if (raw) return JSON.parse(raw);
+        } catch (e) {}
+        return [
+            { id: 'view_ai_3d', name: 'IA & 3D Top', query: 'tag:ia tag:3d', icon: '✨' }
+        ];
+    }
+
+    saveViews() {
+        try { localStorage.setItem(this.viewsKey, JSON.stringify(this.savedViews)); } catch (e) {}
+        this.renderSavedViews();
+    }
+
+    getTagColor(tag) {
+        const clean = (tag || '').toLowerCase().replace(/^#/, '');
+        return this.tagRegistry[clean] || this.palette[clean] || this.palette.default;
+    }
+
+    parseQuery(rawQuery) {
+        const tokens = (rawQuery || '').trim().split(/\s+/).filter(Boolean);
+        const parsed = {
+            text: [],
+            tags: [],
+            categories: [],
+            isFav: false,
+            freqTop: false
+        };
+
+        tokens.forEach(tok => {
+            const lower = tok.toLowerCase();
+            if (lower.startsWith('tag:')) {
+                parsed.tags.push(lower.slice(4));
+            } else if (lower.startsWith('#') && lower.length > 1) {
+                parsed.tags.push(lower.slice(1));
+            } else if (lower.startsWith('cat:') || lower.startsWith('categoria:')) {
+                parsed.categories.push(lower.split(':')[1]);
+            } else if (lower === 'is:fav' || lower === 'is:favorite') {
+                parsed.isFav = true;
+            } else if (lower === 'freq:top' || lower === 'freq:alta' || lower === 'freq:high') {
+                parsed.freqTop = true;
+            } else {
+                parsed.text.push(lower);
+            }
+        });
+
+        return parsed;
+    }
+
+    matches(shortcut, parsedQuery) {
+        if (!shortcut || !parsedQuery) return true;
+
+        // 1. Tag matching (AND logic for multiple tags)
+        if (parsedQuery.tags.length > 0) {
+            const itemTags = (shortcut.tags || []).map(t => (t || '').toLowerCase().replace(/^#/, ''));
+            const matchesAllTags = parsedQuery.tags.every(reqTag => itemTags.includes(reqTag));
+            if (!matchesAllTags) return false;
+        }
+
+        // 2. Category matching
+        if (parsedQuery.categories.length > 0) {
+            const cat = (shortcut.category || '').toLowerCase();
+            const matchesCat = parsedQuery.categories.some(c => cat.includes(c));
+            if (!matchesCat) return false;
+        }
+
+        // 3. Favorite filter
+        if (parsedQuery.isFav && !shortcut.favorite) {
+            return false;
+        }
+
+        // 4. Frequency filter (top usage count >= 5)
+        if (parsedQuery.freqTop) {
+            const launches = shortcut.launchCount || 0;
+            if (launches < 3) return false;
+        }
+
+        // 5. Free text tokens
+        if (parsedQuery.text.length > 0) {
+            const title = (shortcut.title || '').toLowerCase();
+            const desc = (shortcut.description || '').toLowerCase();
+            const url = (shortcut.url || '').toLowerCase();
+            const matchesAllText = parsedQuery.text.every(t => title.includes(t) || desc.includes(t) || url.includes(t));
+            if (!matchesAllText) return false;
+        }
+
+        return true;
+    }
+
+    saveView(name, query, icon = '🔖') {
+        if (!name || !query) return;
+        soundFx.play('chime');
+        const view = {
+            id: 'view_' + Date.now(),
+            name: name.trim(),
+            query: query.trim(),
+            icon: icon.trim()
+        };
+        this.savedViews.push(view);
+        this.saveViews();
+    }
+
+    deleteView(id) {
+        soundFx.play('click');
+        this.savedViews = this.savedViews.filter(v => v.id !== id);
+        this.saveViews();
+    }
+
+    renderSavedViews() {
+        const container = document.getElementById('category-filter-bar');
+        if (!container) return;
+
+        // Remove old saved view pills
+        container.querySelectorAll('.saved-view-pill').forEach(el => el.remove());
+
+        this.savedViews.forEach(view => {
+            const pill = document.createElement('button');
+            pill.className = 'filter-pill saved-view-pill';
+            pill.setAttribute('data-filter-view', view.id);
+            pill.innerHTML = `<span class="view-icon">${view.icon}</span> <span>${view.name}</span> <span class="delete-view-x" title="Eliminar vista">×</span>`;
+            
+            pill.addEventListener('click', (e) => {
+                if (e.target.classList.contains('delete-view-x')) {
+                    e.stopPropagation();
+                    this.deleteView(view.id);
+                    return;
+                }
+                soundFx.play('click');
+                const searchInp = document.getElementById('search-input') || document.querySelector('.search-input');
+                if (searchInp) {
+                    searchInp.value = view.query;
+                    searchInp.dispatchEvent(new Event('input', { bubbles: true }));
+                    searchInp.focus();
+                }
+            });
+
+            container.appendChild(pill);
+        });
+    }
+
+    init() {
+        this.renderSavedViews();
+        const saveViewBtn = document.getElementById('save-search-view-btn');
+        const saveModal = document.getElementById('save-view-modal');
+        const closeSaveModal = document.getElementById('close-save-view-modal');
+        const confirmSaveBtn = document.getElementById('confirm-save-view-btn');
+        const viewQueryInp = document.getElementById('saved-view-query-input');
+        const viewNameInp = document.getElementById('saved-view-name-input');
+        const viewIconInp = document.getElementById('saved-view-icon-input');
+
+        if (saveViewBtn) {
+            saveViewBtn.addEventListener('click', () => {
+                const searchInp = document.getElementById('search-input') || document.querySelector('.search-input');
+                const q = searchInp ? searchInp.value.trim() : '';
+                if (!q) { alert('Escribe primero una búsqueda o etiquetas para guardar la vista.'); return; }
+                if (viewQueryInp) viewQueryInp.value = q;
+                if (saveModal) saveModal.classList.remove('hidden');
+            });
+        }
+
+        if (closeSaveModal && saveModal) {
+            closeSaveModal.addEventListener('click', () => saveModal.classList.add('hidden'));
+        }
+
+        if (confirmSaveBtn && saveModal) {
+            confirmSaveBtn.addEventListener('click', () => {
+                const q = viewQueryInp ? viewQueryInp.value.trim() : '';
+                const name = viewNameInp ? viewNameInp.value.trim() : 'Vista';
+                const icon = (viewIconInp ? viewIconInp.value.trim() : '') || '🔖';
+                if (name && q) {
+                    this.saveView(name, q, icon);
+                    saveModal.classList.add('hidden');
+                }
+            });
+        }
+    }
+}
+
+const tagsFilter = new TagsFilterEngine();
+
+
 // --- Module: js/calendar-agenda.js ---
 // js/calendar-agenda.js - Bento Calendar & Agenda Engine (RFC 5545 iCal Parser & Proximity Alert)
 
@@ -3960,7 +4173,10 @@ class DashboardRenderer {
                     </div>
                 ` : '';
 
-                card.innerHTML = `
+                        const tagsHtml = (Array.isArray(shortcut.tags) && shortcut.tags.length > 0)
+            ? `<div class="shortcut-tags-row">${shortcut.tags.slice(0, 3).map(t => `<span class="shortcut-tag-chip" style="--tag-color: ${tagsFilter.getTagColor(t)}">#${t}</span>`).join('')}</div>`
+            : '';
+        card.innerHTML = `
                     ${editButtons}
                     <div class="icon-img-wrapper">
                         <img src="${shortcut.icon}" alt="${escapeHtml(shortcut.title)}" width="60" height="60" loading="lazy">
@@ -4802,7 +5018,6 @@ class BackupManager {
 // --- Module: js/search.js ---
 // js/search.js - Multi-Engine Omnibox, Category Filters, Bangs & DevTools
 
-
 const SEARCH_ENGINES = {
     google: { name: 'Google', url: 'https://www.google.com/search?q=', icon: 'iconos/google.webp' },
     duckduckgo: { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=', icon: 'iconos/duckduckgo.webp' },
@@ -4898,7 +5113,6 @@ class SearchEngineManager {
         const categories = document.querySelectorAll('.categoria');
         let totalVisible = 0;
 
-                // Check Macro Triggers
         const macro = macroEngine.getMacro(query);
         if (macro) {
             if (this.calcBanner) {
@@ -4935,7 +5149,6 @@ class SearchEngineManager {
             }
         }
 
-        // 3. Filter Shortcut Cards
         categories.forEach(cat => {
             const group = cat.getAttribute('data-group');
             const matchesPill = (state.activeFilter === 'all' || state.activeFilter === group);
@@ -4948,7 +5161,8 @@ class SearchEngineManager {
                 const desc = (card.getAttribute('data-desc') || '').toLowerCase();
                 const text = (card.innerText || card.textContent || '').toLowerCase();
 
-                const matchesQuery = !query || title.includes(query) || tags.includes(query) || desc.includes(query) || text.includes(query);
+                const parsedFilter = tagsFilter.parseQuery(query);
+            const matchesQuery = !query || tagsFilter.matches(s, parsedFilter) || title.includes(query) || tags.includes(query) || desc.includes(query) || text.includes(query);
 
                 if (matchesPill && matchesQuery) {
                     card.classList.remove('hidden-by-filter', 'no-match');
@@ -4977,13 +5191,11 @@ class SearchEngineManager {
         const trimmed = query.trim();
         if (!trimmed) return;
 
-                // Check Macro Query
         if (macroEngine.getMacro(trimmed)) {
             macroEngine.executeMacro(trimmed);
             return;
         }
 
-        // Check Bang Query
         const bangInfo = parseBangQuery(trimmed);
         if (bangInfo.isBang && bangInfo.targetUrl) {
             soundFx.play('click');
@@ -4991,7 +5203,6 @@ class SearchEngineManager {
             return;
         }
 
-        // Standard Web Search
         const engine = SEARCH_ENGINES[this.currentEngineKey] || SEARCH_ENGINES.google;
         const searchUrl = `${engine.url}${encodeURIComponent(trimmed)}`;
         soundFx.play('click');
@@ -5474,6 +5685,7 @@ function initApp() {
         techRadar.init();
         neuralSearch.init();
         spacesManager.init();
+        tagsFilter.init();
         calendarAgenda.init();
     window.ambientAudio = ambientAudio;
     window.radialHUD = radialHUD;
@@ -5486,6 +5698,7 @@ function initApp() {
     window.extensionApi = extensionApi;
     window.personalAnalytics = personalAnalytics;
     window.spacesManager = spacesManager;
+    window.tagsFilter = tagsFilter;
     window.calendarAgenda = calendarAgenda;
     extensionApi.init();
     miniHud.init();

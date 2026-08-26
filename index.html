@@ -739,6 +739,25 @@
         </div>
     </div>
 
+        <!-- Save Smart View Modal -->
+    <div class="save-view-modal-backdrop hidden" id="save-view-modal" role="dialog" aria-modal="true" aria-label="Guardar Vista Inteligente">
+        <div class="save-view-modal-card">
+            <div class="save-view-modal-header">
+                <h3>🔖 Guardar como Vista Inteligente</h3>
+                <button class="save-view-modal-close" id="close-save-view-modal" aria-label="Cerrar modal">✕</button>
+            </div>
+            <p class="save-view-modal-desc">Crea una píldora de filtro permanente con tus etiquetas y consulta actual:</p>
+            <div class="save-view-modal-form">
+                <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                    <input type="text" id="saved-view-icon-input" placeholder="Icono" maxlength="4" style="width: 70px;" value="✨">
+                    <input type="text" id="saved-view-name-input" placeholder="Nombre de la Vista (ej. IA & 3D Top)" style="flex: 1;">
+                </div>
+                <input type="text" id="saved-view-query-input" placeholder="Consulta (ej. tag:ia tag:3d)" style="width: 100%; margin-bottom: 14px;" readonly>
+                <button class="save-view-confirm-btn" id="confirm-save-view-btn">Fijar Vista en Barra</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Settings Slide-Over Glass Drawer -->
     <div class="settings-drawer-backdrop hidden" id="settings-drawer" role="dialog" aria-modal="true" aria-label="Ajustes">
         <div class="settings-drawer-card">

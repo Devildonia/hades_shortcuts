@@ -1,3 +1,4 @@
+import { tagsFilter } from './tags-filter.js';
 import { personalAnalytics } from './personal-analytics.js';
 // js/render.js - Dynamic Bento Grid & Shortcut Card Renderer
 
@@ -84,7 +85,10 @@ export class DashboardRenderer {
                     </div>
                 ` : '';
 
-                card.innerHTML = `
+                        const tagsHtml = (Array.isArray(shortcut.tags) && shortcut.tags.length > 0)
+            ? `<div class="shortcut-tags-row">${shortcut.tags.slice(0, 3).map(t => `<span class="shortcut-tag-chip" style="--tag-color: ${tagsFilter.getTagColor(t)}">#${t}</span>`).join('')}</div>`
+            : '';
+        card.innerHTML = `
                     ${editButtons}
                     <div class="icon-img-wrapper">
                         <img src="${shortcut.icon}" alt="${escapeHtml(shortcut.title)}" width="60" height="60" loading="lazy">
