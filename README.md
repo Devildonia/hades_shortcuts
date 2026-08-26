@@ -189,7 +189,7 @@ Pure mathematical acoustic synthesis using modern **Web Audio API** nodes (`Audi
 - **100% Offline Canvas QR Generator (`js/devtools.js`)**: Pure 2D Canvas matrix rendering (0 network calls, 0 third-party APIs like `api.qrserver.com`) with instant PNG download and clipboard copy.
 - **SessionStorage Token Isolation (`js/crypto-sync.js`)**: GitHub Personal Access Tokens reside strictly in `sessionStorage` (wiped immediately when the browser tab closes).
 - **Client-Side PBKDF2 + AES-256-GCM**: Used for GitHub Gist cloud sync of dashboard JSON (shortcuts, notes, layout). API keys for OpenAI/Anthropic stay in `sessionStorage` for the tab session.
-- **50 bundled shortcuts** across 10 categories (3D, AI, Art, Audio, Google, Tools, Social, Shopping, Gaming, Video).
+- **51 bundled shortcuts** across 10 categories (3D, AI, Art, Audio, Google, Tools, Social, Shopping, Gaming, Video).
 - **Local semantic filter**: `neural-search.js` ranks shortcuts by token overlap in title/tags/description — not WebGPU embeddings.
 
 ---

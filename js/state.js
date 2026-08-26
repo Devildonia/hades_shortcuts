@@ -63,6 +63,7 @@ export const DEFAULT_SHORTCUTS = [
     { id: 'pccomponentes', title: 'PcComponentes', url: 'https://www.pccomponentes.com/', icon: 'iconos/pccomponentes.webp', category: 'cat_shopping', tags: 'hardware, tecnologia, pc, componentes' },
     { id: 'paypal', title: 'PayPal', url: 'https://www.paypal.com/', icon: 'iconos/paypal.webp', category: 'cat_shopping', tags: 'pagos, cartera, transferencias' },
     { id: 'wallapop', title: 'Wallapop', url: 'https://es.wallapop.com/', icon: 'iconos/wallapop.webp', category: 'cat_shopping', tags: 'segunda mano, compras, ventas' },
+    { id: 'ebay', title: 'eBay', url: 'https://www.ebay.es/', icon: 'iconos/ebay.webp', category: 'cat_shopping', tags: 'compras, subastas, marketplace, segunda mano' },
     // Gaming
     { id: 'steam', title: 'Steam', url: 'https://store.steampowered.com/', icon: 'iconos/steam.webp', category: 'cat_gaming', tags: 'gaming steam valve tienda juegos pc store' },
     { id: 'epic', title: 'Epic Games', url: 'https://store.epicgames.com/', icon: 'iconos/epic.webp', category: 'cat_gaming', tags: 'gaming epic store juegos unreal fortnite' },

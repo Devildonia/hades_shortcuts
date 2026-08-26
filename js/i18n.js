@@ -6,17 +6,33 @@ export const i18nDictionaries = {"es": {"brand_greeting": "Bienvenido al Centro 
 
 (function hydrateEmbeddedCategories() {
     const gaming = { es: 'Gaming & Plataformas', en: 'Gaming & Platforms', fr: 'Gaming & Plateformes', de: 'Gaming & Plattformen' };
-    const analyticsTab = { es: 'Hábitos', en: 'Habits', fr: 'Habitudes', de: 'Gewohnheiten' };
+    const analyticsTab = { es: 'Hábitos & Analytics', en: 'Habits & Analytics', fr: 'Habitudes & Analytics', de: 'Gewohnheiten & Analytics' };
     Object.keys(gaming).forEach((lang) => {
         const dict = i18nDictionaries[lang];
         if (!dict) return;
         if (dict.categories) dict.categories.cat_gaming = dict.categories.cat_gaming || gaming[lang];
         if (dict.settings_hub && dict.settings_hub.tabs) {
-            dict.settings_hub.tabs.analytics = dict.settings_hub.tabs.analytics || analyticsTab[lang];
+            dict.settings_hub.tabs.analytics = analyticsTab[lang];
+        }
+        if (dict.shortcuts) {
+            dict.shortcuts.ebay = dict.shortcuts.ebay || {
+                es: 'Marketplace global de subastas y compraventa entre particulares y tiendas',
+                en: 'Global marketplace for auctions and buying and selling from people and shops',
+                fr: "Place de marché mondiale d'enchères et d'achat-vente entre particuliers et boutiques",
+                de: 'Globaler Marktplatz für Auktionen sowie Kauf und Verkauf von Privat und Händlern'
+            }[lang];
+        }
+        if (dict.settings_hub && dict.settings_hub.appearance && dict.settings_hub.appearance.themes) {
+            dict.settings_hub.appearance.themes.abyss = dict.settings_hub.appearance.themes.abyss || 'Abyss OLED';
+            dict.settings_hub.appearance.themes.jade = dict.settings_hub.appearance.themes.jade || 'Jade Terminal';
         }
         if (dict.settings_hub && dict.settings_hub.backup && dict.settings_hub.backup.reset_desc) {
-            dict.settings_hub.backup.reset_desc = dict.settings_hub.backup.reset_desc.replace('45', '50');
+            dict.settings_hub.backup.reset_desc = dict.settings_hub.backup.reset_desc.replace('45', '51').replace('50', '51');
         }
+        if (!dict.macros_studio) dict.macros_studio = {};
+        dict.macros_studio.run_btn = { es: 'Ejecutar', en: 'Run', fr: 'Exécuter', de: 'Ausführen' }[lang];
+        dict.macros_studio.edit_btn = { es: 'Editar', en: 'Edit', fr: 'Modifier', de: 'Bearbeiten' }[lang];
+        dict.macros_studio.delete_btn = { es: 'Eliminar', en: 'Delete', fr: 'Supprimer', de: 'Löschen' }[lang];
     });
 })();
 

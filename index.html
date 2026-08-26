@@ -30,10 +30,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=6.2.3">
+    <link rel="stylesheet" href="style.css?v=6.3.6">
 
     <!-- Master Script Module -->
-    <script type="module" src="js/app.js?v=6.2.4"></script>
+    <script type="module" src="js/app.js?v=6.2.8"></script>
 </head>
 <body>
     <canvas id="aurora-bg-canvas" class="aurora-canvas"></canvas>
@@ -643,6 +643,16 @@
                             <span class="theme-choice-name">Sunset Amber</span>
                         </label>
                         <label class="theme-choice-card">
+                            <input type="radio" name="setting-theme" value="abyss">
+                            <span class="theme-choice-preview abyss-preview"></span>
+                            <span class="theme-choice-name" data-i18n="settings_hub.appearance.themes.abyss">Abyss OLED</span>
+                        </label>
+                        <label class="theme-choice-card">
+                            <input type="radio" name="setting-theme" value="jade">
+                            <span class="theme-choice-preview jade-preview"></span>
+                            <span class="theme-choice-name" data-i18n="settings_hub.appearance.themes.jade">Jade Terminal</span>
+                        </label>
+                        <label class="theme-choice-card">
                             <input type="radio" name="setting-theme" value="light">
                             <span class="theme-choice-preview light-preview"></span>
                             <span class="theme-choice-name">Crystal Light</span>
@@ -711,7 +721,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
                 <div class="settings-section">
                     <div class="settings-toggle-row">

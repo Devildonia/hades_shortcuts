@@ -81,6 +81,7 @@
     "pccomponentes": "Specialized computer hardware, electronics, and tech store",
     "paypal": "Secure digital wallet and online payment transfer system",
     "wallapop": "Peer-to-peer secondhand marketplace for buying and selling goods",
+    "ebay": "Global marketplace for auctions and buying and selling from people and shops",
     "youtube": "Global streaming video platform, tutorials, music, and live broadcasts",
     "kling": "Cinematic video generation with realistic physics and camera motion",
     "hedra": "AI-powered expressive talking avatar and animated video generation",
@@ -147,7 +148,7 @@
       "layout": "Layout & Shortcuts",
       "backup": "Backup & Restore",
       "macros": "Macros & Routines",
-      "analytics": "📊 Habits & Analytics"
+      "analytics": "Habits & Analytics"
     },
     "appearance": {
       "themes_label": "Visual Theme",
@@ -157,6 +158,8 @@
         "cyber": "Cyber Neon",
         "nebula": "Deep Nebula",
         "amber": "Sunset Amber",
+        "abyss": "Abyss OLED",
+        "jade": "Jade Terminal",
         "light": "Crystal Light",
         "sunset": "Sunset Amber"
       },
@@ -188,7 +191,7 @@
       "import_desc": "Load a previously exported JSON backup file.",
       "import_btn": "📤 Restore from File",
       "reset_title": "Factory Reset",
-      "reset_desc": "Reset dashboard back to the original 50 default shortcuts.",
+      "reset_desc": "Reset dashboard back to the original 51 default shortcuts.",
       "reset_btn": "⚠️ Reset to Default",
       "reset_confirm": "Are you sure you want to restore factory defaults? Customizations will be lost.",
       "import_success": "Backup successfully restored!",
@@ -329,7 +332,7 @@
     "semantic_match": "AI Semantic Match"
   },
   "analytics": {
-    "tab_title": "📊 Habits & Analytics",
+    "tab_title": "Habits & Analytics",
     "title": "Usage Analytics & Habits (100% Local)",
     "desc": "Private statistics computed solely in your browser. Zero external telemetry.",
     "total_launches": "Total Launches",
@@ -361,9 +364,9 @@
     "pomodoro_label": "Pomodoro Action:",
     "save_btn": "Save Macro",
     "cancel_btn": "Cancel",
-    "run_btn": "▶ Run",
-    "edit_btn": "✏️ Edit",
-    "delete_btn": "🗑️ Delete",
+    "run_btn": "Run",
+    "edit_btn": "Edit",
+    "delete_btn": "Delete",
     "ambient_none": "None",
     "ambient_rain": "🌧️ Rain",
     "ambient_space": "🚀 Space",

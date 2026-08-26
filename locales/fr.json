@@ -81,6 +81,7 @@
     "pccomponentes": "Boutique spécialisée en informatique, hardware et technologie",
     "paypal": "Portefeuille numérique sécurisé et plateforme de paiement",
     "wallapop": "Plateforme d'achat et vente de produits d'occasion",
+    "ebay": "Place de marché mondiale d'enchères et d'achat-vente entre particuliers et boutiques",
     "youtube": "Plateforme de streaming vidéo, tutoriels et diffusions en direct",
     "kling": "Génération de vidéos cinématographiques avec mouvements réalistes",
     "hedra": "Création d'avatars expressifs parlants et de personnages animés par IA",
@@ -147,7 +148,7 @@
       "layout": "Mise en page & Raccourcis",
       "backup": "Sauvegarde",
       "macros": "Macros & Routines",
-      "analytics": "📊 Habitudes & Analytics"
+      "analytics": "Habitudes & Analytics"
     },
     "appearance": {
       "themes_label": "Thème Visuel",
@@ -157,6 +158,8 @@
         "cyber": "Cyber Neon",
         "nebula": "Deep Nebula",
         "amber": "Sunset Amber",
+        "abyss": "Abyss OLED",
+        "jade": "Jade Terminal",
         "light": "Crystal Light",
         "sunset": "Sunset Amber"
       },
@@ -188,7 +191,7 @@
       "import_desc": "Chargez un fichier de sauvegarde JSON préalablement exporté.",
       "import_btn": "📤 Restaurer depuis le Fichier",
       "reset_title": "Réinitialisation d'Usine",
-      "reset_desc": "Restaure les 50 raccourcis originaux par défaut.",
+      "reset_desc": "Restaure les 51 raccourcis originaux par défaut.",
       "reset_btn": "⚠️ Réinitialiser par Défaut",
       "reset_confirm": "Êtes-vous sûr de vouloir réinitialiser ? Les personnalisations seront perdues.",
       "import_success": "Sauvegarde restaurée avec succès !",
@@ -329,7 +332,7 @@
     "semantic_match": "Correspondance Sémantique IA"
   },
   "analytics": {
-    "tab_title": "📊 Habitudes & Analytics",
+    "tab_title": "Habitudes & Analytics",
     "title": "Métriques d'Usage & Habitudes (100% Local)",
     "desc": "Statistiques privées calculées uniquement dans votre navigateur. Zéro télémétrie externe.",
     "total_launches": "Lancements Totaux",
@@ -361,9 +364,9 @@
     "pomodoro_label": "Action Pomodoro :",
     "save_btn": "Enregistrer",
     "cancel_btn": "Annuler",
-    "run_btn": "▶ Exécuter",
-    "edit_btn": "✏️ Modifier",
-    "delete_btn": "🗑️ Supprimer",
+    "run_btn": "Exécuter",
+    "edit_btn": "Modifier",
+    "delete_btn": "Supprimer",
     "ambient_none": "Aucun",
     "ambient_rain": "🌧️ Pluie",
     "ambient_space": "🚀 Espace",

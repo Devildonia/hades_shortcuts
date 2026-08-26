@@ -100,6 +100,7 @@ export class SettingsHub {
         soundFx.play('click');
         this.syncUIState();
         this.drawer.classList.remove('hidden');
+        document.body.classList.add('settings-open');
         this.renderAnalyticsTab();
     }
 
@@ -107,6 +108,7 @@ export class SettingsHub {
         if (!this.drawer) return;
         soundFx.play('click');
         this.drawer.classList.add('hidden');
+        document.body.classList.remove('settings-open');
     }
 
     applyGlow(enabled) {

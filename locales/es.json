@@ -81,6 +81,7 @@
     "pccomponentes": "Tienda especializada en informática, hardware y tecnología",
     "paypal": "Pasarela de pagos en línea segura y transferencias",
     "wallapop": "Plataforma de compraventa de productos de segunda mano",
+    "ebay": "Marketplace global de subastas y compraventa entre particulares y tiendas",
     "youtube": "Plataforma de vídeo en streaming, tutoriales y directos",
     "kling": "Generación de vídeo cinemático con movimiento realista por IA",
     "hedra": "Creación de avatares hablantes y personajes animados con IA",
@@ -147,7 +148,7 @@
       "layout": "Diseño & Atajos",
       "backup": "Copia de Seguridad",
       "macros": "Macros & Rutinas",
-      "analytics": "📊 Hábitos & Analytics"
+      "analytics": "Hábitos & Analytics"
     },
     "appearance": {
       "themes_label": "Tema Visual",
@@ -157,6 +158,8 @@
         "cyber": "Cyber Neon",
         "nebula": "Deep Nebula",
         "amber": "Sunset Amber",
+        "abyss": "Abyss OLED",
+        "jade": "Jade Terminal",
         "light": "Crystal Light",
         "sunset": "Sunset Amber"
       },
@@ -188,7 +191,7 @@
       "import_desc": "Carga un archivo de respaldo JSON previamente exportado.",
       "import_btn": "📤 Restaurar desde Archivo",
       "reset_title": "Restablecer de Fábrica",
-      "reset_desc": "Restaura los 50 accesos directos originales predeterminados.",
+      "reset_desc": "Restaura los 51 accesos directos originales predeterminados.",
       "reset_btn": "⚠️ Restablecer Valores",
       "reset_confirm": "¿Estás seguro de que deseas restablecer los valores de fábrica? Se perderán las personalizaciones.",
       "import_success": "¡Copia de seguridad restaurada con éxito!",
@@ -329,7 +332,7 @@
     "semantic_match": "Coincidencia Semántica IA"
   },
   "analytics": {
-    "tab_title": "📊 Hábitos & Analytics",
+    "tab_title": "Hábitos & Analytics",
     "title": "Métricas de Uso y Hábitos (100% Local)",
     "desc": "Estadísticas privadas calculadas únicamente en tu navegador. Cero telemetría externa.",
     "total_launches": "Lanzamientos Totales",
@@ -361,9 +364,9 @@
     "pomodoro_label": "Acción del Pomodoro:",
     "save_btn": "Guardar Macro",
     "cancel_btn": "Cancelar",
-    "run_btn": "▶ Ejecutar",
-    "edit_btn": "✏️ Editar",
-    "delete_btn": "🗑️ Eliminar",
+    "run_btn": "Ejecutar",
+    "edit_btn": "Editar",
+    "delete_btn": "Eliminar",
     "ambient_none": "Ninguno",
     "ambient_rain": "🌧️ Lluvia",
     "ambient_space": "🚀 Espacio",

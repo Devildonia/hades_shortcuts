@@ -6,7 +6,7 @@ import { soundFx } from './audio.js';
 
 export const SORTED_PRESET_ICONS = [
     'aliexpress.webp', 'amazon.webp', 'bing.webp', 'birme.webp', 'chatgpt.webp', 'civitai.webp',
-    'claude.webp', 'deepseek.webp', 'discord.webp', 'duckduckgo.webp', 'elevenlabs.webp', 'epic.webp',
+    'claude.webp', 'deepseek.webp', 'discord.webp', 'duckduckgo.webp', 'ebay.webp', 'elevenlabs.webp', 'epic.webp',
     'exophase.webp', 'facebook.webp', 'gemini.webp', 'github.webp', 'gmail.webp', 'gog.webp',
     'google.webp', 'googleaistudio.webp', 'googledrive.webp', 'hedra.webp', 'instagram.webp', 'itchio.webp',
     'kling.webp', 'linkedin.webp', 'ludoai.webp', 'meshy.webp', 'MiniMax.webp', 'notebooklm.webp',

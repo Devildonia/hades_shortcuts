@@ -1,4 +1,4 @@
-import { macroEngine } from './macros.js';
+import { macroEngine } from './macros.js?v=6.2.8';
 import { aiAgent } from './ai-agent.js';
 // js/app.js - Master Orchestrator for HaDeS' Shortcuts Next-Gen
 import { state } from './state.js';
@@ -11,7 +11,7 @@ import { DragDropManager } from './dragdrop.js';
 import { LayoutManager } from './layout.js';
 import { ShortcutManager } from './shortcut-manager.js';
 import { BackupManager } from './backup.js';
-import { SettingsHub } from './settings.js';
+import { SettingsHub } from './settings.js?v=6.2.7';
 import { widgetsManager } from './widgets.js';
 import { PostItManager } from './postits.js';
 import { ThemeStudio } from './theme-studio.js';

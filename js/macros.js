@@ -4,6 +4,11 @@ import { state, escapeHtml, persistJson } from './state.js';
 import { soundFx } from './audio.js';
 import { ambientAudio } from './ambient-audio.js';
 import { focusMode } from './focus-mode.js';
+import { getTranslation } from './i18n.js';
+
+const MACRO_ICON_PLAY = '<svg class="macro-action-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z"/></svg>';
+const MACRO_ICON_EDIT = '<svg class="macro-action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+const MACRO_ICON_DEL = '<svg class="macro-action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>';
 
 export const DEFAULT_MACROS = {
     '!work': {
@@ -119,6 +124,10 @@ export class MacroEngine {
             card.className = 'macro-item-card';
             const isCustom = !!this.customMacros[trigger];
 
+            const runLabel = getTranslation('macros_studio.run_btn') || 'Ejecutar';
+            const editLabel = getTranslation('macros_studio.edit_btn') || 'Editar';
+            const delLabel = getTranslation('macros_studio.delete_btn') || 'Eliminar';
+
             card.innerHTML = `
                 <div class="macro-item-header">
                     <span class="macro-badge">${escapeHtml(trigger)}</span>
@@ -127,9 +136,9 @@ export class MacroEngine {
                 </div>
                 <p class="macro-item-desc">${escapeHtml(macro.desc || (macro.shortcuts || []).join(', '))}</p>
                 <div class="macro-card-actions">
-                    <button class="control-btn macro-run-btn" data-trigger="${escapeHtml(trigger)}">▶ Ejecutar</button>
-                    <button class="control-btn macro-edit-btn" data-trigger="${escapeHtml(trigger)}">✏️ Editar</button>
-                    ${isCustom ? `<button class="control-btn macro-del-btn" data-trigger="${escapeHtml(trigger)}">🗑️ Eliminar</button>` : ''}
+                    <button type="button" class="macro-action-btn macro-run-btn" data-trigger="${escapeHtml(trigger)}">${MACRO_ICON_PLAY}<span>${escapeHtml(runLabel)}</span></button>
+                    <button type="button" class="macro-action-btn macro-edit-btn" data-trigger="${escapeHtml(trigger)}">${MACRO_ICON_EDIT}<span>${escapeHtml(editLabel)}</span></button>
+                    ${isCustom ? `<button type="button" class="macro-action-btn macro-del-btn" data-trigger="${escapeHtml(trigger)}">${MACRO_ICON_DEL}<span>${escapeHtml(delLabel)}</span></button>` : ''}
                 </div>
             `;
 
@@ -225,6 +234,7 @@ export class MacroEngine {
 
     init() {
         this.renderMacroList();
+        state.on('language:changed', () => this.renderMacroList());
         const createBtn = document.getElementById('create-macro-btn');
         const saveBtn = document.getElementById('macro-form-save-btn');
         const cancelBtn = document.getElementById('cancel-macro-modal') || document.getElementById('close-macro-modal');

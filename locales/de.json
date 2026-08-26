@@ -81,6 +81,7 @@
     "pccomponentes": "Fachgeschäft für Computer, Hardware und Technik",
     "paypal": "Sichere Online-Zahlungsplattform und digitale Geldbörse",
     "wallapop": "Marktplatz für den Kauf und Verkauf von gebrauchten Artikeln",
+    "ebay": "Globaler Marktplatz für Auktionen sowie Kauf und Verkauf von Privat und Händlern",
     "youtube": "Streaming-Videoplattform, Tutorials, Musik und Live-Übertragungen",
     "kling": "Kinoreife Videogenerierung mit realistischen Bewegungen durch KI",
     "hedra": "Erstellung sprechender Avatare und animierter Charaktere mit KI",
@@ -147,7 +148,7 @@
       "layout": "Layout & Verknüpfungen",
       "backup": "Sicherung & Wiederherstellung",
       "macros": "Makros & Routinen",
-      "analytics": "📊 Gewohnheiten & Analytics"
+      "analytics": "Gewohnheiten & Analytics"
     },
     "appearance": {
       "themes_label": "Visuelles Design",
@@ -157,6 +158,8 @@
         "cyber": "Cyber Neon",
         "nebula": "Deep Nebula",
         "amber": "Sunset Amber",
+        "abyss": "Abyss OLED",
+        "jade": "Jade Terminal",
         "light": "Crystal Light",
         "sunset": "Sunset Amber"
       },
@@ -188,7 +191,7 @@
       "import_desc": "Laden Sie eine zuvor exportierte JSON-Sicherungsdatei.",
       "import_btn": "📤 Aus Datei wiederherstellen",
       "reset_title": "Werkseinstellungen",
-      "reset_desc": "Stellt die ursprünglichen 50 Standard-Verknüpfungen wieder her.",
+      "reset_desc": "Stellt die ursprünglichen 51 Standard-Verknüpfungen wieder her.",
       "reset_btn": "⚠️ Auf Standard zurücksetzen",
       "reset_confirm": "Möchten Sie wirklich die Werkseinstellungen wiederherstellen?",
       "import_success": "Sicherung erfolgreich wiederhergestellt!",
@@ -329,7 +332,7 @@
     "semantic_match": "Semantische KI-Übereinstimmung"
   },
   "analytics": {
-    "tab_title": "📊 Gewohnheiten & Analytics",
+    "tab_title": "Gewohnheiten & Analytics",
     "title": "Nutzungsmetriken & Gewohnheiten (100% Lokal)",
     "desc": "Private Statistiken, die ausschließlich in Ihrem Browser berechnet werden. Keine Telemetrie.",
     "total_launches": "Gesamte Starts",
@@ -361,9 +364,9 @@
     "pomodoro_label": "Pomodoro-Aktion:",
     "save_btn": "Makro Speichern",
     "cancel_btn": "Abbrechen",
-    "run_btn": "▶ Ausführen",
-    "edit_btn": "✏️ Bearbeiten",
-    "delete_btn": "🗑️ Löschen",
+    "run_btn": "Ausführen",
+    "edit_btn": "Bearbeiten",
+    "delete_btn": "Löschen",
     "ambient_none": "Keins",
     "ambient_rain": "🌧️ Regen",
     "ambient_space": "🚀 Weltall",
