@@ -5069,3 +5069,131 @@ input:checked + .slider:before {
     border-radius: 6px;
     cursor: pointer;
 }
+
+/* --- Ultra-Aesthetic Tech Radar & RSS Feed Items --- */
+.widget-tech-radar {
+    display: flex;
+    flex-direction: column;
+    min-height: 220px;
+}
+
+.tech-radar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 8px;
+    flex: 1;
+    overflow-y: auto;
+    max-height: 240px;
+    padding-right: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 242, 254, 0.2) transparent;
+}
+
+.tech-radar-list::-webkit-scrollbar {
+    width: 4px;
+}
+.tech-radar-list::-webkit-scrollbar-thumb {
+    background: rgba(0, 242, 254, 0.25);
+    border-radius: 4px;
+}
+
+.radar-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 7px 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.radar-item:hover {
+    background: rgba(0, 242, 254, 0.05);
+    border-color: rgba(0, 242, 254, 0.35);
+    transform: translateX(2px);
+    box-shadow: 0 2px 12px rgba(0, 242, 254, 0.08);
+}
+
+.radar-link {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex: 1;
+    text-decoration: none !important;
+    color: var(--text-primary, #e2e8f0) !important;
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1.35;
+    min-width: 0;
+}
+
+.radar-bullet {
+    color: #00f2fe;
+    font-size: 0.9rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.radar-item:hover .radar-bullet {
+    transform: translateX(2px);
+}
+
+.radar-title {
+    color: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.2s ease;
+}
+
+.radar-item:hover .radar-title {
+    color: #00f2fe !important;
+}
+
+.radar-source-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #4facfe;
+    background: rgba(79, 172, 254, 0.12);
+    border: 1px solid rgba(79, 172, 254, 0.25);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+}
+
+.radar-pin-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 3px 5px;
+    border-radius: 6px;
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
+    opacity: 0.5;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.radar-item:hover .radar-pin-btn {
+    opacity: 1;
+}
+
+.radar-pin-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: scale(1.15);
+}
+
+.radar-loading, .radar-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    font-size: 0.82rem;
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
+}
