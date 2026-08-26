@@ -1,3 +1,5 @@
+import { platform } from './platform.js';
+import { extensionApi } from './extension-api.js';
 import { neuralSearch } from './neural-search.js';
 import { techRadar } from './tech-radar.js';
 import { telemetry } from './telemetry.js';
@@ -219,6 +221,9 @@ export function initApp() {
     window.techRadar = techRadar;
     window.neuralSearch = neuralSearch;
     window.devTools = devTools;
+    window.platform = platform;
+    window.extensionApi = extensionApi;
+    extensionApi.init();
     miniHud.init();
 
     loadLocaleAsync(state.language).then(() => {

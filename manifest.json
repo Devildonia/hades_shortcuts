@@ -1,28 +1,28 @@
 {
-  "name": "HaDeS' Shortcuts · Command Center",
-  "short_name": "HaDeS Shortcuts",
-  "description": "High-performance browser startpage, command center & productivity hub",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#07090e",
-  "theme_color": "#07090e",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "iconos/pwa-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "iconos/pwa-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
+  "manifest_version": 3,
+  "name": "HaDeS Shortcuts — Productivity New Tab & Command Center",
+  "version": "6.0.0",
+  "description": "Ultra-aesthetic cyberpunk startpage, glassmorphism bento grid, offline AI semantic search, focus soundscapes and productivity tools.",
+  "default_locale": "en",
+  "icons": {
+    "16": "iconos/pwa-192.png",
+    "48": "iconos/pwa-192.png",
+    "128": "iconos/pwa-512.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "background": {
+    "service_worker": "js/sw-extension.js"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "optional_permissions": [
+    "topSites",
+    "contextMenus"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
 }

@@ -1,6 +1,49 @@
 (() => {
 'use strict';
 
+// --- Module: js/platform.js ---
+// js/platform.js - Universal Platform Abstraction Layer (Web/PWA vs Chrome/Firefox Extension)
+
+const platform = {
+    isExtension: typeof chrome !== 'undefined' && !!chrome.runtime && !!chrome.runtime.id,
+    
+    async getStorage(key, fallback = null) {
+        if (this.isExtension && chrome.storage && chrome.storage.sync) {
+            return new Promise((resolve) => {
+                chrome.storage.sync.get([key], (result) => {
+                    if (result && result[key] !== undefined) resolve(result[key]);
+                    else resolve(localStorage.getItem(key) || fallback);
+                });
+            });
+        }
+        return localStorage.getItem(key) || fallback;
+    },
+
+    async setStorage(key, value) {
+        localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
+        if (this.isExtension && chrome.storage && chrome.storage.sync) {
+            const obj = {};
+            obj[key] = value;
+            return new Promise((resolve) => chrome.storage.sync.set(obj, resolve));
+        }
+    },
+
+    async getTopSites() {
+        if (!this.isExtension || !chrome.topSites) return [];
+        return new Promise((resolve) => {
+            chrome.topSites.get((sites) => resolve(sites || []));
+        });
+    },
+
+    async requestPermission(permName) {
+        if (!this.isExtension || !chrome.permissions) return false;
+        return new Promise((resolve) => {
+            chrome.permissions.request({ permissions: [permName] }, (granted) => resolve(granted));
+        });
+    }
+};
+
+
 // --- Module: js/state.js ---
 // js/state.js - Central Reactive State & Persistence Manager
 
@@ -1550,6 +1593,85 @@ class NeuralSearchEngine {
 }
 
 const neuralSearch = new NeuralSearchEngine();
+
+
+// --- Module: js/extension-api.js ---
+// js/extension-api.js - Native Extension Integrations (TopSites Onboarding & Context Menu Sync)
+
+
+class ExtensionAPIEngine {
+    constructor() {
+        this.isReady = false;
+    }
+
+    init() {
+        if (!platform.isExtension) return;
+        this.bindBackgroundMessages();
+        this.initSyncObserver();
+        this.isReady = true;
+    }
+
+    async importTopSitesToShortcuts() {
+        const hasPerm = await platform.requestPermission('topSites');
+        if (!hasPerm) return false;
+
+        const sites = await platform.getTopSites();
+        if (!sites || sites.length === 0) return false;
+
+        soundFx.play('chime');
+        let addedCount = 0;
+        sites.slice(0, 8).forEach(site => {
+            const exists = state.shortcuts.some(s => s.url === site.url);
+            if (!exists) {
+                const domain = new URL(site.url).hostname.replace('www.', '');
+                state.shortcuts.push({
+                    id: 'ext_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                    title: site.title || domain,
+                    url: site.url,
+                    category: 'productividad',
+                    icon: `https://www.google.com/s2/favicons?domain=${encodeURIComponent(site.url)}&sz=64`,
+                    desc: `Importado de tus sitios frecuentes de Chrome`,
+                    tags: 'extension topsites chrome'
+                });
+                addedCount++;
+            }
+        });
+
+        if (addedCount > 0) {
+            state.saveShortcuts();
+            state.emit('shortcuts:changed');
+        }
+        return addedCount;
+    }
+
+    bindBackgroundMessages() {
+        if (!platform.isExtension || !chrome.runtime || !chrome.runtime.onMessage) return;
+        chrome.runtime.onMessage.addListener((request) => {
+            if (request.action === 'add_shortcut' && request.data) {
+                state.shortcuts.push(request.data);
+                state.saveShortcuts();
+                state.emit('shortcuts:changed');
+                soundFx.play('chime');
+            }
+        });
+    }
+
+    initSyncObserver() {
+        if (!platform.isExtension || !chrome.storage || !chrome.storage.onChanged) return;
+        chrome.storage.onChanged.addListener((changes, area) => {
+            if (area === 'sync' && changes.hades_shortcuts_state) {
+                const newShortcuts = changes.hades_shortcuts_state.newValue;
+                if (newShortcuts && JSON.stringify(newShortcuts) !== JSON.stringify(state.shortcuts)) {
+                    state.shortcuts = newShortcuts;
+                    localStorage.setItem('hades_shortcuts_state', JSON.stringify(newShortcuts));
+                    state.emit('shortcuts:changed');
+                }
+            }
+        });
+    }
+}
+
+const extensionApi = new ExtensionAPIEngine();
 
 
 // --- Module: js/macros.js ---
@@ -4644,6 +4766,9 @@ function initApp() {
     window.techRadar = techRadar;
     window.neuralSearch = neuralSearch;
     window.devTools = devTools;
+    window.platform = platform;
+    window.extensionApi = extensionApi;
+    extensionApi.init();
     miniHud.init();
 
     loadLocaleAsync(state.language).then(() => {

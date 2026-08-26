@@ -222,6 +222,13 @@ python -m http.server 8080
 ```
 Then visit `http://localhost:8080` in your favorite browser.
 
+### Option 4: 🧩 Chrome / Edge / Brave Extension (Manifest V3)
+Transform every new browser tab into HaDeS with 1 click:
+1. Open `chrome://extensions/` in your Chromium-based browser (Chrome, Edge, Brave, Opera).
+2. Enable **Developer Mode** (toggle in the top-right corner).
+3. Click **Load unpacked** (*Cargar descomprimida*) and select this project folder.
+4. Press <kbd>Ctrl</kbd> + <kbd>T</kbd> to enjoy your instant command center in every new tab!
+
 ---
 
 ## 🌍 Internationalization (i18n)
@@ -252,6 +259,9 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   └── screenshots/         # High-res previews & animated demo GIF
 ├── js/
 │   ├── app.js               # Main orchestrator & lifecycle manager
+│   ├── platform.js          # Universal platform abstraction (Web/PWA vs Extension)
+│   ├── extension-api.js     # Native TopSites & background context menu bridge
+│   ├── sw-extension.js      # Manifest V3 background service worker
 │   ├── state.js             # Reactive central state & localStorage sync
 │   ├── audio.js             # Procedural Web Audio API synthesizer (0 KB)
 │   ├── ambient-audio.js     # Procedural focus ambient soundscapes (0 KB)

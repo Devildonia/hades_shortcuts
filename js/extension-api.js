@@ -1,0 +1,79 @@
+// js/extension-api.js - Native Extension Integrations (TopSites Onboarding & Context Menu Sync)
+
+import { platform } from './platform.js';
+import { state } from './state.js';
+import { soundFx } from './audio.js';
+
+export class ExtensionAPIEngine {
+    constructor() {
+        this.isReady = false;
+    }
+
+    init() {
+        if (!platform.isExtension) return;
+        this.bindBackgroundMessages();
+        this.initSyncObserver();
+        this.isReady = true;
+    }
+
+    async importTopSitesToShortcuts() {
+        const hasPerm = await platform.requestPermission('topSites');
+        if (!hasPerm) return false;
+
+        const sites = await platform.getTopSites();
+        if (!sites || sites.length === 0) return false;
+
+        soundFx.play('chime');
+        let addedCount = 0;
+        sites.slice(0, 8).forEach(site => {
+            const exists = state.shortcuts.some(s => s.url === site.url);
+            if (!exists) {
+                const domain = new URL(site.url).hostname.replace('www.', '');
+                state.shortcuts.push({
+                    id: 'ext_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                    title: site.title || domain,
+                    url: site.url,
+                    category: 'productividad',
+                    icon: `https://www.google.com/s2/favicons?domain=${encodeURIComponent(site.url)}&sz=64`,
+                    desc: `Importado de tus sitios frecuentes de Chrome`,
+                    tags: 'extension topsites chrome'
+                });
+                addedCount++;
+            }
+        });
+
+        if (addedCount > 0) {
+            state.saveShortcuts();
+            state.emit('shortcuts:changed');
+        }
+        return addedCount;
+    }
+
+    bindBackgroundMessages() {
+        if (!platform.isExtension || !chrome.runtime || !chrome.runtime.onMessage) return;
+        chrome.runtime.onMessage.addListener((request) => {
+            if (request.action === 'add_shortcut' && request.data) {
+                state.shortcuts.push(request.data);
+                state.saveShortcuts();
+                state.emit('shortcuts:changed');
+                soundFx.play('chime');
+            }
+        });
+    }
+
+    initSyncObserver() {
+        if (!platform.isExtension || !chrome.storage || !chrome.storage.onChanged) return;
+        chrome.storage.onChanged.addListener((changes, area) => {
+            if (area === 'sync' && changes.hades_shortcuts_state) {
+                const newShortcuts = changes.hades_shortcuts_state.newValue;
+                if (newShortcuts && JSON.stringify(newShortcuts) !== JSON.stringify(state.shortcuts)) {
+                    state.shortcuts = newShortcuts;
+                    localStorage.setItem('hades_shortcuts_state', JSON.stringify(newShortcuts));
+                    state.emit('shortcuts:changed');
+                }
+            }
+        });
+    }
+}
+
+export const extensionApi = new ExtensionAPIEngine();
