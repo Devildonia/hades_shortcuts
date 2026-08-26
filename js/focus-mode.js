@@ -116,7 +116,7 @@ export class FocusModeEngine {
             const label = this.isActive 
                 ? (dict.nav?.focus_active || 'Focus Activo')
                 : (dict.nav?.focus_mode || 'Modo Focus');
-            focusBtn.innerHTML = `<span>🧘</span> <span>${label}</span>`;
+            focusBtn.innerHTML = `<span>${label}</span>`;
         }
     }
 
