@@ -241,9 +241,9 @@
     "pomodoro_start": "Démarrer",
     "pomodoro_pause": "Pause",
     "pomodoro_reset": "Réinitialiser",
-    "toggle_widgets_title": "Mini-Widgets Bento",
+    "toggle_widgets_title": "Mini-Widgets Bento & Modules",
     "toggle_scratchpad": "Afficher le Bloc-notes",
-    "toggle_pomodoro": "Afficher le Minuteur Pomodoro",
+    "toggle_pomodoro": "Afficher le Minuteur Focus",
     "scratchpad_pin": "Épingler Post-it",
     "ambient_title": "Audio Ambiant Focus",
     "ambient_play": "Lire",
@@ -253,7 +253,11 @@
     "calendar_sync": "Synchroniser",
     "calendar_config": "Configurer le flux iCal",
     "calendar_empty": "Aucun événement à venir. Concentrez-vous !",
-    "tech_radar_title": "Tech Radar & RSS"
+    "tech_radar_title": "Tech Radar & RSS",
+    "toggle_calendar": "Afficher l'Agenda & Calendrier",
+    "toggle_ambient": "Afficher l'Audio Ambiant",
+    "toggle_radar": "Afficher Tech Radar & RSS",
+    "toggle_telemetry": "Afficher la Télémétrie Système"
   },
   "audio": {
     "preset_label": "Effet Sonore Haptique",
