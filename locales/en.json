@@ -166,7 +166,13 @@
       "editing_active_badge": "Edit Mode Active",
       "reset_layout_title": "Reset Original Layout",
       "reset_layout_desc": "Extensively customized your dashboard? Start fresh anytime with the original factory layout and default shortcuts.",
-      "reset_layout_btn": "🔄 Restore Factory Layout"
+      "reset_layout_btn": "🔄 Restore Factory Layout",
+      "show_scratchpad": "Show Scratchpad Notes",
+      "show_calendar": "Show Agenda & Calendar",
+      "show_ambient": "Show Ambient Audio",
+      "show_pomodoro": "Show Focus Timer",
+      "show_radar": "Show Tech Radar & RSS",
+      "show_telemetry": "Show System Telemetry"
     },
     "backup": {
       "export_title": "Export Configuration",

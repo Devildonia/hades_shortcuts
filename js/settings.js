@@ -101,10 +101,7 @@ export class SettingsHub {
         if (this.soundPresetSelect) this.soundPresetSelect.value = soundFx.preset;
         if (this.editModeToggle) this.editModeToggle.checked = state.editMode;
 
-        const scratchpadVisible = localStorage.getItem('widget_scratchpad_visible') !== 'false';
-        const pomodoroVisible = localStorage.getItem('widget_pomodoro_visible') !== 'false';
-        if (this.toggleScratchpad) this.toggleScratchpad.checked = scratchpadVisible;
-        if (this.togglePomodoro) this.togglePomodoro.checked = pomodoroVisible;
+        this.syncWidgetToggles();
     }
 
     bindEvents() {
@@ -157,21 +154,7 @@ export class SettingsHub {
             });
         }
 
-        if (this.toggleScratchpad) {
-            this.toggleScratchpad.addEventListener('change', (e) => {
-                const el = document.getElementById('widget-scratchpad-card');
-                if (el) el.classList.toggle('hidden', !e.target.checked);
-                localStorage.setItem('widget_scratchpad_visible', e.target.checked ? 'true' : 'false');
-            });
-        }
-
-        if (this.togglePomodoro) {
-            this.togglePomodoro.addEventListener('change', (e) => {
-                const el = document.getElementById('widget-pomodoro-card');
-                if (el) el.classList.toggle('hidden', !e.target.checked);
-                localStorage.setItem('widget_pomodoro_visible', e.target.checked ? 'true' : 'false');
-            });
-        }
+        this.bindWidgetToggles();
 
         if (this.layoutResetBtn) {
             this.layoutResetBtn.addEventListener('click', () => {
@@ -212,4 +195,39 @@ export class SettingsHub {
         if (chartBox) chartBox.innerHTML = personalAnalytics.generate7DayChartSVG();
     }
 
+    getWidgetMap() {
+        return [
+            { id: 'toggle-widget-scratchpad', target: 'widget-scratchpad-card', key: 'widget_scratchpad_visible' },
+            { id: 'toggle-widget-calendar', target: 'widget-calendar-card', key: 'widget_calendar_visible' },
+            { id: 'toggle-widget-ambient', target: 'widget-ambient-card', key: 'widget_ambient_visible' },
+            { id: 'toggle-widget-pomodoro', target: 'widget-pomodoro-card', key: 'widget_pomodoro_visible' },
+            { id: 'toggle-widget-radar', target: 'widget-tech-radar-card', key: 'widget_tech_radar_visible' },
+            { id: 'toggle-widget-telemetry', target: 'telemetry-capsule', key: 'widget_telemetry_visible' }
+        ];
+    }
+
+    syncWidgetToggles() {
+        this.getWidgetMap().forEach(({ id, target, key }) => {
+            const toggle = document.getElementById(id);
+            const el = document.getElementById(target);
+            const isVisible = localStorage.getItem(key) !== 'false';
+            if (el) el.classList.toggle('hidden', !isVisible);
+            if (toggle) toggle.checked = isVisible;
+        });
+    }
+
+    bindWidgetToggles() {
+        this.syncWidgetToggles();
+        this.getWidgetMap().forEach(({ id, target, key }) => {
+            const toggle = document.getElementById(id);
+            const el = document.getElementById(target);
+            if (toggle) {
+                toggle.addEventListener('change', (e) => {
+                    soundFx.play('click');
+                    if (el) el.classList.toggle('hidden', !e.target.checked);
+                    localStorage.setItem(key, e.target.checked ? 'true' : 'false');
+                });
+            }
+        });
+    }
 }

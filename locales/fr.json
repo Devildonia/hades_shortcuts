@@ -166,7 +166,13 @@
       "editing_active_badge": "Mode Édition Activé",
       "reset_layout_title": "Réinitialiser la Disposition",
       "reset_layout_desc": "Vous avez beaucoup personnalisé votre tableau ? Repartez de zéro avec la disposition et les raccourcis d'usine.",
-      "reset_layout_btn": "🔄 Restaurer la Disposition d'Usine"
+      "reset_layout_btn": "🔄 Restaurer la Disposition d'Usine",
+      "show_scratchpad": "Afficher le Bloc-notes",
+      "show_calendar": "Afficher l'Agenda & Calendrier",
+      "show_ambient": "Afficher l'Audio Ambiant",
+      "show_pomodoro": "Afficher le Minuteur Focus",
+      "show_radar": "Afficher Tech Radar & RSS",
+      "show_telemetry": "Afficher la Télémétrie Système"
     },
     "backup": {
       "export_title": "Exporter la Configuration",

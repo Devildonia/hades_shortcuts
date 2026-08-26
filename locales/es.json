@@ -166,7 +166,13 @@
       "editing_active_badge": "Modo Edición Activado",
       "reset_layout_title": "Restablecer Diseño Original",
       "reset_layout_desc": "¿Has modificado mucho el tablero? Vuelve a empezar de cero con la disposición y accesos directos originales de fábrica.",
-      "reset_layout_btn": "🔄 Restaurar Diseño de Fábrica"
+      "reset_layout_btn": "🔄 Restaurar Diseño de Fábrica",
+      "show_scratchpad": "Mostrar Bloc de Notas",
+      "show_calendar": "Mostrar Agenda & Calendario",
+      "show_ambient": "Mostrar Audio Ambiental",
+      "show_pomodoro": "Mostrar Temporizador Focus",
+      "show_radar": "Mostrar Tech Radar & RSS",
+      "show_telemetry": "Mostrar Telemetría del Sistema"
     },
     "backup": {
       "export_title": "Exportar Configuración",
