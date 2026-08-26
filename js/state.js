@@ -45,7 +45,6 @@ export const DEFAULT_SHORTCUTS = [
     { id: 'birme', title: 'Birme', url: 'https://birme.net', icon: 'iconos/birme.webp', category: 'cat_tools', tags: 'birme redimensionar imagenes recortar fotos lote' },
     { id: 'photoroom', title: 'Photoroom', url: 'https://www.photoroom.com/es/herramientas/eliminador-de-fondos', icon: 'iconos/photoroom.webp', category: 'cat_tools', tags: 'photoroom fondo quitar transparent cutout' },
     { id: 'github', title: 'GitHub', url: 'https://github.com/Devildonia', icon: 'iconos/github.webp', category: 'cat_tools', tags: 'github codigo repositorios git devildonia dev' },
-    { id: 'itchio', title: 'itch.io', url: 'https://itch.io/', icon: 'iconos/itchio.webp', category: 'cat_tools', tags: 'itchio juegos assets indie sprites dev gamedev' },
     { id: 'optimizeglb', title: 'OptimizeGLB', url: 'https://optimizeglb.com/dashboard', icon: 'iconos/OptimizeGLB.webp', category: 'cat_tools', tags: 'optimizeglb glb gltf 3d optimizador compresion dev 3dmodel' },
     { id: 'translate', title: 'Traductor', url: 'https://translate.google.com/', icon: 'iconos/translate.webp', category: 'cat_tools', tags: 'traductor google translate idiomas' },
     // Social
@@ -57,7 +56,6 @@ export const DEFAULT_SHORTCUTS = [
     { id: 'patreon', title: 'Patreon', url: 'https://www.patreon.com/', icon: 'iconos/patreon.webp', category: 'cat_social', tags: 'creadores, suscripcion, crowdfunding' },
     { id: 'discord', title: 'Discord', url: 'https://discord.com/app', icon: 'iconos/discord.webp', category: 'cat_social', tags: 'chat, voice, gamedev, community' },
     { id: 'linkedin', title: 'LinkedIn', url: 'https://www.linkedin.com/', icon: 'iconos/linkedin.webp', category: 'cat_social', tags: 'empleo, trabajo, network, profesional' },
-    { id: 'exophase', title: 'Exophase', url: 'https://www.exophase.com/', icon: 'iconos/exophase.webp', category: 'cat_social', tags: 'gaming, logros, trofeos, tracking' },
     // Shopping
     { id: 'amazon', title: 'Amazon', url: 'https://www.amazon.es/', icon: 'iconos/amazon.webp', category: 'cat_shopping', tags: 'compras, tienda, retail' },
     { id: 'aliexpress', title: 'AliExpress', url: 'https://es.aliexpress.com/', icon: 'iconos/aliexpress.webp', category: 'cat_shopping', tags: 'compras, importacion, tienda' },
@@ -69,6 +67,8 @@ export const DEFAULT_SHORTCUTS = [
     { id: 'epic', title: 'Epic Games', url: 'https://store.epicgames.com/', icon: 'iconos/epic.webp', category: 'cat_gaming', tags: 'gaming epic store juegos unreal fortnite' },
     { id: 'gog', title: 'GOG.com', url: 'https://www.gog.com/', icon: 'iconos/gog.webp', category: 'cat_gaming', tags: 'gaming gog drmfree cdprojekt juegos retro' },
     { id: 'xbox', title: 'Xbox', url: 'https://www.xbox.com/', icon: 'iconos/xbox.webp', category: 'cat_gaming', tags: 'gaming xbox microsoft gamepass consola juegos' },
+    { id: 'itchio', title: 'itch.io', url: 'https://itch.io/', icon: 'iconos/itchio.webp', category: 'cat_gaming', tags: 'gaming itchio juegos assets indie sprites dev gamedev' },
+    { id: 'exophase', title: 'Exophase', url: 'https://www.exophase.com/', icon: 'iconos/exophase.webp', category: 'cat_gaming', tags: 'gaming exophase logros trofeos tracking stats perfiles' },
     // Video
     { id: 'youtube', title: 'YouTube', url: 'https://www.youtube.com/', icon: 'iconos/youtube.webp', category: 'cat_video', tags: 'video, streaming, google, tutoriales' },
     { id: 'kling', title: 'Kling', url: 'https://klingai.com/', icon: 'iconos/kling.webp', category: 'cat_video', tags: 'video, ai, generacion, cinemica' },
@@ -116,8 +116,11 @@ export class AppState {
             if (saved) {
                 const list = JSON.parse(saved);
                 DEFAULT_SHORTCUTS.forEach(ds => {
-                    if (!list.some(s => s.id === ds.id)) {
+                    const existing = list.find(s => s.id === ds.id);
+                    if (!existing) {
                         list.push(ds);
+                    } else if ((ds.id === 'itchio' || ds.id === 'exophase') && existing.category !== 'cat_gaming') {
+                        existing.category = 'cat_gaming';
                     }
                 });
                 return list;

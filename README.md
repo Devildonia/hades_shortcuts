@@ -297,7 +297,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── personal-analytics.js# 100% local usage analytics, 7-day SVG chart & suggestions (207 lines)
 │   ├── extension-api.js     # Native TopSites & background context menu bridge (79 lines)
 │   ├── sw-extension.js      # Manifest V3 background service worker (30 lines)
-│   ├── state.js             # Reactive central state & localStorage sync (239 lines)
+│   ├── state.js             # Reactive central state & localStorage sync (242 lines)
 │   ├── audio.js             # Procedural Web Audio API synthesizer (100 lines)
 │   ├── ambient-audio.js     # Procedural focus ambient soundscapes (252 lines)
 │   ├── aurora-canvas.js     # Reactive Aurora Canvas mesh & Mini-HUD launcher (212 lines)
