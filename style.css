@@ -4683,3 +4683,68 @@ input:checked + .slider:before {
     font-size: 10px;
     font-family: inherit;
 }
+
+/* --- Arc-Inspired Spaces Switcher Capsule --- */
+.spaces-switcher-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    z-index: 10;
+}
+
+.spaces-capsule {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 6px;
+    background: rgba(10, 15, 29, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+}
+
+.space-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 18px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.space-pill:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.space-pill.active {
+    background: rgba(0, 242, 254, 0.15);
+    border-color: rgba(0, 242, 254, 0.5);
+    color: #00f2fe;
+    box-shadow: 0 0 12px rgba(0, 242, 254, 0.25);
+}
+
+.space-icon {
+    font-size: 0.95rem;
+}
+
+.space-name {
+    letter-spacing: 0.3px;
+}
+
+.space-transition-flash {
+    animation: spaceMorph 0.3s ease-out;
+}
+
+@keyframes spaceMorph {
+    0% { opacity: 0.85; filter: blur(2px); transform: scale(0.995); }
+    100% { opacity: 1; filter: blur(0); transform: scale(1); }
+}

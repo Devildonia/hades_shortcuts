@@ -1,3 +1,4 @@
+import { spacesManager } from './spaces.js';
 import { personalAnalytics } from './personal-analytics.js';
 import { platform } from './platform.js';
 import { extensionApi } from './extension-api.js';
@@ -215,6 +216,7 @@ export function initApp() {
         telemetry.init();
         techRadar.init();
         neuralSearch.init();
+        spacesManager.init();
     window.ambientAudio = ambientAudio;
     window.radialHUD = radialHUD;
     window.solarEngine = solarEngine;
@@ -225,6 +227,7 @@ export function initApp() {
     window.platform = platform;
     window.extensionApi = extensionApi;
     window.personalAnalytics = personalAnalytics;
+    window.spacesManager = spacesManager;
     extensionApi.init();
     miniHud.init();
 

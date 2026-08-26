@@ -105,6 +105,13 @@
     - `!ai <prompt>`: Instant client-side intelligent answers.
     - `!t <text>`: Fast multilingual translation helper.
 
+### 🪐 Arc-Inspired Multi-Profile Spaces («Contextual Workspaces»)
+- **Isolated Digital Profiles**: Switch between custom workflow environments in one click (<kbd>Alt</kbd> + <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd>):
+  - 💼 **Work & Dev Space**: Development shortcuts, Git tools, productivity apps, and clean daylight theme.
+  - 🏠 **Personal & Leisure Space**: Social media, entertainment, shopping, and deep nebula theme.
+  - 🎨 **3D & AI Media Space**: Fast access to 3D generators (Meshy, Tripo3D), GLSL shaders, audio/video generation, and cyber amber theme.
+  - ⚡ **Instant In-Place Morphing**: Switches shortcuts, themes, scratchpad notes, and canvas positions without full page reload.
+
 ### 📈 100% Local Personal Analytics & Predictive Context Engine («My Dashboard Knows Me»)
 - **Privacy-First Zero-Telemetry Intelligence**: All usage statistics are computed in-memory and sliding-window `localStorage` without sending a single byte to external servers:
   - 🔮 **Time-Aware Smart Suggestions**: Learns your daily habits and displays an interactive context chip (e.g. *"You usually open GitHub & Gmail at 09:00 — Launch now?"*).
@@ -267,6 +274,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 ├── js/
 │   ├── app.js               # Main orchestrator & lifecycle manager
 │   ├── platform.js          # Universal platform abstraction (Web/PWA vs Extension)
+│   ├── spaces.js            # Arc-inspired multi-profile spaces manager & hotkeys
 │   ├── personal-analytics.js# 100% local usage analytics, 7-day SVG chart & smart suggestions
 │   ├── extension-api.js     # Native TopSites & background context menu bridge
 │   ├── sw-extension.js      # Manifest V3 background service worker
