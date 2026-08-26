@@ -87,7 +87,8 @@
     "steam": "Plataforma líder de videojuegos para PC, descargas digitales, comunidad y mods",
     "epic": "Tienda de juegos de Epic Games, lanzador de Unreal Engine y juegos gratuitos semanales",
     "gog": "Tienda de juegos digitales 100% libres de DRM de CD Projekt y catálogo retro clásico",
-    "xbox": "Ecosistema gaming de Microsoft, Xbox Cloud Gaming y catálogo de PC Game Pass"
+    "xbox": "Ecosistema gaming de Microsoft, Xbox Cloud Gaming y catálogo de PC Game Pass",
+    "reddit": "Plataforma de comunidades, foros de debate temáticos y agregador de noticias"
   },
   "no_results": {
     "title": "No se encontraron accesos directos",

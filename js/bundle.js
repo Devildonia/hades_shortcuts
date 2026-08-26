@@ -101,6 +101,7 @@ const DEFAULT_SHORTCUTS = [
     { id: 'tiktok', title: 'TikTok', url: 'https://www.tiktok.com/', icon: 'iconos/tiktok.webp', category: 'cat_social', tags: 'social, video, short, reels' },
     { id: 'threads', title: 'Threads', url: 'https://www.threads.net/', icon: 'iconos/threads.webp', category: 'cat_social', tags: 'social, meta, microblogging, feed' },
     { id: 'patreon', title: 'Patreon', url: 'https://www.patreon.com/', icon: 'iconos/patreon.webp', category: 'cat_social', tags: 'creadores, suscripcion, crowdfunding' },
+    { id: 'reddit', title: 'Reddit', url: 'https://www.reddit.com/', icon: 'iconos/reddit.webp', category: 'cat_social', tags: 'social reddit foros comunidad noticias karma' },
     { id: 'discord', title: 'Discord', url: 'https://discord.com/app', icon: 'iconos/discord.webp', category: 'cat_social', tags: 'chat, voice, gamedev, community' },
     { id: 'linkedin', title: 'LinkedIn', url: 'https://www.linkedin.com/', icon: 'iconos/linkedin.webp', category: 'cat_social', tags: 'empleo, trabajo, network, profesional' },
     // Shopping
@@ -5364,9 +5365,9 @@ const SORTED_PRESET_ICONS = [
     'google.webp', 'googleaistudio.webp', 'googledrive.webp', 'hedra.webp', 'instagram.webp', 'itchio.webp',
     'kling.webp', 'linkedin.webp', 'ludoai.webp', 'meshy.webp', 'MiniMax.webp', 'notebooklm.webp',
     'OptimizeGLB.webp', 'patreon.webp', 'paypal.webp', 'pccomponentes.webp', 'perplexity.webp', 'photoroom.webp',
-    'qwen.webp', 'seaartai.webp', 'seaverse.webp', 'shadertoy.webp', 'shakkerai.webp', 'steam.webp',
-    'suno.webp', 'tensorart.webp', 'threads.webp', 'tiktok.webp', 'translate.webp', 'tripo3d.webp',
-    'wallapop.webp', 'x.webp', 'xbox.webp', 'youtube.webp'
+    'qwen.webp', 'reddit.webp', 'seaartai.webp', 'seaverse.webp', 'shadertoy.webp', 'shakkerai.webp',
+    'steam.webp', 'suno.webp', 'tensorart.webp', 'threads.webp', 'tiktok.webp', 'translate.webp',
+    'tripo3d.webp', 'wallapop.webp', 'x.webp', 'xbox.webp', 'youtube.webp'
 ];
 
 class ShortcutManager {
