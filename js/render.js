@@ -108,12 +108,20 @@ export class DashboardRenderer {
     }
 
     bindCardInteractions(card, shortcut) {
-        card.addEventListener('mouseenter', (e) => {
+        card.setAttribute('aria-describedby', 'smart-tooltip');
+
+        card.addEventListener('mouseenter', () => {
             soundFx.play('hover');
             if (!state.editMode) this.showTooltip(card, shortcut);
         });
-
         card.addEventListener('mouseleave', () => this.hideTooltip());
+
+        card.addEventListener('focus', () => {
+            soundFx.play('hover');
+            if (!state.editMode) this.showTooltip(card, shortcut);
+        });
+        card.addEventListener('blur', () => this.hideTooltip());
+
         card.addEventListener('click', (e) => {
             if (state.editMode) {
                 e.preventDefault();
@@ -165,7 +173,6 @@ export class DashboardRenderer {
         this.smartTooltip.style.top = `${top}px`;
         this.smartTooltip.classList.remove('hidden');
         this.smartTooltip.classList.add('visible');
-        this.smartTooltip.setAttribute('aria-hidden', 'false');
         this.smartTooltip.setAttribute('aria-hidden', 'false');
     }
 

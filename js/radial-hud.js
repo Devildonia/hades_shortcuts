@@ -39,9 +39,12 @@ export class RadialHUDEngine {
         this.actions.forEach((act, idx) => {
             const angle = (idx * (360 / total) - 90) * (Math.PI / 180);
             const x = Math.round(radius * Math.cos(angle)), y = Math.round(radius * Math.sin(angle));
-            const btn = document.createElement('div');
+            const btn = document.createElement('button');
+            btn.type = 'button';
             btn.className = `radial-node-btn radial-node-${act.id}`;
-            btn.setAttribute("tabindex", "0");
+            btn.setAttribute('tabindex', '0');
+            btn.setAttribute('role', 'button');
+            btn.setAttribute('aria-label', t[act.labelKey] || act.id);
             btn.setAttribute('data-action', act.id);
             btn.setAttribute('title', t[act.labelKey] || act.id);
             btn.style.setProperty('--node-x', `${x}px`);
@@ -56,6 +59,13 @@ export class RadialHUDEngine {
                 soundFx.play('click');
                 act.action();
                 if (act.id !== 'favs') this.close();
+            });
+
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    btn.click();
+                }
             });
             this.hudWheel.appendChild(btn);
         });
@@ -199,13 +209,17 @@ export class RadialHUDEngine {
                     return;
                 }
                 if (e.key === 'Tab') {
-                    const focusables = Array.from(this.hudWheel ? this.hudWheel.querySelectorAll('.radial-node-btn, .radial-sub-fav-item, button, [tabindex="0"]') : []);
+                    const focusables = Array.from(this.hudWheel ? this.hudWheel.querySelectorAll('.radial-node-btn, .radial-sub-fav-item, button:not([disabled]), [tabindex="0"]') : []);
                     if (focusables.length > 0) {
                         const first = focusables[0], last = focusables[focusables.length - 1];
-                        if (e.shiftKey && document.activeElement === first) {
+                        const activeEl = document.activeElement;
+                        if (!focusables.includes(activeEl)) {
+                            e.preventDefault();
+                            (e.shiftKey ? last : first).focus();
+                        } else if (e.shiftKey && activeEl === first) {
                             e.preventDefault();
                             last.focus();
-                        } else if (!e.shiftKey && document.activeElement === last) {
+                        } else if (!e.shiftKey && activeEl === last) {
                             e.preventDefault();
                             first.focus();
                         }
