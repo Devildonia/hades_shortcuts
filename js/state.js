@@ -299,6 +299,13 @@ export function safeHttpUrl(url) {
     return '';
 }
 
+export function openSafeUrl(url, target = '_blank') {
+    const href = safeHttpUrl(url);
+    if (!href) return false;
+    window.open(href, target, 'noopener,noreferrer');
+    return true;
+}
+
 export function faviconForUrl(url) {
     const href = safeHttpUrl(url);
     if (!href) return PLACEHOLDER_ICON;

@@ -1,5 +1,5 @@
 // js/search.js - Multi-Engine Omnibox, Category Filters, Bangs & DevTools
-import { state, escapeHtml, bindIconFallback } from './state.js';
+import { state, escapeHtml, bindIconFallback, openSafeUrl } from './state.js';
 import { tagsFilter } from './tags-filter.js';
 import { neuralSearch } from './neural-search.js';
 import { macroEngine } from './macros.js';
@@ -231,7 +231,7 @@ export class SearchEngineManager {
 
     openExternal(url) {
         if (focusMode && typeof focusMode.openUrl === 'function') focusMode.openUrl(url);
-        else window.open(url, '_blank', 'noopener,noreferrer');
+        else openSafeUrl(url, '_blank');
     }
 
     bindEvents() {

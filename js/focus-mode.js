@@ -1,7 +1,7 @@
-import { i18nDictionaries } from './i18n.js';
+import { i18nDictionaries, getTranslation } from './i18n.js';
 // js/focus-mode.js - Deep Work Focus Mode & Zen Distraction Shield
 
-import { state, persistJson } from './state.js';
+import { state, persistJson, showToast, openSafeUrl } from './state.js';
 import { soundFx } from './audio.js';
 
 export class FocusModeEngine {
@@ -32,10 +32,15 @@ export class FocusModeEngine {
         persistJson(this.storageKey, this.config);
     }
 
+    getSharedRemaining() {
+        const wm = window.widgetsManager;
+        if (wm && wm.pomodoroState) return wm.pomodoroState.remaining;
+        return this.remainingSeconds;
+    }
+
     activateFocus(durationMinutes = 25) {
         if (this.isActive) return;
         this.isActive = true;
-        this.remainingSeconds = durationMinutes * 60;
         soundFx.play('chime');
 
         document.body.classList.add('focus-mode-active');
@@ -43,14 +48,18 @@ export class FocusModeEngine {
 
         const wm = window.widgetsManager;
         if (wm && wm.pomodoroState) {
-            wm.pomodoroState.mode = 'focus';
-            wm.pomodoroState.duration = durationMinutes * 60;
-            wm.pomodoroState.remaining = this.remainingSeconds;
-            if (!wm.pomodoroState.isRunning) wm.startPomodoro();
-            else wm.updatePomodoroDisplay();
+            if (!wm.pomodoroState.isRunning) {
+                wm.pomodoroState.mode = 'focus';
+                wm.pomodoroState.duration = durationMinutes * 60;
+                wm.pomodoroState.remaining = durationMinutes * 60;
+                wm.startPomodoro();
+            }
+            this.remainingSeconds = wm.pomodoroState.remaining;
             const startBtn = document.getElementById('pomodoro-start-btn');
             if (startBtn) startBtn.textContent = wm.getLabel('pause');
+            wm.updatePomodoroDisplay();
         } else {
+            this.remainingSeconds = durationMinutes * 60;
             clearInterval(this.timerId);
             this.timerId = setInterval(() => {
                 this.remainingSeconds--;
@@ -71,7 +80,7 @@ export class FocusModeEngine {
 
         if (completed) {
             soundFx.play('chime');
-            alert('🎉 ¡Sesión de Deep Work completada con éxito! Tómate un respiro.');
+            showToast(getTranslation('toasts.focus_complete') || 'Deep Work session complete.', 'success');
         } else {
             soundFx.play('click');
             const wm = window.widgetsManager;
@@ -96,8 +105,7 @@ export class FocusModeEngine {
             this.showZenShield(url);
             return false;
         }
-        window.open(url, target, 'noopener,noreferrer');
-        return true;
+        return openSafeUrl(url, target);
     }
 
     isUrlBlocked(url) {
@@ -123,8 +131,9 @@ export class FocusModeEngine {
     updateShieldTimer() {
         const timeEl = document.getElementById('zen-shield-timer-val');
         if (timeEl) {
-            const m = Math.floor(this.remainingSeconds / 60).toString().padStart(2, '0');
-            const s = (this.remainingSeconds % 60).toString().padStart(2, '0');
+            const secs = Math.max(0, this.getSharedRemaining());
+            const m = Math.floor(secs / 60).toString().padStart(2, '0');
+            const s = (secs % 60).toString().padStart(2, '0');
             timeEl.textContent = `${m}:${s}`;
         }
     }
@@ -135,7 +144,7 @@ export class FocusModeEngine {
             focusBtn.classList.toggle('active', this.isActive);
             const lang = state.language || 'es';
             const dict = i18nDictionaries[lang] || i18nDictionaries['es'] || {};
-            const label = this.isActive 
+            const label = this.isActive
                 ? (dict.nav?.focus_active || 'Focus Activo')
                 : (dict.nav?.focus_mode || 'Modo Focus');
             focusBtn.innerHTML = `<span>${label}</span>`;
@@ -153,12 +162,11 @@ export class FocusModeEngine {
             allowOnceBtn.onclick = () => {
                 const target = this.blockedAttemptUrl;
                 this.hideZenShield();
-                if (target) window.open(target, '_blank');
+                if (target) openSafeUrl(target, '_blank');
             };
         }
         if (focusBtn) focusBtn.onclick = () => this.toggleFocus();
 
-        // Intercept link clicks on document
         document.addEventListener('click', (e) => {
             if (!this.isActive) return;
             const a = e.target.closest('a');
@@ -171,7 +179,6 @@ export class FocusModeEngine {
             }
         }, true);
 
-        // Global hotkey Alt+F
         document.addEventListener('keydown', (e) => {
             if (e.altKey && (e.key === 'f' || e.key === 'F')) {
                 e.preventDefault();

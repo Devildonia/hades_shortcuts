@@ -1,6 +1,6 @@
 // js/macros.js - Contextual Multi-Action Macro & Routine Engine (Visual No-Code Studio)
 
-import { state, escapeHtml, persistJson } from './state.js';
+import { state, escapeHtml, persistJson, openSafeUrl } from './state.js';
 import { soundFx } from './audio.js';
 import { ambientAudio } from './ambient-audio.js';
 import { focusMode } from './focus-mode.js';
@@ -107,7 +107,7 @@ export class MacroEngine {
                 const s = (state.shortcuts || []).find(item => (item.id || item.title.toLowerCase().replace(/\s+/g, '')) === key.toLowerCase() || item.title.toLowerCase() === key.toLowerCase());
                 if (s && s.url) {
                     if (focusMode && focusMode.openUrl) focusMode.openUrl(s.url);
-                    else window.open(s.url, '_blank', 'noopener,noreferrer');
+                    else openSafeUrl(s.url, '_blank');
                 }
             });
         }

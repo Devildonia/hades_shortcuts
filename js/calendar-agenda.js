@@ -1,7 +1,8 @@
 // js/calendar-agenda.js - Bento Calendar & Agenda Engine (RFC 5545 iCal Parser & Manual Event Creator)
 
-import { state, escapeHtml, fetchTextMaybeProxy, safeHttpUrl, persistJson } from './state.js';
+import { state, escapeHtml, fetchTextMaybeProxy, safeHttpUrl, persistJson, showToast } from './state.js';
 import { soundFx } from './audio.js';
+import { getTranslation } from './i18n.js';
 
 export class CalendarAgendaEngine {
     constructor() {
@@ -63,8 +64,8 @@ export class CalendarAgendaEngine {
                 if (line.startsWith('SUMMARY:')) current.title = line.slice(8).trim();
                 if (line.startsWith('LOCATION:')) current.location = line.slice(9).trim();
                 if (line.startsWith('DESCRIPTION:')) current.desc = line.slice(12).trim();
-                if (line.startsWith('DTSTART')) current.start = this.parseICSDate((line.split(':').pop() || '').trim());
-                if (line.startsWith('DTEND')) current.end = this.parseICSDate((line.split(':').pop() || '').trim());
+                if (line.startsWith('DTSTART')) current.start = this.parseIcsDateProperty(line);
+                if (line.startsWith('DTEND')) current.end = this.parseIcsDateProperty(line);
             }
         });
 
@@ -77,15 +78,69 @@ export class CalendarAgendaEngine {
         return events;
     }
 
-    parseICSDate(str) {
+    parseIcsDateProperty(line) {
+        const colon = line.indexOf(':');
+        if (colon < 0) return new Date().toISOString();
+        const meta = line.slice(0, colon);
+        const value = (line.slice(colon + 1) || '').trim();
+        let tzid = null;
+        const tzMatch = meta.match(/TZID=([^;]+)/i);
+        if (tzMatch) tzid = tzMatch[1].replace(/^["']|["']$/g, '').trim();
+        return this.parseICSDate(value, tzid);
+    }
+
+    zonedWallTimeToDate(year, monthIndex, day, hour, minute, second, timeZone) {
+        const utcGuess = Date.UTC(year, monthIndex, day, hour, minute, second);
+        const dtf = new Intl.DateTimeFormat('en-US', {
+            timeZone,
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hourCycle: 'h23'
+        });
+        const asUtcParts = (ms) => {
+            const bag = {};
+            dtf.formatToParts(new Date(ms)).forEach((part) => {
+                if (part.type !== 'literal') bag[part.type] = part.value;
+            });
+            return Date.UTC(
+                parseInt(bag.year, 10),
+                parseInt(bag.month, 10) - 1,
+                parseInt(bag.day, 10),
+                parseInt(bag.hour, 10) % 24,
+                parseInt(bag.minute, 10),
+                parseInt(bag.second, 10)
+            );
+        };
+        let utc = utcGuess - (asUtcParts(utcGuess) - utcGuess);
+        const drift = asUtcParts(utc) - utcGuess;
+        if (drift) utc -= drift;
+        return new Date(utc);
+    }
+
+    parseICSDate(str, tzid) {
         if (!str) return new Date().toISOString();
-        if (str.length >= 8) {
-            const y = parseInt(str.slice(0, 4)), m = parseInt(str.slice(4, 6)) - 1, d = parseInt(str.slice(6, 8));
-            const hr = str.includes('T') ? parseInt(str.slice(9, 11) || 0) : 9;
-            const min = str.includes('T') ? parseInt(str.slice(11, 13) || 0) : 0;
-            return new Date(Date.UTC(y, m, d, hr, min)).toISOString();
+        const zulu = /Z$/i.test(str);
+        const compact = str.replace(/Z$/i, '').replace(/[-:]/g, '');
+        if (compact.length < 8) return new Date().toISOString();
+        const y = parseInt(compact.slice(0, 4), 10);
+        const m = parseInt(compact.slice(4, 6), 10) - 1;
+        const d = parseInt(compact.slice(6, 8), 10);
+        const hr = compact.includes('T') ? parseInt(compact.slice(9, 11) || '0', 10) : 0;
+        const min = compact.includes('T') ? parseInt(compact.slice(11, 13) || '0', 10) : 0;
+        const sec = compact.includes('T') ? parseInt(compact.slice(13, 15) || '0', 10) : 0;
+        if (zulu) return new Date(Date.UTC(y, m, d, hr, min, sec)).toISOString();
+        if (tzid) {
+            try {
+                return this.zonedWallTimeToDate(y, m, d, hr, min, sec, tzid).toISOString();
+            } catch (e) {
+                return new Date(y, m, d, hr, min, sec).toISOString();
+            }
         }
-        return new Date().toISOString();
+        return new Date(y, m, d, hr, min, sec).toISOString();
     }
 
     async syncFeed() {
@@ -102,7 +157,7 @@ export class CalendarAgendaEngine {
                 soundFx.play('chime');
             }
         } catch (e) {
-            alert('No se pudo sincronizar el feed iCal. Verifica la URL o CORS.');
+            showToast(getTranslation('toasts.ical_error') || 'Could not sync the iCal feed.', 'error');
         }
     }
 

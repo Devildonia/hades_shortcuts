@@ -1,8 +1,9 @@
 // js/extension-api.js - Native Extension Integrations (TopSites Onboarding & Context Menu Sync)
 
 import { platform } from './platform.js';
-import { state } from './state.js';
+import { state, showToast } from './state.js';
 import { soundFx } from './audio.js';
+import { getTranslation } from './i18n.js';
 
 export class ExtensionAPIEngine {
     constructor() {
@@ -39,7 +40,9 @@ export class ExtensionAPIEngine {
         if (!platform.isExtension || !chrome.storage || !chrome.storage.sync) return;
         try {
             chrome.storage.sync.set({ custom_shortcuts_v2: state.shortcuts });
-        } catch (e) {}
+        } catch (e) {
+            showToast(getTranslation('toasts.sync_push_error') || 'Could not sync with chrome.storage.', 'error');
+        }
     }
 
     drainPendingShortcuts() {

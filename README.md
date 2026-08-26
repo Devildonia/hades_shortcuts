@@ -1,11 +1,11 @@
 <div align="center">
 
-# ⚡ HaDeS' Shortcuts · Next-Gen (v6.3)
+# ⚡ HaDeS' Shortcuts · Next-Gen (v1.0.0-rc-1)
 ### *A high-performance, ultra-aesthetic browser command center, productivity OS & startpage*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Online%20Preview-brightgreen?logo=github)](https://devildonia.github.io/hades_shortcuts/)
-[![Chrome Extension](https://img.shields.io/badge/Chrome%20Extension-Manifest%20V3-blue?logo=googlechrome)](dist/hades-shortcuts-chrome-v6.3.0.zip)
+[![Chrome Extension](https://img.shields.io/badge/Chrome%20Extension-v1.0.0--rc--1%20MV3-blue?logo=googlechrome)](dist/hades-shortcuts-chrome-v1.0.0-rc-1.zip)
 [![PWA Ready](https://img.shields.io/badge/PWA-Installable%20Desktop-orange?logo=pwa)](https://devildonia.github.io/hades_shortcuts/)
 [![Pure Vanilla](https://img.shields.io/badge/Stack-Vanilla%20HTML%20%2F%20CSS%20%2F%20JS-yellow.svg)](https://developer.mozilla.org/en-US/)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20Zero-brightgreen.svg)]()
@@ -37,8 +37,13 @@
 
 ---
 
-## What's new in v6.3
+## What's new in v1.0.0-rc-1
 
+First release candidate of 1.0. Chrome MV3 `version` stays numeric (`1.0.0`); the human tag is `1.0.0-rc-1` (`version_name`, cache-bust and zip).
+
+- **Audit hardening**: single ESM graph (no duplicate engines), `openSafeUrl` on every live `window.open`, iCal `TZID` parsing, Focus/Pomodoro share remaining time, `alert()` replaced with toasts on Focus and iCal sync.
+- **i18n parity**: embedded dictionaries match `locales/` (ES / EN / FR / DE); weather, user, iCal, RSS, smart-view, zen and AI modals use `data-i18n`.
+- **PWA cache** `hades-shortcuts-v1-0-0-rc-1-cache`; startpage loads `js/app.js` (stale `js/bundle.js` removed).
 - **Six visual themes**: Cyber Neon, Deep Nebula, Sunset Amber, **Abyss OLED**, **Jade Terminal**, Crystal Light.
 - **Contained Command Center settings** (max 620px) with six tabs, including Habits & Analytics.
 - **52 bundled shortcuts** across 10 Bento categories, including **Spotify** in Audio Generation, **eBay** in Shopping & Payments, and a full **Gaming** row.
@@ -74,7 +79,7 @@
 
 ## Architecture
 
-Vanilla HTML / CSS / ES modules. No bundler on the startpage path (`js/bundle.js` is a packaged snapshot, not the live module graph). `js/app.js` boots the page; `js/state.js` is the reactive hub; everything else is a single-responsibility engine.
+Vanilla HTML / CSS / ES modules. `js/app.js` boots the page; `js/state.js` is the reactive hub; everything else is a single-responsibility engine.
 
 ```mermaid
 flowchart TB
@@ -167,7 +172,7 @@ flowchart TB
 | `platform.js` | Web vs Chrome MV3 differences |
 | `sw-extension.js` | Extension background worker |
 
-Supporting files: `manifest.json` (Chrome new-tab override), `site.webmanifest` + `sw.js` (PWA), `iconos/` (56 WebP shortcuts + PWA icons), `locales/`, `sounds/` (optional haptic fallbacks — synthesis is Web Audio).
+Supporting files: `manifest.json` (Chrome new-tab override), `site.webmanifest` + `sw.js` (PWA), `iconos/` (55 WebP shortcuts + PWA icons), `locales/`, `sounds/` (optional haptic fallbacks — synthesis is Web Audio).
 
 ---
 
@@ -275,7 +280,7 @@ Web Audio API: Cyber Rain, Deep Space brown noise, 432 Hz binaural alpha, Cosmic
 **[https://devildonia.github.io/hades_shortcuts/](https://devildonia.github.io/hades_shortcuts/)**
 
 ### Chrome / Edge / Brave (Manifest V3)
-1. Download [`dist/hades-shortcuts-chrome-v6.3.0.zip`](dist/hades-shortcuts-chrome-v6.3.0.zip) or clone this repo.
+1. Download [`dist/hades-shortcuts-chrome-v1.0.0-rc-1.zip`](dist/hades-shortcuts-chrome-v1.0.0-rc-1.zip) or clone this repo.
 2. Open `chrome://extensions/`, enable **Developer Mode**.
 3. **Load unpacked** and select the project folder.
 4. <kbd>Ctrl</kbd> + <kbd>T</kbd> opens the Command Center as your new tab.

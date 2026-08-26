@@ -1,6 +1,6 @@
-import { macroEngine } from './macros.js?v=6.2.8';
-import { aiAgent } from './ai-agent.js';
 // js/app.js - Master Orchestrator for HaDeS' Shortcuts Next-Gen
+import { macroEngine } from './macros.js';
+import { aiAgent } from './ai-agent.js';
 import { state } from './state.js';
 import { soundFx } from './audio.js';
 import { updateDocumentLocalization, loadLocaleAsync } from './i18n.js';
@@ -11,25 +11,25 @@ import { DragDropManager } from './dragdrop.js';
 import { LayoutManager } from './layout.js';
 import { ShortcutManager } from './shortcut-manager.js';
 import { BackupManager } from './backup.js';
-import { SettingsHub } from './settings.js?v=6.2.7';
+import { SettingsHub } from './settings.js';
 import { widgetsManager } from './widgets.js';
 import { PostItManager } from './postits.js';
 import { ThemeStudio } from './theme-studio.js';
 import { BookmarksImporter } from './importer.js';
 import { devTools } from './devtools.js';
-import { ambientAudio } from './ambient-audio.js?v=6.2.3';
+import { ambientAudio } from './ambient-audio.js';
 import { CryptoSyncEngine } from './crypto-sync.js';
 import { auroraCanvas, miniHud } from './aurora-canvas.js';
 import { radialHUD } from './radial-hud.js';
 import { solarEngine } from './solar-engine.js';
 import { telemetry } from './telemetry.js';
-import { techRadar } from './tech-radar.js?v=6.2.3';
+import { techRadar } from './tech-radar.js';
 import { neuralSearch } from './neural-search.js';
 import { extensionApi } from './extension-api.js';
 import { platform } from './platform.js';
 import { personalAnalytics } from './personal-analytics.js';
 import { spacesManager } from './spaces.js';
-import { calendarAgenda } from './calendar-agenda.js?v=6.2.3';
+import { calendarAgenda } from './calendar-agenda.js';
 import { tagsFilter } from './tags-filter.js';
 import { focusMode } from './focus-mode.js';
 

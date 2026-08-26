@@ -1,6 +1,6 @@
 // js/personal-analytics.js - 100% Local Personal Analytics & Predictive Context Engine
 
-import { state, escapeHtml, persistJson } from './state.js';
+import { state, escapeHtml, persistJson, openSafeUrl } from './state.js';
 import { soundFx } from './audio.js';
 import { i18nDictionaries } from './i18n.js';
 
@@ -141,7 +141,7 @@ export class PersonalAnalyticsEngine {
         if (launchBtn) {
             launchBtn.onclick = () => {
                 soundFx.play('click');
-                window.open(suggestion.shortcut.url, '_blank');
+                openSafeUrl(suggestion.shortcut.url, '_blank');
                 containerEl.classList.add('hidden');
             };
         }

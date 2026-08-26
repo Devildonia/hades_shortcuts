@@ -20,7 +20,7 @@ export class BackupManager {
 
     exportBackup() {
         const data = {
-            version: '6.0.0',
+            version: '1.0.0-rc-1',
             exportedAt: new Date().toISOString(),
             settings: {
                 userName: state.userName,

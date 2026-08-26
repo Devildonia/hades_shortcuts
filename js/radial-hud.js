@@ -1,6 +1,6 @@
 // js/radial-hud.js - Radial HUD Action Wheel (360° Gestural Quick Access)
 
-import { state, escapeHtml, bindIconFallback, faviconForUrl } from './state.js';
+import { state, escapeHtml, bindIconFallback, faviconForUrl, openSafeUrl } from './state.js';
 import { soundFx } from './audio.js';
 import { ambientAudio } from './ambient-audio.js';
 import { i18nDictionaries } from './i18n.js';
@@ -121,7 +121,7 @@ export class RadialHUDEngine {
             subBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 soundFx.play('click');
-                window.open(sc.url, '_blank');
+                openSafeUrl(sc.url, '_blank');
                 this.close();
             });
             subContainer.appendChild(subBtn);
@@ -171,7 +171,7 @@ export class RadialHUDEngine {
 
     toggleFavsSubOrbit() {
         const topSc = this.getMostUsedShortcuts()[0] || state.shortcuts[0];
-        if (topSc && topSc.url) window.open(topSc.url, '_blank');
+        if (topSc && topSc.url) openSafeUrl(topSc.url, '_blank');
         this.close();
     }
 

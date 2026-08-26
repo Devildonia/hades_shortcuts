@@ -2511,10 +2511,12 @@ input:checked + .slider:before {
 /* Mini-Widgets Bento Section */
 .mini-widgets-section {
     width: 100%;
+    max-width: none;
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-auto-rows: 360px;
     gap: var(--bento-gap);
-    margin: 0;
+    margin: 0 0 0 0;
     align-items: stretch;
 }
 
@@ -3352,10 +3354,6 @@ input:checked + .slider:before {
     color: var(--text-muted);
     min-width: 32px;
     text-align: right;
-}
-
-.mini-widgets-section {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 
@@ -4511,6 +4509,32 @@ input:checked + .slider:before {
 
 .telemetry-icon {
     font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.telemetry-icon svg {
+    width: 12px;
+    height: 12px;
+    display: block;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.save-view-trigger svg,
+.radial-hud-core-icon svg,
+.hud-search-icon svg {
+    display: block;
 }
 
 
@@ -6069,17 +6093,6 @@ body.focus-mode-active .category-filter-bar {
 }
 
 /* --- 5-Column Bento aligned with categories --- */
-.mini-widgets-section {
-    width: 100%;
-    max-width: none;
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    grid-auto-rows: 360px;
-    gap: var(--bento-gap);
-    margin-bottom: 0;
-    align-items: stretch;
-}
-
 .mini-widget-card {
     min-height: 0;
     overflow: hidden;

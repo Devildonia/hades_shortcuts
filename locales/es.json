@@ -290,7 +290,8 @@
     "replace_mode": "Reemplazar todos los atajos",
     "import_btn": "Importar Marcadores",
     "success_msg": "¡Se han importado {count} accesos directos con éxito!",
-    "error_msg": "No se encontraron marcadores válidos en el archivo seleccionado."
+    "error_msg": "No se encontraron marcadores válidos en el archivo seleccionado.",
+    "topsites_btn": "Importar sitios frecuentes de Chrome"
   },
   "devtools": {
     "qr_title": "Código QR Generado",
@@ -410,5 +411,69 @@
     "blur_label": "Desenfoque (Blur):",
     "dim_label": "Oscurecimiento (Dim):",
     "gradient_preset_label": "Presets de Color / Gradiente:"
+  },
+  "toasts": {
+    "focus_complete": "Sesión de Deep Work completada. Tómate un respiro.",
+    "ical_error": "No se pudo sincronizar el feed iCal. Verifica la URL o CORS.",
+    "weather_error": "No se pudo actualizar el clima. Se mantiene el último dato conocido.",
+    "invalid_url": "La URL debe empezar por http:// o https://.",
+    "ai_network_error": "No se pudo consultar el asistente en red. Prueba de nuevo más tarde.",
+    "sync_push_error": "No se pudo sincronizar con chrome.storage."
+  },
+  "calendar_feed": {
+    "title": "Configurar Feed de Calendario (iCal / ICS)",
+    "desc": "Pega la URL de suscripción iCal / ICS secreta de tu calendario (Google Calendar, Outlook, Nextcloud o Proton):",
+    "placeholder": "https://calendar.google.com/calendar/ical/.../basic.ics",
+    "save_btn": "Guardar y Sincronizar",
+    "hint": "100% Privado: los eventos se descargan y analizan en tu navegador, sin intermediarios."
+  },
+  "rss_modal": {
+    "title": "Añadir Feed RSS / Atom",
+    "desc": "Sigue cualquier blog, medio o repositorio en tu Tech Radar (100% en local):",
+    "icon_placeholder": "Opcional",
+    "icon_label": "Icono (opcional)",
+    "name_placeholder": "Nombre del Feed (ej. The Verge)",
+    "name_label": "Nombre del feed",
+    "url_placeholder": "https://www.theverge.com/rss/index.xml",
+    "url_label": "URL del feed",
+    "add_btn": "Añadir Feed al Radar",
+    "presets": "Presets rápidos:"
+  },
+  "save_view": {
+    "title": "Guardar como Vista Inteligente",
+    "desc": "Crea una píldora de filtro permanente con tus etiquetas y consulta actual:",
+    "icon_placeholder": "Icono",
+    "icon_label": "Icono",
+    "name_placeholder": "Nombre de la Vista (ej. IA & 3D Top)",
+    "name_label": "Nombre de la vista",
+    "query_placeholder": "Consulta (ej. tag:ia tag:3d)",
+    "query_label": "Consulta",
+    "confirm_btn": "Fijar Vista en Barra",
+    "trigger_title": "Guardar vista inteligente"
+  },
+  "zen_shield": {
+    "breathe": "Respira",
+    "title": "Modo Concentración Activo",
+    "desc": "Has intentado acceder a un sitio de distracción. Mantén tu flujo de trabajo.",
+    "remaining": "Tiempo restante:",
+    "return_btn": "Volver al Foco",
+    "allow_btn": "Abrir por 1 minuto"
+  },
+  "ai_agent": {
+    "title": "Asistente IA Contextual",
+    "chip_3d": "Mis herramientas 3D",
+    "chip_suggest": "Sugerir nuevas apps",
+    "chip_focus": "Modo Focus",
+    "hello": "Hola. Soy tu asistente contextual. Conozco tus atajos, espacios y agenda. ¿En qué te ayudo hoy?",
+    "placeholder": "Pregúntame sobre tus atajos o pide recomendaciones...",
+    "send": "Enviar",
+    "provider": "Proveedor",
+    "openai_key": "OpenAI API key (sesión)",
+    "anthropic_key": "Anthropic API key (sesión)",
+    "ollama_endpoint": "http://localhost:11434/api/generate",
+    "opt_local": "Local (heurística)",
+    "opt_ollama": "Ollama",
+    "opt_openai": "OpenAI",
+    "opt_anthropic": "Anthropic"
   }
 }

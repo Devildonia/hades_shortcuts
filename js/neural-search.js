@@ -1,8 +1,8 @@
 // js/neural-search.js - Token-overlap semantic search, live AI answers & translator
 
 import { aiAgent } from './ai-agent.js';
-import { state, escapeHtml } from './state.js';
-import { i18nDictionaries } from './i18n.js';
+import { state, escapeHtml, showToast } from './state.js';
+import { i18nDictionaries, getTranslation } from './i18n.js';
 
 export class NeuralSearchEngine {
     constructor() {
@@ -68,7 +68,7 @@ export class NeuralSearchEngine {
             if (aiAgent && typeof aiAgent.openAndQuery === 'function') {
                 aiAgent.openAndQuery(prompt);
             } else if (bannerEl) {
-                bannerEl.innerHTML = `<span>🧠 <strong>${t.ai_answer_title || 'Asistente IA'}:</strong></span> <span>${this.generateLocalQuickAnswer(prompt)}</span>`;
+                bannerEl.innerHTML = `<span><strong>${escapeHtml(t.ai_answer_title || 'Asistente IA')}:</strong></span> <span>${this.generateLocalQuickAnswer(prompt)}</span>`;
                 bannerEl.classList.remove('hidden');
             }
             return true;
@@ -110,7 +110,9 @@ export class NeuralSearchEngine {
                     bannerEl.innerHTML = `<span>🧠 <strong>Asistente IA:</strong></span> <span>${escapeHtml(answer)}</span>`;
                 }
             }
-        } catch (e) {}
+        } catch (e) {
+            showToast(getTranslation('toasts.ai_network_error') || 'Could not reach the online assistant.', 'error');
+        }
     }
 
     async fetchLiveTranslation(text, bannerEl) {

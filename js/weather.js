@@ -1,7 +1,7 @@
 // js/weather.js - Clock & Weather Engine
 
-import { state, escapeHtml } from './state.js';
-import { i18nDictionaries } from './i18n.js';
+import { state, escapeHtml, showToast } from './state.js';
+import { i18nDictionaries, getTranslation } from './i18n.js';
 
 export class WeatherEngine {
     constructor() {
@@ -119,7 +119,9 @@ export class WeatherEngine {
                     city: cityName, temp, code, isDay, timestamp: Date.now(), lat, lon
                 }));
             }
-        } catch (e) {}
+        } catch (e) {
+            showToast(getTranslation('toasts.weather_error') || 'Could not refresh weather.', 'error');
+        }
     }
 
     async detectLocationAndWeather() {
