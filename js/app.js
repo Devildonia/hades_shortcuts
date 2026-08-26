@@ -163,7 +163,7 @@ export function initApp() {
     const postits = new PostItManager();
     const dragDropManager = new DragDropManager();
     const cryptoSync = new CryptoSyncEngine();
-    const settingsHub = new SettingsHub(weather, themeStudio, importer);
+    const settingsHub = new SettingsHub(renderer, shortcutManager, backupManager, importer, themeStudio);
 
     initUserNameSystem(weather, settingsHub);
     initGlobalShortcuts();
@@ -179,6 +179,7 @@ export function initApp() {
     dragDropManager.init();
     shortcutManager.init();
     backupManager.init();
+    themeStudio.init();
     settingsHub.init();
     cryptoSync.init();
     auroraCanvas.init();
@@ -194,6 +195,7 @@ export function initApp() {
     tagsFilter.init();
     focusMode.init();
 
+    window.themeStudio = themeStudio;
     window.ambientAudio = ambientAudio;
     window.radialHUD = radialHUD;
     window.solarEngine = solarEngine;
