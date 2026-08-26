@@ -366,5 +366,22 @@
     "pomodoro_none": "Sin cambios",
     "pomodoro_start": "▶ Iniciar 25m",
     "pomodoro_reset": "🔄 Reiniciar"
+  },
+  "calendar_modal": {
+    "add_title": "Añadir Evento a la Agenda",
+    "title_label": "Título del Evento",
+    "title_placeholder": "Ej: Reunión de Diseño, Sprint Review...",
+    "date_label": "Fecha",
+    "time_label": "Hora",
+    "link_label": "Enlace de Videollamada (Meet / Zoom / Teams)",
+    "link_placeholder": "https://meet.google.com/...",
+    "cat_label": "Categoría",
+    "cat_work": "💼 Trabajo",
+    "cat_focus": "🎯 Enfoque / Código",
+    "cat_creative": "🎨 Creativo / 3D",
+    "cat_personal": "☕ Personal",
+    "save_btn": "Guardar Evento",
+    "cancel_btn": "Cancelar",
+    "add_tooltip": "Añadir Evento Manual"
   }
 }

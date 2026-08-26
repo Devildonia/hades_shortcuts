@@ -195,6 +195,7 @@
                         <h3 data-i18n="widgets.calendar_title">Agenda & Calendario</h3>
                     </div>
                     <div style="display: flex; gap: 6px;">
+                        <button class="calendar-tool-btn" id="calendar-add-event-btn" title="Añadir Evento Manual" data-i18n-title="calendar_modal.add_tooltip">➕</button>
                         <button class="calendar-tool-btn" id="calendar-sync-btn" title="Sincronizar Feed">🔄</button>
                         <button class="calendar-tool-btn" id="calendar-config-btn" title="Configurar iCal">⚙️</button>
                     </div>
@@ -819,7 +820,50 @@
         </div>
     </div>
 
-        <!-- Visual Macro Studio Modal -->
+            <!-- Manual Calendar Event Modal -->
+    <div class="modal-overlay hidden" id="calendar-event-modal" role="dialog" aria-modal="true" aria-label="Añadir Evento">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 data-i18n="calendar_modal.add_title">Añadir Evento a la Agenda</h3>
+                <button class="modal-close" id="close-event-modal" aria-label="Cerrar">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-field-group">
+                    <label data-i18n="calendar_modal.title_label">Título del Evento</label>
+                    <input type="text" id="event-form-title" placeholder="Ej: Reunión de Diseño, Sprint Review..." data-i18n-placeholder="calendar_modal.title_placeholder" autocomplete="off">
+                </div>
+                <div class="macro-form-row">
+                    <div class="macro-form-field" style="flex: 1;">
+                        <label data-i18n="calendar_modal.date_label">Fecha</label>
+                        <input type="date" id="event-form-date">
+                    </div>
+                    <div class="macro-form-field" style="flex: 1;">
+                        <label data-i18n="calendar_modal.time_label">Hora</label>
+                        <input type="time" id="event-form-time" value="09:30">
+                    </div>
+                </div>
+                <div class="settings-field-group">
+                    <label data-i18n="calendar_modal.link_label">Enlace de Videollamada (Meet / Zoom / Teams)</label>
+                    <input type="url" id="event-form-link" placeholder="https://meet.google.com/..." data-i18n-placeholder="calendar_modal.link_placeholder" autocomplete="off">
+                </div>
+                <div class="settings-field-group">
+                    <label data-i18n="calendar_modal.cat_label">Categoría</label>
+                    <select id="event-form-category">
+                        <option value="work" data-i18n="calendar_modal.cat_work">💼 Trabajo</option>
+                        <option value="focus" data-i18n="calendar_modal.cat_focus">🎯 Enfoque / Código</option>
+                        <option value="creative" data-i18n="calendar_modal.cat_creative">🎨 Creativo / 3D</option>
+                        <option value="personal" data-i18n="calendar_modal.cat_personal">☕ Personal</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-event-modal" data-i18n="calendar_modal.cancel_btn">Cancelar</button>
+                <button class="btn btn-primary" id="save-manual-event-btn" data-i18n="calendar_modal.save_btn">Guardar Evento</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visual Macro Studio Modal -->
     <div class="modal-overlay hidden" id="macro-editor-modal" role="dialog" aria-modal="true" aria-label="Editor de Macro">
         <div class="modal-card macro-editor-card">
             <div class="modal-header">

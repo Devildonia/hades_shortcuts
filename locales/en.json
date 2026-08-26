@@ -366,5 +366,22 @@
     "pomodoro_none": "No change",
     "pomodoro_start": "▶ Start 25m",
     "pomodoro_reset": "🔄 Reset"
+  },
+  "calendar_modal": {
+    "add_title": "Add Event to Agenda",
+    "title_label": "Event Title",
+    "title_placeholder": "E.g. Design Sync, Sprint Review...",
+    "date_label": "Date",
+    "time_label": "Time",
+    "link_label": "Meeting Link (Meet / Zoom / Teams)",
+    "link_placeholder": "https://meet.google.com/...",
+    "cat_label": "Category",
+    "cat_work": "💼 Work",
+    "cat_focus": "🎯 Focus / Code",
+    "cat_creative": "🎨 Creative / 3D",
+    "cat_personal": "☕ Personal",
+    "save_btn": "Save Event",
+    "cancel_btn": "Cancel",
+    "add_tooltip": "Add Manual Event"
   }
 }

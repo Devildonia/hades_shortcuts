@@ -366,5 +366,22 @@
     "pomodoro_none": "Keine Änderung",
     "pomodoro_start": "▶ 25m Starten",
     "pomodoro_reset": "🔄 Zurücksetzen"
+  },
+  "calendar_modal": {
+    "add_title": "Termin zum Kalender hinzufügen",
+    "title_label": "Ereignistitel",
+    "title_placeholder": "Z.B. Design Sync, Sprint Review...",
+    "date_label": "Datum",
+    "time_label": "Uhrzeit",
+    "link_label": "Meeting-Link (Meet / Zoom / Teams)",
+    "link_placeholder": "https://meet.google.com/...",
+    "cat_label": "Kategorie",
+    "cat_work": "💼 Arbeit",
+    "cat_focus": "🎯 Fokus / Code",
+    "cat_creative": "🎨 Kreativ / 3D",
+    "cat_personal": "☕ Privat",
+    "save_btn": "Termin Speichern",
+    "cancel_btn": "Abbrechen",
+    "add_tooltip": "Manuellen Termin hinzufügen"
   }
 }

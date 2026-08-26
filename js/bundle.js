@@ -983,7 +983,7 @@ const tagsFilter = new TagsFilterEngine();
 
 
 // --- Module: js/calendar-agenda.js ---
-// js/calendar-agenda.js - Bento Calendar & Agenda Engine (RFC 5545 iCal Parser & Proximity Alert)
+// js/calendar-agenda.js - Bento Calendar & Agenda Engine (RFC 5545 iCal Parser & Manual Event Creator)
 
 
 class CalendarAgendaEngine {
@@ -995,6 +995,7 @@ class CalendarAgendaEngine {
         this.widgetCard = document.getElementById('widget-calendar-card');
         this.eventsList = document.getElementById('calendar-events-list');
         this.modal = document.getElementById('calendar-modal');
+        this.eventModal = document.getElementById('calendar-event-modal');
         this.feedInput = document.getElementById('calendar-feed-url-input');
     }
 
@@ -1015,7 +1016,6 @@ class CalendarAgendaEngine {
             const raw = localStorage.getItem(this.cacheKey);
             if (raw) return JSON.parse(raw);
         } catch (e) {}
-        // Default curated starter schedule
         const today = new Date();
         const y = today.getFullYear(), m = today.getMonth(), d = today.getDate();
         return [
@@ -1045,18 +1045,11 @@ class CalendarAgendaEngine {
                 if (line.startsWith('SUMMARY:')) current.title = line.slice(8).trim();
                 if (line.startsWith('LOCATION:')) current.location = line.slice(9).trim();
                 if (line.startsWith('DESCRIPTION:')) current.desc = line.slice(12).trim();
-                if (line.startsWith('DTSTART')) {
-                    const val = line.split(':')[1] || '';
-                    current.start = this.parseICSDate(val);
-                }
-                if (line.startsWith('DTEND')) {
-                    const val = line.split(':')[1] || '';
-                    current.end = this.parseICSDate(val);
-                }
+                if (line.startsWith('DTSTART')) current.start = this.parseICSDate(line.split(':')[1] || '');
+                if (line.startsWith('DTEND')) current.end = this.parseICSDate(line.split(':')[1] || '');
             }
         });
 
-        // Detect meeting links
         events.forEach(ev => {
             const raw = `${ev.location || ''} ${ev.desc || ''}`;
             const meetMatch = raw.match(/https:\/\/(meet\.google\.com|zoom\.us\/j|teams\.microsoft\.com)\/[^\s]+/i);
@@ -1082,7 +1075,7 @@ class CalendarAgendaEngine {
         soundFx.play('click');
         try {
             const res = await fetch(this.config.feedUrl);
-            if (!res.ok) throw new Error('Error al descargar calendario');
+            if (!res.ok) throw new Error('Error feed');
             const text = await res.text();
             const parsed = this.parseICS(text);
             if (parsed.length > 0) {
@@ -1096,13 +1089,55 @@ class CalendarAgendaEngine {
         }
     }
 
+    deleteEvent(id) {
+        soundFx.play('click');
+        const updated = this.events.filter(e => e.id !== id);
+        this.saveEvents(updated);
+    }
+
+    openEventModal() {
+        if (!this.eventModal) return;
+        const now = new Date();
+        const dateInput = document.getElementById('event-form-date');
+        if (dateInput) dateInput.value = now.toISOString().split('T')[0];
+        const titleInput = document.getElementById('event-form-title');
+        if (titleInput) titleInput.value = '';
+        const linkInput = document.getElementById('event-form-link');
+        if (linkInput) linkInput.value = '';
+        this.eventModal.classList.remove('hidden');
+    }
+
+    closeEventModal() {
+        if (this.eventModal) this.eventModal.classList.add('hidden');
+    }
+
+    saveManualEventFromForm() {
+        const title = (document.getElementById('event-form-title').value || '').trim();
+        const dateVal = document.getElementById('event-form-date').value;
+        const timeVal = document.getElementById('event-form-time').value || '09:00';
+        const link = (document.getElementById('event-form-link').value || '').trim();
+        const category = document.getElementById('event-form-category').value || 'work';
+
+        if (!title || !dateVal) return;
+
+        const [y, m, d] = dateVal.split('-').map(Number);
+        const [hr, min] = timeVal.split(':').map(Number);
+        const start = new Date(y, m - 1, d, hr, min).toISOString();
+        const end = new Date(y, m - 1, d, hr + 1, min).toISOString();
+
+        const newEv = { id: 'ev_' + Date.now(), title, start, end, link, category };
+        const updated = [...this.events, newEv];
+        this.saveEvents(updated);
+        soundFx.play('chime');
+        this.closeEventModal();
+    }
+
     render() {
         if (!this.eventsList) return;
         this.eventsList.innerHTML = '';
         const now = new Date();
         let hasImminentMeeting = false;
 
-        // Sort chronological
         const sorted = [...this.events].sort((a, b) => new Date(a.start) - new Date(b.start));
 
         sorted.slice(0, 5).forEach(ev => {
@@ -1117,19 +1152,21 @@ class CalendarAgendaEngine {
             const row = document.createElement('div');
             row.className = `calendar-event-item ${isImminent ? 'imminent' : ''}`;
             row.innerHTML = `
-                <span class="event-time-badge">${dayLabel} ${timeFmt}</span>
+                <span class="event-time-badge">${escapeHtml(dayLabel)} ${escapeHtml(timeFmt)}</span>
                 <div class="event-info">
-                    <strong class="event-title">${ev.title}</strong>
+                    <strong class="event-title">${escapeHtml(ev.title)}</strong>
                     ${isImminent ? `<span class="event-alert-tag">⏰ En ${diffMin}m</span>` : ''}
                 </div>
-                ${ev.link ? `<a href="${ev.link}" target="_blank" rel="noopener noreferrer" class="meet-link-btn" title="Entrar a reunión">🚀</a>` : ''}
+                <div style="display: flex; gap: 4px; align-items: center;">
+                    ${ev.link ? `<a href="${escapeHtml(ev.link)}" target="_blank" rel="noopener noreferrer" class="meet-link-btn" title="Entrar a reunión">🚀</a>` : ''}
+                    <button class="event-del-btn" data-ev-id="${ev.id}" title="Eliminar evento" style="background:none; border:none; color:rgba(255,255,255,0.4); cursor:pointer; font-size:0.75rem; padding:2px 4px;">✕</button>
+                </div>
             `;
+            row.querySelector('.event-del-btn')?.addEventListener('click', () => this.deleteEvent(ev.id));
             this.eventsList.appendChild(row);
         });
 
-        if (this.widgetCard) {
-            this.widgetCard.classList.toggle('meeting-pulse-alert', hasImminentMeeting);
-        }
+        if (this.widgetCard) this.widgetCard.classList.toggle('meeting-pulse-alert', hasImminentMeeting);
     }
 
     openConfigModal() {
@@ -1143,14 +1180,22 @@ class CalendarAgendaEngine {
 
     init() {
         this.render();
+        const addBtn = document.getElementById('calendar-add-event-btn');
         const syncBtn = document.getElementById('calendar-sync-btn');
         const cfgBtn = document.getElementById('calendar-config-btn');
         const saveCfgBtn = document.getElementById('save-calendar-feed-btn');
         const closeCfgBtn = document.getElementById('close-calendar-modal');
+        const saveEvBtn = document.getElementById('save-manual-event-btn');
+        const closeEvBtn = document.getElementById('close-event-modal');
+        const cancelEvBtn = document.getElementById('cancel-event-modal');
 
+        if (addBtn) addBtn.onclick = () => this.openEventModal();
         if (syncBtn) syncBtn.onclick = () => this.syncFeed();
         if (cfgBtn) cfgBtn.onclick = () => this.openConfigModal();
         if (closeCfgBtn) closeCfgBtn.onclick = () => this.closeConfigModal();
+        if (closeEvBtn) closeEvBtn.onclick = () => this.closeEventModal();
+        if (cancelEvBtn) cancelEvBtn.onclick = () => this.closeEventModal();
+        if (saveEvBtn) saveEvBtn.onclick = () => this.saveManualEventFromForm();
         if (saveCfgBtn) {
             saveCfgBtn.onclick = () => {
                 soundFx.play('click');
@@ -1161,7 +1206,6 @@ class CalendarAgendaEngine {
             };
         }
 
-        // Proximity polling every 60s
         setInterval(() => this.render(), 60000);
         state.on('language:changed', () => this.render());
     }
