@@ -1045,8 +1045,13 @@
             <!-- Tab: Macros & Contextual Routines -->
             <div class="settings-tab-pane" id="tab-pane-macros">
                 <div class="settings-section">
-                    <h4 data-i18n="settings_hub.macros.title">Rutinas & Disparadores Rápidos</h4>
-                    <p class="settings-hint" data-i18n="settings_hub.macros.desc">Escribe estos comandos en la barra de búsqueda para ejecutar múltiples acciones en 1 segundo:</p>
+                    <div class="macros-tab-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 12px;">
+                        <div>
+                            <h4 data-i18n="settings_hub.macros.title" style="margin: 0;">Rutinas & Disparadores Rápidos</h4>
+                            <p class="settings-hint" data-i18n="settings_hub.macros.desc" style="margin: 4px 0 0 0;">Escribe estos comandos en la barra de búsqueda para ejecutar múltiples acciones en 1 segundo:</p>
+                        </div>
+                        <button class="create-macro-btn" id="create-macro-btn" data-i18n="macros_studio.create_btn">➕ Nueva Macro</button>
+                    </div>
                     <div class="macros-list-container" id="macros-list-container">
                         <div class="macro-item-card">
                             <div class="macro-item-header">
