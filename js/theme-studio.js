@@ -15,11 +15,7 @@ export class ThemeStudio {
         this.secondaryInput = document.getElementById('custom-theme-secondary');
         this.resetBtn = document.getElementById('reset-theme-colors-btn');
         this.savedColors = this.loadSavedColors();
-
         this.bgConfig = this.loadBgConfig();
-        this.bgLayer = document.getElementById('custom-bg-layer');
-        this.dimOverlay = document.getElementById('custom-bg-dim-overlay');
-        this.auroraCanvas = document.getElementById('aurora-bg-canvas') || document.getElementById('aurora-canvas');
     }
 
     loadSavedColors() {
@@ -52,6 +48,10 @@ export class ThemeStudio {
     }
 
     init() {
+        this.primaryInput = document.getElementById('custom-theme-primary');
+        this.secondaryInput = document.getElementById('custom-theme-secondary');
+        this.resetBtn = document.getElementById('reset-theme-colors-btn');
+
         if (this.savedColors) {
             this.applyCustomColors(this.savedColors.primary, this.savedColors.secondary);
             if (this.primaryInput) this.primaryInput.value = this.savedColors.primary;
@@ -92,27 +92,32 @@ export class ThemeStudio {
     }
 
     applyBackground() {
-        if (!this.bgLayer) return;
+        const bgLayer = document.getElementById('custom-bg-layer');
+        const dimOverlay = document.getElementById('custom-bg-dim-overlay');
+        const auroraCanvas = document.getElementById('aurora-bg-canvas') || document.getElementById('aurora-canvas');
+
         const { mode, gradient, imageUrl, blur, dim } = this.bgConfig;
 
-        if (this.auroraCanvas) {
-            this.auroraCanvas.style.display = (mode === 'aurora') ? 'block' : 'none';
+        if (auroraCanvas) {
+            auroraCanvas.style.display = (mode === 'aurora') ? 'block' : 'none';
         }
 
+        if (!bgLayer) return;
+
         if (mode === 'aurora') {
-            this.bgLayer.classList.remove('active');
-            this.bgLayer.style.backgroundImage = 'none';
-            if (this.dimOverlay) this.dimOverlay.style.opacity = '0';
+            bgLayer.classList.remove('active');
+            bgLayer.style.backgroundImage = 'none';
+            if (dimOverlay) dimOverlay.style.opacity = '0';
         } else if (mode === 'gradient') {
-            this.bgLayer.classList.add('active');
-            this.bgLayer.style.backgroundImage = gradient;
-            this.bgLayer.style.filter = 'none';
-            if (this.dimOverlay) this.dimOverlay.style.opacity = '0';
+            bgLayer.classList.add('active');
+            bgLayer.style.backgroundImage = gradient || 'linear-gradient(135deg, #0f172a 0%, #020617 100%)';
+            bgLayer.style.filter = 'none';
+            if (dimOverlay) dimOverlay.style.opacity = '0';
         } else if (mode === 'image') {
-            this.bgLayer.classList.add('active');
-            this.bgLayer.style.backgroundImage = `url("${imageUrl || UNSPLASH_PRESETS.cyberpunk}")`;
-            this.bgLayer.style.filter = `blur(${blur || 0}px)`;
-            if (this.dimOverlay) this.dimOverlay.style.opacity = `${(dim || 20) / 100}`;
+            bgLayer.classList.add('active');
+            bgLayer.style.backgroundImage = `url("${imageUrl || UNSPLASH_PRESETS.cyberpunk}")`;
+            bgLayer.style.filter = `blur(${blur || 0}px)`;
+            if (dimOverlay) dimOverlay.style.opacity = `${(dim || 20) / 100}`;
         }
     }
 
@@ -123,17 +128,21 @@ export class ThemeStudio {
         const topicSelect = document.getElementById('bg-unsplash-topic-select');
         const fileInput = document.getElementById('bg-file-upload-input');
         const urlInput = document.getElementById('bg-custom-url-input');
+        const randomBtn = document.getElementById('bg-refresh-unsplash-btn');
         const blurSlider = document.getElementById('bg-blur-slider');
         const dimSlider = document.getElementById('bg-dim-slider');
         const blurDisplay = document.getElementById('bg-blur-val-display');
         const dimDisplay = document.getElementById('bg-dim-val-display');
 
         const syncUI = () => {
-            chips.forEach(c => c.classList.toggle('active', c.getAttribute('data-bg-mode') === this.bgConfig.mode));
+            chips.forEach(c => {
+                const cMode = c.getAttribute('data-bg-mode');
+                c.classList.toggle('active', cMode === this.bgConfig.mode);
+            });
             if (gradPanel) gradPanel.classList.toggle('hidden', this.bgConfig.mode !== 'gradient');
             if (imgPanel) imgPanel.classList.toggle('hidden', this.bgConfig.mode !== 'image');
             if (topicSelect) topicSelect.value = this.bgConfig.unsplashTopic || 'cyberpunk';
-            if (urlInput) urlInput.value = this.bgConfig.imageUrl || '';
+            if (urlInput) urlInput.value = (this.bgConfig.imageType === 'url' ? this.bgConfig.imageUrl : '') || '';
             if (blurSlider) blurSlider.value = this.bgConfig.blur || 0;
             if (dimSlider) dimSlider.value = this.bgConfig.dim || 20;
             if (blurDisplay) blurDisplay.textContent = `${this.bgConfig.blur || 0}px`;
@@ -143,67 +152,87 @@ export class ThemeStudio {
         syncUI();
 
         chips.forEach(c => {
-            c.addEventListener('click', () => {
+            c.onclick = (e) => {
+                e.preventDefault();
                 soundFx.play('click');
-                this.bgConfig.mode = c.getAttribute('data-bg-mode');
+                const newMode = c.getAttribute('data-bg-mode');
+                this.bgConfig.mode = newMode;
                 this.saveBgConfig();
                 syncUI();
-            });
+            };
         });
 
         document.querySelectorAll('.bg-grad-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.onclick = (e) => {
+                e.preventDefault();
                 soundFx.play('click');
                 this.bgConfig.gradient = btn.getAttribute('data-grad');
                 this.saveBgConfig();
-            });
+            };
         });
 
         if (topicSelect) {
-            topicSelect.addEventListener('change', (e) => {
+            topicSelect.onchange = (e) => {
                 this.bgConfig.unsplashTopic = e.target.value;
+                this.bgConfig.imageType = 'unsplash';
                 this.bgConfig.imageUrl = UNSPLASH_PRESETS[e.target.value] || UNSPLASH_PRESETS.cyberpunk;
                 this.saveBgConfig();
                 syncUI();
-            });
+            };
+        }
+
+        if (randomBtn) {
+            randomBtn.onclick = (e) => {
+                e.preventDefault();
+                soundFx.play('click');
+                const topics = ['cyberpunk', 'space', 'nature', 'architecture'];
+                const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+                this.bgConfig.unsplashTopic = randomTopic;
+                this.bgConfig.imageType = 'unsplash';
+                this.bgConfig.imageUrl = `${UNSPLASH_PRESETS[randomTopic]}&sig=${Date.now()}`;
+                this.saveBgConfig();
+                syncUI();
+            };
         }
 
         if (fileInput) {
-            fileInput.addEventListener('change', (e) => {
+            fileInput.onchange = (e) => {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = (event) => {
+                        this.bgConfig.imageType = 'local';
                         this.bgConfig.imageUrl = event.target.result;
                         this.saveBgConfig();
                         syncUI();
                     };
                     reader.readAsDataURL(file);
                 }
-            });
+            };
         }
 
         if (urlInput) {
-            urlInput.addEventListener('change', (e) => {
+            urlInput.onchange = (e) => {
+                this.bgConfig.imageType = 'url';
                 this.bgConfig.imageUrl = e.target.value.trim();
                 this.saveBgConfig();
-            });
+            };
         }
 
         if (blurSlider) {
-            blurSlider.addEventListener('input', (e) => {
+            blurSlider.oninput = (e) => {
                 this.bgConfig.blur = parseInt(e.target.value);
                 if (blurDisplay) blurDisplay.textContent = `${e.target.value}px`;
                 this.saveBgConfig();
-            });
+            };
         }
 
         if (dimSlider) {
-            dimSlider.addEventListener('input', (e) => {
+            dimSlider.oninput = (e) => {
                 this.bgConfig.dim = parseInt(e.target.value);
                 if (dimDisplay) dimDisplay.textContent = `${e.target.value}%`;
                 this.saveBgConfig();
-            });
+            };
         }
     }
 }
