@@ -92,7 +92,13 @@
   - 🖥️ **Refresh Rate Monitor**: Real-time display refresh rate detector (60Hz, 120Hz, 144Hz).
   - 🌐 **Instant Offline Auto-Failover**: Dynamic detection of offline states with auto-cached local fallbacks.
 
-### 📡 Live Tech Radar Bento Capsule
+### 📡 Live Tech Radar & Multi-Channel RSS/Atom Reader
+- **Zero-Dependency Universal Feed Aggregator**:
+  - 📰 **Native DOMParser XML Engine (0 KB)**: Parses any RSS 2.0 or Atom 1.0 feed (HackerNews, Hugging Face, Ars Technica, Blender/3D News, Substack, Reddit) directly in the browser.
+  - 🎛️ **Horizontal Channel Selector**: Toggle between custom feeds with high-speed cached switching (<kbd>30 min TTL</kbd>).
+  - ➕ **Custom Feeds Manager**: Add unlimited custom RSS feeds with custom names and emoji icons.
+  - 📌 **1-Click Post-it Pinning**: Click 📌 on any headline to immediately spawn a floating translucent Glass Post-it on your dashboard.
+
 - **Real-Time Curated Tech & AI Streams**:
   - Direct live integration with **HackerNews Top Stories** and AI Radars via zero-backend asynchronous fetch with a 15-minute `localStorage` cache.
   - **1-Click Post-it Pinning**: Click 📌 on any trending headline to instantly pin it as a floating Glass Post-it for later reading.

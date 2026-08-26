@@ -4923,3 +4923,149 @@ input:checked + .slider:before {
     font-size: 0.78rem;
     color: rgba(255, 255, 255, 0.6);
 }
+
+/* --- Multi-Channel Tech Radar & RSS Feed Reader --- */
+.radar-tool-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.radar-tool-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.radar-channel-bar {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 4px 0 8px 0;
+    scrollbar-width: none;
+}
+
+.radar-channel-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.radar-channel-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    color: var(--text-secondary, rgba(255, 255, 255, 0.65));
+    font-size: 0.74rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.radar-channel-pill:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+}
+
+.radar-channel-pill.active {
+    background: rgba(0, 242, 254, 0.15);
+    border-color: rgba(0, 242, 254, 0.5);
+    color: #00f2fe;
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+}
+
+.radar-source-tag {
+    font-size: 0.68rem;
+    color: var(--accent-glow, #4facfe);
+    background: rgba(79, 172, 254, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-right: 6px;
+}
+
+.rss-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 17, 0.75);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.rss-modal-card {
+    background: rgba(10, 15, 29, 0.95);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.rss-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.rss-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.rss-modal-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+}
+
+.rss-modal-form input {
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.85rem;
+}
+
+.rss-save-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    color: #050811;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    margin-bottom: 14px;
+}
+
+.rss-modal-presets {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+.rss-preset-chip {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #00f2fe;
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+}

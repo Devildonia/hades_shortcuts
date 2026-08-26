@@ -1,121 +1,212 @@
-// js/tech-radar.js - Live Tech Radar & Micro-Feeds Bento Widget
+// js/tech-radar.js - Multi-Channel Tech Radar & Native RSS/Atom Feed Reader (DOMParser 0 KB)
 
-import { state, escapeHtml } from './state.js';
 import { soundFx } from './audio.js';
-import { i18nDictionaries } from './i18n.js';
+import { state, escapeHtml } from './state.js';
 
 export class TechRadarEngine {
     constructor() {
-        this.containerEl = document.getElementById('techradar-list');
-        this.refreshBtn = document.getElementById('techradar-refresh-btn');
-        this.feedType = 'hn';
-        this.cacheKey = 'techradar_cache_v1';
-        this.items = [];
+        this.cacheKey = 'hades_tech_radar_rss_cache_v2';
+        this.feedsKey = 'hades_custom_rss_feeds_v1';
+        this.feeds = this.loadFeeds();
+        this.activeFeedId = 'hackernews';
+        this.radarList = document.getElementById('tech-radar-list');
+        this.channelBar = document.getElementById('radar-channel-bar');
+        this.refreshBtn = document.getElementById('radar-refresh-btn');
+        this.configBtn = document.getElementById('radar-config-btn');
+        this.modal = document.getElementById('rss-modal');
     }
 
-    init() {
-        this.loadCachedOrFetch();
-        this.bindEvents();
-    }
-
-    async loadCachedOrFetch(force = false) {
-        const cached = localStorage.getItem(this.cacheKey);
-        if (!force && cached) {
-            try {
-                const parsed = JSON.parse(cached);
-                if (Date.now() - parsed.timestamp < 15 * 60 * 1000 && parsed.items && parsed.items.length > 0) {
-                    this.items = parsed.items;
-                    this.renderList();
-                    return;
-                }
-            } catch (e) {}
-        }
-        await this.fetchHackerNews();
-    }
-
-    async fetchHackerNews() {
-        if (this.containerEl) {
-            this.containerEl.innerHTML = `<div class="techradar-loading"><span>📡</span> ${(i18nDictionaries[state.language] || i18nDictionaries.es).tech_radar.loading}</div>`;
-        }
-
+    loadFeeds() {
         try {
-            const topRes = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json');
-            const topIds = await topRes.json();
-            const sliceIds = (topIds || []).slice(0, 5);
-
-            const fetchedItems = await Promise.all(
-                sliceIds.map(async (id) => {
-                    const itemRes = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
-                    return itemRes.json();
-                })
-            );
-
-            this.items = fetchedItems.filter(Boolean).map(item => ({
-                id: item.id,
-                title: item.title || 'Tech News',
-                url: item.url || `https://news.ycombinator.com/item?id=${item.id}`,
-                score: item.score || 1,
-                by: item.by || 'anon'
-            }));
-
-            localStorage.setItem(this.cacheKey, JSON.stringify({ items: this.items, timestamp: Date.now() }));
-            this.renderList();
-        } catch (e) {
-            this.renderFallback();
-        }
-    }
-
-    renderFallback() {
-        this.items = [
-            { id: 1, title: 'DeepSeek-R1 open weights release & architecture breakdown', url: 'https://news.ycombinator.com', score: 320, by: 'ai' },
-            { id: 2, title: 'WebGPU 1.0 specifications officially shipped across all major browsers', url: 'https://w3.org/TR/webgpu', score: 245, by: 'w3c' },
-            { id: 3, title: 'Show HN: HaDeS Shortcuts v6.0 - Zero-Backend Local Agentic Dashboard', url: 'https://github.com/Devildonia/hades_shortcuts', score: 189, by: 'hades' }
+            const raw = localStorage.getItem(this.feedsKey);
+            if (raw) return JSON.parse(raw);
+        } catch (e) {}
+        return [
+            { id: 'hackernews', name: 'HackerNews', icon: '🔥', url: 'https://news.ycombinator.com/rss' },
+            { id: 'huggingface', name: 'Hugging Face', icon: '🤖', url: 'https://huggingface.co/blog/feed.xml' },
+            { id: 'arstechnica', name: 'Ars Technica', icon: '💻', url: 'https://feeds.arstechnica.com/arstechnica/index' },
+            { id: 'blendernation', name: 'Blender & 3D', icon: '🎨', url: 'https://www.blendernation.com/feed/' }
         ];
-        this.renderList();
     }
 
-    renderList() {
-        if (!this.containerEl) return;
-        this.containerEl.innerHTML = '';
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).tech_radar || {};
+    saveFeeds() {
+        try { localStorage.setItem(this.feedsKey, JSON.stringify(this.feeds)); } catch (e) {}
+        this.renderChannelBar();
+    }
 
-        this.items.forEach(item => {
+    parseXMLFeed(xmlText, fallbackSource = 'Web') {
+        const items = [];
+        try {
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(xmlText, 'text/xml');
+            
+            // RSS 2.0 (<item>)
+            const rssItems = xml.querySelectorAll('item');
+            if (rssItems && rssItems.length > 0) {
+                rssItems.forEach(el => {
+                    const title = el.querySelector('title')?.textContent || '';
+                    const link = el.querySelector('link')?.textContent || '';
+                    const pubDate = el.querySelector('pubDate')?.textContent || '';
+                    if (title && link) items.push({ title: title.trim(), url: link.trim(), time: pubDate, source: fallbackSource });
+                });
+                return items;
+            }
+
+            // Atom 1.0 (<entry>)
+            const atomEntries = xml.querySelectorAll('entry');
+            if (atomEntries && atomEntries.length > 0) {
+                atomEntries.forEach(el => {
+                    const title = el.querySelector('title')?.textContent || '';
+                    const link = el.querySelector('link')?.getAttribute('href') || el.querySelector('link')?.textContent || '';
+                    const published = el.querySelector('published, updated')?.textContent || '';
+                    if (title && link) items.push({ title: title.trim(), url: link.trim(), time: published, source: fallbackSource });
+                });
+            }
+        } catch (e) {}
+        return items;
+    }
+
+    async fetchFeedArticles(feed, force = false) {
+        if (!feed) return [];
+        const cacheRaw = localStorage.getItem(this.cacheKey) || '{}';
+        let cache = {};
+        try { cache = JSON.parse(cacheRaw); } catch (e) {}
+
+        const now = Date.now();
+        if (!force && cache[feed.id] && (now - cache[feed.id].timestamp < 30 * 60 * 1000)) {
+            return cache[feed.id].items;
+        }
+
+        let items = [];
+        try {
+            if (feed.id === 'hackernews') {
+                const res = await fetch('https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=7');
+                const data = await res.json();
+                items = (data.hits || []).map(h => ({
+                    id: h.objectID,
+                    title: h.title,
+                    url: h.url || `https://news.ycombinator.com/item?id=${h.objectID}`,
+                    time: new Date(h.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    source: 'HN'
+                }));
+            } else {
+                let text = '';
+                try {
+                    const res = await fetch(feed.url);
+                    if (res.ok) text = await res.text();
+                } catch (e) {
+                    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(feed.url)}`;
+                    const resProxy = await fetch(proxyUrl);
+                    if (resProxy.ok) text = await resProxy.text();
+                }
+                if (text) items = this.parseXMLFeed(text, feed.name);
+            }
+
+            if (items.length > 0) {
+                cache[feed.id] = { timestamp: now, items: items.slice(0, 6) };
+                localStorage.setItem(this.cacheKey, JSON.stringify(cache));
+            }
+        } catch (err) {}
+
+        return items.slice(0, 6);
+    }
+
+    async loadAndRender(force = false) {
+        if (!this.radarList) return;
+        this.renderChannelBar();
+        const currentFeed = this.feeds.find(f => f.id === this.activeFeedId) || this.feeds[0];
+        
+        this.radarList.innerHTML = '<div class="radar-loading"><span>📡 Sincronizando feed...</span></div>';
+        const articles = await this.fetchFeedArticles(currentFeed, force);
+
+        this.radarList.innerHTML = '';
+        if (!articles || articles.length === 0) {
+            this.radarList.innerHTML = '<div class="radar-empty"><span>No se pudieron cargar artículos. Pulsa 🔄 para reintentar.</span></div>';
+            return;
+        }
+
+        articles.forEach(art => {
             const row = document.createElement('div');
-            row.className = 'techradar-row';
+            row.className = 'radar-item';
             row.innerHTML = `
-                <a href="${item.url}" target="_blank" rel="noopener" class="techradar-title-link" title="${escapeHtml(item.title)}">
-                    <span class="techradar-score">▲ ${item.score}</span>
-                    <span class="techradar-title-text">${escapeHtml(item.title)}</span>
+                <a href="${art.url}" target="_blank" rel="noopener noreferrer" class="radar-link">
+                    <span class="radar-bullet">›</span>
+                    <span class="radar-title">${escapeHtml(art.title)}</span>
                 </a>
-                <button class="techradar-pin-btn" title="${t.pin_tooltip || 'Guardar en Post-it'}" data-title="${escapeHtml(item.title)}" data-url="${item.url}">📌</button>
+                <span class="radar-source-tag">${escapeHtml(art.source || currentFeed.name)}</span>
+                <button class="radar-pin-btn" title="Fijar como Post-it">📌</button>
             `;
-
-            const pinBtn = row.querySelector('.techradar-pin-btn');
+            const pinBtn = row.querySelector('.radar-pin-btn');
             if (pinBtn) {
                 pinBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     soundFx.play('click');
-                    const noteText = `${item.title}
-🔗 ${item.url}`;
-                    window.dispatchEvent(new CustomEvent('postit:create', {
-                        detail: { text: noteText, x: window.innerWidth / 2 - 100, y: window.innerHeight / 2 - 80 }
-                    }));
+                    window.dispatchEvent(new CustomEvent('postit:create', { detail: { text: `[${art.title}](${art.url})` } }));
                 });
             }
-
-            this.containerEl.appendChild(row);
+            this.radarList.appendChild(row);
         });
     }
 
-    bindEvents() {
+    renderChannelBar() {
+        if (!this.channelBar) return;
+        this.channelBar.innerHTML = '';
+
+        this.feeds.forEach(f => {
+            const btn = document.createElement('button');
+            const isActive = f.id === this.activeFeedId;
+            btn.className = `radar-channel-pill ${isActive ? 'active' : ''}`;
+            btn.innerHTML = `<span class="radar-pill-icon">${f.icon}</span> <span class="radar-pill-name">${f.name}</span>`;
+            btn.onclick = () => {
+                soundFx.play('click');
+                this.activeFeedId = f.id;
+                this.loadAndRender();
+            };
+            this.channelBar.appendChild(btn);
+        });
+    }
+
+    openModal() {
+        if (this.modal) this.modal.classList.remove('hidden');
+    }
+
+    closeModal() {
+        if (this.modal) this.modal.classList.add('hidden');
+    }
+
+    init() {
+        this.loadAndRender();
         if (this.refreshBtn) {
             this.refreshBtn.addEventListener('click', () => {
                 soundFx.play('click');
-                this.fetchHackerNews();
+                this.loadAndRender(true);
             });
         }
-
-        state.on('language:changed', () => this.renderList());
+        if (this.configBtn) this.configBtn.onclick = () => this.openModal();
+        const closeBtn = document.getElementById('close-rss-modal');
+        const addBtn = document.getElementById('add-rss-feed-btn');
+        if (closeBtn) closeBtn.onclick = () => this.closeModal();
+        if (addBtn) {
+            addBtn.onclick = () => {
+                const nameInp = document.getElementById('rss-feed-name-input');
+                const urlInp = document.getElementById('rss-feed-url-input');
+                const iconInp = document.getElementById('rss-feed-icon-input');
+                if (nameInp && urlInp && urlInp.value.trim()) {
+                    soundFx.play('chime');
+                    const newFeed = {
+                        id: 'rss_' + Date.now(),
+                        name: nameInp.value.trim() || 'Custom Feed',
+                        icon: (iconInp ? iconInp.value.trim() : '') || '📰',
+                        url: urlInp.value.trim()
+                    };
+                    this.feeds.push(newFeed);
+                    this.saveFeeds();
+                    this.activeFeedId = newFeed.id;
+                    this.closeModal();
+                    this.loadAndRender(true);
+                }
+            };
+        }
     }
 }
 

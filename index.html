@@ -714,6 +714,30 @@
         </div>
     </div>
 
+        <!-- Custom RSS Feed Configuration Modal -->
+    <div class="rss-modal-backdrop hidden" id="rss-modal" role="dialog" aria-modal="true" aria-label="Añadir Feed RSS">
+        <div class="rss-modal-card">
+            <div class="rss-modal-header">
+                <h3>Añadir Feed RSS / Atom</h3>
+                <button class="rss-modal-close" id="close-rss-modal" aria-label="Cerrar modal">✕</button>
+            </div>
+            <p class="rss-modal-desc">Sigue cualquier blog, medio o repositorio en tu Tech Radar (100% en local):</p>
+            <div class="rss-modal-form">
+                <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                    <input type="text" id="rss-feed-icon-input" placeholder="Icono (ej. 📰, 🚀)" maxlength="4" style="width: 80px;" value="📰">
+                    <input type="text" id="rss-feed-name-input" placeholder="Nombre del Feed (ej. The Verge)" style="flex: 1;">
+                </div>
+                <input type="url" id="rss-feed-url-input" placeholder="https://www.theverge.com/rss/index.xml" style="width: 100%; margin-bottom: 12px;">
+                <button class="rss-save-btn" id="add-rss-feed-btn">Añadir Feed al Radar</button>
+            </div>
+            <div class="rss-modal-presets">
+                <span>Presets rápidos:</span>
+                <button class="rss-preset-chip" onclick="document.getElementById('rss-feed-name-input').value='The Verge';document.getElementById('rss-feed-url-input').value='https://www.theverge.com/rss/index.xml';document.getElementById('rss-feed-icon-input').value='📱';">The Verge</button>
+                <button class="rss-preset-chip" onclick="document.getElementById('rss-feed-name-input').value='GitHub Blog';document.getElementById('rss-feed-url-input').value='https://github.blog/feed/';document.getElementById('rss-feed-icon-input').value='🐙';">GitHub Blog</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Settings Slide-Over Glass Drawer -->
     <div class="settings-drawer-backdrop hidden" id="settings-drawer" role="dialog" aria-modal="true" aria-label="Ajustes">
         <div class="settings-drawer-card">
