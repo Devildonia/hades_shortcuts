@@ -1876,11 +1876,11 @@ class TechRadarEngine {
         this.feedsKey = 'hades_custom_rss_feeds_v1';
         this.feeds = this.loadFeeds();
         this.activeFeedId = 'hackernews';
-        this.radarList = document.getElementById('tech-radar-list');
-        this.channelBar = document.getElementById('radar-channel-bar');
-        this.refreshBtn = document.getElementById('radar-refresh-btn');
-        this.configBtn = document.getElementById('radar-config-btn');
-        this.modal = document.getElementById('rss-modal');
+        this.radarList = null;
+        this.channelBar = null;
+        this.refreshBtn = null;
+        this.configBtn = null;
+        this.modal = null;
     }
 
     loadFeeds() {
@@ -1901,13 +1901,27 @@ class TechRadarEngine {
         this.renderChannelBar();
     }
 
+    getFallbackArticles(feedId) {
+        if (feedId === 'hackernews') {
+            return [
+                { id: 'hn_1', title: 'DeepSeek-R1 open-source reasoning model architecture', url: 'https://news.ycombinator.com', source: 'HN' },
+                { id: 'hn_2', title: 'WebGPU 1.0 specification finalized across all major browsers', url: 'https://news.ycombinator.com', source: 'HN' },
+                { id: 'hn_3', title: 'SQLite in the browser with WebAssembly & OPFS', url: 'https://news.ycombinator.com', source: 'HN' },
+                { id: 'hn_4', title: 'Claude 3.5 Sonnet computer use capabilities and safety', url: 'https://news.ycombinator.com', source: 'HN' }
+            ];
+        }
+        return [
+            { id: 'fb_1', title: 'Últimas novedades en Inteligencia Artificial y Modelos 3D', url: 'https://huggingface.co', source: 'Radar' },
+            { id: 'fb_2', title: 'Avances en síntesis procedural y rendimiento web', url: 'https://arstechnica.com', source: 'Radar' }
+        ];
+    }
+
     parseXMLFeed(xmlText, fallbackSource = 'Web') {
         const items = [];
         try {
             const parser = new DOMParser();
             const xml = parser.parseFromString(xmlText, 'text/xml');
             
-            // RSS 2.0 (<item>)
             const rssItems = xml.querySelectorAll('item');
             if (rssItems && rssItems.length > 0) {
                 rssItems.forEach(el => {
@@ -1919,7 +1933,6 @@ class TechRadarEngine {
                 return items;
             }
 
-            // Atom 1.0 (<entry>)
             const atomEntries = xml.querySelectorAll('entry');
             if (atomEntries && atomEntries.length > 0) {
                 atomEntries.forEach(el => {
@@ -1934,20 +1947,23 @@ class TechRadarEngine {
     }
 
     async fetchFeedArticles(feed, force = false) {
-        if (!feed) return [];
+        if (!feed) return this.getFallbackArticles('hackernews');
         const cacheRaw = localStorage.getItem(this.cacheKey) || '{}';
         let cache = {};
         try { cache = JSON.parse(cacheRaw); } catch (e) {}
 
         const now = Date.now();
-        if (!force && cache[feed.id] && (now - cache[feed.id].timestamp < 30 * 60 * 1000)) {
+        if (!force && cache[feed.id] && (now - cache[feed.id].timestamp < 30 * 60 * 1000) && cache[feed.id].items?.length > 0) {
             return cache[feed.id].items;
         }
 
         let items = [];
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 4000);
+
         try {
             if (feed.id === 'hackernews') {
-                const res = await fetch('https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=7');
+                const res = await fetch('https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=7', { signal: controller.signal });
                 const data = await res.json();
                 items = (data.hits || []).map(h => ({
                     id: h.objectID,
@@ -1959,31 +1975,41 @@ class TechRadarEngine {
             } else {
                 let text = '';
                 try {
-                    const res = await fetch(feed.url);
+                    const res = await fetch(feed.url, { signal: controller.signal });
                     if (res.ok) text = await res.text();
                 } catch (e) {
                     const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(feed.url)}`;
-                    const resProxy = await fetch(proxyUrl);
+                    const resProxy = await fetch(proxyUrl, { signal: controller.signal });
                     if (resProxy.ok) text = await resProxy.text();
                 }
                 if (text) items = this.parseXMLFeed(text, feed.name);
             }
+        } catch (err) {
+            // Network timeout / error -> use fallback
+            items = this.getFallbackArticles(feed.id);
+        } finally {
+            clearTimeout(timeoutId);
+        }
 
-            if (items.length > 0) {
-                cache[feed.id] = { timestamp: now, items: items.slice(0, 6) };
-                localStorage.setItem(this.cacheKey, JSON.stringify(cache));
-            }
-        } catch (err) {}
+        if (!items || items.length === 0) {
+            items = this.getFallbackArticles(feed.id);
+        }
+
+        cache[feed.id] = { timestamp: now, items: items.slice(0, 6) };
+        try { localStorage.setItem(this.cacheKey, JSON.stringify(cache)); } catch (e) {}
 
         return items.slice(0, 6);
     }
 
     async loadAndRender(force = false) {
+        this.radarList = document.getElementById('tech-radar-list');
+        this.channelBar = document.getElementById('radar-channel-bar');
         if (!this.radarList) return;
+
         this.renderChannelBar();
         const currentFeed = this.feeds.find(f => f.id === this.activeFeedId) || this.feeds[0];
         
-        this.radarList.innerHTML = '<div class="radar-loading"><span>📡 Sincronizando feed...</span></div>';
+        // Show cached or fallback immediately to prevent blank loader
         const articles = await this.fetchFeedArticles(currentFeed, force);
 
         this.radarList.innerHTML = '';
@@ -2016,6 +2042,7 @@ class TechRadarEngine {
     }
 
     renderChannelBar() {
+        this.channelBar = document.getElementById('radar-channel-bar');
         if (!this.channelBar) return;
         this.channelBar.innerHTML = '';
 
@@ -2034,14 +2061,22 @@ class TechRadarEngine {
     }
 
     openModal() {
+        this.modal = document.getElementById('rss-modal');
         if (this.modal) this.modal.classList.remove('hidden');
     }
 
     closeModal() {
+        this.modal = document.getElementById('rss-modal');
         if (this.modal) this.modal.classList.add('hidden');
     }
 
     init() {
+        this.radarList = document.getElementById('tech-radar-list');
+        this.channelBar = document.getElementById('radar-channel-bar');
+        this.refreshBtn = document.getElementById('radar-refresh-btn');
+        this.configBtn = document.getElementById('radar-config-btn');
+        this.modal = document.getElementById('rss-modal');
+
         this.loadAndRender();
         if (this.refreshBtn) {
             this.refreshBtn.addEventListener('click', () => {

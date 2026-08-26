@@ -242,11 +242,12 @@
     "ambient_title": "Fokus-Umgebungs-Audio",
     "ambient_play": "Abspielen",
     "ambient_pause": "Pause",
-    "techradar_title": "Tech Radar Live",
+    "techradar_title": "Tech Radar & RSS",
     "calendar_title": "Agenda & Kalender",
     "calendar_sync": "Synchronisieren",
     "calendar_config": "iCal Feed einrichten",
-    "calendar_empty": "Keine anstehenden Termine. Zeit zum Fokussieren!"
+    "calendar_empty": "Keine anstehenden Termine. Zeit zum Fokussieren!",
+    "tech_radar_title": "Tech Radar & RSS"
   },
   "audio": {
     "preset_label": "Haptischer Sound-Effekt",

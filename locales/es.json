@@ -242,11 +242,12 @@
     "ambient_title": "Audio Ambiental Focus",
     "ambient_play": "Reproducir",
     "ambient_pause": "Pausar",
-    "techradar_title": "Radar Tech & IA",
+    "techradar_title": "Tech Radar & RSS",
     "calendar_title": "Agenda & Calendario",
     "calendar_sync": "Sincronizar",
     "calendar_config": "Configurar Feed iCal",
-    "calendar_empty": "Sin eventos próximos. ¡Tiempo para concentrarse!"
+    "calendar_empty": "Sin eventos próximos. ¡Tiempo para concentrarse!",
+    "tech_radar_title": "Tech Radar & RSS"
   },
   "audio": {
     "preset_label": "Efecto de Sonido Háptico",

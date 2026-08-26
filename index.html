@@ -220,20 +220,21 @@
             </div>
 
             
-            <!-- Widget 4: Live Tech Radar Bento Capsule (HackerNews / AI Trends) -->
-            <div class="mini-widget-card widget-techradar" id="widget-techradar-card" data-tile-id="tile-techradar">
+                        <!-- Widget 5: Live Tech Radar & Multi-Channel RSS Feed Reader -->
+            <div class="mini-widget-card widget-tech-radar" id="widget-tech-radar-card" data-tile-id="tile-tech-radar">
                 <div class="widget-header">
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span class="widget-icon">📡</span>
-                        <h3 data-i18n="widgets.techradar_title">Tech Radar Live</h3>
+                        <h3 data-i18n="widgets.tech_radar_title">Tech Radar & RSS</h3>
                     </div>
-                    <button class="techradar-refresh-btn" id="techradar-refresh-btn" title="Actualizar titulares">
-                        <span>🔄</span>
-                    </button>
+                    <div style="display: flex; gap: 6px;">
+                        <button class="radar-tool-btn" id="radar-refresh-btn" title="Actualizar titulares">🔄</button>
+                        <button class="radar-tool-btn" id="radar-config-btn" title="Gestionar Feeds RSS">⚙️</button>
+                    </div>
                 </div>
-                <div class="techradar-body" id="techradar-list">
-                    <div class="techradar-loading"><span>📡</span> Cargando titulares...</div>
-                </div>
+                <!-- Channel Selector Pills -->
+                <div class="radar-channel-bar" id="radar-channel-bar"></div>
+                <div class="tech-radar-list" id="tech-radar-list"></div>
             </div>
 
 <!-- Widget 2: Pomodoro Focus Timer -->
