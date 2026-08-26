@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <!-- Top Right Controls: Weather + Settings Button -->
+        <!-- Top Right Controls: Weather + AI Agent + Focus + Settings Button -->
         <div class="nav-controls modular-dropzone" id="zone-header-right">
             <!-- Weather Widget (Placed to the right of title) -->
             <div class="nav-widget widget-weather" id="weather-widget" data-tile-id="tile-weather" title="Haz clic para cambiar o buscar tu ciudad" role="button" tabindex="0">
@@ -90,6 +90,16 @@
                     <span class="weather-condition" id="weather-condition">Detectando clima...</span>
                 </div>
             </div>
+
+            <!-- AI Agent Header Button -->
+            <button class="ai-agent-header-btn" id="open-ai-agent-btn" title="Asistente IA Contextual (!ai)" aria-label="Abrir Asistente IA">
+                <span>🤖</span> <span>IA Agent</span>
+            </button>
+
+            <!-- Deep Focus Header Button -->
+            <button class="focus-toggle-btn" id="focus-mode-toggle-btn" title="Modo Concentración Profunda (Alt+F)" aria-label="Modo Focus">
+                <span>🧘</span> <span>Focus</span>
+            </button>
 
             <!-- Settings Hub Button -->
             <div class="settings-btn-tile" data-tile-id="tile-settings-btn">

@@ -5309,16 +5309,7 @@ input:checked + .slider:before {
 }
 
 /* --- Deep Focus Mode & Zen Shield --- */
-.focus-toggle-btn {
-    font-size: 0.8rem;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: var(--text-secondary);
-    transition: all 0.25s ease;
-}
+
 
 .focus-toggle-btn:hover {
     background: rgba(0, 242, 254, 0.1);
@@ -5464,16 +5455,7 @@ body.focus-mode-active .category-filter-bar {
 }
 
 /* --- Contextual AI Agent Glass Drawer --- */
-.ai-agent-header-btn {
-    font-size: 0.8rem;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(168, 85, 247, 0.2));
-    border: 1px solid rgba(0, 242, 254, 0.4);
-    color: #00f2fe;
-    transition: all 0.25s ease;
-}
+
 
 .ai-agent-header-btn:hover {
     background: linear-gradient(135deg, rgba(0, 242, 254, 0.3), rgba(168, 85, 247, 0.4));
@@ -5633,4 +5615,67 @@ body.focus-mode-active .category-filter-bar {
     border-radius: 8px;
     padding: 0 16px;
     cursor: pointer;
+}
+
+/* --- Header Action Capsule Buttons --- */
+
+.ai-agent-header-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 42px;
+    padding: 0 16px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(168, 85, 247, 0.18));
+    border: 1px solid rgba(0, 242, 254, 0.35);
+    color: #00f2fe;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+
+.ai-agent-header-btn:hover {
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.25), rgba(168, 85, 247, 0.35));
+    border-color: #00f2fe;
+    box-shadow: 0 0 18px rgba(0, 242, 254, 0.4);
+    transform: translateY(-2px);
+}
+
+.focus-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 42px;
+    padding: 0 16px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+
+.focus-toggle-btn:hover {
+    background: rgba(0, 242, 254, 0.1);
+    border-color: rgba(0, 242, 254, 0.3);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.focus-toggle-btn.active {
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(79, 172, 254, 0.3));
+    border-color: rgba(0, 242, 254, 0.6);
+    color: #00f2fe;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
 }
