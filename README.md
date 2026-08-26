@@ -29,12 +29,14 @@
 
 [Live Demo](https://devildonia.github.io/hades_shortcuts/) •
 [Features](#-key-features) •
-[Spaces](#-arc-inspired-multi-profile-spaces-contextual-workspaces) •
-[Deep Focus & Zen Shield](#-deep-focus-mode--zen-distraction-shield) •
+[Background Studio](#-dynamic-background-studio-unsplash-4k--local-file--gradients) •
+[Visual Macros](#-visual-macro-studio--custom-workflow-engine-no-code-routine-creator) •
 [Calendar Hub](#-bento-calendar--agenda-hub-universal-schedule-hub) •
+[Deep Focus & Zen](#-deep-focus-mode--zen-distraction-shield) •
+[Spaces](#-arc-inspired-multi-profile-spaces-contextual-workspaces) •
 [Tech Radar & RSS](#-live-tech-radar--multi-channel-rssatom-reader) •
-[Tags & Smart Views](#-multi-tag-compound-search--saved-smart-views-linear-style-cmdk) •
 [Personal Analytics](#-100-local-personal-analytics--predictive-context-engine-my-dashboard-knows-me) •
+[Security & Privacy](#-security--privacy-first-architecture) •
 [DevTools & Bangs](#-devtools-omnibox--bang-commands-cheatsheet) •
 [Keyboard Shortcuts](#-keyboard-shortcuts) •
 [Architecture](#-project-architecture-anti-god-file-modular-design)
@@ -67,6 +69,46 @@
 
 ## 🌟 Key Features
 
+### 🖼️ Dynamic Background Studio (Unsplash 4K / Local File / Gradients)
+- **3 Visual Atmosphere Modes**:
+  - 🌌 **Aurora Canvas**: Procedural WebGL mesh responsive to cursor dynamics and astronomical solar cycle.
+  - 🎨 **Solid Color & Gradients**: Deep Cyberpunk, Midnight Blue, Velvet Purple, Emerald Matrix, and OLED Pure Black (100% GPU & battery saving).
+  - 🖼️ **Image & Unsplash Wallpapers**:
+    - **Curated Unsplash Topics**: Cyberpunk & Tech, Deep Space, Mountain Nature, and Minimal Architecture.
+    - **Random Wallpaper Generator**: 1-click `[ 🔄 Foto Aleatoria ]` for fresh inspiration.
+    - **Local File Upload**: Load your custom wallpaper directly from your hard drive (`FileReader` base64).
+    - **Custom Image URL**: Paste any direct web wallpaper link.
+    - **Live Legibility Filters**: Real-time **Blur (0-20px)** and **Dim (0-80%)** sliders to ensure optimal card contrast.
+
+### ⚡ Visual Macro Studio & Custom Workflow Engine (No-Code Routine Creator)
+- **100% Visual Custom Routine Builder**:
+  - 🎛️ **No-Code Macro Studio**: Create, edit, and duplicate custom productivity macros in 20 seconds from *Settings > Macros & Rutinas* without touching JSON or code.
+  - 📦 **Compound Action Composition**:
+    - **Trigger Command**: Assign any custom bang (e.g. `!gaming`, `!study`, `!work`, `!crypto`).
+    - **Visual Identity**: Emoji icon & custom routine title.
+    - **Multi-Shortcut Selector**: Checkbox grid to launch 1 to 10 apps simultaneously.
+    - **Ambient Audio Sync**: Auto-starts focus soundscapes (🌧️ Rain, 🚀 Space, ☕ 432Hz, 🌊 Waves).
+    - **Pomodoro Action**: Auto-triggers 25m focus countdown or resets timers.
+  - ⚡ **Omnibox & 1-Click Run**: Trigger routines via search bar (`!gaming`) or the interactive `[ ▶ Run ]` test button in settings.
+
+### 📅 Bento Calendar & Agenda Hub («Universal Schedule Hub»)
+- **Zero-Knowledge Universal Calendar & Manual Event Tracker**:
+  - 🔄 **Direct RFC 5545 iCal/ICS Parsing**: Client-side parsing of private iCal subscription URLs from Google Calendar, Microsoft Outlook, Apple iCloud, Nextcloud, or Proton Calendar (0 external proxy servers).
+  - ➕ **Manual Event Creation**: Direct `[ ➕ ]` button in the Bento card to create custom events with Title, Date, Time, Video Call URL, and Categories.
+  - ✕ **1-Click Quick Deletion**: Easily dismiss or remove manual events directly from the timeline list.
+  - 🚨 **15-Minute Meeting Proximity Radar**: The bento card pulses with a neon warning halo (`.meeting-pulse-alert`) when an event is starting within 15 minutes.
+  - 🚀 **1-Click Video Call Access**: Automatically parses and detects meeting links for **Google Meet**, **Zoom**, **Microsoft Teams**, and **Discord**.
+  - 📐 **Full Bento Freeform Support**: Drag, resize (`tile-calendar`), or toggle visibility with `LayoutManager`.
+
+### 🎛️ Granular Bento Widget Visibility Control
+- **Independent Layout Switches**: Customize your command center in *Settings > Diseño & Atajos* with 6 individual visibility toggles:
+  - 📝 **Scratchpad Card** (`#widget-scratchpad-card`)
+  - 📅 **Calendar & Agenda Card** (`#widget-calendar-card`)
+  - 🎧 **Ambient Focus Audio** (`#widget-ambient-card`)
+  - ⏳ **Pomodoro Focus Timer** (`#widget-pomodoro-card`)
+  - 📡 **Tech Radar & RSS Reader** (`#widget-tech-radar-card`)
+  - 📊 **Cyberpunk System Telemetry Capsule** (`#telemetry-capsule`)
+
 ### 🤖 Contextual Dashboard AI Agent («Ground-Truth Dashboard Brain»)
 - **Full Dashboard Awareness & Real-Time Intelligence**:
   - 🧠 **Ground-Truth Context Injection**: The AI Agent dynamically knows all your active shortcuts, tags, spaces, calendar events, focus state, and Tech Radar feeds.
@@ -90,13 +132,6 @@
   - 🌫️ **Zen Morphing**: Temporarily dims background distractions, freezes Tech Radar headlines, and spotlights only your active work tools and countdown clock.
   - 🛡️ **Zen Shield Distraction Blocker**: Intercepts attempts to open distracting social media (Twitter/X, Instagram, Reddit, TikTok) and displays a 4-7-8 breathing pacer with live timer.
   - 🔔 **Seamless Break Transition**: Smoothly restores full dashboard visibility upon timer completion with an ambient chime.
-
-### 📅 Bento Calendar & Agenda Hub («Universal Schedule Hub»)
-- **Zero-Knowledge Universal Calendar Integration**:
-  - 🔄 **Direct RFC 5545 iCal/ICS Parsing**: Client-side parsing of private iCal subscription URLs from Google Calendar, Microsoft Outlook, Apple iCloud, Nextcloud, or Proton Calendar (0 external proxy servers).
-  - 🚨 **15-Minute Meeting Proximity Radar**: The bento card pulses with a neon warning halo (`.meeting-pulse-alert`) when an event is starting within 15 minutes.
-  - 🚀 **1-Click Video Call Access**: Automatically parses and detects meeting links for **Google Meet**, **Zoom**, **Microsoft Teams**, and **Discord**.
-  - 📐 **Full Bento Freeform Support**: Drag, resize (`tile-calendar`), or toggle visibility with `LayoutManager`.
 
 ### 📡 Live Tech Radar & Multi-Channel RSS/Atom Reader
 - **Zero-Dependency Universal Feed Aggregator**:
@@ -150,29 +185,10 @@ Pure mathematical acoustic synthesis using modern **Web Audio API** nodes (`Audi
 - ☕ **Binaural Alpha Waves (432 Hz)**: Dual stereo sine wave oscillators producing an 8 Hz Alpha brainwave beat.
 - 🌊 **Cosmic Waves**: 10-second rhythmic ocean wave breathing cycle.
 
-### 🖼️ Dynamic Background Studio (Unsplash 4K / Local File / Gradients)
-- **3 Visual Atmosphere Modes**:
-  - 🌌 **Aurora Canvas**: Procedural WebGL mesh responsive to cursor and solar cycle.
-  - 🎨 **Solid Color & Gradients**: Deep Cyberpunk, Midnight Blue, Velvet Purple, Emerald Matrix, and OLED Pure Black (100% GPU/battery saving).
-  - 🖼️ **Image & Unsplash Wallpapers**:
-    - **Curated Unsplash Topics**: Cyberpunk & Tech, Deep Space, Mountain Nature, and Minimal Architecture.
-    - **Local File Upload**: Load your custom wallpaper directly from disk.
-    - **Legibility Filters**: Live **Blur (0-20px)** and **Dim (0-80%)** sliders to ensure optimal card contrast.
-
-### ⚡ Visual Macro Studio & Custom Workflow Engine (No-Code Routine Creator)
-- **100% Visual Custom Routine Builder**:
-  - 🎛️ **No-Code Macro Studio**: Create, edit, and duplicate custom productivity macros in 20 seconds from *Settings > Macros* without touching JSON or code.
-  - 📦 **Compound Action Composition**:
-    - **Trigger Command**: Assign any custom bang (e.g. `!gaming`, `!study`, `!crypto`).
-    - **Visual Identity**: Emoji icon & custom routine title.
-    - **Multi-Shortcut Selector**: Checkbox grid to launch 1 to 10 apps simultaneously.
-    - **Ambient Audio Sync**: Auto-starts focus soundscapes (🌧️ Rain, 🚀 Space, ☕ 432Hz, 🌊 Waves).
-    - **Pomodoro Action**: Auto-triggers 25m focus countdown or resets timers.
-  - ⚡ **Omnibox & 1-Click Run**: Trigger routines via search bar (`!gaming`) or the interactive `[ ▶ Run ]` test button in settings.
-
-### 🔒 Zero-Knowledge Encrypted Cloud Sync (E2EE)
+### 🔒 Security & Privacy-First Architecture
+- **100% Offline Canvas QR Generator (`js/devtools.js`)**: Pure 2D Canvas matrix rendering (0 network calls, 0 third-party APIs like `api.qrserver.com`) with instant PNG download and clipboard copy.
+- **SessionStorage Token Isolation (`js/crypto-sync.js`)**: GitHub Personal Access Tokens reside strictly in `sessionStorage` (wiped immediately when the browser tab closes).
 - **Client-Side PBKDF2 + AES-256-GCM**: Derive 256-bit encryption keys with 100,000 PBKDF2 iterations using native `window.crypto.subtle`.
-- **Private GitHub Gist Backup**: Safely synchronize all your custom shortcuts, 360° canvas positions, glass post-its, and theme settings with zero server tracking.
 
 ---
 
@@ -260,7 +276,7 @@ locales/
 
 ## 🏛️ Project Architecture (Anti-God File Modular Design)
 
-The project enforces a strict Single Responsibility Principle (SRP) with native ES6 modules under `/js/` (~40–270 lines each, 0 god files):
+The project enforces a strict Single Responsibility Principle (SRP) with native ES6 modules under `/js/` (~40–275 lines each, 0 god files):
 
 ```
 ├── manifest.json            # Chrome Extension Manifest V3 & PWA manifest
@@ -271,13 +287,13 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 ├── dist/
 │   └── hades-shortcuts-chrome-v6.0.0.zip # Chrome Extension release package
 ├── js/
-│   ├── app.js               # Main orchestrator & lifecycle manager (229 lines)
+│   ├── app.js               # Main orchestrator & lifecycle manager (237 lines)
 │   ├── platform.js          # Universal platform abstraction: Web vs Extension (40 lines)
 │   ├── spaces.js            # Arc-inspired multi-profile spaces manager (154 lines)
-│   ├── focus-mode.js        # Deep Focus Mode, !work bang & Zen Shield blocker (155 lines)
+│   ├── focus-mode.js        # Deep Focus Mode, !work bang & Zen Shield blocker (162 lines)
 │   ├── ai-agent.js          # Contextual Dashboard AI Agent: Ollama & Claude API (174 lines)
 │   ├── tags-filter.js       # Multi-tag compound query tokenizer & saved smart views (212 lines)
-│   ├── calendar-agenda.js   # RFC 5545 iCal/Google calendar parser & proximity radar (188 lines)
+│   ├── calendar-agenda.js   # RFC 5545 iCal parser, manual event creator & proximity radar (231 lines)
 │   ├── personal-analytics.js# 100% local usage analytics, 7-day SVG chart & suggestions (207 lines)
 │   ├── extension-api.js     # Native TopSites & background context menu bridge (79 lines)
 │   ├── sw-extension.js      # Manifest V3 background service worker (30 lines)
@@ -290,14 +306,14 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── telemetry.js         # Real-time ping, battery, fps & offline monitor (109 lines)
 │   ├── tech-radar.js        # Multi-channel RSS/Atom feed reader & aggregator (248 lines)
 │   ├── neural-search.js     # Local semantic vector search & AI assistant (155 lines)
-│   ├── macros.js            # Visual Macro Studio No-Code & routine engine (220 lines)
-│   ├── crypto-sync.js       # Zero-knowledge AES-256-GCM + GitHub Gist sync (228 lines)
-│   ├── bangs.js             # Bang commands parser & safe math calculator (115 lines)
-│   ├── devtools.js          # Built-in DevTools Omnibox & Canvas 2D QR Generator (252 lines)
+│   ├── macros.js            # Visual Macro Studio No-Code & routine engine (223 lines)
+│   ├── crypto-sync.js       # Zero-knowledge AES-256-GCM + GitHub Gist sync (229 lines)
+│   ├── bangs.js             # Bang commands parser & safe math calculator (116 lines)
+│   ├── devtools.js          # Built-in DevTools Omnibox & 100% Offline Canvas QR Generator (252 lines)
 │   ├── postits.js           # Floating Glass Post-its manager (238 lines)
 │   ├── layout.js            # Freeform Canvas & Corner Resize Engine (269 lines)
 │   ├── widgets.js           # Bento widgets manager: Scratchpad + Pomodoro (140 lines)
-│   ├── theme-studio.js      # Real-time custom theme color palette generator (69 lines)
+│   ├── theme-studio.js      # Dynamic Background Studio, Unsplash 4K, Local Upload & Color Themes (238 lines)
 │   ├── importer.js          # Universal HTML bookmarks parser (84 lines)
 │   ├── i18n.js              # Localization engine & dynamic loader (68 lines)
 │   ├── weather.js           # Precision clock & Open-Meteo weather geocoder (275 lines)
@@ -306,8 +322,8 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── dragdrop.js          # Inner card reordering drag & drop manager (111 lines)
 │   ├── shortcut-manager.js  # Add / Edit / Delete modal & HD Favicon engine (254 lines)
 │   ├── backup.js            # JSON export, import & factory reset (96 lines)
-│   └── settings.js          # Floating settings modal controller (215 lines)
-├── iconos/                  # 48 optimized WebP icon assets (60x60)
+│   └── settings.js          # Floating settings modal controller & granular widget switches (233 lines)
+├── iconos/                  # 54 optimized WebP icon assets (60x60)
 └── sounds/                  # Haptic audio fallback assets
 ```
 
