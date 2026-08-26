@@ -778,6 +778,34 @@
         </div>
     </div>
 
+        <!-- Contextual AI Agent Glass Drawer -->
+    <div class="ai-agent-backdrop hidden" id="ai-agent-drawer" role="dialog" aria-modal="true" aria-label="Asistente IA Contextual">
+        <div class="ai-agent-panel">
+            <div class="ai-agent-header">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="ai-agent-icon">🤖</span>
+                    <h3>Asistente IA Contextual</h3>
+                </div>
+                <button class="ai-agent-close" id="close-ai-agent-drawer" aria-label="Cerrar Asistente IA">✕</button>
+            </div>
+            <!-- Prompt suggestion chips -->
+            <div class="ai-prompt-chips-row">
+                <button class="ai-prompt-chip" data-prompt="¿Qué herramientas de 3D o IA tengo guardadas?">🎨 Mis herramientas 3D</button>
+                <button class="ai-prompt-chip" data-prompt="Recomiéndame 3 herramientas nuevas de productividad">✨ Sugerir nuevas apps</button>
+                <button class="ai-prompt-chip" data-prompt="¿Cómo activo el modo Focus?">🧘 Modo Focus</button>
+            </div>
+            <div class="ai-agent-messages" id="ai-agent-messages">
+                <div class="ai-msg-bubble ai">
+                    ¡Hola! Soy tu <strong>Asistente IA Contextual</strong>. Conozco tus atajos, espacios y agenda. ¿En qué te ayudo hoy?
+                </div>
+            </div>
+            <div class="ai-agent-input-row">
+                <input type="text" id="ai-agent-input" placeholder="Pregúntame sobre tus atajos o pide recomendaciones..." autocomplete="off">
+                <button class="ai-agent-send-btn" id="ai-agent-send-btn">Enviar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Settings Slide-Over Glass Drawer -->
     <div class="settings-drawer-backdrop hidden" id="settings-drawer" role="dialog" aria-modal="true" aria-label="Ajustes">
         <div class="settings-drawer-card">

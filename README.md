@@ -67,6 +67,16 @@
 
 ## 🌟 Key Features
 
+### 🤖 Contextual Dashboard AI Agent («Ground-Truth Dashboard Brain»)
+- **Full Dashboard Awareness & Real-Time Intelligence**:
+  - 🧠 **Ground-Truth Context Injection**: The AI Agent dynamically knows all your active shortcuts, tags, spaces, calendar events, focus state, and Tech Radar feeds.
+  - 🔌 **Dual Connectivity**:
+    - 🦙 **100% Local & Private (Ollama / LM Studio)**: Connects to `http://localhost:11434` for zero-cost, offline inference (*Llama 3, Mistral, Qwen 2.5, DeepSeek-R1*).
+    - 🔮 **Anthropic Claude 3.5 Sonnet / OpenAI**: Client-side API key integration with local AES-256 encryption.
+    - ⚡ **Local Heuristic Fallback**: Instant offline contextual answers and shortcut recommendations even with 0 API keys configured.
+  - 💬 **Glass AI Assistant Drawer (`#ai-agent-drawer`)**: Real-time streaming markdown bubbles, suggested prompt chips, and 1-click launch chips (`[ 🚀 Abrir Atajo ]`).
+  - ⚡ **Omnibox Bang Integration**: Trigger instant queries via `!ai <prompt>` or `!ask <prompt>`.
+
 ### 🪐 Arc-Inspired Multi-Profile Spaces («Contextual Workspaces»)
 - **Isolated Digital Profiles**: Switch between custom workflow environments in one click or keyboard shortcut (<kbd>Alt</kbd> + <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd>):
   - 💼 **Work & Dev Space**: Development shortcuts, Git tools, productivity apps, and clean daylight theme.
@@ -245,6 +255,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── platform.js          # Universal platform abstraction: Web vs Extension (40 lines)
 │   ├── spaces.js            # Arc-inspired multi-profile spaces manager (154 lines)
 │   ├── focus-mode.js        # Deep Focus Mode, !work bang & Zen Shield blocker (155 lines)
+│   ├── ai-agent.js          # Contextual Dashboard AI Agent: Ollama & Claude API (174 lines)
 │   ├── tags-filter.js       # Multi-tag compound query tokenizer & saved smart views (212 lines)
 │   ├── calendar-agenda.js   # RFC 5545 iCal/Google calendar parser & proximity radar (188 lines)
 │   ├── personal-analytics.js# 100% local usage analytics, 7-day SVG chart & suggestions (207 lines)

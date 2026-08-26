@@ -1,3 +1,4 @@
+import { aiAgent } from './ai-agent.js';
 // js/app.js - Master Orchestrator for HaDeS' Shortcuts Next-Gen
 import { state } from './state.js';
 import { soundFx } from './audio.js';
@@ -186,6 +187,7 @@ export function initApp() {
     techRadar.init();
     neuralSearch.init();
     spacesManager.init();
+        aiAgent.init();
     calendarAgenda.init();
     tagsFilter.init();
     focusMode.init();
@@ -201,6 +203,7 @@ export function initApp() {
     window.extensionApi = extensionApi;
     window.personalAnalytics = personalAnalytics;
     window.spacesManager = spacesManager;
+    window.aiAgent = aiAgent;
     window.calendarAgenda = calendarAgenda;
     window.tagsFilter = tagsFilter;
     window.focusMode = focusMode;
