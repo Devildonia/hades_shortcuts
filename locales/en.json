@@ -140,7 +140,8 @@
       "weather": "Weather",
       "layout": "Layout & Shortcuts",
       "backup": "Backup & Restore",
-      "macros": "Macros & Routines"
+      "macros": "Macros & Routines",
+      "analytics": "📊 Habits & Analytics"
     },
     "appearance": {
       "themes_label": "Visual Theme",
@@ -305,5 +306,18 @@
     "ai_answer_title": "Local AI Assistant",
     "translate_title": "Quick Translation",
     "semantic_match": "AI Semantic Match"
+  },
+  "analytics": {
+    "tab_title": "📊 Habits & Analytics",
+    "title": "Usage Analytics & Habits (100% Local)",
+    "desc": "Private statistics computed solely in your browser. Zero external telemetry.",
+    "total_launches": "Total Launches",
+    "streak": "Active Day Streak",
+    "peak_hour": "Peak Activity Hour",
+    "chart_title": "Activity Over Last 7 Days",
+    "suggestion_text": "You usually open {title} at {hour}",
+    "launch_btn": "Launch Now",
+    "export_btn": "📥 Export Metrics as JSON",
+    "reset_btn": "🗑️ Clear Usage History"
   }
 }

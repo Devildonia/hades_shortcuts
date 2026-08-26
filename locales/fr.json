@@ -140,7 +140,8 @@
       "weather": "Météo",
       "layout": "Mise en page & Raccourcis",
       "backup": "Sauvegarde",
-      "macros": "Macros & Routines"
+      "macros": "Macros & Routines",
+      "analytics": "📊 Habitudes & Analytics"
     },
     "appearance": {
       "themes_label": "Thème Visuel",
@@ -305,5 +306,18 @@
     "ai_answer_title": "Assistant IA Local",
     "translate_title": "Traduction Rapide",
     "semantic_match": "Correspondance Sémantique IA"
+  },
+  "analytics": {
+    "tab_title": "📊 Habitudes & Analytics",
+    "title": "Métriques d'Usage & Habitudes (100% Local)",
+    "desc": "Statistiques privées calculées uniquement dans votre navigateur. Zéro télémétrie externe.",
+    "total_launches": "Lancements Totaux",
+    "streak": "Jours Consécutifs",
+    "peak_hour": "Heure de Pointe",
+    "chart_title": "Activité des 7 Derniers Jours",
+    "suggestion_text": "Vous ouvrez souvent {title} à {hour}",
+    "launch_btn": "Lancer maintenant",
+    "export_btn": "📥 Exporter les Métriques en JSON",
+    "reset_btn": "🗑️ Effacer l'Historique"
   }
 }

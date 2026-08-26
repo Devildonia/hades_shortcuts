@@ -105,6 +105,13 @@
     - `!ai <prompt>`: Instant client-side intelligent answers.
     - `!t <text>`: Fast multilingual translation helper.
 
+### 📈 100% Local Personal Analytics & Predictive Context Engine («My Dashboard Knows Me»)
+- **Privacy-First Zero-Telemetry Intelligence**: All usage statistics are computed in-memory and sliding-window `localStorage` without sending a single byte to external servers:
+  - 🔮 **Time-Aware Smart Suggestions**: Learns your daily habits and displays an interactive context chip (e.g. *"You usually open GitHub & Gmail at 09:00 — Launch now?"*).
+  - 📊 **Procedural 7-Day SVG Activity Chart**: Ultra-lightweight native vector chart (< 2 KB, 0 external chart libraries) tracking your daily launch volume.
+  - 🔥 **Productivity Streak & Peak Hour Detection**: Displays active day streaks and identifies your peak productivity windows (e.g. `10:00 AM`).
+  - 🛡️ **Full Data Sovereignty**: 1-click JSON metrics export and full history wipe with confirmation.
+
 ### 🛠️ DevTools Omnibox & «Swiss Army Knife»
 Transform your search bar into an instant utility suite:
 - **`!uuid`**: Generates cryptographically secure UUIDv4 with 1-click clipboard copy.
@@ -260,6 +267,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 ├── js/
 │   ├── app.js               # Main orchestrator & lifecycle manager
 │   ├── platform.js          # Universal platform abstraction (Web/PWA vs Extension)
+│   ├── personal-analytics.js# 100% local usage analytics, 7-day SVG chart & smart suggestions
 │   ├── extension-api.js     # Native TopSites & background context menu bridge
 │   ├── sw-extension.js      # Manifest V3 background service worker
 │   ├── state.js             # Reactive central state & localStorage sync

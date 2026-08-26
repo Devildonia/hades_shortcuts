@@ -140,7 +140,8 @@
       "weather": "Wetter",
       "layout": "Layout & Verknüpfungen",
       "backup": "Sicherung & Wiederherstellung",
-      "macros": "Makros & Routinen"
+      "macros": "Makros & Routinen",
+      "analytics": "📊 Gewohnheiten & Analytics"
     },
     "appearance": {
       "themes_label": "Visuelles Design",
@@ -305,5 +306,18 @@
     "ai_answer_title": "Lokaler KI-Assistent",
     "translate_title": "Schnellübersetzung",
     "semantic_match": "Semantische KI-Übereinstimmung"
+  },
+  "analytics": {
+    "tab_title": "📊 Gewohnheiten & Analytics",
+    "title": "Nutzungsmetriken & Gewohnheiten (100% Lokal)",
+    "desc": "Private Statistiken, die ausschließlich in Ihrem Browser berechnet werden. Keine Telemetrie.",
+    "total_launches": "Gesamte Starts",
+    "streak": "Aktive Tagessträhne",
+    "peak_hour": "Hauptaktivitätszeit",
+    "chart_title": "Aktivität der letzten 7 Tage",
+    "suggestion_text": "Sie öffnen normalerweise {title} um {hour}",
+    "launch_btn": "Jetzt starten",
+    "export_btn": "📥 Metriken als JSON exportieren",
+    "reset_btn": "🗑️ Verlauf löschen"
   }
 }

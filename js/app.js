@@ -1,3 +1,4 @@
+import { personalAnalytics } from './personal-analytics.js';
 import { platform } from './platform.js';
 import { extensionApi } from './extension-api.js';
 import { neuralSearch } from './neural-search.js';
@@ -223,6 +224,7 @@ export function initApp() {
     window.devTools = devTools;
     window.platform = platform;
     window.extensionApi = extensionApi;
+    window.personalAnalytics = personalAnalytics;
     extensionApi.init();
     miniHud.init();
 
@@ -230,6 +232,8 @@ export function initApp() {
         updateDocumentLocalization();
         renderer.render();
         layoutManager.applyPositions();
+        const suggContainer = document.getElementById('smart-suggestion-banner');
+        if (suggContainer) personalAnalytics.renderSmartChip(suggContainer);
     });
 
     // 4. User Name Interactive Modal & Drawer Sync

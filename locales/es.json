@@ -140,7 +140,8 @@
       "weather": "Clima",
       "layout": "Diseño & Atajos",
       "backup": "Copia de Seguridad",
-      "macros": "Macros & Rutinas"
+      "macros": "Macros & Rutinas",
+      "analytics": "📊 Hábitos & Analytics"
     },
     "appearance": {
       "themes_label": "Tema Visual",
@@ -305,5 +306,18 @@
     "ai_answer_title": "Asistente IA Local",
     "translate_title": "Traducción Rápida",
     "semantic_match": "Coincidencia Semántica IA"
+  },
+  "analytics": {
+    "tab_title": "📊 Hábitos & Analytics",
+    "title": "Métricas de Uso y Hábitos (100% Local)",
+    "desc": "Estadísticas privadas calculadas únicamente en tu navegador. Cero telemetría externa.",
+    "total_launches": "Lanzamientos Totales",
+    "streak": "Días de Racha Activa",
+    "peak_hour": "Hora Pico de Actividad",
+    "chart_title": "Actividad de los Últimos 7 Días",
+    "suggestion_text": "Sueles abrir {title} a las {hour}",
+    "launch_btn": "Lanzar ahora",
+    "export_btn": "📥 Exportar Métricas en JSON",
+    "reset_btn": "🗑️ Borrar Historial de Uso"
   }
 }

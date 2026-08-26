@@ -1,3 +1,4 @@
+import { personalAnalytics } from './personal-analytics.js';
 // js/render.js - Dynamic Bento Grid & Shortcut Card Renderer
 
 import { state, escapeHtml } from './state.js';
@@ -64,6 +65,7 @@ export class DashboardRenderer {
                         const stats = JSON.parse(localStorage.getItem('shortcut_usage_stats_v1') || '{}');
                         stats[shortcut.id] = (stats[shortcut.id] || 0) + 1;
                         localStorage.setItem('shortcut_usage_stats_v1', JSON.stringify(stats));
+                        personalAnalytics.logLaunch(shortcut.id, shortcut.title);
                     } catch (e) {}
                 });
                 card.setAttribute('data-id', shortcut.id);

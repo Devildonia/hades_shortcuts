@@ -1,3 +1,4 @@
+import { personalAnalytics } from './personal-analytics.js';
 import { auroraCanvas } from './aurora-canvas.js';
 import { macroEngine } from './macros.js';
 // js/settings.js - Slide-Over Settings Drawer Hub
@@ -51,6 +52,28 @@ export class SettingsHub {
                 auroraCanvas.toggle(this.auroraToggle.checked);
             });
         }
+        const exportAnalyticsBtn = document.getElementById('export-analytics-btn');
+        const resetAnalyticsBtn = document.getElementById('reset-analytics-btn');
+        if (exportAnalyticsBtn) {
+            exportAnalyticsBtn.onclick = () => {
+                soundFx.play('click');
+                const blob = new Blob([JSON.stringify(personalAnalytics.data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'hades-personal-analytics.json';
+                a.click();
+            };
+        }
+        if (resetAnalyticsBtn) {
+            resetAnalyticsBtn.onclick = () => {
+                soundFx.play('click');
+                if (confirm('¿Deseas reiniciar tu historial local de uso y estadísticas?')) {
+                    personalAnalytics.resetData();
+                    this.renderAnalyticsTab();
+                }
+            };
+        }
         if (this.importer) this.importer.init();
         if (this.themeStudio) this.themeStudio.init();
     }
@@ -60,6 +83,7 @@ export class SettingsHub {
         soundFx.play('click');
         this.syncUIState();
         this.drawer.classList.remove('hidden');
+        this.renderAnalyticsTab();
     }
 
     close() {
@@ -100,6 +124,7 @@ export class SettingsHub {
                 this.tabBtns.forEach(b => b.classList.toggle('active', b === btn));
                 this.tabPanes.forEach(pane => {
                     pane.classList.toggle('active', pane.id === `tab-pane-${targetTab}`);
+                    if (targetTab === 'analytics') this.renderAnalyticsTab();
                 });
             });
         });
@@ -174,4 +199,17 @@ export class SettingsHub {
             });
         });
     }
+
+    renderAnalyticsTab() {
+        const totalEl = document.getElementById('analytics-total-launches');
+        const streakEl = document.getElementById('analytics-streak-days');
+        const peakEl = document.getElementById('analytics-peak-hour');
+        const chartBox = document.getElementById('analytics-chart-box');
+
+        if (totalEl) totalEl.textContent = personalAnalytics.data.totalLaunches || 0;
+        if (streakEl) streakEl.textContent = `${personalAnalytics.data.streakDays || 1} 🔥`;
+        if (peakEl) peakEl.textContent = personalAnalytics.getPeakProductivityHour();
+        if (chartBox) chartBox.innerHTML = personalAnalytics.generate7DayChartSVG();
+    }
+
 }
