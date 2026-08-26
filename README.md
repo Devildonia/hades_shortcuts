@@ -111,6 +111,13 @@
     - `!ai <prompt>`: Instant client-side intelligent answers.
     - `!t <text>`: Fast multilingual translation helper.
 
+### 🧘 Deep Focus Mode & Zen Distraction Shield
+- **Holistic Concentration Architecture**:
+  - ⚡ **!work / !focus Bang Sync**: Trigger a 25-minute deep focus session via `!work` or <kbd>Alt</kbd> + <kbd>F</kbd>.
+  - 🌫️ **Zen Morphing**: Temporarily dims background distractions, freezes Tech Radar headlines, and spotlights only your active work tools and countdown clock.
+  - 🛡️ **Zen Shield Distraction Blocker**: Intercepts attempts to open distracting social media (Twitter/X, Instagram, Reddit, TikTok) and displays a 4-7-8 breathing pacer with live timer.
+  - 🔔 **Seamless Break Transition**: Smoothly restores full dashboard visibility upon timer completion with an ambient chime.
+
 ### 🏷️ Multi-Tag Compound Search & Saved Smart Views («Linear-Style CMDK»)
 - **Professional Multi-Dimensional Filtering**:
   - 🔍 **Compound Boolean Operators**: Query shortcuts with `tag:<name>` / `#<name>`, `cat:<category>`, `is:fav`, and `freq:top` in a single search string (e.g. `tag:ia tag:3d freq:top`).
@@ -294,6 +301,7 @@ The project enforces a strict Single Responsibility Principle (SRP) with native 
 │   ├── app.js               # Main orchestrator & lifecycle manager
 │   ├── platform.js          # Universal platform abstraction (Web/PWA vs Extension)
 │   ├── spaces.js            # Arc-inspired multi-profile spaces manager & hotkeys
+│   ├── focus-mode.js        # Deep Focus Mode, !work bang & Zen Shield distraction blocker
 │   ├── tags-filter.js       # Multi-tag compound query tokenizer & saved smart views
 │   ├── calendar-agenda.js   # RFC 5545 iCal/Google calendar parser & proximity radar
 │   ├── personal-analytics.js# 100% local usage analytics, 7-day SVG chart & smart suggestions

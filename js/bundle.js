@@ -432,6 +432,162 @@ class SpacesEngine {
 const spacesManager = new SpacesEngine();
 
 
+// --- Module: js/focus-mode.js ---
+// js/focus-mode.js - Deep Work Focus Mode & Zen Distraction Shield
+
+
+class FocusModeEngine {
+    constructor() {
+        this.storageKey = 'hades_focus_config_v1';
+        this.config = this.loadConfig();
+        this.isActive = false;
+        this.remainingSeconds = 25 * 60;
+        this.timerId = null;
+        this.shieldScreen = document.getElementById('zen-shield-screen');
+        this.blockedAttemptUrl = '';
+    }
+
+    loadConfig() {
+        try {
+            const raw = localStorage.getItem(this.storageKey);
+            if (raw) return JSON.parse(raw);
+        } catch (e) {}
+        return {
+            focusCategory: 'ia_3d',
+            blockedDomains: ['twitter.com', 'x.com', 'instagram.com', 'reddit.com', 'tiktok.com', 'youtube.com', 'facebook.com'],
+            dimBackground: true,
+            pauseRadar: true
+        };
+    }
+
+    saveConfig() {
+        try { localStorage.setItem(this.storageKey, JSON.stringify(this.config)); } catch (e) {}
+    }
+
+    activateFocus(durationMinutes = 25) {
+        if (this.isActive) return;
+        this.isActive = true;
+        this.remainingSeconds = durationMinutes * 60;
+        soundFx.play('chime');
+
+        document.body.classList.add('focus-mode-active');
+        state.emit('focus:activated', { duration: durationMinutes });
+
+        // Timer interval
+        clearInterval(this.timerId);
+        this.timerId = setInterval(() => {
+            this.remainingSeconds--;
+            this.updateShieldTimer();
+            if (this.remainingSeconds <= 0) {
+                this.deactivateFocus(true);
+            }
+        }, 1000);
+
+        this.updateUI();
+    }
+
+    deactivateFocus(completed = false) {
+        if (!this.isActive) return;
+        this.isActive = false;
+        clearInterval(this.timerId);
+        document.body.classList.remove('focus-mode-active');
+        this.hideZenShield();
+
+        if (completed) {
+            soundFx.play('chime');
+            alert('🎉 ¡Sesión de Deep Work completada con éxito! Tómate un respiro.');
+        } else {
+            soundFx.play('click');
+        }
+
+        state.emit('focus:deactivated', { completed });
+        this.updateUI();
+    }
+
+    toggleFocus() {
+        if (this.isActive) this.deactivateFocus();
+        else this.activateFocus();
+    }
+
+    isUrlBlocked(url) {
+        if (!url || !this.isActive) return false;
+        const lower = url.toLowerCase();
+        return this.config.blockedDomains.some(d => lower.includes(d));
+    }
+
+    showZenShield(attemptedUrl = '') {
+        this.blockedAttemptUrl = attemptedUrl;
+        soundFx.play('click');
+        if (this.shieldScreen) {
+            this.shieldScreen.classList.remove('hidden');
+            this.updateShieldTimer();
+        }
+    }
+
+    hideZenShield() {
+        if (this.shieldScreen) this.shieldScreen.classList.add('hidden');
+        this.blockedAttemptUrl = '';
+    }
+
+    updateShieldTimer() {
+        const timeEl = document.getElementById('zen-shield-timer-val');
+        if (timeEl) {
+            const m = Math.floor(this.remainingSeconds / 60).toString().padStart(2, '0');
+            const s = (this.remainingSeconds % 60).toString().padStart(2, '0');
+            timeEl.textContent = `${m}:${s}`;
+        }
+    }
+
+    updateUI() {
+        const focusBtn = document.getElementById('focus-mode-toggle-btn');
+        if (focusBtn) {
+            focusBtn.classList.toggle('active', this.isActive);
+            focusBtn.textContent = this.isActive ? '🧘 Focus Activo' : '🧘 Focus Mode';
+        }
+    }
+
+    init() {
+        this.shieldScreen = document.getElementById('zen-shield-screen');
+        const closeShieldBtn = document.getElementById('zen-shield-return-btn');
+        const allowOnceBtn = document.getElementById('zen-shield-allow-btn');
+        const focusBtn = document.getElementById('focus-mode-toggle-btn');
+
+        if (closeShieldBtn) closeShieldBtn.onclick = () => this.hideZenShield();
+        if (allowOnceBtn) {
+            allowOnceBtn.onclick = () => {
+                const target = this.blockedAttemptUrl;
+                this.hideZenShield();
+                if (target) window.open(target, '_blank');
+            };
+        }
+        if (focusBtn) focusBtn.onclick = () => this.toggleFocus();
+
+        // Intercept link clicks on document
+        document.addEventListener('click', (e) => {
+            if (!this.isActive) return;
+            const a = e.target.closest('a');
+            if (a && a.href) {
+                if (this.isUrlBlocked(a.href)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.showZenShield(a.href);
+                }
+            }
+        }, true);
+
+        // Global hotkey Alt+F
+        document.addEventListener('keydown', (e) => {
+            if (e.altKey && (e.key === 'f' || e.key === 'F')) {
+                e.preventDefault();
+                this.toggleFocus();
+            }
+        });
+    }
+}
+
+const focusMode = new FocusModeEngine();
+
+
 // --- Module: js/tags-filter.js ---
 // js/tags-filter.js - Advanced Multi-Tag Query Engine & Saved Smart Views (Linear-style CMDK)
 
@@ -5496,7 +5652,6 @@ class SettingsHub {
 // --- Module: js/app.js ---
 // js/app.js - Master Orchestrator for HaDeS' Shortcuts Next-Gen
 
-
 function initUserNameSystem(weather, settingsHub) {
     const brandName = document.getElementById('brand-user-name');
     const brandSuffix = document.getElementById('brand-user-suffix');
@@ -5522,10 +5677,7 @@ function initUserNameSystem(weather, settingsHub) {
         }
     };
 
-    // Listen to reactive state changes
     state.on('username:changed', (name) => updateDisplay(name));
-
-    // Initial render
     updateDisplay(state.userName);
 
     const openModal = () => {
@@ -5533,10 +5685,7 @@ function initUserNameSystem(weather, settingsHub) {
         if (modal) modal.classList.remove('hidden');
         if (input) {
             input.value = state.userName;
-            setTimeout(() => {
-                input.focus();
-                input.select();
-            }, 50);
+            setTimeout(() => { input.focus(); input.select(); }, 50);
         }
         updatePreview();
     };
@@ -5549,122 +5698,95 @@ function initUserNameSystem(weather, settingsHub) {
     const updatePreview = () => {
         if (!preview || !input) return;
         const val = input.value.trim() || 'HaDeS';
-        const suffix = val.toLowerCase().endsWith('s') ? "'" : "'s";
-        preview.textContent = `${val}${suffix} SHORTCUTS`;
+        const s = val.toLowerCase().endsWith('s') ? "'" : "'s";
+        preview.textContent = `${val}${s} Shortcuts`;
     };
 
-    const applyNewName = (rawName) => {
-        soundFx.play('click');
-        const newName = (rawName || 'HaDeS').trim();
-        state.setUserName(newName);
-        updateDisplay(newName);
-    };
-
-    if (brandName) brandName.addEventListener('click', openModal);
-    if (brandTitle) brandTitle.addEventListener('click', openModal);
-    if (brandName) {
-        brandName.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                openModal();
-            }
-        });
-    }
-
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    if (saveBtn) {
-        saveBtn.addEventListener('click', () => {
-            applyNewName(input ? input.value : 'HaDeS');
+    const saveName = (newName) => {
+        const trimmed = (newName || '').trim();
+        if (trimmed) {
+            soundFx.play('chime');
+            state.setUserName(trimmed);
             closeModal();
-        });
-    }
+        }
+    };
 
-    if (drawerSaveBtn) {
-        drawerSaveBtn.addEventListener('click', () => {
-            applyNewName(drawerInput ? drawerInput.value : 'HaDeS');
-            drawerSaveBtn.textContent = '✓ Guardado';
-            setTimeout(() => {
-                drawerSaveBtn.textContent = 'Guardar';
-            }, 2000);
-        });
-    }
-    if (drawerInput) {
-        drawerInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                applyNewName(drawerInput.value);
-                if (drawerSaveBtn) {
-                    drawerSaveBtn.textContent = '✓ Guardado';
-                    setTimeout(() => {
-                        drawerSaveBtn.textContent = 'Guardar';
-                    }, 2000);
-                }
-            }
-        });
-    }
-
+    if (brandTitle) brandTitle.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
     if (input) {
         input.addEventListener('input', updatePreview);
         input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                applyNewName(input.value);
-                closeModal();
-            }
+            if (e.key === 'Enter') saveName(input.value);
             if (e.key === 'Escape') closeModal();
         });
     }
-
-    if (modal) {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
-    }
+    if (saveBtn) saveBtn.addEventListener('click', () => saveName(input.value));
+    if (drawerSaveBtn && drawerInput) drawerSaveBtn.addEventListener('click', () => saveName(drawerInput.value));
 }
 
-function initGlobalKeybindings(search, settingsHub) {
-    document.addEventListener('keydown', (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+function initGlobalShortcuts() {
+    window.addEventListener('keydown', (e) => {
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        const isEditing = activeTag === 'input' || activeTag === 'textarea' || document.activeElement.isContentEditable;
+
+        if (e.key === '/' && !isEditing) {
             e.preventDefault();
-            soundFx.play('hover');
-            if (search.searchInput) {
-                search.searchInput.focus();
-                search.searchInput.select();
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.focus();
+                searchInput.select();
             }
-        } else if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
-            e.preventDefault();
-            soundFx.play('hover');
-            if (search.searchInput) search.searchInput.focus();
-        } else if ((e.ctrlKey || e.metaKey) && e.key === ',') {
-            e.preventDefault();
-            settingsHub.open();
+            return;
+        }
+
+        if (e.key === 'Escape') {
+            const modals = document.querySelectorAll('.modal-overlay:not(.hidden)');
+            if (modals.length > 0) {
+                modals.forEach(m => m.classList.add('hidden'));
+                return;
+            }
+            const drawer = document.getElementById('settings-drawer');
+            if (drawer && drawer.classList.contains('open')) {
+                drawer.classList.remove('open');
+                const overlay = document.getElementById('settings-overlay');
+                if (overlay) overlay.classList.add('hidden');
+                return;
+            }
+            const searchInput = document.getElementById('search-input');
+            if (searchInput && document.activeElement === searchInput) {
+                searchInput.value = '';
+                searchInput.blur();
+                state.filterQuery = '';
+                state.emit('filter:changed', '');
+            }
         }
     });
 }
 
 function initApp() {
-    // 1. Initialize Visual Theme & Custom Theme Studio
     document.documentElement.setAttribute('data-theme', state.theme);
-    state.on('theme:changed', (theme) => {
-        document.documentElement.setAttribute('data-theme', theme);
+    state.on('theme:changed', (newTheme) => {
+        document.documentElement.setAttribute('data-theme', newTheme);
+        soundFx.play('click');
     });
 
-    const themeStudio = new ThemeStudio();
-    themeStudio.init();
-
-    // 2. Initialize Core Subsystems
-    const renderer = new DashboardRenderer();
     const weather = new WeatherEngine();
+    const renderer = new DashboardRenderer();
+    const layoutManager = new LayoutManager();
     const search = new SearchEngineManager();
     const widgets = new WidgetsManager();
+    const shortcutManager = new ShortcutManager();
+    const backupManager = new BackupManager();
+    const themeStudio = new ThemeStudio();
+    const importer = new BookmarksImporter();
     const postits = new PostItManager();
-    const layoutManager = new LayoutManager();
-    const shortcutManager = new ShortcutManager(renderer);
-    const backupManager = new BackupManager(renderer);
-    const importer = new BookmarksImporter(renderer);
-    const dragDropManager = new DragDropManager(renderer, layoutManager);
-    const cryptoSync = new CryptoSyncEngine(renderer);
-    const settingsHub = new SettingsHub(renderer, shortcutManager, backupManager, importer, themeStudio, cryptoSync);
+    const dragDropManager = new DragDropManager();
+    const cryptoSync = new CryptoSyncEngine();
+    const settingsHub = new SettingsHub(weather, themeStudio, importer);
 
-    // 3. Render Dashboard & Init Subsystems
+    initUserNameSystem(weather, settingsHub);
+    initGlobalShortcuts();
+
     renderer.render();
     layoutManager.init();
     weather.init();
@@ -5679,14 +5801,16 @@ function initApp() {
     settingsHub.init();
     cryptoSync.init();
     auroraCanvas.init();
-        radialHUD.init();
-        solarEngine.init();
-        telemetry.init();
-        techRadar.init();
-        neuralSearch.init();
-        spacesManager.init();
-        tagsFilter.init();
-        calendarAgenda.init();
+    radialHUD.init();
+    solarEngine.init();
+    telemetry.init();
+    techRadar.init();
+    neuralSearch.init();
+    spacesManager.init();
+    calendarAgenda.init();
+    tagsFilter.init();
+    focusMode.init();
+
     window.ambientAudio = ambientAudio;
     window.radialHUD = radialHUD;
     window.solarEngine = solarEngine;
@@ -5698,8 +5822,9 @@ function initApp() {
     window.extensionApi = extensionApi;
     window.personalAnalytics = personalAnalytics;
     window.spacesManager = spacesManager;
-    window.tagsFilter = tagsFilter;
     window.calendarAgenda = calendarAgenda;
+    window.tagsFilter = tagsFilter;
+    window.focusMode = focusMode;
     extensionApi.init();
     miniHud.init();
 
@@ -5707,28 +5832,14 @@ function initApp() {
         updateDocumentLocalization();
         renderer.render();
         layoutManager.applyPositions();
-        const suggContainer = document.getElementById('smart-suggestion-banner');
-        if (suggContainer) personalAnalytics.renderSmartChip(suggContainer);
     });
 
-    // 4. User Name Interactive Modal & Drawer Sync
-    initUserNameSystem(weather, settingsHub);
-
-    // 5. Global Keyboard Shortcuts
-    initGlobalKeybindings(search, settingsHub);
-
-    // 6. User Interaction Audio Unlock (Browser Autoplay Compliance)
-    const unlockAudio = () => {
-        soundFx.getAudioContext();
-        document.removeEventListener('pointerdown', unlockAudio);
-        document.removeEventListener('keydown', unlockAudio);
-    };
-    document.addEventListener('pointerdown', unlockAudio);
-    document.addEventListener('keydown', unlockAudio);
-
-    // 7. Register Service Worker for PWA
-    if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
+    const splash = document.getElementById('splash-screen');
+    if (splash) {
+        setTimeout(() => {
+            splash.classList.add('fade-out');
+            setTimeout(() => splash.remove(), 500);
+        }, 150);
     }
 }
 
