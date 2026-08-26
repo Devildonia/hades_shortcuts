@@ -199,9 +199,9 @@ Ground-truth injection of shortcuts, tags, spaces, calendar, focus state, and ra
 ### Spaces
 | Profile | Default filter | Default theme |
 | :--- | :--- | :--- |
-| Trabajo & Dev | All 10 categories | Cyber Neon |
-| Personal & Ocio | Social, Shopping, Gaming, Google, Tools, Video | Deep Nebula |
-| 3D & Creación IA | 3D, AI, Art, Audio, Video, Google (Gemini) | Sunset Amber |
+| Work & Dev | All 10 categories | Cyber Neon |
+| Personal & Leisure | Social, Shopping, Gaming, Google, Tools, Video | Deep Nebula |
+| 3D & AI Creation | 3D, AI, Art, Audio, Video, Google (Gemini) | Sunset Amber |
 
 Switch with the header pills or <kbd>Alt</kbd>+<kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd>. Scratchpad text and last-used theme are remembered per space.
 

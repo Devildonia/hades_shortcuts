@@ -475,5 +475,12 @@
     "opt_ollama": "Ollama",
     "opt_openai": "OpenAI",
     "opt_anthropic": "Anthropic"
+  },
+  "spaces": {
+    "label": "Perfiles",
+    "aria": "Perfiles independientes",
+    "space_work": "Trabajo & Dev",
+    "space_personal": "Personal & Ocio",
+    "space_3d": "3D & Creación IA"
   }
 }

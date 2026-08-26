@@ -2,31 +2,29 @@
 
 import { state, persistJson, escapeHtml, DEFAULT_SHORTCUTS } from './state.js';
 import { soundFx } from './audio.js';
+import { getTranslation } from './i18n.js';
 
 export const SPACE_PRESETS = {
     space_work: {
         id: 'space_work',
-        name: 'Trabajo & Dev',
         theme: 'cyber',
         accent: '#00f2fe',
         categoryIds: null,
-        scratchpad: 'Notas de trabajo y proyectos activos...'
+        scratchpad: 'Work notes and active projects...'
     },
     space_personal: {
         id: 'space_personal',
-        name: 'Personal & Ocio',
         theme: 'nebula',
         accent: '#c084fc',
         categoryIds: ['cat_social', 'cat_shopping', 'cat_gaming', 'cat_google', 'cat_tools', 'cat_video'],
-        scratchpad: 'Ideas personales, compras y lecturas pendientes...'
+        scratchpad: 'Personal ideas, shopping and reading list...'
     },
     space_3d: {
         id: 'space_3d',
-        name: '3D & Creación IA',
         theme: 'sunset',
         accent: '#fb923c',
         categoryIds: ['cat_3d', 'cat_ai', 'cat_art', 'cat_audio', 'cat_video', 'cat_google'],
-        scratchpad: 'Prompts creativos, texturas y referencias de modelado...'
+        scratchpad: 'Creative prompts, textures and modeling references...'
     }
 };
 
@@ -36,10 +34,13 @@ export class SpacesEngine {
         this.data = this.loadSpaces();
     }
 
+    spaceLabel(spaceId) {
+        return getTranslation(`spaces.${spaceId}`) || SPACE_PRESETS[spaceId]?.id || spaceId;
+    }
+
     defaultSpaces() {
         return Object.values(SPACE_PRESETS).map((preset) => ({
             id: preset.id,
-            name: preset.name,
             theme: preset.theme,
             accent: preset.accent,
             categoryIds: preset.categoryIds ? [...preset.categoryIds] : null,
@@ -64,7 +65,6 @@ export class SpacesEngine {
             const saved = byId.get(preset.id) || {};
             return {
                 ...preset,
-                name: saved.name || preset.name,
                 theme: saved.theme || preset.theme,
                 accent: preset.accent,
                 categoryIds: preset.categoryIds ? [...preset.categoryIds] : null,
@@ -166,24 +166,25 @@ export class SpacesEngine {
 
         const label = document.createElement('span');
         label.className = 'spaces-label';
-        label.textContent = 'Perfiles';
+        label.textContent = getTranslation('spaces.label') || 'Profiles';
         cluster.appendChild(label);
 
         const capsule = document.createElement('div');
         capsule.className = 'spaces-capsule';
         capsule.setAttribute('role', 'tablist');
-        capsule.setAttribute('aria-label', 'Perfiles independientes');
+        capsule.setAttribute('aria-label', getTranslation('spaces.aria') || 'Independent profiles');
 
         this.data.spaces.forEach((sp, idx) => {
             const btn = document.createElement('button');
             const isActive = sp.id === activeId;
+            const name = this.spaceLabel(sp.id);
             btn.type = 'button';
             btn.className = `space-pill ${isActive ? 'active' : ''}`;
             btn.setAttribute('data-space-id', sp.id);
             btn.setAttribute('role', 'tab');
             btn.setAttribute('aria-selected', String(isActive));
-            btn.setAttribute('title', `${sp.name} · Alt+${idx + 1}`);
-            btn.innerHTML = `<span class="space-glyph" aria-hidden="true"></span><span class="space-name">${escapeHtml(sp.name)}</span>`;
+            btn.setAttribute('title', `${name} · Alt+${idx + 1}`);
+            btn.innerHTML = `<span class="space-glyph" aria-hidden="true"></span><span class="space-name">${escapeHtml(name)}</span>`;
 
             btn.addEventListener('click', () => {
                 soundFx.play('click');
@@ -215,6 +216,7 @@ export class SpacesEngine {
         this.renderHeaderSwitcher();
         this.bindKeyboardShortcuts();
         this.saveSpaces();
+        state.on('language:changed', () => this.renderHeaderSwitcher());
     }
 }
 
