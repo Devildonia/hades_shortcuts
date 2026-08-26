@@ -501,6 +501,7 @@ class FocusModeEngine {
         }
 
         state.emit('focus:deactivated', { completed });
+        state.on('language:changed', () => this.updateUI());
         this.updateUI();
     }
 
@@ -542,7 +543,12 @@ class FocusModeEngine {
         const focusBtn = document.getElementById('focus-mode-toggle-btn');
         if (focusBtn) {
             focusBtn.classList.toggle('active', this.isActive);
-            focusBtn.textContent = this.isActive ? '🧘 Focus Activo' : '🧘 Focus Mode';
+            const lang = state.language || 'es';
+            const dict = i18nDictionaries[lang] || i18nDictionaries['es'] || {};
+            const label = this.isActive 
+                ? (dict.nav?.focus_active || 'Focus Activo')
+                : (dict.nav?.focus_mode || 'Modo Focus');
+            focusBtn.innerHTML = `<span>🧘</span> <span>${label}</span>`;
         }
     }
 

@@ -324,5 +324,10 @@
     "launch_btn": "Jetzt starten",
     "export_btn": "📥 Metriken als JSON exportieren",
     "reset_btn": "🗑️ Verlauf löschen"
+  },
+  "nav": {
+    "ai_agent": "KI-Agent",
+    "focus_mode": "Fokus-Modus",
+    "focus_active": "Fokus Aktiv"
   }
 }

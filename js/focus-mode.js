@@ -1,3 +1,4 @@
+import { i18nDictionaries } from './i18n.js';
 // js/focus-mode.js - Deep Work Focus Mode & Zen Distraction Shield
 
 import { state } from './state.js';
@@ -68,6 +69,7 @@ export class FocusModeEngine {
         }
 
         state.emit('focus:deactivated', { completed });
+        state.on('language:changed', () => this.updateUI());
         this.updateUI();
     }
 
@@ -109,7 +111,12 @@ export class FocusModeEngine {
         const focusBtn = document.getElementById('focus-mode-toggle-btn');
         if (focusBtn) {
             focusBtn.classList.toggle('active', this.isActive);
-            focusBtn.textContent = this.isActive ? '🧘 Focus Activo' : '🧘 Focus Mode';
+            const lang = state.language || 'es';
+            const dict = i18nDictionaries[lang] || i18nDictionaries['es'] || {};
+            const label = this.isActive 
+                ? (dict.nav?.focus_active || 'Focus Activo')
+                : (dict.nav?.focus_mode || 'Modo Focus');
+            focusBtn.innerHTML = `<span>🧘</span> <span>${label}</span>`;
         }
     }
 

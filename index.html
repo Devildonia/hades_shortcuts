@@ -44,7 +44,7 @@
 
     <!-- Top Navigation Bar & Widgets -->
     <header class="top-nav">
-        <!-- Left Widgets: Clock + Telemetry Capsule -->
+        <!-- Left Widgets: Clock + Telemetry Capsule + Focus Mode Button -->
         <div class="nav-widgets-left modular-dropzone" id="zone-header-left">
             <!-- Live Clock Widget -->
             <div class="nav-widget widget-clock" id="clock-widget" data-tile-id="tile-clock">
@@ -65,6 +65,11 @@
                 <span class="telemetry-item" title="Tasa de Refresco"><span class="telemetry-icon">⚡</span> <span id="telemetry-fps-val">60 FPS</span></span>
                 <span class="telemetry-item" title="Batería"><span class="telemetry-icon">🔋</span> <span id="telemetry-battery-val">100%</span></span>
             </div>
+
+            <!-- Deep Focus Header Button (Centered below Telemetry) -->
+            <button class="focus-toggle-btn focus-header-left-btn" id="focus-mode-toggle-btn" title="Modo Concentración Profunda (Alt+F)" aria-label="Modo Focus">
+                <span>🧘</span> <span data-i18n="nav.focus_mode">Modo Focus</span>
+            </button>
         </div>
 
         <!-- Center Brand / Title + Subtitle Greeting -->
@@ -93,12 +98,7 @@
 
             <!-- AI Agent Header Button -->
             <button class="ai-agent-header-btn" id="open-ai-agent-btn" title="Asistente IA Contextual (!ai)" aria-label="Abrir Asistente IA">
-                <span>🤖</span> <span>IA Agent</span>
-            </button>
-
-            <!-- Deep Focus Header Button -->
-            <button class="focus-toggle-btn" id="focus-mode-toggle-btn" title="Modo Concentración Profunda (Alt+F)" aria-label="Modo Focus">
-                <span>🧘</span> <span>Focus</span>
+                <span>🤖</span> <span data-i18n="nav.ai_agent">Agente IA</span>
             </button>
 
             <!-- Settings Hub Button -->

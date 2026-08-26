@@ -324,5 +324,10 @@
     "launch_btn": "Launch Now",
     "export_btn": "📥 Export Metrics as JSON",
     "reset_btn": "🗑️ Clear Usage History"
+  },
+  "nav": {
+    "ai_agent": "AI Agent",
+    "focus_mode": "Focus Mode",
+    "focus_active": "Focus Active"
   }
 }
