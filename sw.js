@@ -1,6 +1,6 @@
 // sw.js - Service Worker for HaDeS' Shortcuts PWA (Network-First with Offline Cache & Stale-While-Revalidate Icons)
 
-const CACHE_NAME = 'hades-shortcuts-v6-2-3-cache';
+const CACHE_NAME = 'hades-shortcuts-v6-3-0-cache';
 const STATIC_ASSETS = [
     './',
     './index.html',

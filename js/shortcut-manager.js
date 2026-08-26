@@ -12,7 +12,7 @@ export const SORTED_PRESET_ICONS = [
     'kling.webp', 'linkedin.webp', 'ludoai.webp', 'meshy.webp', 'MiniMax.webp', 'notebooklm.webp',
     'OptimizeGLB.webp', 'patreon.webp', 'paypal.webp', 'pccomponentes.webp', 'perplexity.webp', 'photoroom.webp',
     'qwen.webp', 'reddit.webp', 'seaartai.webp', 'seaverse.webp', 'shadertoy.webp', 'shakkerai.webp',
-    'steam.webp', 'suno.webp', 'tensorart.webp', 'threads.webp', 'tiktok.webp', 'translate.webp',
+    'spotify.webp', 'steam.webp', 'suno.webp', 'tensorart.webp', 'threads.webp', 'tiktok.webp', 'translate.webp',
     'tripo3d.webp', 'wallapop.webp', 'x.webp', 'xbox.webp', 'youtube.webp'
 ];
 

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "HaDeS Shortcuts — Productivity New Tab & Command Center",
-  "version": "6.0.0",
+  "version": "6.3.0",
   "description": "Ultra-aesthetic cyberpunk startpage, glassmorphism bento grid, offline AI semantic search, focus soundscapes and productivity tools.",
   "default_locale": "en",
   "icons": {

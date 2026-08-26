@@ -34,6 +34,7 @@ export const DEFAULT_SHORTCUTS = [
     { id: 'minimax', title: 'Minimax', url: 'https://www.minimax.io/audio/voices', icon: 'iconos/MiniMax.webp', category: 'cat_audio', tags: 'audio, voice, tts, clone' },
     { id: 'suno', title: 'Suno', url: 'https://app.suno.ai/', icon: 'iconos/suno.webp', category: 'cat_audio', tags: 'audio, music, ai, songs' },
     { id: 'elevenlabs', title: 'Eleven Labs', url: 'https://elevenlabs.io/es', icon: 'iconos/elevenlabs.webp', category: 'cat_audio', tags: 'audio, voice, tts, speech' },
+    { id: 'spotify', title: 'Spotify', url: 'https://open.spotify.com/', icon: 'iconos/spotify.webp', category: 'cat_audio', tags: 'audio, musica, streaming, podcasts, spotify' },
     // Google
     { id: 'google', title: 'Google', url: 'https://www.google.es/', icon: 'iconos/google.webp', category: 'cat_google', tags: 'search, web, google' },
     { id: 'gmail', title: 'Gmail', url: 'https://mail.google.com/', icon: 'iconos/gmail.webp', category: 'cat_google', tags: 'email, mail, google' },

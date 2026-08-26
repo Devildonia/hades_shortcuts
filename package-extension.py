@@ -3,7 +3,7 @@ import os, zipfile
 
 dist_dir = 'dist'
 os.makedirs(dist_dir, exist_ok=True)
-zip_path = os.path.join(dist_dir, 'hades-shortcuts-chrome-v6.0.0.zip')
+zip_path = os.path.join(dist_dir, 'hades-shortcuts-chrome-v6.3.0.zip')
 
 include_files = ['index.html', 'style.css', 'manifest.json', 'site.webmanifest', 'sw.js', 'og-preview.png', 'LICENSE', 'favicon.ico']
 include_dirs = ['js', 'iconos', 'locales', '_locales', 'sounds']

@@ -21,13 +21,20 @@ export const i18nDictionaries = {"es": {"brand_greeting": "Bienvenido al Centro 
                 fr: "Place de marché mondiale d'enchères et d'achat-vente entre particuliers et boutiques",
                 de: 'Globaler Marktplatz für Auktionen sowie Kauf und Verkauf von Privat und Händlern'
             }[lang];
+            dict.shortcuts.spotify = dict.shortcuts.spotify || {
+                es: 'Streaming de música, podcasts y listas de reproducción en la nube',
+                en: 'Cloud streaming for music, podcasts and playlists',
+                fr: 'Streaming cloud de musique, podcasts et playlists',
+                de: 'Cloud-Streaming für Musik, Podcasts und Playlists'
+            }[lang];
         }
         if (dict.settings_hub && dict.settings_hub.appearance && dict.settings_hub.appearance.themes) {
             dict.settings_hub.appearance.themes.abyss = dict.settings_hub.appearance.themes.abyss || 'Abyss OLED';
             dict.settings_hub.appearance.themes.jade = dict.settings_hub.appearance.themes.jade || 'Jade Terminal';
         }
         if (dict.settings_hub && dict.settings_hub.backup && dict.settings_hub.backup.reset_desc) {
-            dict.settings_hub.backup.reset_desc = dict.settings_hub.backup.reset_desc.replace('45', '51').replace('50', '51');
+            dict.settings_hub.backup.reset_desc = dict.settings_hub.backup.reset_desc
+                .replace('45', '52').replace('50', '52').replace('51', '52');
         }
         if (!dict.macros_studio) dict.macros_studio = {};
         dict.macros_studio.run_btn = { es: 'Ejecutar', en: 'Run', fr: 'Exécuter', de: 'Ausführen' }[lang];
