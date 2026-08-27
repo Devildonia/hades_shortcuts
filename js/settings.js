@@ -24,6 +24,8 @@ export class SettingsHub {
         this.soundPresetSelect = document.getElementById('sound-preset-select');
         this.glowToggle = document.getElementById('setting-glow-toggle');
         this.editModeToggle = document.getElementById('setting-edit-mode-toggle');
+        this.tagsToggle = document.getElementById('setting-show-tags-toggle');
+        this.chromeBezelToggle = document.getElementById('setting-chrome-bezel-toggle');
         this.addShortcutBtn = document.getElementById('drawer-add-shortcut-btn');
         this.layoutResetBtn = document.getElementById('layout-reset-defaults-btn');
         this.toggleScratchpad = document.getElementById('toggle-widget-scratchpad');
@@ -126,6 +128,8 @@ export class SettingsHub {
         if (this.soundToggle) this.soundToggle.checked = state.soundEnabled;
         if (this.soundPresetSelect) this.soundPresetSelect.value = soundFx.preset;
         if (this.editModeToggle) this.editModeToggle.checked = state.editMode;
+        if (this.tagsToggle) this.tagsToggle.checked = state.showShortcutTags;
+        if (this.chromeBezelToggle) this.chromeBezelToggle.checked = state.showChromeBezel !== false;
 
         this.syncWidgetToggles();
     }
@@ -177,6 +181,20 @@ export class SettingsHub {
             this.editModeToggle.addEventListener('change', (e) => {
                 soundFx.play('click');
                 state.setEditMode(e.target.checked);
+            });
+        }
+
+        if (this.tagsToggle) {
+            this.tagsToggle.addEventListener('change', (e) => {
+                soundFx.play('click');
+                state.setShowShortcutTags(e.target.checked);
+            });
+        }
+
+        if (this.chromeBezelToggle) {
+            this.chromeBezelToggle.addEventListener('change', (e) => {
+                soundFx.play('click');
+                state.setShowChromeBezel(e.target.checked);
             });
         }
 

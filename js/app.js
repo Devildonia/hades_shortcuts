@@ -158,6 +158,8 @@ export function initGlobalShortcuts() {
 
 export function initApp() {
     document.documentElement.setAttribute('data-theme', state.theme);
+    state.applyShortcutTagsVisibility();
+    state.applyChromeBezel();
     state.on('theme:changed', (newTheme) => {
         document.documentElement.setAttribute('data-theme', newTheme);
         soundFx.play('click');

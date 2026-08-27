@@ -108,7 +108,9 @@ export class CryptoSyncEngine {
             theme: state.theme,
             soundEnabled: state.soundEnabled,
             soundPreset: soundFx.preset,
-            language: state.language
+            language: state.language,
+            showShortcutTags: state.showShortcutTags,
+            showChromeBezel: state.showChromeBezel
         };
     }
 
@@ -121,6 +123,8 @@ export class CryptoSyncEngine {
         if (data.userName) state.setUserName(data.userName);
         if (data.theme) state.setTheme(data.theme);
         if (typeof data.soundEnabled === 'boolean') state.setSoundEnabled(data.soundEnabled);
+        if (typeof data.showShortcutTags === 'boolean') state.setShowShortcutTags(data.showShortcutTags);
+        if (typeof data.showChromeBezel === 'boolean') state.setShowChromeBezel(data.showChromeBezel);
         if (data.language) state.setLanguage(data.language);
 
         this.lastSync = Date.now().toString();

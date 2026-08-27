@@ -27,6 +27,8 @@ export class BackupManager {
                 theme: state.theme,
                 soundEnabled: state.soundEnabled,
                 language: state.language,
+                showShortcutTags: state.showShortcutTags,
+                showChromeBezel: state.showChromeBezel,
                 weatherCity: localStorage.getItem('weather_manual_city'),
                 soundPreset: soundFx.preset
             },
@@ -75,6 +77,8 @@ export class BackupManager {
                         if (data.settings.theme) state.setTheme(data.settings.theme);
                         if (data.settings.language) state.setLanguage(data.settings.language);
                         if (typeof data.settings.soundEnabled === 'boolean') state.setSoundEnabled(data.settings.soundEnabled);
+                        if (typeof data.settings.showShortcutTags === 'boolean') state.setShowShortcutTags(data.settings.showShortcutTags);
+                        if (typeof data.settings.showChromeBezel === 'boolean') state.setShowChromeBezel(data.settings.showChromeBezel);
                         if (data.settings.weatherCity) localStorage.setItem('weather_manual_city', data.settings.weatherCity);
                         if (data.settings.soundPreset && soundFx.setPreset) soundFx.setPreset(data.settings.soundPreset);
                     }

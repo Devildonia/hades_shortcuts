@@ -89,6 +89,8 @@ export class AppState {
         this.activeFilter = this.getItem('active_pill_filter', 'all');
         this.searchEngine = this.getItem('app_search_engine', 'google');
         this.editMode = false;
+        this.showShortcutTags = this.getItem('show_shortcut_tags', 'false') === 'true';
+        this.showChromeBezel = this.getItem('show_chrome_bezel', 'true') !== 'false';
         this.layoutMatrix = this.loadLayoutMatrix();
         this.listeners = new Map();
     }
@@ -205,6 +207,30 @@ export class AppState {
     setEditMode(enabled) {
         this.editMode = enabled;
         this.emit('editmode:changed', enabled);
+    }
+
+    applyShortcutTagsVisibility() {
+        if (typeof document === 'undefined') return;
+        document.documentElement.classList.toggle('show-shortcut-tags', this.showShortcutTags);
+    }
+
+    setShowShortcutTags(enabled) {
+        this.showShortcutTags = !!enabled;
+        this.setItem('show_shortcut_tags', this.showShortcutTags ? 'true' : 'false');
+        this.applyShortcutTagsVisibility();
+        this.emit('tags:visibility', this.showShortcutTags);
+    }
+
+    applyChromeBezel() {
+        if (typeof document === 'undefined') return;
+        document.documentElement.classList.toggle('no-chrome-bezel', !this.showChromeBezel);
+    }
+
+    setShowChromeBezel(enabled) {
+        this.showChromeBezel = !!enabled;
+        this.setItem('show_chrome_bezel', this.showChromeBezel ? 'true' : 'false');
+        this.applyChromeBezel();
+        this.emit('chrome:visibility', this.showChromeBezel);
     }
 
     saveShortcuts(list) {
