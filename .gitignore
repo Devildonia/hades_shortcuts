@@ -1,6 +1,7 @@
 # Local launch scripts
 local server.bat
 *.bat
+scripts/
 
 # OS & Editor artifacts
 .DS_Store
