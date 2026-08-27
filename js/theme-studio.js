@@ -1,7 +1,7 @@
 // js/theme-studio.js - Custom Dynamic Color Theme & Dynamic Background Studio
 
 import { soundFx } from './audio.js';
-import { persistJson } from './state.js';
+import { persistJson, showToast } from './state.js';
 
 export const UNSPLASH_PRESETS = {
     cyberpunk: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80',
@@ -44,8 +44,101 @@ export class ThemeStudio {
     }
 
     saveBgConfig() {
-        persistJson('hades_bg_config_v1', this.bgConfig);
-        this.applyBackground();
+        const saved = persistJson('hades_bg_config_v1', this.bgConfig);
+        if (saved) {
+            this.applyBackground();
+        }
+        return saved;
+    }
+
+    /**
+     * Optimiza y comprime una imagen local mediante Canvas antes de guardarla en localStorage.
+     * Escala a máximo 1920x1080 manteniendo relación de aspecto y exporta a WebP/JPEG optimizado (~100-350 KB).
+     * @param {File} file
+     * @returns {Promise<string>} Data URL optimizada
+     */
+    async optimizeImageFile(file) {
+        if (!file || !file.type || !file.type.startsWith('image/')) {
+            throw new Error('El archivo seleccionado no es una imagen válida.');
+        }
+
+        const MAX_RAW_BYTES = 20 * 1024 * 1024;
+        if (file.size > MAX_RAW_BYTES) {
+            throw new Error('La imagen es demasiado grande. El límite máximo es de 20 MB.');
+        }
+
+        return new Promise((resolve, reject) => {
+            const objectUrl = URL.createObjectURL(file);
+            const img = new Image();
+
+            img.onload = () => {
+                URL.revokeObjectURL(objectUrl);
+
+                try {
+                    const MAX_WIDTH = 1920;
+                    const MAX_HEIGHT = 1080;
+                    let { width, height } = img;
+
+                    if (width > MAX_WIDTH || height > MAX_HEIGHT) {
+                        const ratio = Math.min(MAX_WIDTH / width, MAX_HEIGHT / height);
+                        width = Math.round(width * ratio);
+                        height = Math.round(height * ratio);
+                    }
+
+                    const canvas = document.createElement('canvas');
+                    canvas.width = Math.max(1, width);
+                    canvas.height = Math.max(1, height);
+
+                    const ctx = canvas.getContext('2d');
+                    if (!ctx) {
+                        throw new Error('No se pudo inicializar el procesador gráfico (Canvas 2D).');
+                    }
+
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    // Intentar formato WebP (0.80 calidad)
+                    let dataUrl = canvas.toDataURL('image/webp', 0.80);
+                    if (!dataUrl.startsWith('data:image/webp')) {
+                        // Fallback a JPEG si WebP no está disponible
+                        dataUrl = canvas.toDataURL('image/jpeg', 0.80);
+                    }
+
+                    // Si por alta complejidad gráfica supera ~1.2 MB, aplicar una segunda pasada de compresión
+                    if (dataUrl.length > 1200000) {
+                        const targetW = Math.round(canvas.width * 0.75);
+                        const targetH = Math.round(canvas.height * 0.75);
+                        canvas.width = Math.max(1, targetW);
+                        canvas.height = Math.max(1, targetH);
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.imageSmoothingQuality = 'medium';
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                        dataUrl = canvas.toDataURL('image/webp', 0.65);
+                        if (!dataUrl.startsWith('data:image/webp')) {
+                            dataUrl = canvas.toDataURL('image/jpeg', 0.65);
+                        }
+                    }
+
+                    // Límite de seguridad estricto para localStorage (~1.5 MB)
+                    if (dataUrl.length > 1800000) {
+                        throw new Error('La imagen sigue siendo demasiado pesada para el almacenamiento local.');
+                    }
+
+                    resolve(dataUrl);
+                } catch (err) {
+                    reject(err);
+                }
+            };
+
+            img.onerror = () => {
+                URL.revokeObjectURL(objectUrl);
+                reject(new Error('No se pudo cargar la imagen. El archivo puede estar corrupto.'));
+            };
+
+            img.src = objectUrl;
+        });
     }
 
     init() {
@@ -199,26 +292,47 @@ export class ThemeStudio {
         }
 
         if (fileInput) {
-            fileInput.onchange = (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        this.bgConfig.imageType = 'local';
-                        this.bgConfig.imageUrl = event.target.result;
-                        this.saveBgConfig();
+            fileInput.onchange = async (e) => {
+                const file = e.target.files && e.target.files[0];
+                if (!file) return;
+
+                const previousConfig = { ...this.bgConfig };
+                try {
+                    const optimizedDataUrl = await this.optimizeImageFile(file);
+                    this.bgConfig.mode = 'image';
+                    this.bgConfig.imageType = 'local';
+                    this.bgConfig.imageUrl = optimizedDataUrl;
+
+                    const saved = this.saveBgConfig();
+                    if (!saved) {
+                        this.bgConfig = previousConfig;
+                        this.applyBackground();
+                        showToast('Espacio insuficiente en el navegador para guardar la imagen.', 'error');
+                    } else {
+                        showToast('Imagen de fondo guardada con éxito.', 'success');
                         syncUI();
-                    };
-                    reader.readAsDataURL(file);
+                    }
+                } catch (err) {
+                    console.error('[ThemeStudio] Error al procesar imagen de fondo:', err);
+                    this.bgConfig = previousConfig;
+                    this.applyBackground();
+                    showToast(err.message || 'Error al procesar la imagen.', 'error');
+                } finally {
+                    fileInput.value = '';
                 }
             };
         }
 
         if (urlInput) {
             urlInput.onchange = (e) => {
-                this.bgConfig.imageType = 'url';
-                this.bgConfig.imageUrl = e.target.value.trim();
-                this.saveBgConfig();
+                const url = e.target.value.trim();
+                if (url) {
+                    this.bgConfig.mode = 'image';
+                    this.bgConfig.imageType = 'url';
+                    this.bgConfig.imageUrl = url;
+                    this.saveBgConfig();
+                    syncUI();
+                }
             };
         }
 

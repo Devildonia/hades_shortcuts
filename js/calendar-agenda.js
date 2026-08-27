@@ -170,8 +170,11 @@ export class CalendarAgendaEngine {
     openEventModal() {
         if (!this.eventModal) return;
         const now = new Date();
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, '0');
+        const d = String(now.getDate()).padStart(2, '0');
         const dateInput = document.getElementById('event-form-date');
-        if (dateInput) dateInput.value = now.toISOString().split('T')[0];
+        if (dateInput) dateInput.value = `${y}-${m}-${d}`;
         const titleInput = document.getElementById('event-form-title');
         if (titleInput) titleInput.value = '';
         const linkInput = document.getElementById('event-form-link');

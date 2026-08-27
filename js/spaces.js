@@ -1,12 +1,13 @@
 // js/spaces.js - Arc-Inspired Multi-Profile Contextual Spaces Engine
 
-import { state, persistJson, escapeHtml, DEFAULT_SHORTCUTS } from './state.js';
+import { state, persistJson, escapeHtml } from './state.js';
 import { soundFx } from './audio.js';
 import { getTranslation } from './i18n.js';
 
 export const SPACE_PRESETS = {
     space_work: {
         id: 'space_work',
+        name: 'Work & Dev',
         theme: 'cyber',
         accent: '#00f2fe',
         categoryIds: null,
@@ -14,6 +15,7 @@ export const SPACE_PRESETS = {
     },
     space_personal: {
         id: 'space_personal',
+        name: 'Personal & Leisure',
         theme: 'nebula',
         accent: '#c084fc',
         categoryIds: ['cat_social', 'cat_shopping', 'cat_gaming', 'cat_google', 'cat_tools', 'cat_video'],
@@ -21,6 +23,7 @@ export const SPACE_PRESETS = {
     },
     space_3d: {
         id: 'space_3d',
+        name: '3D & AI Creation',
         theme: 'sunset',
         accent: '#fb923c',
         categoryIds: ['cat_3d', 'cat_ai', 'cat_art', 'cat_audio', 'cat_video', 'cat_google'],
@@ -35,12 +38,13 @@ export class SpacesEngine {
     }
 
     spaceLabel(spaceId) {
-        return getTranslation(`spaces.${spaceId}`) || SPACE_PRESETS[spaceId]?.id || spaceId;
+        return getTranslation(`spaces.${spaceId}`) || SPACE_PRESETS[spaceId]?.name || spaceId;
     }
 
     defaultSpaces() {
         return Object.values(SPACE_PRESETS).map((preset) => ({
             id: preset.id,
+            name: preset.name,
             theme: preset.theme,
             accent: preset.accent,
             categoryIds: preset.categoryIds ? [...preset.categoryIds] : null,
@@ -68,8 +72,7 @@ export class SpacesEngine {
                 theme: saved.theme || preset.theme,
                 accent: preset.accent,
                 categoryIds: preset.categoryIds ? [...preset.categoryIds] : null,
-                scratchpad: saved.scratchpad !== undefined ? saved.scratchpad : preset.scratchpad,
-                shortcuts: saved.shortcuts
+                scratchpad: saved.scratchpad !== undefined ? saved.scratchpad : preset.scratchpad
             };
         });
 
@@ -91,25 +94,6 @@ export class SpacesEngine {
         const space = this.getActiveSpace();
         if (!space || !Array.isArray(space.categoryIds) || space.categoryIds.length === 0) return true;
         return space.categoryIds.includes(catId);
-    }
-
-    hydrateCatalog() {
-        const byId = new Map();
-        (state.shortcuts || []).forEach((s) => {
-            if (s && s.id) byId.set(s.id, s);
-        });
-        this.data.spaces.forEach((sp) => {
-            (sp.shortcuts || []).forEach((s) => {
-                if (s && s.id && !byId.has(s.id)) byId.set(s.id, s);
-            });
-        });
-        const ensureCats = new Set(['cat_gaming', 'cat_ai', 'cat_google']);
-        DEFAULT_SHORTCUTS.forEach((s) => {
-            if (ensureCats.has(s.category) && !byId.has(s.id)) byId.set(s.id, { ...s });
-        });
-        const merged = [...byId.values()];
-        state.shortcuts = merged;
-        persistJson('custom_shortcuts_v2', merged);
     }
 
     applySpaceChrome() {
@@ -211,7 +195,6 @@ export class SpacesEngine {
     }
 
     init() {
-        this.hydrateCatalog();
         this.applySpaceChrome();
         this.renderHeaderSwitcher();
         this.bindKeyboardShortcuts();
@@ -221,3 +204,4 @@ export class SpacesEngine {
 }
 
 export const spacesManager = new SpacesEngine();
+

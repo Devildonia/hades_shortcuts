@@ -124,15 +124,14 @@ export class AppState {
             const saved = this.getItem('custom_shortcuts_v2', null);
             if (saved) {
                 const list = JSON.parse(saved);
-                DEFAULT_SHORTCUTS.forEach(ds => {
-                    const existing = list.find(s => s.id === ds.id);
-                    if (!existing) {
-                        list.push(ds);
-                    } else if ((ds.id === 'itchio' || ds.id === 'exophase') && existing.category !== 'cat_gaming') {
-                        existing.category = 'cat_gaming';
-                    }
-                });
-                return list;
+                if (Array.isArray(list)) {
+                    list.forEach(existing => {
+                        if (existing && (existing.id === 'itchio' || existing.id === 'exophase') && existing.category !== 'cat_gaming') {
+                            existing.category = 'cat_gaming';
+                        }
+                    });
+                    return list;
+                }
             }
         } catch (e) {}
         return [...DEFAULT_SHORTCUTS];
