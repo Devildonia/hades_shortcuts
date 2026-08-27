@@ -38,10 +38,16 @@ export class TelemetryEngine {
                 await fetch(ep.url, { mode: ep.mode, cache: 'no-store' });
                 this.lastPing = Math.min(Math.round(performance.now() - start), 999);
                 if (this.pingEl) this.pingEl.textContent = `${this.lastPing}ms`;
+                if (this.statusDot) this.statusDot.className = 'telemetry-dot online';
+                if (this.statusBadge) this.statusBadge.className = 'telemetry-status-badge online';
+                if (this.statusText) this.statusText.textContent = 'ONLINE';
                 return;
             } catch (e) {}
         }
         if (this.pingEl) this.pingEl.textContent = '—';
+        if (this.statusDot) this.statusDot.className = 'telemetry-dot offline';
+        if (this.statusBadge) this.statusBadge.className = 'telemetry-status-badge offline';
+        if (this.statusText) this.statusText.textContent = 'OFFLINE';
     }
 
     async initBatteryMonitor() {

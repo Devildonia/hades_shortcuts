@@ -57,7 +57,10 @@ export class SolarEngine {
                 return { lat: manual.lat, lon: manual.lon };
             }
         } catch (e) {}
-        return { lat: 42.2328, lon: -8.7226 };
+        // Estimar longitud a partir de la zona horaria del usuario si no hay datos de clima configurados
+        const tzOffsetHours = -new Date().getTimezoneOffset() / 60;
+        const estimatedLon = Math.max(-180, Math.min(180, tzOffsetHours * 15));
+        return { lat: 40.0, lon: estimatedLon };
     }
 
     calculateSolarPhase() {

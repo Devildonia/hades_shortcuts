@@ -20,10 +20,10 @@ export const DEFAULT_MACROS = {
         icon: '💻'
     },
     '!focus': {
-        name: 'Focus mode',
-        desc: 'Alias of !work: Deep Focus plus development tools',
-        shortcuts: ['github', 'claude', 'chatgpt'],
-        ambient: 'rain',
+        name: 'Deep Focus mode',
+        desc: 'Distraction-free 25m Focus session with 432 Hz alpha soundscape and Pomodoro timer',
+        shortcuts: [],
+        ambient: 'binaural',
         pomodoro: 'start',
         icon: '🎯'
     },

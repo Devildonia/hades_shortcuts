@@ -52,7 +52,28 @@ export class PostItManager {
             }
         });
 
+        window.addEventListener('resize', () => this.reclampAll());
+
         this.renderAll();
+    }
+
+    reclampAll() {
+        const maxX = Math.max(20, window.innerWidth - 260);
+        const maxY = Math.max(80, window.innerHeight - 220);
+        let changed = false;
+        this.postits.forEach(note => {
+            if (note.x > maxX || note.y > maxY) {
+                note.x = Math.min(maxX, Math.max(20, note.x));
+                note.y = Math.min(maxY, Math.max(80, note.y));
+                const el = document.getElementById(note.id);
+                if (el) {
+                    el.style.left = `${note.x}px`;
+                    el.style.top = `${note.y}px`;
+                }
+                changed = true;
+            }
+        });
+        if (changed) this.savePostIts();
     }
 
     loadPostIts() {
@@ -67,7 +88,7 @@ export class PostItManager {
         persistJson('glass_postits_v1', this.postits);
     }
 
-        createPostIt(text, x = null, y = null, color = 'cyan') {
+    createPostIt(text, x = null, y = null, color = 'cyan') {
         if (this.postits.length >= 25) {
             soundFx.play('click');
             showToast(getTranslation('toasts.postit_limit') || 'You reached the 25 floating-note limit.', 'error');
@@ -80,7 +101,7 @@ export class PostItManager {
         const rotation = (Math.random() * 4 - 2).toFixed(1); // -2deg to +2deg
 
         const newNote = {
-            id: 'postit_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+            id: 'postit_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
             text: text,
             x: initialX,
             y: initialY,
@@ -133,12 +154,13 @@ export class PostItManager {
             el.style.zIndex = note.zIndex;
         });
 
-        // Content editable sync
+        // Content editable sync con debounce
         const bodyEl = el.querySelector('.postit-body');
         if (bodyEl) {
             bodyEl.addEventListener('input', () => {
                 note.text = bodyEl.innerText;
-                this.savePostIts();
+                if (this._debounceTimer) clearTimeout(this._debounceTimer);
+                this._debounceTimer = setTimeout(() => this.savePostIts(), 250);
             });
         }
 

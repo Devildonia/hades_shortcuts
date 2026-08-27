@@ -4,10 +4,30 @@ import { soundFx } from './audio.js';
 import { persistJson, showToast } from './state.js';
 
 export const UNSPLASH_PRESETS = {
-    cyberpunk: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80',
-    space: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1920&q=80',
-    nature: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80',
-    architecture: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1920&q=80'
+    cyberpunk: [
+        'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80',
+        'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=1920&q=80',
+        'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1920&q=80',
+        'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1920&q=80'
+    ],
+    space: [
+        'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1920&q=80',
+        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80',
+        'https://images.unsplash.com/photo-1502134249126-9f3755a50d78?auto=format&fit=crop&w=1920&q=80',
+        'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1920&q=80'
+    ],
+    nature: [
+        'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80',
+        'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1920&q=80',
+        'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1920&q=80',
+        'https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=1920&q=80'
+    ],
+    architecture: [
+        'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1920&q=80',
+        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80',
+        'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1920&q=80',
+        'https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?auto=format&fit=crop&w=1920&q=80'
+    ]
 };
 
 export class ThemeStudio {
@@ -269,9 +289,11 @@ export class ThemeStudio {
 
         if (topicSelect) {
             topicSelect.onchange = (e) => {
-                this.bgConfig.unsplashTopic = e.target.value;
+                const topic = e.target.value;
+                const pool = UNSPLASH_PRESETS[topic] || UNSPLASH_PRESETS.cyberpunk;
+                this.bgConfig.unsplashTopic = topic;
                 this.bgConfig.imageType = 'unsplash';
-                this.bgConfig.imageUrl = UNSPLASH_PRESETS[e.target.value] || UNSPLASH_PRESETS.cyberpunk;
+                this.bgConfig.imageUrl = pool[0];
                 this.saveBgConfig();
                 syncUI();
             };
@@ -283,9 +305,13 @@ export class ThemeStudio {
                 soundFx.play('click');
                 const topics = ['cyberpunk', 'space', 'nature', 'architecture'];
                 const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+                const pool = UNSPLASH_PRESETS[randomTopic] || UNSPLASH_PRESETS.cyberpunk;
+                // Escoger una imagen diferente a la actual
+                const filtered = pool.filter(url => url !== this.bgConfig.imageUrl);
+                const randomUrl = filtered.length ? filtered[Math.floor(Math.random() * filtered.length)] : pool[0];
                 this.bgConfig.unsplashTopic = randomTopic;
                 this.bgConfig.imageType = 'unsplash';
-                this.bgConfig.imageUrl = `${UNSPLASH_PRESETS[randomTopic]}&sig=${Date.now()}`;
+                this.bgConfig.imageUrl = randomUrl;
                 this.saveBgConfig();
                 syncUI();
             };

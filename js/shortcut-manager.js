@@ -14,7 +14,7 @@ export const SORTED_PRESET_ICONS = [
     'qwen.webp', 'reddit.webp', 'seaartai.webp', 'seaverse.webp', 'shadertoy.webp', 'shakkerai.webp',
     'spotify.webp', 'steam.webp', 'suno.webp', 'tensorart.webp', 'threads.webp', 'tiktok.webp', 'translate.webp',
     'tripo3d.webp', 'wallapop.webp', 'x.webp', 'xbox.webp', 'youtube.webp'
-];
+].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
 
 export class ShortcutManager {
     constructor(renderer) {
@@ -140,14 +140,17 @@ export class ShortcutManager {
         this.tagsInput.value = sc.tags || '';
         this.closeDropdown();
 
-        if (sc.icon.startsWith('iconos/')) {
+        if (sc.icon && sc.icon.startsWith('iconos/')) {
             this.selectIcon(sc.icon);
             this.customIconInput.value = '';
-        } else {
+        } else if (sc.icon) {
             this.selectedIcon = sc.icon;
             if (this.currentIconImg) this.currentIconImg.src = sc.icon;
             if (this.currentIconText) this.currentIconText.textContent = sc.title || 'Personalizado';
             this.customIconInput.value = sc.icon;
+        } else {
+            this.selectIcon('iconos/aliexpress.webp', 'aliexpress');
+            this.customIconInput.value = '';
         }
 
         if (this.deleteBtn) this.deleteBtn.classList.remove('hidden');
@@ -165,7 +168,10 @@ export class ShortcutManager {
         const title = this.titleInput.value.trim();
         const rawUrl = this.urlInput.value.trim();
         const url = safeHttpUrl(rawUrl);
-        if (!title || !rawUrl) return;
+        if (!title || !rawUrl) {
+            showToast(getTranslation('toasts.missing_fields') || 'Por favor, introduce un título y una URL válida.', 'error');
+            return;
+        }
         if (!url) {
             showToast(getTranslation('toasts.invalid_url') || 'The URL must start with http:// or https://.', 'error');
             return;

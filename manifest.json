@@ -40,9 +40,6 @@
     "https://api.anthropic.com/*",
     "https://ipwho.is/*"
   ],
-  "optional_host_permissions": [
-    "*://*/*"
-  ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
   }

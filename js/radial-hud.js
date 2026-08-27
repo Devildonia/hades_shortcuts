@@ -107,11 +107,10 @@ export class RadialHUDEngine {
             subBtn.title = sc.title || 'Favorito';
             subBtn.style.setProperty('--sub-x', `${pos.x}px`);
             subBtn.style.setProperty('--sub-y', `${pos.y}px`);
-            const iconSrc = sc.icon && (sc.icon.startsWith('http') || sc.icon.startsWith('data:')) ? sc.icon : faviconForUrl(sc.url);
             const img = document.createElement('img');
             img.className = 'radial-sub-icon-img';
             img.alt = sc.title || '';
-            img.src = sc.icon || iconSrc;
+            img.src = sc.icon || faviconForUrl(sc.url);
             bindIconFallback(img, sc);
             const tip = document.createElement('span');
             tip.className = 'radial-sub-fav-tooltip';
@@ -170,9 +169,11 @@ export class RadialHUDEngine {
     }
 
     toggleFavsSubOrbit() {
-        const topSc = this.getMostUsedShortcuts()[0] || state.shortcuts[0];
-        if (topSc && topSc.url) openSafeUrl(topSc.url, '_blank');
-        this.close();
+        const sub = this.hudWheel ? this.hudWheel.querySelector('.radial-sub-favs') : null;
+        if (sub) {
+            soundFx.play('hover');
+            sub.classList.toggle('force-visible');
+        }
     }
 
     createPostitUnderCursor() {
