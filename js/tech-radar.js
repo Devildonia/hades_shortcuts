@@ -5,6 +5,13 @@ import { state, escapeHtml, fetchTextMaybeProxy, safeHttpUrl, persistJson } from
 import { focusMode } from './focus-mode.js';
 import { getTranslation } from './i18n.js';
 
+// Quick RSS presets for the feed modal. Keys map to `data-rss-preset`
+// attributes in index.html (inline scripts are banned by the extension CSP).
+export const RSS_PRESETS = {
+    'verge': { name: 'The Verge', url: 'https://www.theverge.com/rss/index.xml' },
+    'github-blog': { name: 'GitHub Blog', url: 'https://github.blog/feed/' }
+};
+
 export class TechRadarEngine {
     constructor() {
         this.cacheKey = 'hades_tech_radar_rss_cache_v2';
@@ -237,6 +244,18 @@ export class TechRadarEngine {
         const closeBtn = document.getElementById('close-rss-modal');
         const addBtn = document.getElementById('add-rss-feed-btn');
         if (closeBtn) closeBtn.onclick = () => this.closeModal();
+        document.querySelectorAll('.rss-preset-chip[data-rss-preset]').forEach((chip) => {
+            chip.addEventListener('click', () => {
+                const preset = RSS_PRESETS[chip.dataset.rssPreset];
+                if (!preset) return;
+                const nameInp = document.getElementById('rss-feed-name-input');
+                const urlInp = document.getElementById('rss-feed-url-input');
+                const iconInp = document.getElementById('rss-feed-icon-input');
+                if (nameInp) nameInp.value = preset.name;
+                if (urlInp) urlInp.value = preset.url;
+                if (iconInp) iconInp.value = '';
+            });
+        });
         if (addBtn) {
             addBtn.onclick = () => {
                 const nameInp = document.getElementById('rss-feed-name-input');
