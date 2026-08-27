@@ -17,7 +17,8 @@
     "service_worker": "js/sw-extension.js"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "activeTab"
   ],
   "optional_permissions": [
     "topSites",
