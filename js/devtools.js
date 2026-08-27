@@ -2,6 +2,7 @@
 
 import { soundFx } from './audio.js';
 import { escapeHtml } from './state.js';
+import { renderQrToCanvas } from './qrcode.js';
 
 export class DevToolsEngine {
     constructor() {
@@ -175,51 +176,33 @@ export class DevToolsEngine {
 
     renderQR(text) {
         if (!this.qrCanvas) return;
-        const ctx = this.qrCanvas.getContext('2d');
-        const size = 256;
-        this.qrCanvas.width = size;
-        this.qrCanvas.height = size;
-
-        // 100% Local Pure Client-Side QR Generator (Zero External Network Calls)
-        ctx.fillStyle = '#0a0f1d';
-        ctx.fillRect(0, 0, size, size);
-
-        // Generate algorithmic deterministic matrix from string hash
-        let hash = 0;
-        for (let i = 0; i < text.length; i++) hash = ((hash << 5) - hash) + text.charCodeAt(i) | 0;
-
-        const grid = 25;
-        const cellSize = (size - 32) / grid;
-        const offset = 16;
-
-        ctx.fillStyle = '#00f2fe';
-        ctx.shadowColor = 'rgba(0, 242, 254, 0.4)';
-        ctx.shadowBlur = 4;
-
-        // Draw 3 standard QR position finder patterns (Top-Left, Top-Right, Bottom-Left)
-        const drawFinder = (gx, gy) => {
-            ctx.fillRect(offset + gx * cellSize, offset + gy * cellSize, 7 * cellSize, 7 * cellSize);
+        // Real, spec-compliant QR (ISO/IEC 18004), rendered 100% locally.
+        // We target ~256 px, ECC level M, quiet zone = 4 modules (spec-required).
+        try {
+            renderQrToCanvas(text || '', this.qrCanvas, {
+                size: 400,
+                quietZone: 4,
+                darkColor: '#00f2fe',
+                lightColor: '#0a0f1d',
+                ecl: 'M',
+            });
+        } catch (err) {
+            // Fallback: if the input is too long for even v40 with ECC boost,
+            // paint a solid background + short error message so it's visually obvious.
+            const ctx = this.qrCanvas.getContext('2d');
+            this.qrCanvas.width = 256;
+            this.qrCanvas.height = 256;
             ctx.fillStyle = '#0a0f1d';
-            ctx.fillRect(offset + (gx + 1) * cellSize, offset + (gy + 1) * cellSize, 5 * cellSize, 5 * cellSize);
-            ctx.fillStyle = '#00f2fe';
-            ctx.fillRect(offset + (gx + 2) * cellSize, offset + (gy + 2) * cellSize, 3 * cellSize, 3 * cellSize);
-        };
-
-        drawFinder(0, 0);
-        drawFinder(grid - 7, 0);
-        drawFinder(0, grid - 7);
-
-        // Draw data modules
-        for (let r = 0; r < grid; r++) {
-            for (let c = 0; c < grid; c++) {
-                if ((r < 8 && c < 8) || (r < 8 && c >= grid - 8) || (r >= grid - 8 && c < 8)) continue;
-                const bit = Math.abs((hash ^ (r * 31 + c * 17) ^ text.charCodeAt((r + c) % text.length)) % 3);
-                if (bit === 0 || (r === 6 || c === 6)) {
-                    ctx.fillRect(offset + c * cellSize, offset + r * cellSize, cellSize - 0.5, cellSize - 0.5);
-                }
-            }
+            ctx.fillRect(0, 0, 256, 256);
+            ctx.fillStyle = '#ff6b6b';
+            ctx.font = '14px system-ui, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Texto demasiado largo para QR', 128, 120);
+            ctx.fillStyle = '#8892a6';
+            ctx.font = '11px system-ui, sans-serif';
+            ctx.fillText(String(err && err.message || err), 128, 142);
         }
-        ctx.shadowBlur = 0;
     }
 
     downloadQR() {

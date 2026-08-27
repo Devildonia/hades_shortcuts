@@ -1,6 +1,6 @@
 // sw.js - Service Worker for HaDeS' Shortcuts PWA (Network-First with Offline Cache & Stale-While-Revalidate Icons)
 
-const CACHE_NAME = 'hades-shortcuts-v1-0-0-rc-1-cache';
+const CACHE_NAME = 'hades-shortcuts-v1-0-0-rc-1-qr-fix-cache';
 const STATIC_ASSETS = [
     './',
     './index.html',
@@ -26,6 +26,7 @@ const STATIC_ASSETS = [
     './js/theme-studio.js',
     './js/importer.js',
     './js/devtools.js',
+    './js/qrcode.js',
     './js/crypto-sync.js',
     './js/aurora-canvas.js',
     './js/radial-hud.js',
