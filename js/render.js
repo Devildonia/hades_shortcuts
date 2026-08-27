@@ -192,12 +192,18 @@ export class DashboardRenderer {
     initSpotlight() {
         if (this._spotlightBound || !this.gridContainer) return;
         this._spotlightBound = true;
-        this.gridContainer.addEventListener('mousemove', (e) => {
-            const el = e.target.closest('.enlace-icono, .categoria');
-            if (!el) return;
-            const rect = el.getBoundingClientRect();
-            el.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-            el.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+        this.gridContainer.addEventListener('pointermove', (e) => {
+            const cat = e.target.closest('.categoria');
+            if (!cat) return;
+            const rect = cat.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            cat.style.setProperty('--mouse-x', `${x}px`);
+            cat.style.setProperty('--mouse-y', `${y}px`);
+            cat.style.setProperty('--chrome-lx', `${x}px`);
+            cat.style.setProperty('--chrome-ly', `${y}px`);
+            const angle = Math.atan2(y - rect.height / 2, x - rect.width / 2) * (180 / Math.PI);
+            cat.style.setProperty('--chrome-angle', `${angle}deg`);
         });
     }
 }

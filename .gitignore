@@ -6,3 +6,8 @@ local server.bat
 .DS_Store
 Thumbs.db
 *.log
+
+# Marketing demo (local only — not shipped in the repo)
+docs/screenshots/demo.mp4
+docs/screenshots/_preview/
+docs/screenshots/_demo_raw/
