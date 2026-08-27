@@ -78,6 +78,10 @@ export class AmbientSoundEngine {
     }
 
     play() {
+        if (this._stopTimeout) {
+            clearTimeout(this._stopTimeout);
+            this._stopTimeout = null;
+        }
         const ctx = this.getAudioContext();
         if (!ctx) return;
         this.stopNodes();
@@ -93,21 +97,48 @@ export class AmbientSoundEngine {
 
     stop() {
         if (!this.isPlaying) return;
-        if (this.masterGain && this.ctx) {
-            this.masterGain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + 0.3);
-            setTimeout(() => {
-                this.stopNodes();
-                this.isPlaying = false;
-                this.updatePlayBtnVisuals();
+        this.isPlaying = false;
+        this.updatePlayBtnVisuals();
+
+        if (this._stopTimeout) {
+            clearTimeout(this._stopTimeout);
+            this._stopTimeout = null;
+        }
+
+        const oldGain = this.masterGain;
+        const oldNodes = [...this.activeNodes];
+        this.activeNodes = [];
+        this.masterGain = null;
+
+        if (oldGain && this.ctx) {
+            try {
+                oldGain.gain.linearRampToValueAtTime(0.0001, this.ctx.currentTime + 0.3);
+            } catch (e) {}
+            this._stopTimeout = setTimeout(() => {
+                oldNodes.forEach(node => {
+                    try {
+                        if (node.stop) node.stop();
+                        node.disconnect();
+                    } catch (e) {}
+                });
+                try { oldGain.disconnect(); } catch (e) {}
+                this._stopTimeout = null;
             }, 350);
         } else {
-            this.stopNodes();
-            this.isPlaying = false;
-            this.updatePlayBtnVisuals();
+            oldNodes.forEach(node => {
+                try {
+                    if (node.stop) node.stop();
+                    node.disconnect();
+                } catch (e) {}
+            });
         }
     }
 
     stopNodes() {
+        if (this._stopTimeout) {
+            clearTimeout(this._stopTimeout);
+            this._stopTimeout = null;
+        }
         this.activeNodes.forEach(node => {
             try {
                 if (node.stop) node.stop();

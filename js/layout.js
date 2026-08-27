@@ -153,8 +153,8 @@ export class LayoutManager {
         const onPointerMove = (e) => {
             if (!isDragging) return;
 
-            const clientX = e.clientX;
-            const clientY = e.clientY;
+            const pageX = e.pageX !== undefined ? e.pageX : (e.clientX + (window.pageXOffset || document.documentElement.scrollLeft || 0));
+            const pageY = e.pageY !== undefined ? e.pageY : (e.clientY + (window.pageYOffset || document.documentElement.scrollTop || 0));
 
             if (rafId) cancelAnimationFrame(rafId);
             rafId = requestAnimationFrame(() => {
@@ -167,11 +167,14 @@ export class LayoutManager {
                     soundFx.play('hover');
                 }
 
-                const targetX = clientX - grabOffsetX;
-                const targetY = clientY - grabOffsetY;
+                const targetX = pageX - grabOffsetX;
+                const targetY = pageY - grabOffsetY;
 
-                const maxX = Math.max(10, window.innerWidth - tile.offsetWidth - 10);
-                const maxY = Math.max(10, window.innerHeight - tile.offsetHeight - 10);
+                const docWidth = Math.max(document.documentElement.scrollWidth, document.body ? document.body.scrollWidth : 0, window.innerWidth);
+                const docHeight = Math.max(document.documentElement.scrollHeight, document.body ? document.body.scrollHeight : 0, window.innerHeight);
+
+                const maxX = Math.max(10, docWidth - tile.offsetWidth - 10);
+                const maxY = Math.max(10, docHeight - tile.offsetHeight - 10);
                 const newX = Math.max(10, Math.min(maxX, targetX));
                 const newY = Math.max(10, Math.min(maxY, targetY));
 

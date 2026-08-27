@@ -3302,7 +3302,7 @@ input:checked + .slider:before {
    Freeform Canvas & Corner Resize Engine
    ========================================================================== */
 .freeform-positioned {
-    position: fixed !important;
+    position: absolute !important;
     margin: 0 !important;
     box-sizing: border-box !important;
     max-width: none !important;
@@ -3310,7 +3310,7 @@ input:checked + .slider:before {
 }
 
 .edit-mode-active .freeform-positioned {
-    position: fixed !important;
+    position: absolute !important;
     margin: 0 !important;
     box-sizing: border-box !important;
     max-width: none !important;

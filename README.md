@@ -232,7 +232,8 @@ Web Audio API: Cyber Rain, Deep Space brown noise, 432 Hz binaural alpha, Cosmic
 
 ### Security & privacy
 - QR codes are encoded locally with a real ISO/IEC 18004 generator (port of Project Nayuki's library) and painted on a 2D canvas — no third-party QR API or network call.
-- GitHub PATs live in `sessionStorage` and die with the tab.
+- GitHub Personal Access Tokens (PAT) live in `sessionStorage` (tab session only) and should strictly be created with minimal permissions: **`gist` scope only** (or Fine-Grained Token with Gists Read & Write).
+- Local Ollama inference: when accessing from the browser, launch Ollama with CORS enabled (`OLLAMA_ORIGINS="*" ollama serve`).
 - AES-256-GCM is used for **Gist dashboard sync**, not for LLM API keys.
 - 52 bundled shortcuts; ranking in `neural-search.js` is local token overlap.
 

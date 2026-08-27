@@ -48,17 +48,9 @@ export class TechRadarEngine {
     }
 
     getFallbackArticles(feedId) {
-        if (feedId === 'hackernews') {
-            return [
-                { id: 'hn_1', title: 'DeepSeek-R1 open-source reasoning model architecture', url: 'https://news.ycombinator.com', source: 'HN' },
-                { id: 'hn_2', title: 'WebGPU 1.0 specification finalized across all major browsers', url: 'https://news.ycombinator.com', source: 'HN' },
-                { id: 'hn_3', title: 'SQLite in the browser with WebAssembly & OPFS', url: 'https://news.ycombinator.com', source: 'HN' },
-                { id: 'hn_4', title: 'Claude 3.5 Sonnet computer use capabilities and safety', url: 'https://news.ycombinator.com', source: 'HN' }
-            ];
-        }
         return [
-            { id: 'fb_1', title: 'Últimas novedades en Inteligencia Artificial y Modelos 3D', url: 'https://huggingface.co', source: 'Radar' },
-            { id: 'fb_2', title: 'Avances en síntesis procedural y rendimiento web', url: 'https://arstechnica.com', source: 'Radar' }
+            { id: 'fb_1', title: 'Sin conexión a la fuente de noticias. Pulsa 🔄 para reintentar.', url: 'https://news.ycombinator.com', source: 'Offline', isFallback: true },
+            { id: 'fb_2', title: 'Comprueba tu conexión o configuración CORS del feed.', url: 'https://github.com', source: 'Offline', isFallback: true }
         ];
     }
 
@@ -93,7 +85,7 @@ export class TechRadarEngine {
     }
 
     async fetchFeedArticles(feed, force = false) {
-        if (!feed) return this.getFallbackArticles('hackernews');
+        if (!feed) return [];
         const cacheRaw = localStorage.getItem(this.cacheKey) || '{}';
         let cache = {};
         try { cache = JSON.parse(cacheRaw); } catch (e) {}
@@ -128,18 +120,27 @@ export class TechRadarEngine {
                 if (text) items = this.parseXMLFeed(text, feed.name);
             }
         } catch (err) {
-            // Network timeout / error -> use fallback
+            // Si la red falla, usar caché previa válida si existe
+            if (cache[feed.id]?.items?.length > 0) {
+                return cache[feed.id].items;
+            }
             items = this.getFallbackArticles(feed.id);
         } finally {
             clearTimeout(timeoutId);
         }
 
         if (!items || items.length === 0) {
+            if (cache[feed.id]?.items?.length > 0) {
+                return cache[feed.id].items;
+            }
             items = this.getFallbackArticles(feed.id);
         }
 
-        cache[feed.id] = { timestamp: now, items: items.slice(0, 6) };
-        persistJson(this.cacheKey, cache);
+        // Solo guardar en caché si obtuvimos artículos reales
+        if (items.length > 0 && !items[0].isFallback) {
+            cache[feed.id] = { timestamp: now, items: items.slice(0, 6) };
+            persistJson(this.cacheKey, cache);
+        }
 
         return items.slice(0, 6);
     }

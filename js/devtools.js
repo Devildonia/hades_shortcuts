@@ -42,38 +42,43 @@ export class DevToolsEngine {
     }
 
     parseColor(input) {
-        const str = input.trim();
-        const testEl = document.createElement('div');
-        testEl.style.color = str;
-        if (!testEl.style.color) return null;
+        const str = (input || '').trim();
+        if (!str) return null;
+        try {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1;
+            canvas.height = 1;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return null;
+            ctx.fillStyle = '#010203';
+            ctx.fillStyle = str;
+            if (ctx.fillStyle === '#010203' && str.toLowerCase() !== '#010203') return null;
 
-        document.body.appendChild(testEl);
-        const computed = window.getComputedStyle(testEl).color;
-        document.body.removeChild(testEl);
+            ctx.fillRect(0, 0, 1, 1);
+            const data = ctx.getImageData(0, 0, 1, 1).data;
+            const r = data[0], g = data[1], b = data[2];
+            const hex = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+            
+            const rN = r / 255, gN = g / 255, bN = b / 255;
+            const max = Math.max(rN, gN, bN), min = Math.min(rN, gN, bN);
+            let h = 0, s = 0, l = (max + min) / 2;
 
-        const rgbMatch = computed.match(/\d+/g);
-        if (!rgbMatch || rgbMatch.length < 3) return null;
-
-        const r = parseInt(rgbMatch[0], 10), g = parseInt(rgbMatch[1], 10), b = parseInt(rgbMatch[2], 10);
-        const hex = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
-        
-        const rN = r / 255, gN = g / 255, bN = b / 255;
-        const max = Math.max(rN, gN, bN), min = Math.min(rN, gN, bN);
-        let h = 0, s = 0, l = (max + min) / 2;
-
-        if (max !== min) {
-            const d = max - min;
-            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-            switch (max) {
-                case rN: h = (gN - bN) / d + (gN < bN ? 6 : 0); break;
-                case gN: h = (bN - rN) / d + 2; break;
-                case bN: h = (rN - gN) / d + 4; break;
+            if (max !== min) {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case rN: h = (gN - bN) / d + (gN < bN ? 6 : 0); break;
+                    case gN: h = (bN - rN) / d + 2; break;
+                    case bN: h = (rN - gN) / d + 4; break;
+                }
+                h /= 6;
             }
-            h /= 6;
-        }
 
-        const hsl = `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
-        return { hex, rgb: `rgb(${r}, ${g}, ${b})`, hsl };
+            const hsl = `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
+            return { hex, rgb: `rgb(${r}, ${g}, ${b})`, hsl };
+        } catch (e) {
+            return null;
+        }
     }
 
     parseEpoch(input) {
@@ -100,26 +105,26 @@ export class DevToolsEngine {
     renderBanner(query, bannerEl) {
         if (!bannerEl) return false;
 
-        if (query.startsWith('!uuid')) {
+        if (/^!uuid(\s|$)/i.test(query)) {
             const uuid = this.generateUUID();
             bannerEl.innerHTML = `<div class="devtool-result-row"><span>🔑 <strong>UUIDv4:</strong></span> <code class="devtool-code">${uuid}</code> <button class="devtool-copy-btn" data-copy="${uuid}">📋 Copiar</button></div>`;
             this.bindCopyBtns(bannerEl);
             return true;
         }
-        if (query.startsWith('!b64d ')) {
-            const decoded = this.decodeBase64(query.slice(6).trim());
+        if (/^!b64d\s+/i.test(query)) {
+            const decoded = this.decodeBase64(query.replace(/^!b64d\s+/i, '').trim());
             bannerEl.innerHTML = `<div class="devtool-result-row"><span>🔓 <strong>Base64 Decoded:</strong></span> <code class="devtool-code">${escapeHtml(decoded)}</code> <button class="devtool-copy-btn" data-copy="${escapeHtml(decoded)}">📋 Copiar</button></div>`;
             this.bindCopyBtns(bannerEl);
             return true;
         }
-        if (query.startsWith('!b64 ')) {
-            const encoded = this.encodeBase64(query.slice(5).trim());
+        if (/^!b64\s+/i.test(query)) {
+            const encoded = this.encodeBase64(query.replace(/^!b64\s+/i, '').trim());
             bannerEl.innerHTML = `<div class="devtool-result-row"><span>🔒 <strong>Base64 Encoded:</strong></span> <code class="devtool-code">${encoded}</code> <button class="devtool-copy-btn" data-copy="${encoded}">📋 Copiar</button></div>`;
             this.bindCopyBtns(bannerEl);
             return true;
         }
-        if (query.startsWith('!color ')) {
-            const color = this.parseColor(query.slice(7).trim());
+        if (/^!color\s+/i.test(query)) {
+            const color = this.parseColor(query.replace(/^!color\s+/i, '').trim());
             if (color) {
                 bannerEl.innerHTML = `<div class="devtool-result-row"><span class="color-preview-chip" style="background: ${color.hex}"></span> <span><strong>${color.hex}</strong> | ${color.rgb} | ${color.hsl}</span> <button class="devtool-copy-btn" data-copy="${color.hex}">📋 Copiar</button></div>`;
             } else {
@@ -128,16 +133,16 @@ export class DevToolsEngine {
             this.bindCopyBtns(bannerEl);
             return true;
         }
-        if (query.startsWith('!epoch') || query.startsWith('!time')) {
-            const tInfo = this.parseEpoch(query.replace(/^!(epoch|time)\s*/, ''));
+        if (/^!(epoch|time)(\s|$)/i.test(query)) {
+            const tInfo = this.parseEpoch(query.replace(/^!(epoch|time)\s*/i, ''));
             if (tInfo) {
                 bannerEl.innerHTML = `<div class="devtool-result-row"><span>⏰ <strong>Fecha:</strong> ${tInfo.local}</span> <span>(UNIX: <code>${tInfo.epochSec}</code>)</span> <button class="devtool-copy-btn" data-copy="${tInfo.epochSec}">📋 Copiar</button></div>`;
                 this.bindCopyBtns(bannerEl);
                 return true;
             }
         }
-        if (query.startsWith('!qr ')) {
-            const text = query.slice(4).trim();
+        if (/^!qr\s+/i.test(query)) {
+            const text = query.replace(/^!qr\s+/i, '').trim();
             bannerEl.innerHTML = `<div class="devtool-result-row"><span>📱 <strong>Código QR para:</strong> <em>${escapeHtml(text)}</em></span> <button class="devtool-action-btn" id="open-qr-trigger">⚡ Abrir QR</button></div>`;
             const trigger = document.getElementById('open-qr-trigger');
             if (trigger) trigger.onclick = () => this.openQRModal(text);

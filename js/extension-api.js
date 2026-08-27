@@ -39,7 +39,12 @@ export class ExtensionAPIEngine {
     pushShortcutsToSync() {
         if (!platform.isExtension || !chrome.storage || !chrome.storage.sync) return;
         try {
-            chrome.storage.sync.set({ custom_shortcuts_v2: state.shortcuts });
+            chrome.storage.sync.set({ custom_shortcuts_v2: state.shortcuts }, () => {
+                if (chrome.runtime && chrome.runtime.lastError) {
+                    console.warn('[ExtensionAPI] Sync error:', chrome.runtime.lastError);
+                    showToast(getTranslation('toasts.sync_push_error') || 'Could not sync with chrome.storage.', 'error');
+                }
+            });
         } catch (e) {
             showToast(getTranslation('toasts.sync_push_error') || 'Could not sync with chrome.storage.', 'error');
         }

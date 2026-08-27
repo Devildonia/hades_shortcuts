@@ -32,15 +32,12 @@ export class CalendarAgendaEngine {
     loadCachedEvents() {
         try {
             const raw = localStorage.getItem(this.cacheKey);
-            if (raw) return JSON.parse(raw);
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed)) return parsed;
+            }
         } catch (e) {}
-        const today = new Date();
-        const y = today.getFullYear(), m = today.getMonth(), d = today.getDate();
-        return [
-            { id: 'ev_1', title: 'Daily Standup & Sync', start: new Date(y, m, d, 9, 30).toISOString(), end: new Date(y, m, d, 10, 0).toISOString(), link: 'https://meet.google.com/abc-defg-hij', category: 'work', source: 'demo' },
-            { id: 'ev_2', title: 'Deep Work & Code Review', start: new Date(y, m, d, 11, 0).toISOString(), end: new Date(y, m, d, 13, 0).toISOString(), category: 'focus', source: 'demo' },
-            { id: 'ev_3', title: 'Diseño 3D & AI Pipelines', start: new Date(y, m, d + 1, 16, 0).toISOString(), end: new Date(y, m, d + 1, 17, 30).toISOString(), link: 'https://zoom.us/j/123456789', category: 'creative', source: 'demo' }
-        ];
+        return [];
     }
 
     saveEvents(evList) {
@@ -257,6 +254,9 @@ export class CalendarAgendaEngine {
     }
 
     init() {
+        if (this._inited) return;
+        this._inited = true;
+
         this.render();
         const addBtn = document.getElementById('calendar-add-event-btn');
         const syncBtn = document.getElementById('calendar-sync-btn');
@@ -284,7 +284,8 @@ export class CalendarAgendaEngine {
             };
         }
 
-        setInterval(() => this.render(), 60000);
+        if (this._renderInterval) clearInterval(this._renderInterval);
+        this._renderInterval = setInterval(() => this.render(), 60000);
         state.on('language:changed', () => this.render());
     }
 }

@@ -92,18 +92,20 @@ export class TagsFilterEngine {
             if (!matchesAllTags) return false;
         }
 
-        // 2. Category matching
+        // 2. Category matching (exact match on normalized ID, avoiding false substring hits)
         if (parsedQuery.categories.length > 0) {
-            const cat = (shortcut.category || '').toLowerCase();
-            const matchesCat = parsedQuery.categories.some(c => cat.includes(c));
+            const rawCat = (shortcut.category || '').toLowerCase();
+            const cleanCat = rawCat.replace(/^cat_/, '');
+            const matchesCat = parsedQuery.categories.some(c => {
+                const cleanC = (c || '').toLowerCase().replace(/^cat_/, '');
+                return rawCat === c || cleanCat === cleanC;
+            });
             if (!matchesCat) return false;
         }
 
-        // 3. Favorite filter
+        // 3. Favorite filter (strictly check favorite status)
         if (parsedQuery.isFav && !shortcut.favorite) {
-            const counts = (personalAnalytics && personalAnalytics.data && personalAnalytics.data.shortcutCounts) || {};
-            const ranked = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([id]) => id);
-            if (!ranked.includes(shortcut.id)) return false;
+            return false;
         }
 
         // 4. Frequency filter
