@@ -325,9 +325,19 @@ export function safeHttpUrl(url) {
     return '';
 }
 
-export function openSafeUrl(url, target = '_blank') {
+// Optional URL guard hook. The Zen Distraction Shield (focus mode)
+// registers itself here so that EVERY programmatic navigation funnels
+// through the same filter, no matter which module calls openSafeUrl.
+// The guard receives the validated http(s) href and returns false to veto.
+let urlGuard = null;
+export function setUrlGuard(guard) { urlGuard = guard; }
+
+export function openSafeUrl(url, target = '_blank', opts = {}) {
     const href = safeHttpUrl(url);
     if (!href) return false;
+    if (!opts.ignoreGuard && typeof urlGuard === 'function' && urlGuard(href) === false) {
+        return false; // Vetoed by the guard (it shows its own feedback UI).
+    }
     window.open(href, target, 'noopener,noreferrer');
     return true;
 }

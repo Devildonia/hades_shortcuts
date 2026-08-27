@@ -1,7 +1,7 @@
 import { i18nDictionaries, getTranslation } from './i18n.js';
 // js/focus-mode.js - Deep Work Focus Mode & Zen Distraction Shield
 
-import { state, persistJson, showToast, openSafeUrl } from './state.js';
+import { state, persistJson, showToast, openSafeUrl, setUrlGuard } from './state.js';
 import { soundFx } from './audio.js';
 
 export class FocusModeEngine {
@@ -101,17 +101,24 @@ export class FocusModeEngine {
     }
 
     openUrl(url, target = '_blank') {
-        if (this.isUrlBlocked(url)) {
-            this.showZenShield(url);
-            return false;
-        }
+        // The URL guard inside openSafeUrl applies the Zen Shield check,
+        // so this stays a thin alias kept for API compatibility.
         return openSafeUrl(url, target);
     }
 
     isUrlBlocked(url) {
         if (!url || !this.isActive) return false;
-        const lower = url.toLowerCase();
-        return this.config.blockedDomains.some(d => lower.includes(d));
+        let hostname = '';
+        try { hostname = new URL(url).hostname.toLowerCase(); } catch (e) { return false; }
+        if (!hostname) return false;
+        // Match on the hostname only, exact or as a subdomain (www.x.com,
+        // m.x.com). Substring matching would produce false positives
+        // (e.g. "notx.com" matching "x.com") and false negatives.
+        return (this.config.blockedDomains || []).some(d => {
+            const domain = String(d || '').trim().toLowerCase().replace(/^\.+/, '').replace(/\.+$/, '');
+            if (!domain) return false;
+            return hostname === domain || hostname.endsWith('.' + domain);
+        });
     }
 
     showZenShield(attemptedUrl = '') {
@@ -162,10 +169,19 @@ export class FocusModeEngine {
             allowOnceBtn.onclick = () => {
                 const target = this.blockedAttemptUrl;
                 this.hideZenShield();
-                if (target) openSafeUrl(target, '_blank');
+                if (target) openSafeUrl(target, '_blank', { ignoreGuard: true }); // "allow once" must bypass the shield
             };
         }
         if (focusBtn) focusBtn.onclick = () => this.toggleFocus();
+
+        // Central choke point: every module that opens URLs through
+        // openSafeUrl (analytics, radial HUD, search, ...) now passes the
+        // same Zen Shield filter instead of bypassing it.
+        setUrlGuard((href) => {
+            if (!this.isUrlBlocked(href)) return true;
+            this.showZenShield(href);
+            return false;
+        });
 
         document.addEventListener('click', (e) => {
             if (!this.isActive) return;
