@@ -69,7 +69,7 @@ First release candidate of 1.0. Chrome MV3 `version` stays numeric (`1.0.0`); th
 | :---: | :---: |
 | <img src="docs/screenshots/theme-abyss.png" width="420" alt="Abyss OLED dashboard" /> | <img src="docs/screenshots/theme-jade.png" width="420" alt="Jade Terminal dashboard" /> |
 
-| Command Center Settings | Offline Canvas QR |
+| Command Center Settings | Offline QR (Nayuki) |
 | :---: | :---: |
 | <img src="docs/screenshots/settings-drawer.png" width="420" alt="Contained settings drawer with six themes" /> | <img src="docs/screenshots/devtools-qr-preview.png" width="420" alt="Client-side QR modal" /> |
 
@@ -168,7 +168,8 @@ flowchart TB
 | `neural-search.js` | Token-overlap ranking (not WebGPU embeddings) |
 | `crypto-sync.js` | E2EE Gist push/pull |
 | `backup.js` | JSON export / import / factory reset |
-| `devtools.js` | Offline Canvas QR + omnibox utilities |
+| `devtools.js` | Omnibox utilities + QR modal (`!qr`) |
+| `qrcode.js` | Spec-compliant QR encoder (ISO/IEC 18004), local ES-module port of [Nayuki](https://www.nayuki.io/page/qr-code-generator-library)'s MIT library |
 | `platform.js` | Web vs Chrome MV3 differences |
 | `sw-extension.js` | Extension background worker |
 
@@ -230,7 +231,7 @@ Latency probe, Battery API, refresh-rate detector, offline failover.
 Web Audio API: Cyber Rain, Deep Space brown noise, 432 Hz binaural alpha, Cosmic Waves.
 
 ### Security & privacy
-- QR codes are drawn on a 2D canvas — no third-party QR API.
+- QR codes are encoded locally with a real ISO/IEC 18004 generator (port of Project Nayuki's library) and painted on a 2D canvas — no third-party QR API or network call.
 - GitHub PATs live in `sessionStorage` and die with the tab.
 - AES-256-GCM is used for **Gist dashboard sync**, not for LLM API keys.
 - 52 bundled shortcuts; ranking in `neural-search.js` is local token overlap.
@@ -249,7 +250,7 @@ Web Audio API: Cyber Rain, Deep Space brown noise, 432 Hz binaural alpha, Cosmic
 | `!color <val>` | Color preview | `!color #00f2fe` |
 | `!b64` / `!b64d` | Base64 encode / decode | `!b64 Cyberpunk` |
 | `!time` / `!epoch` | UNIX epoch helper | `!epoch 1787589157` |
-| `!qr <link>` | Offline Canvas QR | `!qr https://github.com` |
+| `!qr <link>` | Scannable offline QR (Nayuki encoder → canvas) | `!qr https://github.com` |
 | `!yt` / `!gh` / `!w` / `!r` / `!m` | YouTube, GitHub, Wikipedia, Reddit, Maps | `!gh three.js` |
 | `!civitai` / `!tr` / `!npm` / `!ddg` | Model hub, Translate, NPM, DuckDuckGo | `!ddg privacy` |
 | `<math>` | Instant calculator | `150 * 1.21` |
@@ -307,6 +308,10 @@ UI chrome, greetings, widget copy, settings, and shortcut tooltips stay in parit
 
 ---
 
+## Credits
+
+- **QR Code generator** — `js/qrcode.js` is an ES-module port of [Project Nayuki](https://www.nayuki.io/)'s [QR Code generator library](https://www.nayuki.io/page/qr-code-generator-library) (MIT). Copyright (c) Project Nayuki. The original algorithm encodes all 40 QR versions with Reed–Solomon ECC, automatic masking, and format/version bits; we only adapt the TypeScript reference into a pure browser module and canvas renderer. Full license text is preserved in the file header.
+
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE). Third-party notice above applies to the bundled Nayuki QR encoder.
