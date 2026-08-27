@@ -5339,6 +5339,50 @@ input:checked + .slider:before {
     gap: 8px;
     margin-top: 10px;
     flex: 1;
+    min-height: 110px;
+}
+
+.calendar-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px 8px;
+    flex: 1;
+    gap: 6px;
+}
+
+.calendar-empty-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+    opacity: 0.85;
+}
+
+.calendar-empty-text {
+    font-size: 0.78rem;
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
+    line-height: 1.3;
+    margin: 0;
+}
+
+.calendar-empty-btn {
+    margin-top: 2px;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent-primary, #00f2fe);
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.calendar-empty-btn:hover {
+    background: rgba(0, 242, 254, 0.18);
+    border-color: rgba(0, 242, 254, 0.5);
+    transform: translateY(-1px);
 }
 
 .calendar-event-item {

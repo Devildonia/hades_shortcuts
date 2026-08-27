@@ -212,6 +212,24 @@ export class CalendarAgendaEngine {
 
         const sorted = [...this.events].sort((a, b) => new Date(a.start) - new Date(b.start));
 
+        if (sorted.length === 0) {
+            const emptyMsg = getTranslation('widgets.calendar_empty') || 'Sin eventos próximos. ¡Tiempo para concentrarse!';
+            const addLabel = getTranslation('calendar_modal.add_tooltip') || '+ Añadir Evento';
+            this.eventsList.innerHTML = `
+                <div class="calendar-empty">
+                    <span class="calendar-empty-icon">☕</span>
+                    <p class="calendar-empty-text">${escapeHtml(emptyMsg)}</p>
+                    <button class="calendar-empty-btn" id="calendar-empty-add-btn">${escapeHtml(addLabel)}</button>
+                </div>
+            `;
+            const emptyAddBtn = this.eventsList.querySelector('#calendar-empty-add-btn');
+            if (emptyAddBtn) {
+                emptyAddBtn.onclick = () => this.openEventModal();
+            }
+            if (this.widgetCard) this.widgetCard.classList.remove('meeting-pulse-alert');
+            return;
+        }
+
         sorted.slice(0, 5).forEach(ev => {
             const startD = new Date(ev.start);
             const diffMin = Math.round((startD - now) / 60000);
