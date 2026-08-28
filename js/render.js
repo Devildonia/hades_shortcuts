@@ -135,6 +135,7 @@ export class DashboardRenderer {
                 card.rel = 'noopener noreferrer';
                 card.className = 'enlace-icono';
                 card.addEventListener('click', (e) => {
+                    if (state.editMode) return; // Edición: sin navegación, sin analítica, sin Zen Shield
                     if (focusMode && focusMode.isActive && focusMode.isUrlBlocked(href)) {
                         e.preventDefault();
                         focusMode.showZenShield(href);

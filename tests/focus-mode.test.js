@@ -22,15 +22,15 @@ test('FocusModeEngine: activación y desactivación de modo foco', ({ expect }) 
     expect(engine.isActive).toBe(false);
 });
 
-test('FocusModeEngine: canOpenUrl bloquea dominios no permitidos durante el foco', ({ expect }) => {
+test('FocusModeEngine: isUrlBlocked detecta dominios bloqueados durante el foco', ({ expect }) => {
     const engine = new FocusModeEngine();
     engine.isActive = true;
 
-    expect(engine.canOpenUrl('https://x.com/home')).toBe(false);
-    expect(engine.canOpenUrl('https://youtube.com/watch?v=123')).toBe(false);
-    expect(engine.canOpenUrl('https://github.com/Devildonia')).toBe(true);
-    expect(engine.canOpenUrl('https://claude.ai/chat')).toBe(true);
+    expect(engine.isUrlBlocked('https://x.com/home')).toBe(true);
+    expect(engine.isUrlBlocked('https://youtube.com/watch?v=123')).toBe(true);
+    expect(engine.isUrlBlocked('https://github.com/Devildonia')).toBe(false);
+    expect(engine.isUrlBlocked('https://claude.ai/chat')).toBe(false);
 
     engine.isActive = false;
-    expect(engine.canOpenUrl('https://x.com/home')).toBe(true);
+    expect(engine.isUrlBlocked('https://x.com/home')).toBe(false);
 });

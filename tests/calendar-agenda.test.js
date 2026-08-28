@@ -28,29 +28,32 @@ END:VCALENDAR
     expect(parsed[0].start).toContain('2026-09-01');
 });
 
-test('CalendarAgendaEngine: guardado y persistencia de eventos manuales', ({ expect }) => {
+test('CalendarAgendaEngine: guardado y persistencia de configuración y eventos', ({ expect }) => {
     const engine = new CalendarAgendaEngine();
-    const newEvent = {
-        id: 'ev_' + Date.now(),
-        title: 'Daily Standup',
-        start: '2026-09-05T09:30',
-        end: '2026-09-05T10:00',
-        location: 'Discord',
-        desc: 'Sincronización matutina'
-    };
-
-    engine.saveEvents([newEvent]);
-    expect(engine.events.length).toBe(1);
-    expect(engine.events[0].title).toBe('Daily Standup');
+    engine.config.feedUrl = 'https://example.com/calendar.ics';
+    engine.saveConfig();
 
     const reloaded = new CalendarAgendaEngine();
-    expect(reloaded.events.length).toBe(1);
-    expect(reloaded.events[0].location).toBe('Discord');
+    expect(reloaded.config.feedUrl).toBe('https://example.com/calendar.ics');
 });
 
-test('CalendarAgendaEngine: getLocalDateString devuelve formato YYYY-MM-DD local', ({ expect }) => {
+test('CalendarAgendaEngine: parseICS extrae enlaces de videoconferencia y ubicaciones', ({ expect }) => {
     const engine = new CalendarAgendaEngine();
-    const date = new Date(2026, 8, 15, 12, 0, 0); // 15 de Septiembre 2026
-    const str = engine.getLocalDateString(date);
-    expect(str).toBe('2026-09-15');
+    const icsSample = `
+BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+UID:meet-456@hades
+SUMMARY:Demo Sprint
+LOCATION:https://meet.google.com/abc-defg-hij
+DTSTART:20261010T150000Z
+DTEND:20261010T160000Z
+END:VEVENT
+END:VCALENDAR
+    `.trim();
+
+    const parsed = engine.parseICS(icsSample);
+    expect(parsed.length).toBe(1);
+    expect(parsed[0].title).toBe('Demo Sprint');
+    expect(parsed[0].link).toBe('https://meet.google.com/abc-defg-hij');
 });

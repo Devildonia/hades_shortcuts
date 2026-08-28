@@ -48,6 +48,17 @@
     <div id="postits-canvas"></div>
     <div id="macros-list-container"></div>
     <input id="import-backup-file" type="file" accept="application/json">
+    <div id="shortcuts-grid"></div>
+    <div id="smart-tooltip" class="hidden"></div>
+    <div class="floating-edit-bar hidden" id="floating-edit-bar"></div>
+    <button id="exit-edit-mode-btn">Salir</button>
+    <button id="reset-layout-btn-bar">Restablecer</button>
+  </div>
+
+  <!-- ===== FIXTURES LAYOUT: visibles, con layout real (el drag/resize usa offsetLeft/offsetParent) ===== -->
+  <div id="layout-fixture" style="position:relative; width:420px; height:200px; margin:16px auto; background:#101a30; border:1px dashed #2c3e6b; border-radius:10px; padding:12px;">
+    <div id="lt-tile-a" data-tile-id="lt-tile-a" data-base-style="width:100%; height:60px; background:#182645; border-radius:8px; margin-bottom:10px;" style="width:100%; height:60px; background:#182645; border-radius:8px; margin-bottom:10px;">Tile A (fixture)</div>
+    <div id="lt-tile-b" data-tile-id="lt-tile-b" data-base-style="width:100%; height:60px; background:#182645; border-radius:8px;" style="width:100%; height:60px; background:#182645; border-radius:8px;"><input id="lt-tile-b-input" aria-label="input fixture" style="width:70px; height:20px;"> Tile B (fixture)</div>
   </div>
 
   <div id="report">
@@ -56,7 +67,7 @@
 
   <footer>
     Resultados también disponibles en <code>window.__testResults</code> (JSON) para conectar a un CI futuro.<br>
-    Cubre: bangs (crítico #1), Pomodoro (crítico #2), import/sync (silencioso #3), TopSites (#4), race del radar (#5) y utilidades de seguridad.
+    Cubre: bangs (crítico #1), Pomodoro (crítico #2), import/sync (silencioso #3), TopSites (#4), race del radar (#5), utilidades de seguridad y el sistema de edición (drag/resize de tiles).
   </footer>
 
   <script type="module">
@@ -79,6 +90,15 @@
     await import('./spaces.test.js');
     await import('./focus-mode.test.js');
     await import('./calendar-agenda.test.js');
+    await import('./macros.test.js');
+    await import('./tags-filter.test.js');
+    await import('./neural-search.test.js');
+    await import('./personal-analytics.test.js');
+    await import('./theme-studio.test.js');
+    await import('./postits.test.js');
+    await import('./weather.test.js');
+    await import('./devtools-crypto.test.js');
+    await import('./layout-edit.test.js');
 
     const report = document.getElementById('report');
     report.textContent = '';

@@ -9,17 +9,17 @@ test('SpacesEngine: carga espacios predeterminados y estructura inicial', ({ exp
     expect(Array.isArray(engine.data.spaces)).toBe(true);
     expect(engine.data.spaces.length).toBe(3);
 
-    const workSpace = engine.getSpace('space_work');
+    const workSpace = engine.data.spaces.find(s => s.id === 'space_work');
     expect(workSpace.name).toBe(SPACE_PRESETS.space_work.name);
     expect(workSpace.theme).toBe('cyber');
 });
 
 test('SpacesEngine: conmutación de espacio activo y persistencia', ({ expect }) => {
     const engine = new SpacesEngine();
-    engine.setActiveSpace('space_personal');
+    engine.switchSpace('space_personal');
 
     expect(engine.data.activeSpaceId).toBe('space_personal');
-    expect(state.activeSpaceId).toBe('space_personal');
+    expect(engine.getActiveSpace().id).toBe('space_personal');
 
     const reloaded = new SpacesEngine();
     expect(reloaded.data.activeSpaceId).toBe('space_personal');
@@ -27,11 +27,15 @@ test('SpacesEngine: conmutación de espacio activo y persistencia', ({ expect })
 
 test('SpacesEngine: espacio devuelve lista correcta de categorías permitidas', ({ expect }) => {
     const engine = new SpacesEngine();
-    const personal = engine.getSpace('space_personal');
+    const personal = engine.data.spaces.find(s => s.id === 'space_personal');
     expect(Array.isArray(personal.categoryIds)).toBe(true);
     expect(personal.categoryIds).toContain('cat_social');
     expect(personal.categoryIds).toContain('cat_gaming');
 
-    const work = engine.getSpace('space_work');
+    const work = engine.data.spaces.find(s => s.id === 'space_work');
     expect(work.categoryIds).toBeNull(); // null significa todas las categorías
+
+    engine.switchSpace('space_personal');
+    expect(engine.allowsCategory('cat_social')).toBe(true);
+    expect(engine.allowsCategory('cat_code')).toBe(false);
 });

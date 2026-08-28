@@ -173,9 +173,9 @@ export class AIAgentEngine {
         let html = escapeHtml(text || '');
         html = html.replace(/`([^`]+)`/g, '<code class="ai-inline-code">$1</code>');
         html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-        html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-        html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="ai-link-chip">🚀 $1</a>');
         html = html.replace(/(?:^|\n)[*-]\s+(.+)/g, '<div class="ai-list-item">• $1</div>');
+        html = html.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+        html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="ai-link-chip">🚀 $1</a>');
         html = html.replace(/\n/g, '<br>');
         return html;
     }

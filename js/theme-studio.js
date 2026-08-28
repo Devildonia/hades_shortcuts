@@ -37,7 +37,10 @@ export function sanitizeCssUrl(rawUrl) {
         try {
             const parsed = new URL(str);
             if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
-                return parsed.href.replace(/["'\\\(\)\s]/g, encodeURIComponent);
+                return parsed.href
+                    .replace(/["'\\]/g, (c) => encodeURIComponent(c))
+                    .replace(/\(/g, '%28')
+                    .replace(/\)/g, '%29');
             }
         } catch (e) {}
     }

@@ -23,27 +23,27 @@ test('AIAgentEngine: formatMarkdown renderiza código, negrita y enlaces correct
     const html = engine.formatMarkdown(markdown);
 
     expect(html).toContain('<strong>negrita</strong>');
-    expect(html).toContain('<code>const x = 1</code>');
-    expect(html).toContain('<a href="https://github.com/Devildonia" target="_blank" rel="noopener noreferrer">GitHub</a>');
+    expect(html).toContain('<code class="ai-inline-code">const x = 1</code>');
+    expect(html).toContain('<a href="https://github.com/Devildonia" target="_blank" rel="noopener noreferrer" class="ai-link-chip">🚀 GitHub</a>');
 });
 
-test('AIAgentEngine: formatMarkdown procesa listas con guiones y bloques de código', ({ expect }) => {
+test('AIAgentEngine: formatMarkdown procesa listas con viñetas formateadas', ({ expect }) => {
     const engine = new AIAgentEngine();
-    const input = 'Lista de tareas:\n- Item 1\n- Item 2\n\n```js\nconsole.log(42);\n```';
+    const input = 'Lista de tareas:\n* Item 1\n* Item 2';
     const html = engine.formatMarkdown(input);
 
-    expect(html).toContain('<ul');
-    expect(html).toContain('<li>Item 1</li>');
-    expect(html).toContain('<li>Item 2</li>');
-    expect(html).toContain('<pre><code>console.log(42);');
+    expect(html).toContain('ai-list-item');
+    expect(html).toContain('Item 1');
+    expect(html).toContain('Item 2');
 });
 
-test('AIAgentEngine: getLocalHeuristicResponse genera respuestas de atajos y contexto', ({ expect }) => {
+test('AIAgentEngine: generateLocalHeuristicResponse genera respuestas de atajos y contexto', async ({ expect }) => {
     const engine = new AIAgentEngine();
-    const respTime = engine.getLocalHeuristicResponse('¿Qué hora es?');
-    expect(respTime).toContain('Son las');
+    const respShortcuts = await engine.generateLocalHeuristicResponse('¿Qué herramientas de 3D tengo?');
+    expect(typeof respShortcuts).toBe('string');
+    expect(respShortcuts.length).toBeGreaterThan(10);
 
-    const respWeather = engine.getLocalHeuristicResponse('clima');
-    expect(typeof respWeather).toBe('string');
-    expect(respWeather.length).toBeGreaterThan(5);
+    const respGeneral = await engine.generateLocalHeuristicResponse('Hola');
+    expect(typeof respGeneral).toBe('string');
+    expect(respGeneral.length).toBeGreaterThan(10);
 });

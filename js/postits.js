@@ -155,7 +155,7 @@ export class PostItManager {
         `;
 
         this.bindPostItInteractions(el, note);
-        this.container.appendChild(el);
+        if (this.container) this.container.appendChild(el);
     }
 
     bindPostItInteractions(el, note) {

@@ -3244,7 +3244,15 @@ html.no-gold-bezel .mini-widget-card::after {
 .modular-tile {
     position: relative;
     cursor: grab;
+    user-select: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* En edit mode, los controles de formulario dentro de un tile conservan su cursor */
+.modular-tile input,
+.modular-tile textarea,
+.modular-tile select {
+    cursor: auto;
 }
 
 .modular-tile:active {
@@ -3278,6 +3286,9 @@ html.no-gold-bezel .mini-widget-card::after {
     z-index: 20;
     transition: var(--transition-fast);
     backdrop-filter: blur(8px);
+    /* Sin esto, en móvil el drag desde el tirador se cancela como scroll */
+    touch-action: none;
+    user-select: none;
 }
 
 .modular-drag-handle:hover {
@@ -3550,14 +3561,12 @@ html.no-gold-bezel .mini-widget-card::after {
     margin: 0 !important;
     box-sizing: border-box !important;
     max-width: none !important;
-    touch-action: none !important;
 }
 
+/* Solo en modo edición: touch-action:none evita que el SO interprete el drag
+   como scroll. Fuera de edición bloquearía el scroll táctil sobre los tiles
+   posicionados (regresión móvil). */
 .edit-mode-active .freeform-positioned {
-    position: absolute !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
-    max-width: none !important;
     touch-action: none !important;
 }
 

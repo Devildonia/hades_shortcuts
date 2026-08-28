@@ -145,7 +145,7 @@ export async function runAll(container) {
         let ok = true;
         let error = null;
         try {
-            await t.fn();
+            await t.fn({ expect });
         } catch (e) {
             ok = false;
             error = (e && (e.stack || e.message)) || String(e);
