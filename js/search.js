@@ -128,7 +128,7 @@ export class SearchEngineManager {
                 const copy = macroEngine.displayCopy(query, macro);
                 const detected = getTranslation('bangs.macro_detected') || 'Macro detected:';
                 const runLabel = getTranslation('bangs.run_routine') || 'Run routine';
-                this.calcBanner.innerHTML = `<div class="devtool-result-row"><span>⚡ <strong>${escapeHtml(detected)}</strong> ${escapeHtml(macro.icon || '')} ${escapeHtml(copy.name)}</span> <button class="devtool-action-btn" id="run-macro-trigger">🚀 ${escapeHtml(runLabel)}</button></div>`;
+                this.calcBanner.innerHTML = `<div class="devtool-result-row"><span><strong>${escapeHtml(detected)}</strong>&ensp;${escapeHtml(copy.name)}</span> <button class="devtool-action-btn" id="run-macro-trigger">${escapeHtml(runLabel)}</button></div>`;
                 this.calcBanner.classList.remove('hidden');
                 const trigger = document.getElementById('run-macro-trigger');
                 if (trigger) trigger.onclick = () => macroEngine.executeMacro(query);
