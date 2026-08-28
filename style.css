@@ -7937,3 +7937,82 @@ html.show-shortcut-tags .enlace-icono .icon-img-wrapper {
     font-style: italic;
     color: var(--paper-ink-soft);
 }
+
+/* ==========================================================================
+   Temporizador Focus — Zen Garden (customización)
+   Tinta malva sobre papel de washi cálido + anillo con gradiente
+   rosa-cerezo → malva, para que la columna 3 (Sakura + Temporizador)
+   lea como un solo jardín zen
+   ========================================================================== */
+.widget-pomodoro {
+    --zen-ink: #5A2E4A;
+    --zen-ink-soft: rgba(90, 46, 74, 0.6);
+    --zen-rose: #C93A6E;
+    position: relative;
+    background:
+        repeating-linear-gradient(90deg,
+            rgba(90, 46, 74, 0.028) 0px, rgba(90, 46, 74, 0.028) 1px,
+            transparent 1px, transparent 4px),
+        linear-gradient(165deg, #F7EDE7 0%, #F1E3D9 48%, #E9D6C9 100%);
+}
+
+/* Título: hereda Outfit 0.95rem/700 de .widget-header h3 como el resto de
+   widgets; solo se ajusta el color para que sea legible sobre el papel */
+.widget-pomodoro .widget-title-group h3 {
+    color: var(--zen-ink);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.widget-pomodoro .widget-icon {
+    color: var(--zen-ink-soft);
+}
+
+/* Badge Enfoque/Descanso: tinta malva-rosa y tinta verde sobre papel */
+.widget-pomodoro .pomodoro-badge.focus {
+    background: rgba(255, 255, 255, 0.55);
+    color: #8C3A5A;
+    border: 1px solid rgba(140, 58, 90, 0.4);
+}
+
+.widget-pomodoro .pomodoro-badge.break {
+    background: rgba(255, 255, 255, 0.55);
+    color: #3E7A4E;
+    border: 1px solid rgba(62, 122, 78, 0.4);
+}
+
+/* Anillo: pista en tinta malva + trazo con gradiente rosa → malva
+   (definido en <defs id="zen-ring-grad"> del SVG) */
+.widget-pomodoro .pomodoro-bg-circle {
+    stroke: rgba(90, 46, 74, 0.14);
+}
+
+.widget-pomodoro .pomodoro-progress-circle {
+    stroke: url(#zen-ring-grad);
+}
+
+.widget-pomodoro .pomodoro-time {
+    color: var(--zen-ink);
+}
+
+/* Botones: Iniciar como la chip activa de Sakura; Reiniciar en cristal tinta */
+.widget-pomodoro .pomodoro-btn.start {
+    background: linear-gradient(135deg, #E4689B 0%, var(--zen-rose) 100%);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 3px 10px rgba(201, 58, 110, 0.35);
+}
+
+.widget-pomodoro .pomodoro-btn.start:hover {
+    box-shadow: 0 5px 14px rgba(201, 58, 110, 0.45);
+}
+
+.widget-pomodoro .pomodoro-btn.reset {
+    background: rgba(255, 255, 255, 0.5);
+    color: var(--zen-ink);
+    border-color: rgba(90, 46, 74, 0.3);
+}
+
+.widget-pomodoro .pomodoro-btn.reset:hover {
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--zen-ink);
+}
