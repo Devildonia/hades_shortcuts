@@ -20,6 +20,14 @@ export class DashboardRenderer {
                 this.collapseCategory();
             }
         });
+
+        // Si la ventana pierde el foco (ej: un atajo se abre en otra pestaña y
+        // volvemos a la página), el tooltip no recibe mouseleave/blur y quedaría
+        // anclado sobre el widget. Lo ocultamos de forma idempotente.
+        window.addEventListener('blur', () => this.hideTooltip());
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) this.hideTooltip();
+        });
     }
 
     playSound(audio) {
