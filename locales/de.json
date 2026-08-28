@@ -358,6 +358,7 @@
   },
   "nav": {
     "ai_agent": "KI-Agent",
+    "ai_agent_card": "Assistent",
     "focus_mode": "Fokus-Modus",
     "focus_active": "Fokus Aktiv"
   },

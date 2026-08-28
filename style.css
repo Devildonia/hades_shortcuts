@@ -428,6 +428,9 @@ body.settings-open {
     align-items: center;
     justify-content: center;
     text-align: center;
+    /* Alineación óptica: el bloque (título + saludo) baja unos píxeles para
+       que el título quede a la altura de los cajones de reloj y clima */
+    transform: translateY(12px);
 }
 
 .brand-tile-wrapper {
@@ -776,17 +779,117 @@ body.settings-open {
     gap: var(--space-lg);
 }
 
+/* Caja de búsqueda: mismo marco cromo-azul que perfiles y Agente IA (familia azul) */
 .search-box-wrapper {
+    --gold-lx: 28%;
+    --gold-ly: 12%;
+    --gold-angle: -38deg;
     width: 100%;
     position: relative;
     display: flex;
     align-items: center;
+    padding: 6px;
+    background: var(--card-bg);
+    border-radius: calc(var(--radius-pill) + 6px);
+    isolation: isolate;
+    box-shadow:
+        0 0 0 1px rgba(96, 165, 250, 0.35),
+        inset 0 1px 0 rgba(191, 219, 254, 0.3),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.35),
+        var(--shadow-subtle);
+}
+
+/* Spotlight azul del cursor (mismo efecto que .space-numpad-card) */
+.search-box-wrapper::before {
+    content: '';
+    position: absolute;
+    top: var(--mouse-y, -1000px);
+    left: var(--mouse-x, -1000px);
+    transform: translate(-50%, -50%);
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.16) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.search-box-wrapper:hover::before {
+    opacity: 1;
+}
+
+/* Bezel cromo-azul: misma estructura de mask que el dorado, paleta fría de perfiles */
+.search-box-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 6px;
+    pointer-events: none;
+    z-index: 4;
+    background:
+        radial-gradient(
+            280px circle at var(--gold-lx) var(--gold-ly),
+            rgba(219, 234, 254, 0.98) 0%,
+            rgba(96, 165, 250, 0.6) 20%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from var(--gold-angle),
+            #0a1524 0deg,
+            #2f5f9e 30deg,
+            #bcdcff 50deg,
+            #1e4270 84deg,
+            #0d2340 126deg,
+            #4d8fd6 168deg,
+            #173253 206deg,
+            #9ec8ff 244deg,
+            #0e2038 288deg,
+            #3f77b8 328deg,
+            #0a1524 360deg
+        );
+    background-blend-mode: screen, normal;
+    -webkit-mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    -webkit-mask-origin: content-box, border-box;
+    -webkit-mask-clip: content-box, border-box;
+    mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    mask-origin: content-box, border-box;
+    mask-clip: content-box, border-box;
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="light"] .search-box-wrapper::after {
+    background:
+        radial-gradient(
+            280px circle at var(--gold-lx) var(--gold-ly),
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(147, 197, 253, 0.55) 20%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from var(--gold-angle),
+            #1d4e89 0deg,
+            #4f8fe0 30deg,
+            #ffffff 50deg,
+            #2f6cb8 84deg,
+            #1a3f70 126deg,
+            #7fb2f0 168deg,
+            #274f86 206deg,
+            #d6e8ff 244deg,
+            #1e4478 288deg,
+            #5b98dd 328deg,
+            #1d4e89 360deg
+        );
 }
 
 /* Search Engine Dropdown */
 .engine-dropdown-wrapper {
     position: absolute;
-    left: 8px;
+    /* +6px: se asienta sobre el bezel de .search-box-wrapper */
+    left: 14px;
     z-index: 10;
 }
 
@@ -908,6 +1011,7 @@ body.settings-open {
     background: var(--card-bg);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
+    /* El marco azul lo aporta .search-box-wrapper (bezel cromo de la familia perfiles) */
     border: 1px solid var(--card-border);
     border-radius: var(--radius-pill);
     color: var(--text-primary);
@@ -933,7 +1037,8 @@ body.settings-open {
 
 .search-key-badge {
     position: absolute;
-    right: 20px;
+    /* +6px: compensa el grosor del bezel */
+    right: 26px;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid var(--card-border);
     padding: 3px 9px;
@@ -947,7 +1052,8 @@ body.settings-open {
 
 .clear-search-btn {
     position: absolute;
-    right: 52px;
+    /* +6px: compensa el grosor del bezel */
+    right: 58px;
     z-index: 6;
     width: 32px;
     height: 32px;
@@ -976,7 +1082,7 @@ body.settings-open {
 }
 
 .search-box-wrapper.is-filled .clear-search-btn {
-    right: 16px;
+    right: 22px;
 }
 
 .search-box-wrapper.is-filled #main-search {
@@ -2029,15 +2135,12 @@ body.category-expanded-active {
     position: relative;
     display: inline-block;
     transition: var(--transition-smooth);
-    border-bottom: 2px dashed rgba(255, 255, 255, 0.25);
-    padding-bottom: 1px;
     outline: none;
 }
 
 .brand-user-name:hover,
 .brand-user-name:focus-visible {
     color: var(--accent-primary);
-    border-bottom-color: var(--accent-primary);
     text-shadow: 0 0 20px var(--accent-glow);
 }
 
@@ -2936,7 +3039,8 @@ html.no-gold-bezel .mini-widget-card:hover {
     box-shadow: var(--shadow-elevated);
 }
 
-html.no-gold-bezel .mini-widget-card::after {
+html.no-gold-bezel .mini-widget-card::after,
+html.no-gold-bezel .search-box-wrapper::after {
     display: none;
 }
 
@@ -5633,6 +5737,58 @@ html.no-gold-bezel .mini-widget-card::after {
         );
 }
 
+/* --- Agente IA launcher: cajón de la familia azul (perfiles) ---
+    Etiqueta arriba (alineada con PERFILES) + botón que ocupa el resto */
+.ai-launcher-card {
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 14px 18px;
+}
+
+.ai-launcher-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+    min-height: 78px;
+    padding: 10px 16px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.10), rgba(168, 85, 247, 0.14));
+    border: 1px solid rgba(0, 242, 254, 0.40);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-launcher-btn:hover {
+    border-color: #00f2fe;
+    box-shadow: 0 0 22px rgba(0, 242, 254, 0.35), inset 0 1px 0 rgba(191, 235, 254, 0.25);
+    transform: translateY(-2px);
+}
+
+.ai-launcher-btn:active {
+    transform: translateY(0) scale(0.985);
+}
+
+.ai-launcher-name {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .ai-launcher-btn {
+    background: linear-gradient(135deg, rgba(0, 180, 216, 0.10), rgba(124, 58, 237, 0.10));
+    border-color: rgba(0, 150, 190, 0.45);
+}
+
+[data-theme="light"] .ai-launcher-name {
+    color: #0f172a;
+}
+
 .space-numpad-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -6403,11 +6559,6 @@ body.focus-mode-active #aurora-bg {
 /* --- Contextual AI Agent — pantalla central (convención de modales del proyecto) --- */
 
 
-.ai-agent-header-btn:hover {
-    background: linear-gradient(135deg, rgba(0, 242, 254, 0.3), rgba(168, 85, 247, 0.4));
-    box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
-}
-
 .ai-agent-backdrop {
     position: fixed;
     inset: 0;
@@ -6757,33 +6908,6 @@ body.focus-mode-active #aurora-bg {
 
 /* --- Header Action Capsule Buttons --- */
 
-.ai-agent-header-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    height: 42px;
-    padding: 0 16px;
-    border-radius: 30px;
-    background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(168, 85, 247, 0.18));
-    border: 1px solid rgba(0, 242, 254, 0.35);
-    color: #00f2fe;
-    font-size: 0.82rem;
-    font-weight: 700;
-    cursor: pointer;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    white-space: nowrap;
-}
-
-.ai-agent-header-btn:hover {
-    background: linear-gradient(135deg, rgba(0, 242, 254, 0.25), rgba(168, 85, 247, 0.35));
-    border-color: #00f2fe;
-    box-shadow: 0 0 18px rgba(0, 242, 254, 0.4);
-    transform: translateY(-2px);
-}
-
 .focus-toggle-btn {
     display: inline-flex;
     align-items: center;
@@ -6843,6 +6967,9 @@ body.focus-mode-active #aurora-bg {
         grid-column: 1 / -1;
     }
     .search-section {
+        grid-column: 1 / -1;
+    }
+    .ai-launcher-card {
         grid-column: 1 / -1;
     }
 }
@@ -7150,7 +7277,6 @@ html.show-shortcut-tags .enlace-icono .icon-img-wrapper {
 }
 
 .nav-action-btn,
-.ai-agent-header-btn,
 .focus-toggle-btn {
     height: var(--chip-h);
     padding: 0 16px;
@@ -7705,9 +7831,9 @@ html.show-shortcut-tags .enlace-icono .icon-img-wrapper {
         grid-column: 1;
         grid-row: 1 / 2;
     }
-    /* Búsqueda: misma fila, Cols 2-5 → su eje vertical cae en la mitad del box de perfiles */
+    /* Búsqueda: misma fila, Cols 2-4 → centrada entre perfiles (izq) y Agente IA (der) */
     .search-section {
-        grid-column: 2 / 6;
+        grid-column: 2 / 5;
         grid-row: 1 / 2;
         max-width: none;
         margin: 0;
@@ -7716,6 +7842,11 @@ html.show-shortcut-tags .enlace-icono .icon-img-wrapper {
     }
     .search-section .search-box-wrapper {
         max-width: 840px;
+    }
+    /* Agente IA: Col 5, espejo del numpad en Col 1 → fila simétrica */
+    .ai-launcher-card {
+        grid-column: 5 / 6;
+        grid-row: 1 / 2;
     }
     .widget-scratchpad {
         grid-column: 1;

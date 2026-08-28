@@ -272,7 +272,7 @@ export class DashboardRenderer {
         if (this._spotlightBound) return;
         this._spotlightBound = true;
         document.addEventListener('pointermove', (e) => {
-            const card = e.target.closest('.categoria, .mini-widget-card');
+            const card = e.target.closest('.categoria, .mini-widget-card, .search-box-wrapper');
             if (!card) return;
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -280,7 +280,7 @@ export class DashboardRenderer {
             card.style.setProperty('--mouse-x', `${x}px`);
             card.style.setProperty('--mouse-y', `${y}px`);
             const angle = Math.atan2(y - rect.height / 2, x - rect.width / 2) * (180 / Math.PI);
-            if (card.classList.contains('mini-widget-card')) {
+            if (card.classList.contains('mini-widget-card') || card.classList.contains('search-box-wrapper')) {
                 card.style.setProperty('--gold-lx', `${x}px`);
                 card.style.setProperty('--gold-ly', `${y}px`);
                 card.style.setProperty('--gold-angle', `${angle}deg`);

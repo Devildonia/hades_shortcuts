@@ -89,12 +89,8 @@
                 </div>
             </div>
 
-            <!-- AI Agent Header Button -->
             <button class="nav-action-btn focus-toggle-btn" id="focus-mode-toggle-btn" title="Modo Concentración Profunda (Alt+F)" aria-label="Modo Focus">
                 <span data-i18n="nav.focus_mode">Modo Focus</span>
-            </button>
-            <button class="nav-action-btn ai-agent-header-btn" id="open-ai-agent-btn" title="Asistente IA Contextual (!ai)" aria-label="Abrir Asistente IA">
-                <span data-i18n="nav.ai_agent">Agente IA</span>
             </button>
 
             <!-- Settings Hub Button -->
@@ -163,6 +159,14 @@
 
             <!-- Widget 0: Space Numpad — 6 perfiles (teclas 1-6), encima del Bloc de Notas -->
             <div class="mini-widget-card space-numpad-card" id="spaces-switcher-bar" data-tile-id="tile-spaces-numpad" title="Perfiles · Alt+1 a Alt+6"></div>
+
+            <!-- Widget 0b: Agente IA — cajón con marco azul (familia perfiles), a la derecha de la búsqueda -->
+            <div class="mini-widget-card space-numpad-card ai-launcher-card" id="ai-launcher-card" data-tile-id="tile-ai-launcher" title="Asistente IA Contextual (!ai)">
+                <span class="spaces-label" data-i18n="nav.ai_agent_card">Asistente</span>
+                <button class="ai-launcher-btn" id="open-ai-agent-btn" type="button" title="Asistente IA Contextual (!ai)" aria-label="Abrir Asistente IA">
+                    <span class="ai-launcher-name" data-i18n="nav.ai_agent">Agente IA</span>
+                </button>
+            </div>
 
             <!-- Widget 1: Scratchpad Glass (Col 1) -->
             <div class="mini-widget-card widget-scratchpad" id="widget-scratchpad-card" data-tile-id="tile-scratchpad">

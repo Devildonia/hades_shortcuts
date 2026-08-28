@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ HaDeS' Shortcuts · Next-Gen (v1.0.0-rc-1)
+# HaDeS' Shortcuts (v1.0.0-rc-1)
 ### *A high-performance, ultra-aesthetic browser command center, productivity OS & startpage*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)

@@ -358,6 +358,7 @@
   },
   "nav": {
     "ai_agent": "AI Agent",
+    "ai_agent_card": "Assistant",
     "focus_mode": "Focus Mode",
     "focus_active": "Focus Active"
   },
