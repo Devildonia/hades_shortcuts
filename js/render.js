@@ -43,14 +43,12 @@ export class DashboardRenderer {
             // Drag handle for Edit Mode
             const dragHandle = '';
             const catTitle = t.categories[cat.id] || cat.defaultTitle;
-            const badgeText = `${shortcutsInCat.length} ${t.badges.apps}`;
 
             section.innerHTML = `
                 <div class="categoria-header">
                     ${dragHandle}
                     <div class="cat-tag-indicator ${cat.color}"></div>
                     <h2 data-cat-key="${cat.id}">${escapeHtml(catTitle)}</h2>
-                    <span class="cat-badge">${badgeText}</span>
                 </div>
                 <div class="iconos-grupo" data-cat-id="${cat.id}"></div>
             `;
