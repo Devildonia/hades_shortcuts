@@ -55,6 +55,34 @@ export class TechRadarEngine {
         ];
     }
 
+    // RSS→JSON vía api.rss2json.com (sin API key, tier gratuito).
+    // Devuelve artículos ya parseados: no depende de proxies CORS de texto.
+    async fetchFeedViaRss2Json(feed, signal, budgetMs = 10000) {
+        const api = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed.url);
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), budgetMs);
+        const onAbort = () => ctrl.abort();
+        if (signal) signal.addEventListener('abort', onAbort, { once: true });
+        try {
+            const res = await fetch(api, { signal: ctrl.signal });
+            if (!res.ok) throw new Error('rss2json_http_' + res.status);
+            const data = await res.json();
+            const rawItems = (data && Array.isArray(data.items)) ? data.items : [];
+            return rawItems.slice(0, 6)
+                .map((it, i) => ({
+                    id: 'r2j_' + (it.guid || it.link || i) + '_' + i,
+                    title: (it.title || '').trim(),
+                    url: it.link || '',
+                    time: it.pubDate || it.isoDate || '',
+                    source: feed.name
+                }))
+                .filter(it => it.title && it.url);
+        } finally {
+            clearTimeout(timer);
+            if (signal) signal.removeEventListener('abort', onAbort);
+        }
+    }
+
     parseXMLFeed(xmlText, fallbackSource = 'Web') {
         const items = [];
         try {
@@ -98,7 +126,9 @@ export class TechRadarEngine {
 
         let items = [];
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 4000);
+        // Budget total de la cadena completa: directo (4s) + 2 proxies (10s c/u)
+        // + RSS→JSON (10s) + margen. Cada fase corta sola con su presupuesto.
+        const timeoutId = setTimeout(() => controller.abort(), 40000);
 
         try {
             if (feed.id === 'hackernews') {
@@ -112,13 +142,27 @@ export class TechRadarEngine {
                     source: 'HN'
                 }));
             } else {
+                // Estrategia A: XML/Atom vía fetch directo o cadena de proxies CORS
                 let text = '';
                 try {
-                    text = await fetchTextMaybeProxy(feed.url, controller.signal);
+                    text = await fetchTextMaybeProxy(feed.url, controller.signal, {
+                        directMs: 4000,
+                        proxyMs: 10000
+                    });
                 } catch (e) {
                     text = '';
                 }
                 if (text) items = this.parseXMLFeed(text, feed.name);
+
+                // Estrategia B: RSS→JSON (infraestructura independiente; funciona
+                // incluso si todos los proxies CORS están caídos)
+                if (!items.length) {
+                    try {
+                        items = await this.fetchFeedViaRss2Json(feed, controller.signal);
+                    } catch (e) {
+                        items = [];
+                    }
+                }
             }
         } catch (err) {
             // Si la red falla, usar caché previa válida si existe

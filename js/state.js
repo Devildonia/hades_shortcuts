@@ -414,15 +414,62 @@ export function readJsonStorage(key, fallback) {
     }
 }
 
-export async function fetchTextMaybeProxy(url, signal) {
+// Proxies CORS gratuitos (sin API key). Se prueban en orden; gana el
+// primero que devuelva un cuerpo válido.
+const CORS_PROXY_MAKERS = [
+    (u) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    (u) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+];
+
+/**
+ * Descarga texto de una URL respetando CORS, en 3 fases:
+ *   1) fetch directo (funciona si el origen permite CORS),
+ *   2) cadena de proxies CORS (cada uno con presupuesto de tiempo propio).
+ * Cada fase tiene su propio budget para que un proxy lento no consuma el
+ * tiempo de las siguientes. Si `signal` se aborta, se propaga al momento.
+ */
+export async function fetchTextMaybeProxy(url, signal, opts = {}) {
+    const directMs = opts.directMs ?? 4000;
+    const proxyMs = opts.proxyMs ?? 10000;
+
+    const runFetch = async (fetchUrl, budgetMs) => {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), budgetMs);
+        const onOuterAbort = () => ctrl.abort();
+        if (signal) signal.addEventListener('abort', onOuterAbort, { once: true });
+        try {
+            const res = await fetch(fetchUrl, { signal: ctrl.signal });
+            if (!res.ok) throw new Error(`http_${res.status}`);
+            const text = await res.text();
+            if (!text || !text.trim()) throw new Error('empty_body');
+            return text;
+        } finally {
+            clearTimeout(timer);
+            if (signal) signal.removeEventListener('abort', onOuterAbort);
+        }
+    };
+
+    const throwIfAborted = () => {
+        if (signal && signal.aborted) throw new DOMException('Aborted', 'AbortError');
+    };
+
+    // 1) Directo
     try {
-        const res = await fetch(url, { signal });
-        if (res.ok) return await res.text();
+        return await runFetch(url, directMs);
     } catch (e) {
-        if (e && e.name === 'AbortError') throw e;
+        throwIfAborted();
     }
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-    const resProxy = await fetch(proxyUrl, { signal });
-    if (!resProxy.ok) throw new Error('fetch_failed');
-    return await resProxy.text();
+
+    // 2) Proxies, uno a uno, con presupuesto independiente cada uno
+    let lastErr = null;
+    for (const make of CORS_PROXY_MAKERS) {
+        throwIfAborted();
+        try {
+            return await runFetch(make(url), proxyMs);
+        } catch (e) {
+            throwIfAborted();
+            lastErr = e;
+        }
+    }
+    throw lastErr || new Error('fetch_failed');
 }
