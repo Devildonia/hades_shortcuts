@@ -73,7 +73,6 @@
                     <span class="brand-user-name" id="brand-user-name" title="Haz clic para cambiar tu nombre de usuario" role="button" tabindex="0">HaDeS</span><span class="brand-user-suffix" id="brand-user-suffix">'</span> <span class="accent-text">SHORTCUTS</span>
                 </h1>
                 <p class="brand-greeting" id="greeting-text">Bienvenido al Centro de Mando</p>
-                <div id="spaces-switcher-bar" class="spaces-switcher-bar"></div>
             </div>
         </div>
 
@@ -113,8 +112,10 @@
     <!-- Main Content Container -->
     <main class="dashboard-wrapper">
         
-        <!-- Search & Filter Bar Section -->
-        <section class="search-section modular-dropzone" id="zone-hero">
+                <!-- Mini-Widgets Bento Section -->
+        <section class="mini-widgets-section modular-dropzone" id="zone-widgets">
+            <!-- Barra de búsqueda: en escritorio se asienta en la fila del numpad, centrada en su altura -->
+            <section class="search-section modular-dropzone" id="zone-hero">
             <div class="search-box-wrapper" data-tile-id="tile-search">
                 <!-- Search Engine Selector Dropdown -->
                 <div class="engine-dropdown-wrapper">
@@ -158,10 +159,11 @@
 
             <div class="smart-suggestion-banner hidden" id="smart-suggestion-banner"></div>
             <div class="search-calc-banner hidden" id="search-calc-banner"></div>
-        </section>
+            </section>
 
-                <!-- Mini-Widgets Bento Section -->
-        <section class="mini-widgets-section modular-dropzone" id="zone-widgets">
+            <!-- Widget 0: Space Numpad — 6 perfiles (teclas 1-6), encima del Bloc de Notas -->
+            <div class="mini-widget-card space-numpad-card" id="spaces-switcher-bar" data-tile-id="tile-spaces-numpad" title="Perfiles · Alt+1 a Alt+6"></div>
+
             <!-- Widget 1: Scratchpad Glass (Col 1) -->
             <div class="mini-widget-card widget-scratchpad" id="widget-scratchpad-card" data-tile-id="tile-scratchpad">
                 <span class="postit-pin" aria-hidden="true"></span>

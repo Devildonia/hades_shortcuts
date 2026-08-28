@@ -498,7 +498,10 @@
     "aria": "Profils indépendants",
     "space_work": "Travail & Dev",
     "space_personal": "Personnel & Loisirs",
-    "space_3d": "3D & Création IA"
+    "space_3d": "3D & Création IA",
+    "space_art": "Art & Audio",
+    "space_fun": "Social & Gaming",
+    "space_utils": "Outils & Web"
   },
   "macros_seed": {
     "work": {

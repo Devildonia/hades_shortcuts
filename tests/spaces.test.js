@@ -7,7 +7,11 @@ test('SpacesEngine: carga espacios predeterminados y estructura inicial', ({ exp
     const engine = new SpacesEngine();
     expect(engine.data.activeSpaceId).toBe('space_work');
     expect(Array.isArray(engine.data.spaces)).toBe(true);
-    expect(engine.data.spaces.length).toBe(3);
+    expect(engine.data.spaces.length).toBe(6);
+
+    // Los 3 espacios originales conservan su identidad; 4-6 son las nuevas teclas del numpad
+    ['space_work', 'space_personal', 'space_3d', 'space_art', 'space_fun', 'space_utils']
+        .forEach((id) => expect(engine.data.spaces.some((s) => s.id === id)).toBe(true));
 
     const workSpace = engine.data.spaces.find(s => s.id === 'space_work');
     expect(workSpace.name).toBe(SPACE_PRESETS.space_work.name);

@@ -28,6 +28,30 @@ export const SPACE_PRESETS = {
         accent: '#fb923c',
         categoryIds: ['cat_3d', 'cat_ai', 'cat_art', 'cat_audio', 'cat_video', 'cat_google'],
         scratchpad: 'Creative prompts, textures and modeling references...'
+    },
+    space_art: {
+        id: 'space_art',
+        name: 'Arte & Audio',
+        theme: 'jade',
+        accent: '#34d399',
+        categoryIds: ['cat_3d', 'cat_art', 'cat_audio', 'cat_ai'],
+        scratchpad: 'Ideas creativas: renders, mezclas y referencias...'
+    },
+    space_fun: {
+        id: 'space_fun',
+        name: 'Social & Gaming',
+        theme: 'abyss',
+        accent: '#e2e8f0',
+        categoryIds: ['cat_social', 'cat_gaming', 'cat_video', 'cat_shopping'],
+        scratchpad: 'Partidas, streams y planes de ocio...'
+    },
+    space_utils: {
+        id: 'space_utils',
+        name: 'Herramientas & Web',
+        theme: 'light',
+        accent: '#0284c7',
+        categoryIds: ['cat_tools', 'cat_google', 'cat_video', 'cat_ai'],
+        scratchpad: 'Utilities, APIs y consultas rápidas...'
     }
 };
 
@@ -131,54 +155,52 @@ export class SpacesEngine {
             localStorage.setItem('hades_scratchpad_content', target.scratchpad);
         }
 
-        this.renderHeaderSwitcher();
+        this.renderNumpad();
         state.emit('space:changed', spaceId);
 
         document.body.classList.add('space-transition-flash');
         setTimeout(() => document.body.classList.remove('space-transition-flash'), 300);
     }
 
-    renderHeaderSwitcher(containerEl) {
+    // Numpad de 6 perfiles: teclas 1-6, la activa se ve "pulsada"
+    renderNumpad(containerEl) {
         const container = containerEl || document.getElementById('spaces-switcher-bar');
         if (!container) return;
 
         const activeId = this.data.activeSpaceId;
         container.innerHTML = '';
 
-        const cluster = document.createElement('div');
-        cluster.className = 'spaces-cluster';
-
         const label = document.createElement('span');
         label.className = 'spaces-label';
         label.textContent = getTranslation('spaces.label') || 'Profiles';
-        cluster.appendChild(label);
+        container.appendChild(label);
 
-        const capsule = document.createElement('div');
-        capsule.className = 'spaces-capsule';
-        capsule.setAttribute('role', 'tablist');
-        capsule.setAttribute('aria-label', getTranslation('spaces.aria') || 'Independent profiles');
+        const grid = document.createElement('div');
+        grid.className = 'space-numpad-grid';
+        grid.setAttribute('role', 'tablist');
+        grid.setAttribute('aria-label', getTranslation('spaces.aria') || 'Independent profiles');
 
         this.data.spaces.forEach((sp, idx) => {
             const btn = document.createElement('button');
             const isActive = sp.id === activeId;
             const name = this.spaceLabel(sp.id);
             btn.type = 'button';
-            btn.className = `space-pill ${isActive ? 'active' : ''}`;
+            btn.className = `space-key ${isActive ? 'active' : ''}`;
             btn.setAttribute('data-space-id', sp.id);
             btn.setAttribute('role', 'tab');
             btn.setAttribute('aria-selected', String(isActive));
             btn.setAttribute('title', `${name} · Alt+${idx + 1}`);
-            btn.innerHTML = `<span class="space-glyph" aria-hidden="true"></span><span class="space-name">${escapeHtml(name)}</span>`;
+            if (sp.accent) btn.style.setProperty('--key-accent', sp.accent);
+            btn.innerHTML = `<span class="space-key-num" aria-hidden="true">${idx + 1}</span><span class="visually-hidden">${escapeHtml(name)}</span>`;
 
             btn.addEventListener('click', () => {
                 soundFx.play('click');
                 this.switchSpace(sp.id);
             });
-            capsule.appendChild(btn);
+            grid.appendChild(btn);
         });
 
-        cluster.appendChild(capsule);
-        container.appendChild(cluster);
+        container.appendChild(grid);
     }
 
     bindKeyboardShortcuts() {
@@ -196,10 +218,10 @@ export class SpacesEngine {
 
     init() {
         this.applySpaceChrome();
-        this.renderHeaderSwitcher();
+        this.renderNumpad();
         this.bindKeyboardShortcuts();
         this.saveSpaces();
-        state.on('language:changed', () => this.renderHeaderSwitcher());
+        state.on('language:changed', () => this.renderNumpad());
     }
 }
 
