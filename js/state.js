@@ -318,8 +318,9 @@ export function normalizeTags(tags) {
 }
 
 export function safeHttpUrl(url) {
+    if (url === null || url === undefined || String(url).trim() === '') return '';
     try {
-        const u = new URL(String(url || ''), typeof location !== 'undefined' ? location.href : 'https://local.invalid');
+        const u = new URL(String(url), typeof location !== 'undefined' ? location.href : 'https://local.invalid');
         if (u.protocol === 'http:' || u.protocol === 'https:') return u.href;
     } catch (e) {}
     return '';

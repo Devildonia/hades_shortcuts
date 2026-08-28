@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HaDeS' Shortcuts — Batería de Tests</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 28px 16px 70px; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; background: #0b1020; color: #e6edf7; }
+    header, #report { max-width: 880px; margin: 0 auto; }
+    header { margin-bottom: 22px; }
+    h1 { font-size: 22px; margin: 0 0 6px; }
+    header p { margin: 0; color: #8fa3c0; font-size: 13px; line-height: 1.5; }
+    code { background: #16203a; padding: 1px 6px; border-radius: 6px; font-size: 12px; color: #9fd0ff; }
+    #report { display: grid; gap: 8px; margin-top: 22px; }
+    .summary { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; padding: 14px 16px; border-radius: 12px; background: #111a30; border: 1px solid #223052; font-size: 15px; }
+    .summary.all-ok { border-color: #14532d; }
+    .summary.has-fail { border-color: #7f1d1d; }
+    .badge { padding: 4px 12px; border-radius: 8px; font-weight: 700; font-family: ui-monospace, monospace; }
+    .badge.ok { background: #0f3d2a; color: #4ade80; }
+    .badge.ko { background: #4a1420; color: #f87171; }
+    .ms { margin-left: auto; color: #5c7096; font-size: 12px; font-family: ui-monospace, monospace; }
+    .test { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; border-radius: 10px; background: #0f1730; border: 1px solid #1e2b4d; font-size: 14px; }
+    .test .mark { font-weight: 700; line-height: 1.4; }
+    .test.ok .mark { color: #4ade80; }
+    .test.ko .mark { color: #f87171; }
+    .test .label { flex: 1; }
+    .test .err { display: block; margin-top: 5px; color: #fca5a5; font-size: 12.5px; font-family: ui-monospace, monospace; white-space: pre-wrap; word-break: break-word; }
+    footer { max-width: 880px; margin: 30px auto 0; color: #5c7096; font-size: 12px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🧪 HaDeS' Shortcuts — Batería de Tests</h1>
+    <p>Vanilla ES Modules · sin Node, sin npm, sin build · sirve con <code>local server.bat</code> y abre <code>/tests/</code> en el navegador.</p>
+  </header>
+
+  <!-- ===== FIXTURES: DOM que necesitan los módulos bajo prueba (oculto, pero presente) ===== -->
+  <div id="test-fixtures" hidden>
+    <div id="tech-radar-list"></div>
+    <div id="radar-channel-bar"></div>
+    <span id="pomodoro-time-display">--:--</span>
+    <span id="pomodoro-mode-badge"></span>
+    <svg width="80" height="80"><circle id="pomodoro-progress-circle" cx="40" cy="40" r="36" fill="none" stroke="#4facfe" stroke-width="6"/></svg>
+    <button id="pomodoro-start-btn">Iniciar</button>
+    <button id="pomodoro-reset-btn">Reiniciar</button>
+    <div id="postits-canvas"></div>
+    <div id="macros-list-container"></div>
+    <input id="import-backup-file" type="file" accept="application/json">
+  </div>
+
+  <div id="report">
+    <div class="summary">Cargando módulos y tests…</div>
+  </div>
+
+  <footer>
+    Resultados también disponibles en <code>window.__testResults</code> (JSON) para conectar a un CI futuro.<br>
+    Cubre: bangs (crítico #1), Pomodoro (crítico #2), import/sync (silencioso #3), TopSites (#4), race del radar (#5) y utilidades de seguridad.
+  </footer>
+
+  <script type="module">
+    import { runAll, beforeEach } from './harness.js';
+
+    // Hook global: storage limpio antes de cada test
+    beforeEach(() => {
+      try { localStorage.clear(); } catch (e) {}
+      try { sessionStorage.clear(); } catch (e) {}
+    });
+
+    // Registro de test files (orden importa: puros → estado → integraciones)
+    await import('./bangs.test.js');
+    await import('./state-utils.test.js');
+    await import('./pomodoro.test.js');
+    await import('./import-sync.test.js');
+    await import('./tech-radar.test.js');
+    await import('./extension-api.test.js');
+
+    const report = document.getElementById('report');
+    report.textContent = '';
+    const summary = await runAll(report);
+    document.title = (summary.failed === 0
+      ? `✅ Tests: ${summary.passed}/${summary.total} pasaron`
+      : `❌ Tests: ${summary.failed} fallaron (${summary.passed}/${summary.total})`);
+  </script>
+</body>
+</html>
