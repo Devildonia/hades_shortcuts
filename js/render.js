@@ -12,7 +12,14 @@ export class DashboardRenderer {
         this.tooltipTitle = document.getElementById('tooltip-title');
         this.tooltipDomain = document.getElementById('tooltip-domain');
         this.tooltipDesc = document.getElementById('tooltip-desc');
+        this.currentExpandedCategory = null;
+        this._categoryPlaceholder = null;
 
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.currentExpandedCategory) {
+                this.collapseCategory();
+            }
+        });
     }
 
     playSound(audio) {
@@ -23,7 +30,60 @@ export class DashboardRenderer {
         } catch (e) {}
     }
 
+    expandCategory(section) {
+        if (this.currentExpandedCategory) {
+            this.collapseCategory();
+        }
+
+        let backdrop = document.getElementById('category-expand-backdrop');
+        if (!backdrop) {
+            backdrop = document.createElement('div');
+            backdrop.id = 'category-expand-backdrop';
+            backdrop.className = 'category-expand-backdrop';
+            document.body.appendChild(backdrop);
+            backdrop.addEventListener('click', () => this.collapseCategory());
+        }
+
+        // Placeholder in grid to maintain smooth grid flow without layout shifting
+        const rect = section.getBoundingClientRect();
+        const placeholder = document.createElement('div');
+        placeholder.className = 'categoria-grid-placeholder';
+        placeholder.style.width = `${rect.width}px`;
+        placeholder.style.height = `${rect.height}px`;
+        placeholder.style.gridColumn = window.getComputedStyle(section).gridColumn;
+        placeholder.style.gridRow = window.getComputedStyle(section).gridRow;
+        section.parentNode.insertBefore(placeholder, section);
+        this._categoryPlaceholder = placeholder;
+
+        this.currentExpandedCategory = section;
+        backdrop.classList.add('active');
+        section.classList.add('is-expanded');
+        document.body.classList.add('category-expanded-active');
+        soundFx.play('click');
+    }
+
+    collapseCategory() {
+        if (!this.currentExpandedCategory) return;
+        const section = this.currentExpandedCategory;
+        const backdrop = document.getElementById('category-expand-backdrop');
+        if (backdrop) backdrop.classList.remove('active');
+
+        section.classList.remove('is-expanded');
+        document.body.classList.remove('category-expanded-active');
+
+        if (this._categoryPlaceholder && this._categoryPlaceholder.parentNode) {
+            this._categoryPlaceholder.parentNode.removeChild(this._categoryPlaceholder);
+            this._categoryPlaceholder = null;
+        }
+
+        this.currentExpandedCategory = null;
+        soundFx.play('click');
+    }
+
     render() {
+        if (this.currentExpandedCategory) {
+            this.collapseCategory();
+        }
         if (!this.gridContainer) return;
         this.gridContainer.innerHTML = '';
         const t = i18nDictionaries[state.language] || i18nDictionaries.es;
@@ -39,6 +99,18 @@ export class DashboardRenderer {
             section.setAttribute('data-group', cat.group);
             section.setAttribute('data-cat-id', cat.id);
             section.setAttribute('data-tile-id', `tile-${cat.id}`);
+
+            // Click empty space in category to expand
+            section.addEventListener('click', (e) => {
+                if (state.editMode) return;
+                if (e.target.closest('.enlace-icono') || e.target.closest('.card-action-btn') || e.target.closest('.shortcut-tag-chip')) {
+                    return;
+                }
+                if (section.classList.contains('is-expanded')) {
+                    return;
+                }
+                this.expandCategory(section);
+            });
 
             // Drag handle for Edit Mode
             const dragHandle = '';
