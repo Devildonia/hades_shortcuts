@@ -5443,12 +5443,6 @@ html.no-gold-bezel .mini-widget-card::after {
     color: var(--text-primary, #ffffff);
 }
 
-.smart-sugg-icon {
-    font-size: 1.1rem;
-    color: #00f2fe;
-    animation: pulse 2s infinite;
-}
-
 .smart-sugg-msg strong {
     color: #00f2fe;
 }
