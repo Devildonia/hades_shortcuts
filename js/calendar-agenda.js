@@ -224,11 +224,10 @@ export class CalendarAgendaEngine {
         const sorted = [...this.events].sort((a, b) => new Date(a.start) - new Date(b.start));
 
         if (sorted.length === 0) {
-            const emptyMsg = getTranslation('widgets.calendar_empty') || 'Sin eventos próximos. ¡Tiempo para concentrarse!';
+            const emptyMsg = getTranslation('widgets.calendar_empty') || 'Sin eventos próximos';
             const addLabel = getTranslation('calendar_modal.add_tooltip') || '+ Añadir Evento';
             this.eventsList.innerHTML = `
                 <div class="calendar-empty">
-                    <span class="calendar-empty-icon">☕</span>
                     <p class="calendar-empty-text">${escapeHtml(emptyMsg)}</p>
                     <button class="calendar-empty-btn" id="calendar-empty-add-btn">${escapeHtml(addLabel)}</button>
                 </div>
@@ -412,7 +411,7 @@ export class CalendarAgendaEngine {
 
             const dayEvs = this.eventsForDay(this.selectedDay);
             if (dayEvs.length === 0) {
-                dayEvents.innerHTML = `<p class="agenda-no-events">${escapeHtml(t('calendar_full.no_events', 'Sin eventos este día. ¡Tiempo para concentrarse!'))}</p>`;
+                dayEvents.innerHTML = `<p class="agenda-no-events">${escapeHtml(t('calendar_full.no_events', 'Sin eventos este día'))}</p>`;
             } else {
                 dayEvents.innerHTML = dayEvs.map(ev => {
                     const sd = new Date(ev.start);
@@ -437,7 +436,7 @@ export class CalendarAgendaEngine {
                     .sort((a, b) => new Date(a.start) - new Date(b.start))
                     .slice(0, 5);
                 if (future.length === 0) {
-                    upcoming.innerHTML = `<p class="agenda-no-events">${escapeHtml(t('widgets.calendar_empty', 'Sin eventos próximos. ¡Tiempo para concentrarse!'))}</p>`;
+                    upcoming.innerHTML = `<p class="agenda-no-events">${escapeHtml(t('widgets.calendar_empty', 'Sin eventos próximos'))}</p>`;
                 } else {
                     upcoming.innerHTML = future.map(ev => {
                         const sd = new Date(ev.start);

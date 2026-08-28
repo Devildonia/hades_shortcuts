@@ -270,7 +270,7 @@
     "calendar_title": "Agenda & Kalender",
     "calendar_sync": "Synchronisieren",
     "calendar_config": "iCal Feed einrichten",
-    "calendar_empty": "Keine anstehenden Termine. Zeit zum Fokussieren!",
+    "calendar_empty": "Keine anstehenden Termine",
     "tech_radar_title": "Tech Radar & RSS",
     "toggle_calendar": "Terminkalender anzeigen",
     "toggle_ambient": "Umgebungs-Audio anzeigen",
@@ -402,7 +402,7 @@
     "prev": "Vorheriger Monat",
     "next": "Nächster Monat",
     "add_event": "Termin hinzufügen",
-    "no_events": "Keine Termine an diesem Tag. Zeit zum Fokussieren!",
+    "no_events": "Keine Termine an diesem Tag",
     "add_day": "＋ Termin an diesem Tag hinzufügen",
     "upcoming": "Anstehende Termine"
   },

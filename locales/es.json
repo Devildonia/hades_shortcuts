@@ -270,7 +270,7 @@
     "calendar_title": "Agenda & Calendario",
     "calendar_sync": "Sincronizar",
     "calendar_config": "Configurar Feed iCal",
-    "calendar_empty": "Sin eventos próximos. ¡Tiempo para concentrarse!",
+    "calendar_empty": "Sin eventos próximos",
     "tech_radar_title": "Tech Radar & RSS",
     "toggle_calendar": "Mostrar Agenda & Calendario",
     "toggle_ambient": "Mostrar Audio Ambiental",
@@ -402,7 +402,7 @@
     "prev": "Mes anterior",
     "next": "Mes siguiente",
     "add_event": "Añadir evento",
-    "no_events": "Sin eventos este día. ¡Tiempo para concentrarse!",
+    "no_events": "Sin eventos este día",
     "add_day": "＋ Añadir evento este día",
     "upcoming": "Próximos eventos"
   },

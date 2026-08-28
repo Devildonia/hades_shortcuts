@@ -5774,12 +5774,6 @@ html.no-gold-bezel .mini-widget-card::after {
     gap: 6px;
 }
 
-.calendar-empty-icon {
-    font-size: 1.4rem;
-    line-height: 1;
-    opacity: 0.85;
-}
-
 .calendar-empty-text {
     font-size: 0.78rem;
     color: var(--text-secondary, rgba(255, 255, 255, 0.6));
