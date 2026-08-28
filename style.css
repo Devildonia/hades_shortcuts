@@ -5562,6 +5562,75 @@ html.no-gold-bezel .mini-widget-card::after {
     justify-content: center;
     gap: 12px;
     padding: 14px 18px;
+    /* Aro azul: la familia de perfiles (widgets = oro, categorías = plata) */
+    box-shadow:
+        0 0 0 1px rgba(96, 165, 250, 0.35),
+        inset 0 1px 0 rgba(191, 219, 254, 0.3),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.35),
+        var(--shadow-subtle);
+}
+
+/* Spotlight azul (sustituye al dorado de .mini-widget-card::before) */
+.space-numpad-card::before {
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.16) 0%, transparent 70%);
+}
+
+.space-numpad-card:hover {
+    box-shadow:
+        0 0 0 1px rgba(147, 197, 253, 0.55),
+        0 0 24px rgba(59, 130, 246, 0.28),
+        inset 0 1px 0 rgba(219, 234, 254, 0.5),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.35),
+        var(--shadow-elevated);
+}
+
+/* Marco cromo-azul: misma estructura de mask que el bezel dorado, paleta fría */
+.space-numpad-card::after {
+    background:
+        radial-gradient(
+            280px circle at var(--gold-lx) var(--gold-ly),
+            rgba(219, 234, 254, 0.98) 0%,
+            rgba(96, 165, 250, 0.6) 20%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from var(--gold-angle),
+            #0a1524 0deg,
+            #2f5f9e 30deg,
+            #bcdcff 50deg,
+            #1e4270 84deg,
+            #0d2340 126deg,
+            #4d8fd6 168deg,
+            #173253 206deg,
+            #9ec8ff 244deg,
+            #0e2038 288deg,
+            #3f77b8 328deg,
+            #0a1524 360deg
+        );
+}
+
+[data-theme="light"] .space-numpad-card::after {
+    background:
+        radial-gradient(
+            280px circle at var(--gold-lx) var(--gold-ly),
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(147, 197, 253, 0.55) 20%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from var(--gold-angle),
+            #1d4e89 0deg,
+            #4f8fe0 30deg,
+            #ffffff 50deg,
+            #2f6cb8 84deg,
+            #1a3f70 126deg,
+            #7fb2f0 168deg,
+            #274f86 206deg,
+            #d6e8ff 244deg,
+            #1e4478 288deg,
+            #5b98dd 328deg,
+            #1d4e89 360deg
+        );
 }
 
 .space-numpad-grid {
@@ -5572,27 +5641,35 @@ html.no-gold-bezel .mini-widget-card::after {
     max-width: 250px;
 }
 
+/* Keycap 3D: cúpula superior, bisel lateral y cuerpo extruido bajo la tecla */
 .space-key {
     --key-accent: var(--accent-primary);
+    --key-base: var(--bg-secondary, rgba(10, 15, 29, 0.8));
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 52px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 54px;
+    border-radius: 13px;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    border-top-color: rgba(255, 255, 255, 0.14);
     background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 45%, rgba(0, 0, 0, 0.25) 100%),
-        var(--bg-secondary, rgba(10, 15, 29, 0.8));
+        radial-gradient(150% 100% at 50% -10%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 42%, transparent 68%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.12) 62%, rgba(0, 0, 0, 0.32) 100%),
+        var(--key-base);
     color: var(--text-secondary);
     font-family: var(--font-display);
     font-size: 0.92rem;
     font-weight: 700;
     cursor: pointer;
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        0 3px 0 rgba(0, 0, 0, 0.45),
-        0 6px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.14s ease, box-shadow 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.5),
+        inset 3px 0 6px rgba(255, 255, 255, 0.04),
+        inset -3px 0 6px rgba(0, 0, 0, 0.4),
+        0 5px 0 rgba(0, 0, 0, 0.6),
+        0 7px 2px rgba(0, 0, 0, 0.35),
+        0 12px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.12s ease, box-shadow 0.16s ease, color 0.16s ease, border-color 0.16s ease, background 0.16s ease;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
 }
@@ -5604,26 +5681,35 @@ html.no-gold-bezel .mini-widget-card::after {
 .space-key:hover {
     color: var(--text-primary);
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.16),
-        0 3px 0 rgba(0, 0, 0, 0.45),
-        0 6px 14px rgba(0, 0, 0, 0.38),
-        0 0 12px color-mix(in srgb, var(--key-accent) 22%, transparent);
+        inset 0 1px 0 rgba(255, 255, 255, 0.26),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.5),
+        inset 3px 0 6px rgba(255, 255, 255, 0.05),
+        inset -3px 0 6px rgba(0, 0, 0, 0.4),
+        0 5px 0 rgba(0, 0, 0, 0.6),
+        0 7px 2px rgba(0, 0, 0, 0.35),
+        0 12px 22px rgba(0, 0, 0, 0.55),
+        0 0 16px color-mix(in srgb, var(--key-accent) 26%, transparent);
 }
 
-/* Tecla pulsada: se hunde y brilla en el acento del perfil; las demás quedan elevadas */
+/* Tecla pulsada: el keycap hunde sobre su base (la extrusión desaparece)
+   y brilla en el acento del perfil; las demás quedan elevadas */
 .space-key:active,
 .space-key.active {
-    transform: translateY(3px);
+    transform: translateY(5px);
     background:
-        linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.06) 100%),
-        color-mix(in srgb, var(--key-accent) 18%, var(--bg-secondary, rgba(10, 15, 29, 0.8)));
-    border-color: color-mix(in srgb, var(--key-accent) 60%, transparent);
+        radial-gradient(150% 100% at 50% -10%, rgba(255, 255, 255, 0.08) 0%, transparent 55%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.08) 100%),
+        color-mix(in srgb, var(--key-accent) 20%, var(--key-base));
+    border-color: color-mix(in srgb, var(--key-accent) 55%, rgba(0, 0, 0, 0.6));
+    border-top-color: color-mix(in srgb, var(--key-accent) 30%, rgba(0, 0, 0, 0.5));
     color: var(--key-accent);
     text-shadow: 0 0 12px color-mix(in srgb, var(--key-accent) 55%, transparent);
     box-shadow:
-        inset 0 3px 8px rgba(0, 0, 0, 0.65),
-        inset 0 0 0 1px color-mix(in srgb, var(--key-accent) 22%, transparent),
-        0 0 18px color-mix(in srgb, var(--key-accent) 30%, transparent);
+        inset 0 3px 8px rgba(0, 0, 0, 0.75),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.06),
+        0 1px 0 rgba(0, 0, 0, 0.55),
+        0 2px 5px rgba(0, 0, 0, 0.45),
+        0 0 22px color-mix(in srgb, var(--key-accent) 35%, transparent);
 }
 
 .space-key:focus-visible {
