@@ -92,6 +92,7 @@ export class WidgetsManager {
 
     init() {
         this.bindScratchpad();
+        this.bindCalendarPaper();
         this.bindPomodoro();
         state.on('language:changed', () => this.updateWidgetLocalization());
 
@@ -142,6 +143,36 @@ export class WidgetsManager {
                 const name = btn.dataset.paper;
                 if (!PAPER_COLORS.includes(name)) return;
                 localStorage.setItem(PAPER_STORAGE_KEY, name);
+                applyPaper(name);
+            });
+        });
+    }
+
+    // Paleta de papel del widget Agenda & Calendario (cuaderno, estilo Bloc de Notas).
+    // El color persiste y el modal de calendario completo lo hereda al abrirse.
+    bindCalendarPaper() {
+        const card = document.getElementById('widget-calendar-card');
+        const swatches = card ? Array.from(card.querySelectorAll('.calendar-swatch')) : [];
+        if (!swatches.length) return;
+
+        const PAPERS = ['white', 'pink', 'green', 'blue', 'orange', 'purple'];
+        const KEY = 'calendar_paper_color';
+
+        const applyPaper = (name) => {
+            PAPERS.forEach(c => card.classList.remove('paper-' + c));
+            card.classList.add('paper-' + name);
+            swatches.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.paper === name)));
+        };
+
+        const saved = localStorage.getItem(KEY);
+        applyPaper(PAPERS.includes(saved) ? saved : 'white');
+
+        swatches.forEach(btn => {
+            btn.addEventListener('click', () => {
+                soundFx.play('hover');
+                const name = btn.dataset.paper;
+                if (!PAPERS.includes(name)) return;
+                localStorage.setItem(KEY, name);
                 applyPaper(name);
             });
         });

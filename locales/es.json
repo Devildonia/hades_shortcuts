@@ -396,6 +396,16 @@
     "pomodoro_reset": "🔄 Reiniciar",
     "opens": "Abre {list}"
   },
+  "calendar_full": {
+    "open": "Abrir calendario",
+    "today": "Hoy",
+    "prev": "Mes anterior",
+    "next": "Mes siguiente",
+    "add_event": "Añadir evento",
+    "no_events": "Sin eventos este día. ¡Tiempo para concentrarse!",
+    "add_day": "＋ Añadir evento este día",
+    "upcoming": "Próximos eventos"
+  },
   "calendar_modal": {
     "add_title": "Añadir Evento a la Agenda",
     "title_label": "Título del Evento",

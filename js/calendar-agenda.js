@@ -15,6 +15,13 @@ export class CalendarAgendaEngine {
         this.modal = document.getElementById('calendar-modal');
         this.eventModal = document.getElementById('calendar-event-modal');
         this.feedInput = document.getElementById('calendar-feed-url-input');
+
+        // Calendario completo (modal centrado con zoom)
+        this.fullModal = document.getElementById('agenda-full-modal');
+        this.fullCard = document.getElementById('agenda-full-card');
+        const now = new Date();
+        this.viewDate = new Date(now.getFullYear(), now.getMonth(), 1); // 1º del mes visible
+        this.selectedDay = this.localKey(now); // YYYY-MM-DD local
     }
 
     loadConfig() {
@@ -206,6 +213,10 @@ export class CalendarAgendaEngine {
 
     render() {
         if (!this.eventsList) return;
+        // Héroe del mes y modal completo (si está abierto) siempre al día, incluso con la lista vacía
+        this.updateCalendarHero();
+        if (this.fullModal && !this.fullModal.classList.contains('hidden')) this.renderFullCalendar();
+
         this.eventsList.innerHTML = '';
         const now = new Date();
         let hasImminentMeeting = false;
@@ -262,6 +273,187 @@ export class CalendarAgendaEngine {
         if (this.widgetCard) this.widgetCard.classList.toggle('meeting-pulse-alert', hasImminentMeeting);
     }
 
+    // ===================== Calendario completo (modal papel) =====================
+
+    localKey(d) {
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    eventsForDay(key) {
+        return (this.events || [])
+            .filter(ev => {
+                const d = new Date(ev.start);
+                if (isNaN(d.getTime())) return false;
+                return this.localKey(d) === key;
+            })
+            .sort((a, b) => new Date(a.start) - new Date(b.start));
+    }
+
+    updateCalendarHero() {
+        const nameEl = document.getElementById('calendar-month-name');
+        const yearEl = document.getElementById('calendar-month-year');
+        if (nameEl || yearEl) {
+            const now = new Date();
+            const lang = state.language || 'es';
+            try {
+                if (nameEl) nameEl.textContent = now.toLocaleDateString(lang, { month: 'long' });
+            } catch (e) { if (nameEl) nameEl.textContent = now.toLocaleDateString('es', { month: 'long' }); }
+            if (yearEl) yearEl.textContent = String(now.getFullYear());
+        }
+    }
+
+    openFullCalendar() {
+        if (!this.fullModal) return;
+        const now = new Date();
+        this.viewDate = new Date(now.getFullYear(), now.getMonth(), 1);
+        this.selectedDay = this.localKey(now);
+        this.renderFullCalendar();
+        this.fullModal.classList.remove('hidden');
+        // Hereda el papel del widget para que ambas vistas comparten el mismo cuaderno
+        const card = document.getElementById('widget-calendar-card');
+        if (card && this.fullCard) {
+            ['white', 'pink', 'green', 'blue', 'orange', 'purple'].forEach(p => this.fullCard.classList.remove('paper-' + p));
+            const m = Array.from(card.classList).find(c => c && c.startsWith('paper-'));
+            if (m) this.fullCard.classList.add(m);
+        }
+        soundFx.play('click');
+    }
+
+    closeFullCalendar() {
+        if (this.fullModal) this.fullModal.classList.add('hidden');
+    }
+
+    prevMonth() {
+        this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() - 1, 1);
+        this.renderFullCalendar();
+    }
+
+    nextMonth() {
+        this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() + 1, 1);
+        this.renderFullCalendar();
+    }
+
+    goToday() {
+        const now = new Date();
+        this.viewDate = new Date(now.getFullYear(), now.getMonth(), 1);
+        this.selectedDay = this.localKey(now);
+        this.renderFullCalendar();
+    }
+
+    selectDay(key) {
+        this.selectedDay = key;
+        this.renderFullCalendar();
+    }
+
+    openEventModalForDate(key) {
+        if (!this.eventModal) return;
+        const titleInput = document.getElementById('event-form-title');
+        const linkInput = document.getElementById('event-form-link');
+        const dateInput = document.getElementById('event-form-date');
+        if (titleInput) titleInput.value = '';
+        if (linkInput) linkInput.value = '';
+        if (dateInput && key) dateInput.value = key;
+        this.eventModal.classList.remove('hidden');
+    }
+
+    renderFullCalendar() {
+        if (!this.fullModal || !this.fullModal.querySelector('#agenda-full-grid')) return;
+        const lang = state.language || 'es';
+        const t = (k, fb) => getTranslation(k) || fb;
+
+        // Título del mes visible
+        const monthTitle = document.getElementById('agenda-month-title');
+        if (monthTitle) {
+            try { monthTitle.textContent = this.viewDate.toLocaleDateString(lang, { month: 'long', year: 'numeric' }); }
+            catch (e) { monthTitle.textContent = this.viewDate.toLocaleDateString('es', { month: 'long', year: 'numeric' }); }
+        }
+
+        // Cabecera de días (lunes → domingo), colores por día como en un cuaderno
+        const weekhead = document.getElementById('agenda-weekhead');
+        if (weekhead && !weekhead.childElementCount) {
+            const refMonday = new Date(2024, 0, 1); // 1 de enero de 2024 fue lunes
+            let html = '';
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(refMonday.getFullYear(), refMonday.getMonth(), refMonday.getDate() + i);
+                let label;
+                try { label = d.toLocaleDateString(lang, { weekday: 'short' }); }
+                catch (e) { label = d.toLocaleDateString('es', { weekday: 'short' }); }
+                html += `<span class="agenda-weekday wd-${i}">${escapeHtml(label.charAt(0).toUpperCase() + label.slice(1))}</span>`;
+            }
+            weekhead.innerHTML = html;
+        }
+
+        // Rejilla de 42 celdas (6 semanas, altura estable)
+        const first = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth(), 1);
+        const offset = (first.getDay() + 6) % 7; // lunes = 0
+        const todayKey = this.localKey(new Date());
+        const grid = document.getElementById('agenda-full-grid');
+        let html = '';
+        for (let i = 0; i < 42; i++) {
+            const d = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth(), 1 - offset + i);
+            const key = this.localKey(d);
+            const inMonth = d.getMonth() === this.viewDate.getMonth();
+            const evs = this.eventsForDay(key);
+            const dots = evs.slice(0, 3).map(ev => `<i class="ag-dot ${escapeHtml(ev.category || 'work')}"></i>`).join('');
+            html += `<div class="ag-cell${inMonth ? '' : ' ag-out'}${key === todayKey ? ' ag-today' : ''}${key === this.selectedDay ? ' ag-selected' : ''}" role="gridcell" tabindex="0" data-date="${key}" aria-selected="${key === this.selectedDay}">
+                <span class="ag-num">${d.getDate()}</span>
+                ${evs.length ? `<span class="ag-dots">${dots}${evs.length > 3 ? `<i class="ag-more">+${evs.length - 3}</i>` : ''}</span>` : ''}
+            </div>`;
+        }
+        grid.innerHTML = html;
+
+        // Panel del día seleccionado
+        const dayTitle = document.getElementById('agenda-day-title');
+        const dayEvents = document.getElementById('agenda-day-events');
+        if (dayTitle && dayEvents) {
+            const selDate = new Date(this.selectedDay + 'T12:00:00');
+            try { dayTitle.textContent = selDate.toLocaleDateString(lang, { weekday: 'long', day: 'numeric', month: 'long' }); }
+            catch (e) { dayTitle.textContent = selDate.toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' }); }
+
+            const dayEvs = this.eventsForDay(this.selectedDay);
+            if (dayEvs.length === 0) {
+                dayEvents.innerHTML = `<p class="agenda-no-events">${escapeHtml(t('calendar_full.no_events', 'Sin eventos este día. ¡Tiempo para concentrarse!'))}</p>`;
+            } else {
+                dayEvents.innerHTML = dayEvs.map(ev => {
+                    const sd = new Date(ev.start);
+                    const time = `${String(sd.getHours()).padStart(2, '0')}:${String(sd.getMinutes()).padStart(2, '0')}`;
+                    const safe = safeHttpUrl(ev.link);
+                    return `<div class="agenda-ev-row">
+                        <span class="agenda-ev-time">${escapeHtml(time)}</span>
+                        <strong class="agenda-ev-title">${escapeHtml(ev.title)}</strong>
+                        <span class="agenda-ev-cat ag-cat-${escapeHtml(ev.category || 'work')}" aria-hidden="true"></span>
+                        ${safe ? `<a class="agenda-ev-link" href="${escapeHtml(safe)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(t('calendar_modal.meet_join', 'Join meeting'))}">↗</a>` : ''}
+                        <button class="agenda-ev-del" data-ev-id="${escapeHtml(ev.id)}" title="${escapeHtml(t('calendar_modal.delete_event', 'Delete event'))}" aria-label="${escapeHtml(t('calendar_modal.delete_event', 'Delete event'))}">✕</button>
+                    </div>`;
+                }).join('');
+            }
+
+            // Próximos eventos (desde ahora, máx. 5)
+            const upcoming = document.getElementById('agenda-upcoming-list');
+            if (upcoming) {
+                const now = new Date();
+                const future = (this.events || [])
+                    .filter(ev => new Date(ev.start) >= now)
+                    .sort((a, b) => new Date(a.start) - new Date(b.start))
+                    .slice(0, 5);
+                if (future.length === 0) {
+                    upcoming.innerHTML = `<p class="agenda-no-events">${escapeHtml(t('widgets.calendar_empty', 'Sin eventos próximos. ¡Tiempo para concentrarse!'))}</p>`;
+                } else {
+                    upcoming.innerHTML = future.map(ev => {
+                        const sd = new Date(ev.start);
+                        const time = `${String(sd.getHours()).padStart(2, '0')}:${String(sd.getMinutes()).padStart(2, '0')}`;
+                        const safe = safeHttpUrl(ev.link);
+                        return `<div class="agenda-up-row">
+                            <span class="agenda-up-time">${escapeHtml(time)}</span>
+                            <strong class="agenda-up-title">${escapeHtml(ev.title)}</strong>
+                            ${safe ? `<a class="agenda-ev-link" href="${escapeHtml(safe)}" target="_blank" rel="noopener noreferrer">↗</a>` : ''}
+                        </div>`;
+                    }).join('');
+                }
+            }
+        }
+    }
+
     openConfigModal() {
         if (this.feedInput) this.feedInput.value = this.config.feedUrl || '';
         if (this.modal) this.modal.classList.remove('hidden');
@@ -292,6 +484,70 @@ export class CalendarAgendaEngine {
         if (closeEvBtn) closeEvBtn.onclick = () => this.closeEventModal();
         if (cancelEvBtn) cancelEvBtn.onclick = () => this.closeEventModal();
         if (saveEvBtn) saveEvBtn.onclick = () => this.saveManualEventFromForm();
+
+        // ---- Calendario completo (modal papel centrado) ----
+        const heroBtn = document.getElementById('calendar-open-btn');
+        if (heroBtn) heroBtn.onclick = (e) => { e.stopPropagation(); soundFx.play('click'); this.openFullCalendar(); };
+
+        // Clic sobre el widget (fuera de botones/swatches/eventos) también lo abre
+        if (this.widgetCard) {
+            this.widgetCard.addEventListener('click', (e) => {
+                if (state.editMode) return;
+                if (e.target.closest('button, a, input, select, textarea, .calendar-event-item, .scratchpad-swatch')) return;
+                soundFx.play('click');
+                this.openFullCalendar();
+            });
+        }
+
+        if (this.fullModal) {
+            const prevBtn = document.getElementById('agenda-prev-btn');
+            const nextBtn = document.getElementById('agenda-next-btn');
+            const todayBtn = document.getElementById('agenda-today-btn');
+            const closeBtn = document.getElementById('agenda-close-btn');
+            const addBtnFull = document.getElementById('agenda-add-btn');
+            const syncBtnFull = document.getElementById('agenda-sync-btn');
+            const dayAddBtn = document.getElementById('agenda-day-add-btn');
+            const grid = this.fullModal.querySelector('#agenda-full-grid');
+            const dayEvents = this.fullModal.querySelector('#agenda-day-events');
+
+            if (prevBtn) prevBtn.onclick = () => { soundFx.play('hover'); this.prevMonth(); };
+            if (nextBtn) nextBtn.onclick = () => { soundFx.play('hover'); this.nextMonth(); };
+            if (todayBtn) todayBtn.onclick = () => { soundFx.play('click'); this.goToday(); };
+            if (closeBtn) closeBtn.onclick = () => { soundFx.play('click'); this.closeFullCalendar(); };
+            if (addBtnFull) addBtnFull.onclick = () => this.openEventModalForDate(this.selectedDay);
+            if (syncBtnFull) syncBtnFull.onclick = () => this.syncFeed();
+            if (dayAddBtn) dayAddBtn.onclick = () => this.openEventModalForDate(this.selectedDay);
+
+            // Clic de fondo (backdrop) cierra el modal
+            this.fullModal.addEventListener('click', (e) => {
+                if (e.target === this.fullModal) this.closeFullCalendar();
+            });
+
+            if (grid) {
+                grid.addEventListener('click', (e) => {
+                    const cell = e.target.closest('.ag-cell');
+                    if (!cell) return;
+                    soundFx.play('hover');
+                    this.selectDay(cell.dataset.date);
+                });
+                grid.addEventListener('keydown', (e) => {
+                    if (e.key !== 'Enter' && e.key !== ' ') return;
+                    const cell = e.target.closest('.ag-cell');
+                    if (!cell) return;
+                    e.preventDefault();
+                    this.selectDay(cell.dataset.date);
+                });
+            }
+
+            if (dayEvents) {
+                dayEvents.addEventListener('click', (e) => {
+                    const del = e.target.closest('.agenda-ev-del');
+                    if (del) this.deleteEvent(del.dataset.evId);
+                });
+            }
+        }
+
+        this.updateCalendarHero();
         if (saveCfgBtn) {
             saveCfgBtn.onclick = () => {
                 soundFx.play('click');

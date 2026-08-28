@@ -201,7 +201,7 @@
                 <textarea id="scratchpad-input" class="scratchpad-textarea" placeholder="Escribe ideas o notas rápidas y fíjalas en pantalla..." data-i18n-placeholder="widgets.scratchpad_placeholder"></textarea>
             </div>
 
-            <!-- Widget 2: Calendar & Agenda Hub (Col 2) -->
+            <!-- Widget 2: Calendar & Agenda Hub (Col 2) — Cuaderno de papel, estilo Bloc de Notas -->
             <div class="mini-widget-card widget-calendar" id="widget-calendar-card" data-tile-id="tile-calendar">
                 <div class="widget-header">
                     <div class="widget-title-group">
@@ -222,6 +222,21 @@
                         </button>
                     </div>
                 </div>
+                <div class="calendar-paper-colors" role="radiogroup" aria-label="Color del papel">
+                    <button class="scratchpad-swatch calendar-swatch swatch-white" type="button" data-paper="white" aria-pressed="true" title="Blanco"></button>
+                    <button class="scratchpad-swatch calendar-swatch swatch-pink" type="button" data-paper="pink" aria-pressed="false" title="Rosa"></button>
+                    <button class="scratchpad-swatch calendar-swatch swatch-green" type="button" data-paper="green" aria-pressed="false" title="Verde"></button>
+                    <button class="scratchpad-swatch calendar-swatch swatch-blue" type="button" data-paper="blue" aria-pressed="false" title="Azul"></button>
+                    <button class="scratchpad-swatch calendar-swatch swatch-orange" type="button" data-paper="orange" aria-pressed="false" title="Naranja"></button>
+                    <button class="scratchpad-swatch calendar-swatch swatch-purple" type="button" data-paper="purple" aria-pressed="false" title="Lila"></button>
+                </div>
+                <button class="calendar-month-hero" id="calendar-open-btn" type="button" title="Abrir calendario" data-i18n-title="calendar_full.open">
+                    <span class="calendar-month-hero-main">
+                        <span class="calendar-month-name" id="calendar-month-name">Calendario</span>
+                        <span class="calendar-month-year" id="calendar-month-year"></span>
+                    </span>
+                    <span class="calendar-hero-hint" aria-hidden="true">↗</span>
+                </button>
                 <div class="calendar-events-list" id="calendar-events-list"></div>
             </div>
 
@@ -546,6 +561,38 @@
             <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px;">
                 <button class="settings-action-btn secondary" id="cancel-event-modal" data-i18n="calendar_modal.cancel_btn" style="padding: 8px 16px; font-size: 0.82rem;">Cancelar</button>
                 <button class="settings-action-btn primary" id="save-manual-event-btn" data-i18n="calendar_modal.save_btn" style="padding: 8px 18px; font-size: 0.82rem;">Guardar Evento</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Calendar Modal (centrado con zoom, papel estilo cuaderno) -->
+    <div class="agenda-full-backdrop hidden" id="agenda-full-modal" role="dialog" aria-modal="true" aria-label="Calendario completo">
+        <div class="agenda-full-card" id="agenda-full-card">
+            <div class="agenda-full-topbar">
+                <div class="agenda-full-nav">
+                    <button class="agenda-nav-btn" id="agenda-prev-btn" type="button" title="Mes anterior" data-i18n-title="calendar_full.prev" aria-label="Mes anterior">‹</button>
+                    <button class="agenda-nav-btn agenda-nav-today" id="agenda-today-btn" type="button" data-i18n="calendar_full.today">Hoy</button>
+                    <button class="agenda-nav-btn" id="agenda-next-btn" type="button" title="Mes siguiente" data-i18n-title="calendar_full.next" aria-label="Mes siguiente">›</button>
+                </div>
+                <h2 class="agenda-month-title" id="agenda-month-title">—</h2>
+                <div class="agenda-full-actions">
+                    <button class="agenda-nav-btn" id="agenda-add-btn" type="button" title="Añadir evento" data-i18n-title="calendar_full.add_event" aria-label="Añadir evento">＋</button>
+                    <button class="agenda-nav-btn" id="agenda-sync-btn" type="button" title="Sincronizar" data-i18n-title="widgets.calendar_sync" aria-label="Sincronizar">⟳</button>
+                    <button class="agenda-nav-btn agenda-nav-close" id="agenda-close-btn" type="button" title="Cerrar" aria-label="Cerrar">✕</button>
+                </div>
+            </div>
+            <div class="agenda-weekhead" id="agenda-weekhead" aria-hidden="true"></div>
+            <div class="agenda-grid" id="agenda-full-grid" role="grid" aria-label="Días del mes"></div>
+            <div class="agenda-day-panel">
+                <div class="agenda-day-panel-head">
+                    <h3 id="agenda-day-title">—</h3>
+                    <button class="agenda-day-add-btn" id="agenda-day-add-btn" type="button" data-i18n="calendar_full.add_day">＋ Añadir evento este día</button>
+                </div>
+                <div class="agenda-day-events" id="agenda-day-events"></div>
+            </div>
+            <div class="agenda-upcoming">
+                <h4 data-i18n="calendar_full.upcoming">Próximos eventos</h4>
+                <div class="agenda-upcoming-list" id="agenda-upcoming-list"></div>
             </div>
         </div>
     </div>
