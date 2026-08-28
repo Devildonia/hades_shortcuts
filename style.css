@@ -5904,7 +5904,7 @@ html.no-gold-bezel .mini-widget-card::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100;
+    z-index: 10000;
 }
 
 .calendar-modal-card {
@@ -8015,4 +8015,89 @@ html.show-shortcut-tags .enlace-icono .icon-img-wrapper {
 .widget-pomodoro .pomodoro-btn.reset:hover {
     background: rgba(255, 255, 255, 0.8);
     color: var(--zen-ink);
+}
+
+/* ============================================================
+   Calendario — modal "Añadir Evento" (papel, casado con la Agenda)
+   También aplica al modal de Feed iCal (misma familia agenda).
+   ============================================================ */
+.calendar-modal-card {
+    --paper-1: #FDFDF8;
+    --paper-2: #F1ECDD;
+    --paper-ink: #2B2B33;
+    --paper-ink-soft: rgba(43, 43, 51, 0.55);
+    background: linear-gradient(172deg, var(--paper-1) 0%, var(--paper-2) 100%);
+    color: var(--paper-ink);
+    border: none;
+    border-radius: 18px;
+    box-shadow:
+        0 30px 70px -12px rgba(0, 0, 0, 0.85),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    animation: agendaZoom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.calendar-modal-card h3 {
+    font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', var(--font-body);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--paper-ink);
+}
+
+.calendar-modal-card .calendar-modal-close {
+    color: var(--paper-ink-soft);
+    transition: background 0.15s ease, border-radius 0.15s ease;
+}
+
+.calendar-modal-card .calendar-modal-close:hover {
+    background: rgba(43, 43, 51, 0.1);
+    border-radius: 8px;
+}
+
+.calendar-modal-card .calendar-modal-desc,
+.calendar-modal-card .calendar-modal-hint {
+    color: var(--paper-ink-soft);
+}
+
+.calendar-modal-card .macro-form-field label {
+    color: var(--paper-ink);
+}
+
+.calendar-modal-card .macro-form-field input,
+.calendar-modal-card .macro-form-field select {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(43, 43, 51, 0.25);
+    color: var(--paper-ink);
+}
+
+.calendar-modal-card .macro-form-field input:focus,
+.calendar-modal-card .macro-form-field select:focus {
+    border-color: var(--paper-ink);
+}
+
+.calendar-modal-card .calendar-modal-input-wrapper input {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(43, 43, 51, 0.25);
+    color: var(--paper-ink);
+}
+
+.calendar-modal-card .settings-action-btn.secondary {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(43, 43, 51, 0.3);
+    color: var(--paper-ink);
+}
+
+.calendar-modal-card .settings-action-btn.primary,
+.calendar-modal-card .calendar-save-btn {
+    background: var(--paper-ink);
+    color: #F5F2E8;
+    border: 1px solid transparent;
+    box-shadow: 0 3px 10px rgba(43, 43, 51, 0.3);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.calendar-modal-card .settings-action-btn.primary:hover,
+.calendar-modal-card .calendar-save-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(43, 43, 51, 0.4);
 }
