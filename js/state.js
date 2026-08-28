@@ -91,6 +91,7 @@ export class AppState {
         this.editMode = false;
         this.showShortcutTags = this.getItem('show_shortcut_tags', 'false') === 'true';
         this.showChromeBezel = this.getItem('show_chrome_bezel', 'true') !== 'false';
+        this.showGoldBezel = this.getItem('show_gold_bezel', 'true') !== 'false';
         this.layoutMatrix = this.loadLayoutMatrix();
         this.listeners = new Map();
     }
@@ -230,6 +231,18 @@ export class AppState {
         this.setItem('show_chrome_bezel', this.showChromeBezel ? 'true' : 'false');
         this.applyChromeBezel();
         this.emit('chrome:visibility', this.showChromeBezel);
+    }
+
+    applyGoldBezel() {
+        if (typeof document === 'undefined') return;
+        document.documentElement.classList.toggle('no-gold-bezel', !this.showGoldBezel);
+    }
+
+    setShowGoldBezel(enabled) {
+        this.showGoldBezel = !!enabled;
+        this.setItem('show_gold_bezel', this.showGoldBezel ? 'true' : 'false');
+        this.applyGoldBezel();
+        this.emit('gold:visibility', this.showGoldBezel);
     }
 
     saveShortcuts(list) {

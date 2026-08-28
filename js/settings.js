@@ -26,6 +26,7 @@ export class SettingsHub {
         this.editModeToggle = document.getElementById('setting-edit-mode-toggle');
         this.tagsToggle = document.getElementById('setting-show-tags-toggle');
         this.chromeBezelToggle = document.getElementById('setting-chrome-bezel-toggle');
+        this.goldBezelToggle = document.getElementById('setting-gold-bezel-toggle');
         this.addShortcutBtn = document.getElementById('drawer-add-shortcut-btn');
         this.layoutResetBtn = document.getElementById('layout-reset-defaults-btn');
         this.toggleScratchpad = document.getElementById('toggle-widget-scratchpad');
@@ -130,6 +131,7 @@ export class SettingsHub {
         if (this.editModeToggle) this.editModeToggle.checked = state.editMode;
         if (this.tagsToggle) this.tagsToggle.checked = state.showShortcutTags;
         if (this.chromeBezelToggle) this.chromeBezelToggle.checked = state.showChromeBezel !== false;
+        if (this.goldBezelToggle) this.goldBezelToggle.checked = state.showGoldBezel !== false;
 
         this.syncWidgetToggles();
     }
@@ -195,6 +197,13 @@ export class SettingsHub {
             this.chromeBezelToggle.addEventListener('change', (e) => {
                 soundFx.play('click');
                 state.setShowChromeBezel(e.target.checked);
+            });
+        }
+
+        if (this.goldBezelToggle) {
+            this.goldBezelToggle.addEventListener('change', (e) => {
+                soundFx.play('click');
+                state.setShowGoldBezel(e.target.checked);
             });
         }
 

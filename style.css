@@ -2863,22 +2863,138 @@ input:checked + .slider:before {
 }
 
 .mini-widget-card {
+    --gold-lx: 28%;
+    --gold-ly: 12%;
+    --gold-angle: -38deg;
     background: var(--card-bg);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid var(--card-border);
+    border: 1px solid transparent;
     border-radius: var(--radius-xl);
     padding: 20px 24px;
-    box-shadow: var(--shadow-subtle);
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.28),
+        inset 0 1px 0 rgba(255, 240, 180, 0.28),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.35),
+        var(--shadow-subtle);
     display: flex;
     flex-direction: column;
     gap: 12px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
     transition: var(--transition-smooth);
 }
 
+/* Reactive Cursor Spotlight Glow for Gold Widgets */
+.mini-widget-card::before {
+    content: '';
+    position: absolute;
+    top: var(--mouse-y, -1000px);
+    left: var(--mouse-x, -1000px);
+    transform: translate(-50%, -50%);
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(234, 179, 8, 0.14) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mini-widget-card:hover::before {
+    opacity: 1;
+}
+
 .mini-widget-card:hover {
+    transform: translateY(-4px);
+    border-color: transparent;
+    box-shadow:
+        0 0 0 1px rgba(245, 215, 127, 0.45),
+        0 0 24px rgba(218, 165, 32, 0.22),
+        inset 0 1px 0 rgba(255, 245, 200, 0.4),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.35),
+        var(--shadow-elevated);
+}
+
+/* Gold Chrome Bezel Frame */
+.mini-widget-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 6px;
+    pointer-events: none;
+    z-index: 4;
+    background:
+        radial-gradient(
+            280px circle at var(--gold-lx) var(--gold-ly),
+            rgba(255, 252, 230, 0.98) 0%,
+            rgba(235, 195, 95, 0.6) 20%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from var(--gold-angle),
+            #2a1c07 0deg,
+            #c4972a 30deg,
+            #fff5cc 50deg,
+            #996e14 84deg,
+            #38240a 126deg,
+            #d8a838 168deg,
+            #6e4c0d 206deg,
+            #fae29c 244deg,
+            #422909 288deg,
+            #e0b445 328deg,
+            #2a1c07 360deg
+        );
+    background-blend-mode: screen, normal;
+    -webkit-mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    -webkit-mask-origin: content-box, border-box;
+    -webkit-mask-clip: content-box, border-box;
+    mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    mask-origin: content-box, border-box;
+    mask-clip: content-box, border-box;
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="light"] .mini-widget-card::after {
+    background:
+        radial-gradient(
+            280px circle at var(--gold-lx) var(--gold-ly),
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(235, 195, 95, 0.5) 20%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from var(--gold-angle),
+            #785317 0deg,
+            #d4af37 30deg,
+            #ffffff 50deg,
+            #b38728 84deg,
+            #8c621c 126deg,
+            #e6c35c 168deg,
+            #996e1b 206deg,
+            #fff0b3 244deg,
+            #7d5516 288deg,
+            #dfb743 328deg,
+            #785317 360deg
+        );
+}
+
+html.no-gold-bezel .mini-widget-card {
+    border-color: var(--card-border);
+    box-shadow: var(--shadow-subtle);
+}
+
+html.no-gold-bezel .mini-widget-card:hover {
     border-color: var(--card-border-hover);
     box-shadow: var(--shadow-elevated);
+}
+
+html.no-gold-bezel .mini-widget-card::after {
+    display: none;
 }
 
 .widget-header {

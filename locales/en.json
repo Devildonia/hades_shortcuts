@@ -177,6 +177,7 @@
       "visual_title": "Appearance",
       "show_tags_toggle": "Show tags",
       "chrome_bezel_toggle": "Chrome frames",
+      "gold_bezel_toggle": "Gold Frames (Widgets)",
       "add_shortcut_btn": "➕ Add New Shortcut",
       "editing_active_badge": "Edit Mode Active",
       "reset_layout_title": "Reset Original Layout",

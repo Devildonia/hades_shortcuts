@@ -260,20 +260,26 @@ export class DashboardRenderer {
     }
 
     initSpotlight() {
-        if (this._spotlightBound || !this.gridContainer) return;
+        if (this._spotlightBound) return;
         this._spotlightBound = true;
-        this.gridContainer.addEventListener('pointermove', (e) => {
-            const cat = e.target.closest('.categoria');
-            if (!cat) return;
-            const rect = cat.getBoundingClientRect();
+        document.addEventListener('pointermove', (e) => {
+            const card = e.target.closest('.categoria, .mini-widget-card');
+            if (!card) return;
+            const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            cat.style.setProperty('--mouse-x', `${x}px`);
-            cat.style.setProperty('--mouse-y', `${y}px`);
-            cat.style.setProperty('--chrome-lx', `${x}px`);
-            cat.style.setProperty('--chrome-ly', `${y}px`);
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
             const angle = Math.atan2(y - rect.height / 2, x - rect.width / 2) * (180 / Math.PI);
-            cat.style.setProperty('--chrome-angle', `${angle}deg`);
+            if (card.classList.contains('mini-widget-card')) {
+                card.style.setProperty('--gold-lx', `${x}px`);
+                card.style.setProperty('--gold-ly', `${y}px`);
+                card.style.setProperty('--gold-angle', `${angle}deg`);
+            } else {
+                card.style.setProperty('--chrome-lx', `${x}px`);
+                card.style.setProperty('--chrome-ly', `${y}px`);
+                card.style.setProperty('--chrome-angle', `${angle}deg`);
+            }
         });
     }
 }
