@@ -6400,7 +6400,7 @@ body.focus-mode-active #aurora-bg {
     transform: scale(1.03);
 }
 
-/* --- Contextual AI Agent Glass Drawer --- */
+/* --- Contextual AI Agent — pantalla central (convención de modales del proyecto) --- */
 
 
 .ai-agent-header-btn:hover {
@@ -6411,31 +6411,90 @@ body.focus-mode-active #aurora-bg {
 .ai-agent-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(5, 8, 17, 0.7);
-    backdrop-filter: blur(12px);
+    background: rgba(4, 7, 13, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     display: flex;
-    justify-content: flex-end;
-    z-index: 150;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 9990;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-agent-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .ai-agent-panel {
-    background: rgba(10, 15, 29, 0.95);
-    border-left: 1px solid rgba(0, 242, 254, 0.3);
-    width: 440px;
-    max-width: 90vw;
-    height: 100%;
+    width: min(92vw, 640px);
+    max-height: min(85vh, 720px);
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    box-shadow: -15px 0 40px rgba(0, 0, 0, 0.6);
+    padding: 20px 22px 18px;
+    background: var(--card-bg, rgba(10, 15, 29, 0.96));
+    border: 1px solid rgba(0, 242, 254, 0.35);
+    border-radius: 18px;
+    color-scheme: dark;
+    box-shadow:
+        0 25px 65px -10px rgba(0, 0, 0, 0.88),
+        0 0 45px rgba(0, 242, 254, 0.10);
+    transform: translateY(18px) scale(0.97);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-agent-backdrop.open .ai-agent-panel {
+    transform: none;
 }
 
 .ai-agent-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
     padding-bottom: 12px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ai-agent-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: var(--text-primary);
+}
+
+.ai-agent-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ai-header-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ai-header-action svg {
+    display: block;
+}
+
+.ai-header-action:hover {
+    background: rgba(0, 242, 254, 0.12);
+    color: #00f2fe;
+    border-color: rgba(0, 242, 254, 0.35);
 }
 
 .ai-agent-close {
@@ -6536,6 +6595,61 @@ body.focus-mode-active #aurora-bg {
     transform: scale(1.05);
 }
 
+.ai-fallback-note {
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 196, 0, 0.35);
+    background: rgba(255, 196, 0, 0.08);
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+}
+
+.ai-agent-settings-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ai-config-label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.ai-config-label select,
+.ai-config-field input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+}
+
+/* Opciones del desplegable nativo: misma paleta que el tema oscuro */
+#ai-provider-select option {
+    background: #0d1326;
+    color: #e6edf7;
+}
+
+.ai-config-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+/* `display: flex` anularía el atributo `hidden` nativo */
+.ai-config-field[hidden] {
+    display: none;
+}
+
 .ai-agent-input-row {
     display: flex;
     gap: 8px;
@@ -6549,45 +6663,96 @@ body.focus-mode-active #aurora-bg {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 8px;
-    color: #ffffff;
+    color: var(--text-primary);
     font-size: 0.85rem;
 }
 
-.ai-agent-config-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 10px 16px 16px;
-}
-
-.ai-agent-config-row input,
-.ai-agent-config-row select {
-    flex: 1 1 160px;
-    min-width: 140px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
-    border-radius: 8px;
-    padding: 8px 10px;
-    font-size: 0.78rem;
-}
-
-.ai-config-label {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    font-size: 0.72rem;
-    color: var(--text-muted);
-}
-
-.ai-agent-send-btn {
-    background: linear-gradient(135deg, #00f2fe, #4facfe);
-    color: #050811;
+.ai-agent-send-btn,
+.ai-agent-stop-btn {
     font-weight: 700;
     border: none;
     border-radius: 8px;
     padding: 0 16px;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ai-agent-send-btn {
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    color: #050811;
+}
+
+.ai-agent-send-btn:hover {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
+}
+
+.ai-agent-stop-btn {
+    background: rgba(255, 94, 94, 0.14);
+    border: 1px solid rgba(255, 94, 94, 0.5);
+    color: #ff8a8a;
+}
+
+.ai-agent-stop-btn:hover {
+    background: rgba(255, 94, 94, 0.26);
+}
+
+/* --- Theme light: compatibilidad del asistente --- */
+[data-theme="light"] .ai-agent-backdrop {
+    background: rgba(16, 22, 32, 0.55);
+}
+
+[data-theme="light"] .ai-agent-panel {
+    color-scheme: light;
+}
+
+[data-theme="light"] .ai-config-label select,
+[data-theme="light"] .ai-config-field input,
+[data-theme="light"] .ai-agent-input-row input {
+    background: rgba(255, 255, 255, 0.75);
+    border-color: rgba(15, 23, 42, 0.18);
+    color: #0f172a;
+}
+
+[data-theme="light"] #ai-provider-select option {
+    background: #ffffff;
+    color: #0f172a;
+}
+
+[data-theme="light"] .ai-agent-input-row input::placeholder,
+[data-theme="light"] .ai-config-field input::placeholder {
+    color: rgba(15, 23, 42, 0.45);
+}
+
+[data-theme="light"] .ai-msg-bubble.ai {
+    background: rgba(15, 23, 42, 0.05);
+    border-color: rgba(15, 23, 42, 0.14);
+}
+
+[data-theme="light"] .ai-prompt-chip {
+    background: rgba(15, 23, 42, 0.05);
+    border-color: rgba(15, 23, 42, 0.15);
+}
+
+[data-theme="light"] .ai-inline-code {
+    background: rgba(8, 145, 178, 0.12);
+    color: #0369a1;
+}
+
+/* --- Móvil: pantalla central a ancho completo --- */
+@media (max-width: 640px) {
+    .ai-agent-backdrop {
+        padding: 0;
+    }
+
+    .ai-agent-panel {
+        width: 100%;
+        max-height: 100vh;
+        max-height: 100dvh;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
 }
 
 /* --- Header Action Capsule Buttons --- */

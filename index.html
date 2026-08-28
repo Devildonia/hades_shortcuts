@@ -455,14 +455,20 @@
         </div>
     </div>
 
-        <!-- Contextual AI Agent Glass Drawer -->
-    <div class="ai-agent-backdrop hidden" id="ai-agent-drawer" role="dialog" aria-modal="true" aria-label="Asistente IA Contextual">
+        <!-- Contextual AI Agent — pantalla central (convención de modales del proyecto) -->
+    <div class="ai-agent-backdrop hidden" id="ai-agent-drawer" role="dialog" aria-modal="true" aria-labelledby="ai-agent-title" aria-label="Asistente IA Contextual">
         <div class="ai-agent-panel">
             <div class="ai-agent-header">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <h3 data-i18n="ai_agent.title">Asistente IA Contextual</h3>
+                <h3 id="ai-agent-title" data-i18n="ai_agent.title">Asistente IA Contextual</h3>
+                <div class="ai-agent-header-actions">
+                    <button class="ai-header-action" id="ai-agent-reset-btn" title="Nueva conversación" aria-label="Nueva conversación" data-i18n-title="ai_agent.new_chat">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg>
+                    </button>
+                    <button class="ai-header-action" id="ai-agent-settings-btn" title="Ajustes" aria-label="Ajustes" aria-expanded="false" data-i18n-title="ai_agent.settings">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34h.01a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v.01a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z"/></svg>
+                    </button>
+                    <button class="ai-agent-close" id="close-ai-agent-drawer" aria-label="Cerrar Asistente IA">✕</button>
                 </div>
-                <button class="ai-agent-close" id="close-ai-agent-drawer" aria-label="Cerrar Asistente IA">✕</button>
             </div>
             <div class="ai-prompt-chips-row">
                 <button class="ai-prompt-chip" data-prompt="Which 3D or AI tools do I have saved?" data-i18n="ai_agent.chip_3d" data-i18n-prompt="ai_agent.prompt_3d">Mis herramientas 3D</button>
@@ -474,26 +480,47 @@
                     Hola. Soy tu asistente contextual. Conozco tus atajos, espacios y agenda. ¿En qué te ayudo hoy?
                 </div>
             </div>
-            <div class="ai-agent-input-row">
-                <label class="visually-hidden" for="ai-agent-input" data-i18n="ai_agent.placeholder">Mensaje</label>
-                <input type="text" id="ai-agent-input" placeholder="Pregúntame sobre tus atajos o pide recomendaciones..." autocomplete="off" data-i18n-placeholder="ai_agent.placeholder">
-                <button class="ai-agent-send-btn" id="ai-agent-send-btn" data-i18n="ai_agent.send">Enviar</button>
-            </div>
-            <div class="ai-agent-config-row" id="ai-agent-config">
-                <label class="ai-config-label" for="ai-provider-select"><span data-i18n="ai_agent.provider">Proveedor</span>
+            <div class="ai-agent-settings-panel hidden" id="ai-agent-settings-panel">
+                <label class="ai-config-label" for="ai-provider-select">
+                    <span data-i18n="ai_agent.provider">Proveedor</span>
                     <select id="ai-provider-select">
                         <option value="local_heuristic" data-i18n="ai_agent.opt_local">Local (heurística)</option>
                         <option value="ollama" data-i18n="ai_agent.opt_ollama">Ollama</option>
+                        <option value="lmstudio" data-i18n="ai_agent.opt_lmstudio">LM Studio</option>
                         <option value="openai" data-i18n="ai_agent.opt_openai">OpenAI</option>
                         <option value="anthropic" data-i18n="ai_agent.opt_anthropic">Anthropic</option>
                     </select>
                 </label>
-                <label class="visually-hidden" for="ai-openai-key" data-i18n="ai_agent.openai_key">OpenAI</label>
-                <input type="password" id="ai-openai-key" placeholder="OpenAI API key (sesión)" autocomplete="off" data-i18n-placeholder="ai_agent.openai_key">
-                <label class="visually-hidden" for="ai-anthropic-key" data-i18n="ai_agent.anthropic_key">Anthropic</label>
-                <input type="password" id="ai-anthropic-key" placeholder="Anthropic API key (sesión)" autocomplete="off" data-i18n-placeholder="ai_agent.anthropic_key">
-                <label class="visually-hidden" for="ai-ollama-endpoint" data-i18n="ai_agent.ollama_endpoint">Ollama</label>
-                <input type="text" id="ai-ollama-endpoint" placeholder="http://localhost:11434/api/generate" autocomplete="off" data-i18n-placeholder="ai_agent.ollama_endpoint">
+                <div class="ai-config-field" data-provider="ollama">
+                    <label for="ai-ollama-endpoint"><span data-i18n="ai_agent.ollama_endpoint">Endpoint Ollama</span></label>
+                    <input type="text" id="ai-ollama-endpoint" placeholder="http://localhost:11434/api/generate" autocomplete="off" spellcheck="false">
+                    <label for="ai-ollama-model"><span data-i18n="ai_agent.ollama_model">Modelo</span></label>
+                    <input type="text" id="ai-ollama-model" placeholder="llama3.2" autocomplete="off" spellcheck="false">
+                </div>
+                <div class="ai-config-field" data-provider="lmstudio" hidden>
+                    <label for="ai-lmstudio-endpoint"><span data-i18n="ai_agent.lmstudio_endpoint">Endpoint LM Studio</span></label>
+                    <input type="text" id="ai-lmstudio-endpoint" placeholder="http://localhost:1234/v1/chat/completions" autocomplete="off" spellcheck="false">
+                    <label for="ai-lmstudio-model"><span data-i18n="ai_agent.lmstudio_model">Modelo</span></label>
+                    <input type="text" id="ai-lmstudio-model" placeholder="local-model" autocomplete="off" spellcheck="false">
+                </div>
+                <div class="ai-config-field" data-provider="openai" hidden>
+                    <label for="ai-openai-key"><span data-i18n="ai_agent.openai_key">Clave (sesión)</span></label>
+                    <input type="password" id="ai-openai-key" placeholder="sk-..." autocomplete="off" spellcheck="false">
+                    <label for="ai-openai-model"><span data-i18n="ai_agent.openai_model">Modelo</span></label>
+                    <input type="text" id="ai-openai-model" placeholder="gpt-4o-mini" autocomplete="off" spellcheck="false">
+                </div>
+                <div class="ai-config-field" data-provider="anthropic" hidden>
+                    <label for="ai-anthropic-key"><span data-i18n="ai_agent.anthropic_key">Clave (sesión)</span></label>
+                    <input type="password" id="ai-anthropic-key" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+                    <label for="ai-anthropic-model"><span data-i18n="ai_agent.anthropic_model">Modelo</span></label>
+                    <input type="text" id="ai-anthropic-model" placeholder="claude-3-5-sonnet-latest" autocomplete="off" spellcheck="false">
+                </div>
+            </div>
+            <div class="ai-agent-input-row">
+                <label class="visually-hidden" for="ai-agent-input" data-i18n="ai_agent.placeholder">Mensaje</label>
+                <input type="text" id="ai-agent-input" placeholder="Pregúntame sobre tus atajos o pide recomendaciones..." autocomplete="off" data-i18n-placeholder="ai_agent.placeholder">
+                <button class="ai-agent-send-btn" id="ai-agent-send-btn" data-i18n="ai_agent.send">Enviar</button>
+                <button class="ai-agent-stop-btn" id="ai-agent-stop-btn" hidden data-i18n="ai_agent.stop">Parar</button>
             </div>
         </div>
     </div>
