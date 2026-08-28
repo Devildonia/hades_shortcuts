@@ -1,14 +1,11 @@
-// js/tags-filter.js - Advanced Multi-Tag Query Engine & Saved Smart Views (Linear-style CMDK)
+// js/tags-filter.js - Advanced Multi-Tag Query Engine (Linear-style CMDK)
 
-import { state, normalizeTags, escapeHtml, persistJson, showToast } from './state.js';
-import { getTranslation } from './i18n.js';
-import { soundFx } from './audio.js';
+import { normalizeTags } from './state.js';
 import { personalAnalytics } from './personal-analytics.js';
 
 export class TagsFilterEngine {
     constructor() {
         this.tagsKey = 'hades_tags_registry_v1';
-        this.viewsKey = 'hades_saved_views_v1';
         this.palette = {
             ia: '#00f2fe',
             '3d': '#ffaa00',
@@ -21,7 +18,6 @@ export class TagsFilterEngine {
             default: '#64748b'
         };
         this.tagRegistry = this.loadRegistry();
-        this.savedViews = this.loadSavedViews();
     }
 
     loadRegistry() {
@@ -30,21 +26,6 @@ export class TagsFilterEngine {
             if (raw) return JSON.parse(raw);
         } catch (e) {}
         return { ...this.palette };
-    }
-
-    loadSavedViews() {
-        try {
-            const raw = localStorage.getItem(this.viewsKey);
-            if (raw) return JSON.parse(raw);
-        } catch (e) {}
-        return [
-            { id: 'view_ai_3d', name: 'IA & 3D Top', query: 'tag:ia tag:3d', icon: '✨' }
-        ];
-    }
-
-    saveViews() {
-        persistJson(this.viewsKey, this.savedViews);
-        this.renderSavedViews();
     }
 
     getTagColor(tag) {
@@ -125,94 +106,6 @@ export class TagsFilterEngine {
         }
 
         return true;
-    }
-
-    saveView(name, query, icon = '🔖') {
-        if (!name || !query) return;
-        soundFx.play('chime');
-        const view = {
-            id: 'view_' + Date.now(),
-            name: name.trim(),
-            query: query.trim(),
-            icon: icon.trim()
-        };
-        this.savedViews.push(view);
-        this.saveViews();
-    }
-
-    deleteView(id) {
-        soundFx.play('click');
-        this.savedViews = this.savedViews.filter(v => v.id !== id);
-        this.saveViews();
-    }
-
-    renderSavedViews() {
-        const container = document.getElementById('category-filter-bar') || document.getElementById('filter-pills');
-        if (!container) return;
-
-        // Remove old saved view pills
-        container.querySelectorAll('.saved-view-pill').forEach(el => el.remove());
-
-        this.savedViews.forEach(view => {
-            const pill = document.createElement('button');
-            pill.className = 'filter-pill saved-view-pill';
-            pill.setAttribute('data-filter-view', view.id);
-            pill.innerHTML = `<span class="view-icon">${escapeHtml(view.icon)}</span> <span>${escapeHtml(view.name)}</span> <span class="delete-view-x" title="Eliminar vista">×</span>`;
-            
-            pill.addEventListener('click', (e) => {
-                if (e.target.classList.contains('delete-view-x')) {
-                    e.stopPropagation();
-                    this.deleteView(view.id);
-                    return;
-                }
-                soundFx.play('click');
-                const searchInp = document.getElementById('main-search') || document.getElementById('search-input') || document.querySelector('.search-input');
-                if (searchInp) {
-                    searchInp.value = view.query;
-                    searchInp.dispatchEvent(new Event('input', { bubbles: true }));
-                    searchInp.focus();
-                }
-            });
-
-            container.appendChild(pill);
-        });
-    }
-
-    init() {
-        this.renderSavedViews();
-        const saveViewBtn = document.getElementById('save-search-view-btn');
-        const saveModal = document.getElementById('save-view-modal');
-        const closeSaveModal = document.getElementById('close-save-view-modal');
-        const confirmSaveBtn = document.getElementById('confirm-save-view-btn');
-        const viewQueryInp = document.getElementById('saved-view-query-input');
-        const viewNameInp = document.getElementById('saved-view-name-input');
-        const viewIconInp = document.getElementById('saved-view-icon-input');
-
-        if (saveViewBtn) {
-            saveViewBtn.addEventListener('click', () => {
-                const searchInp = document.getElementById('main-search') || document.getElementById('search-input') || document.querySelector('.search-input');
-                const q = searchInp ? searchInp.value.trim() : '';
-                if (!q) { showToast(getTranslation('toasts.save_view_empty') || 'Type a search or tags first to save a smart view.', 'error'); return; }
-                if (viewQueryInp) viewQueryInp.value = q;
-                if (saveModal) saveModal.classList.remove('hidden');
-            });
-        }
-
-        if (closeSaveModal && saveModal) {
-            closeSaveModal.addEventListener('click', () => saveModal.classList.add('hidden'));
-        }
-
-        if (confirmSaveBtn && saveModal) {
-            confirmSaveBtn.addEventListener('click', () => {
-                const q = viewQueryInp ? viewQueryInp.value.trim() : '';
-                const name = viewNameInp ? viewNameInp.value.trim() : 'Vista';
-                const icon = (viewIconInp ? viewIconInp.value.trim() : '') || '🔖';
-                if (name && q) {
-                    this.saveView(name, q, icon);
-                    saveModal.classList.add('hidden');
-                }
-            });
-        }
     }
 }
 

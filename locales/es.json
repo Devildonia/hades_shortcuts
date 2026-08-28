@@ -16,13 +16,6 @@
     "placeholder": "Buscar con {engine} o filtrar atajos...",
     "clear": "Limpiar búsqueda"
   },
-  "filters": {
-    "all": "Todos",
-    "ia_creativa": "IA & 3D",
-    "arte_media": "Arte & Multimedia",
-    "productividad": "Google & Herramientas",
-    "social_compras": "Social & Compras"
-  },
   "categories": {
     "cat_3d": "3D Modeling & AI",
     "cat_ai": "Inteligencia Artificial",
@@ -451,8 +444,7 @@
     "ai_network_error": "No se pudo consultar el asistente en red. Prueba de nuevo más tarde.",
     "sync_push_error": "No se pudo sincronizar con chrome.storage.",
     "reset_done": "Valores restablecidos.",
-    "postit_limit": "Has alcanzado el límite de 25 notas flotantes. Elimina alguna para fijar una nueva.",
-    "save_view_empty": "Escribe primero una búsqueda o etiquetas para guardar la vista."
+    "postit_limit": "Has alcanzado el límite de 25 notas flotantes. Elimina alguna para fijar una nueva."
   },
   "calendar_feed": {
     "title": "Configurar Feed de Calendario (iCal / ICS)",
@@ -472,18 +464,6 @@
     "url_label": "URL del feed",
     "add_btn": "Añadir Feed al Radar",
     "presets": "Presets rápidos:"
-  },
-  "save_view": {
-    "title": "Guardar como Vista Inteligente",
-    "desc": "Crea una píldora de filtro permanente con tus etiquetas y consulta actual:",
-    "icon_placeholder": "Icono",
-    "icon_label": "Icono",
-    "name_placeholder": "Nombre de la Vista (ej. IA & 3D Top)",
-    "name_label": "Nombre de la vista",
-    "query_placeholder": "Consulta (ej. tag:ia tag:3d)",
-    "query_label": "Consulta",
-    "confirm_btn": "Fijar Vista en Barra",
-    "trigger_title": "Guardar vista inteligente"
   },
   "zen_shield": {
     "breathe": "Respira",

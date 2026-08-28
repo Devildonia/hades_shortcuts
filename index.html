@@ -156,17 +156,6 @@
                 <kbd class="search-key-badge">Ctrl K</kbd>
             </div>
 
-            <!-- Quick Filter Tags / Pills -->
-            <div class="filter-pills-container" id="category-filter-bar">
-                <button class="pill-btn active" data-filter="all"><span data-i18n="filters.all">Todos</span> <span class="pill-count">52</span></button>
-                <button class="pill-btn" data-filter="ia-creativa" data-i18n="filters.ia_creativa">IA & 3D</button>
-                <button class="pill-btn" data-filter="arte-media" data-i18n="filters.arte_media">Arte & Multimedia</button>
-                <button class="pill-btn" data-filter="productividad" data-i18n="filters.productividad">Google & Herramientas</button>
-                <button class="pill-btn" data-filter="social-compras" data-i18n="filters.social_compras">Social & Compras</button>
-                <button class="pill-btn save-view-trigger" id="save-search-view-btn" type="button" title="Guardar vista inteligente" data-i18n-title="save_view.trigger_title" aria-label="Guardar vista inteligente">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                </button>
-            </div>
             <div class="smart-suggestion-banner hidden" id="smart-suggestion-banner"></div>
             <div class="search-calc-banner hidden" id="search-calc-banner"></div>
         </section>
@@ -443,27 +432,6 @@
         </div>
     </div>
 
-        <!-- Save Smart View Modal -->
-    <div class="save-view-modal-backdrop hidden" id="save-view-modal" role="dialog" aria-modal="true" aria-label="Guardar Vista Inteligente">
-        <div class="save-view-modal-card">
-            <div class="save-view-modal-header">
-                <h3 data-i18n="save_view.title">Guardar como Vista Inteligente</h3>
-                <button class="save-view-modal-close" id="close-save-view-modal" aria-label="Cerrar modal">✕</button>
-            </div>
-            <p class="save-view-modal-desc" data-i18n="save_view.desc">Crea una píldora de filtro permanente con tus etiquetas y consulta actual:</p>
-            <div class="save-view-modal-form">
-                <div style="display: flex; gap: 8px; margin-bottom: 10px;">
-                    <label class="visually-hidden" for="saved-view-icon-input" data-i18n="save_view.icon_label">Icono</label>
-                    <input type="text" id="saved-view-icon-input" placeholder="Icono" maxlength="4" style="width: 70px;" value="✨" data-i18n-placeholder="save_view.icon_placeholder">
-                    <label class="visually-hidden" for="saved-view-name-input" data-i18n="save_view.name_label">Nombre</label>
-                    <input type="text" id="saved-view-name-input" placeholder="Nombre de la Vista (ej. IA & 3D Top)" style="flex: 1;" data-i18n-placeholder="save_view.name_placeholder">
-                </div>
-                <label class="visually-hidden" for="saved-view-query-input" data-i18n="save_view.query_label">Consulta</label>
-                <input type="text" id="saved-view-query-input" placeholder="Consulta (ej. tag:ia tag:3d)" style="width: 100%; margin-bottom: 14px;" readonly data-i18n-placeholder="save_view.query_placeholder">
-                <button class="save-view-confirm-btn" id="confirm-save-view-btn" data-i18n="save_view.confirm_btn">Fijar Vista en Barra</button>
-            </div>
-        </div>
-    </div>
 
         <!-- Zen Shield Screen (Distraction-Free Breathing Space) -->
     <div class="zen-shield-backdrop hidden" id="zen-shield-screen" role="dialog" aria-modal="true" aria-label="Pantalla de Respiro Zen Shield">

@@ -211,7 +211,6 @@ export function initApp() {
     macroEngine.init();
     aiAgent.init();
     calendarAgenda.init();
-    tagsFilter.init();
     focusMode.init();
 
     state.on('shortcuts:changed', () => {

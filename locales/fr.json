@@ -16,13 +16,6 @@
     "placeholder": "Rechercher avec {engine} ou filtrer les raccourcis...",
     "clear": "Effacer la recherche"
   },
-  "filters": {
-    "all": "Tous",
-    "ia_creativa": "IA & 3D",
-    "arte_media": "Art & Multimédia",
-    "productividad": "Google & Outils",
-    "social_compras": "Social & Achats"
-  },
   "categories": {
     "cat_3d": "Modélisation 3D & IA",
     "cat_ai": "Intelligence Artificielle",
@@ -451,8 +444,7 @@
     "ai_network_error": "Impossible de joindre l'assistant en ligne. Réessayez plus tard.",
     "sync_push_error": "Impossible de synchroniser avec chrome.storage.",
     "reset_done": "Valeurs d'usine restaurées.",
-    "postit_limit": "Limite de 25 notes flottantes atteinte. Supprimez-en une pour en épingler une autre.",
-    "save_view_empty": "Saisissez d'abord une recherche ou des tags pour enregistrer la vue."
+    "postit_limit": "Limite de 25 notes flottantes atteinte. Supprimez-en une pour en épingler une autre."
   },
   "calendar_feed": {
     "title": "Configurer le flux calendrier (iCal / ICS)",
@@ -472,18 +464,6 @@
     "url_label": "URL du flux",
     "add_btn": "Ajouter le flux au Radar",
     "presets": "Préréglages rapides :"
-  },
-  "save_view": {
-    "title": "Enregistrer comme vue intelligente",
-    "desc": "Créez une pastille de filtre permanente avec vos tags et votre requête :",
-    "icon_placeholder": "Icône",
-    "icon_label": "Icône",
-    "name_placeholder": "Nom de la vue (ex. IA & 3D Top)",
-    "name_label": "Nom de la vue",
-    "query_placeholder": "Requête (ex. tag:ia tag:3d)",
-    "query_label": "Requête",
-    "confirm_btn": "Épingler la vue",
-    "trigger_title": "Enregistrer la vue intelligente"
   },
   "zen_shield": {
     "breathe": "Respirez",

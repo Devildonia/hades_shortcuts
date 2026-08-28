@@ -16,13 +16,6 @@
     "placeholder": "Search with {engine} or filter shortcuts...",
     "clear": "Clear search"
   },
-  "filters": {
-    "all": "All",
-    "ia_creativa": "AI & 3D",
-    "arte_media": "Art & Multimedia",
-    "productividad": "Google & Tools",
-    "social_compras": "Social & Shopping"
-  },
   "categories": {
     "cat_3d": "3D Modeling & AI",
     "cat_ai": "Artificial Intelligence",
@@ -451,8 +444,7 @@
     "ai_network_error": "Could not reach the online assistant. Try again later.",
     "sync_push_error": "Could not sync with chrome.storage.",
     "reset_done": "Factory defaults restored.",
-    "postit_limit": "You reached the 25 floating-note limit. Delete one to pin another.",
-    "save_view_empty": "Type a search or tags first to save a smart view."
+    "postit_limit": "You reached the 25 floating-note limit. Delete one to pin another."
   },
   "calendar_feed": {
     "title": "Configure Calendar Feed (iCal / ICS)",
@@ -472,18 +464,6 @@
     "url_label": "Feed URL",
     "add_btn": "Add Feed to Radar",
     "presets": "Quick presets:"
-  },
-  "save_view": {
-    "title": "Save as Smart View",
-    "desc": "Create a permanent filter pill from your current tags and query:",
-    "icon_placeholder": "Icon",
-    "icon_label": "Icon",
-    "name_placeholder": "View name (e.g. AI & 3D Top)",
-    "name_label": "View name",
-    "query_placeholder": "Query (e.g. tag:ia tag:3d)",
-    "query_label": "Query",
-    "confirm_btn": "Pin View to Bar",
-    "trigger_title": "Save smart view"
   },
   "zen_shield": {
     "breathe": "Breathe",

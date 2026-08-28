@@ -983,62 +983,6 @@ body.settings-open {
     padding-right: 56px;
 }
 
-/* Filter Pills Container */
-.filter-pills-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.pill-btn {
-    background: var(--card-bg);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid var(--card-border);
-    color: var(--text-secondary);
-    font-family: var(--font-body);
-    font-size: 0.84rem;
-    font-weight: 600;
-    padding: 7px 16px;
-    border-radius: var(--radius-pill);
-    cursor: pointer;
-    transition: var(--transition-smooth);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    white-space: nowrap;
-    user-select: none;
-}
-
-.pill-btn:hover {
-    color: var(--text-primary);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-}
-
-.pill-btn.active {
-    background: var(--accent-gradient);
-    color: #ffffff;
-    border-color: transparent;
-    box-shadow: 0 4px 18px var(--accent-glow);
-}
-
-[data-theme="light"] .pill-btn.active {
-    color: #ffffff;
-}
-
-.pill-count {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 1px 7px;
-    border-radius: var(--radius-pill);
-    font-size: 0.72rem;
-}
 
 /* ==========================================================================
    Bento Grid Layout System
@@ -1859,7 +1803,6 @@ body.category-expanded-active {
 
 .control-btn:focus-visible,
 .engine-selector-btn:focus-visible,
-.pill-btn:focus-visible,
 .enlace-icono:focus-visible {
     outline: 2px solid var(--accent-primary) !important;
     outline-offset: 3px !important;
@@ -4460,25 +4403,6 @@ html.no-gold-bezel .mini-widget-card::after {
     background: #0369a1;
 }
 
-[data-theme="light"] .pill-btn {
-    background: rgba(255, 255, 255, 0.9);
-    border-color: rgba(0, 0, 0, 0.06);
-    color: #475569;
-}
-
-[data-theme="light"] .pill-btn:hover {
-    background: #ffffff;
-    color: #0f172a;
-    border-color: rgba(2, 132, 199, 0.3);
-}
-
-[data-theme="light"] .pill-btn.active {
-    background: linear-gradient(135deg, #0284c7 0%, #3b82f6 100%);
-    color: #ffffff;
-    border-color: transparent;
-    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
-}
-
 [data-theme="light"] .cat-badge {
     background: rgba(0, 0, 0, 0.04);
     color: #64748b;
@@ -5160,7 +5084,6 @@ html.no-gold-bezel .mini-widget-card::after {
     border: 0;
 }
 
-.save-view-trigger svg,
 .radial-hud-core-icon svg,
 .hud-search-icon svg {
     display: block;
@@ -6264,95 +6187,6 @@ html.no-gold-bezel .mini-widget-card::after {
     letter-spacing: 0.3px;
 }
 
-.saved-view-pill {
-    background: rgba(0, 242, 254, 0.08) !important;
-    border-color: rgba(0, 242, 254, 0.4) !important;
-    color: #00f2fe !important;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.saved-view-pill:hover {
-    background: rgba(0, 242, 254, 0.18) !important;
-    box-shadow: 0 0 12px rgba(0, 242, 254, 0.25);
-}
-
-.delete-view-x {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-left: 4px;
-    cursor: pointer;
-    border-radius: 50%;
-    padding: 0 3px;
-}
-
-.delete-view-x:hover {
-    color: #ff4757;
-    background: rgba(255, 71, 87, 0.2);
-}
-
-.save-view-modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(5, 8, 17, 0.75);
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-}
-
-.save-view-modal-card {
-    background: rgba(10, 15, 29, 0.95);
-    border: 1px solid rgba(0, 242, 254, 0.3);
-    border-radius: 16px;
-    padding: 24px;
-    max-width: 440px;
-    width: 90%;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-}
-
-.save-view-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.save-view-modal-close {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-.save-view-modal-desc {
-    font-size: 0.88rem;
-    color: var(--text-secondary);
-    margin-bottom: 14px;
-}
-
-.save-view-modal-form input {
-    padding: 10px 14px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    color: #ffffff;
-    font-size: 0.85rem;
-}
-
-.save-view-confirm-btn {
-    width: 100%;
-    background: linear-gradient(135deg, #00f2fe, #4facfe);
-    color: #050811;
-    font-weight: 700;
-    border: none;
-    border-radius: 8px;
-    padding: 10px;
-    cursor: pointer;
-}
 
 /* --- Deep Focus Mode & Zen Shield --- */
 
@@ -6378,10 +6212,6 @@ body.focus-mode-active .widget-tech-radar {
 
 body.focus-mode-active #aurora-bg {
     opacity: 0.2 !important;
-}
-
-body.focus-mode-active .category-filter-bar {
-    opacity: 0.5;
 }
 
 /* Zen Shield Screen */
@@ -7235,15 +7065,6 @@ html.show-shortcut-tags .enlace-icono .icon-img-wrapper {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-}
-
-.filter-pills-container {
-    gap: 8px;
-}
-
-.pill-btn {
-    height: 36px;
-    padding: 0 14px;
 }
 
 .search-calc-banner,

@@ -41,17 +41,3 @@ test('TagsFilterEngine: matches evalúa correctamente tags con lógica AND', ({ 
     const query3 = engine.parseQuery('cat:ia is:fav');
     expect(engine.matches(shortcut, query3)).toBe(true);
 });
-
-test('TagsFilterEngine: gestión y persistencia de Saved Views', ({ expect }) => {
-    const engine = new TagsFilterEngine();
-    expect(Array.isArray(engine.savedViews)).toBe(true);
-    expect(engine.savedViews.length).toBeGreaterThan(0);
-
-    engine.savedViews.push({ id: 'custom_view', name: 'Dev Tools', query: 'tag:dev', icon: '💻' });
-    engine.saveViews();
-
-    const reloaded = new TagsFilterEngine();
-    const found = reloaded.savedViews.find(v => v.id === 'custom_view');
-    expect(found).toBeTruthy();
-    expect(found.name).toBe('Dev Tools');
-});
