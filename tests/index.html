@@ -68,13 +68,17 @@
       try { sessionStorage.clear(); } catch (e) {}
     });
 
-    // Registro de test files (orden importa: puros → estado → integraciones)
+    // Registro de test files (orden importa: puros → estado → integraciones → subsistemas)
     await import('./bangs.test.js');
     await import('./state-utils.test.js');
     await import('./pomodoro.test.js');
     await import('./import-sync.test.js');
     await import('./tech-radar.test.js');
     await import('./extension-api.test.js');
+    await import('./ai-agent.test.js');
+    await import('./spaces.test.js');
+    await import('./focus-mode.test.js');
+    await import('./calendar-agenda.test.js');
 
     const report = document.getElementById('report');
     report.textContent = '';
