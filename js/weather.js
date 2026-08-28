@@ -20,14 +20,22 @@ export class WeatherEngine {
         this.weatherCityResults = document.getElementById('weather-city-results');
         this.weatherAutoBtn = document.getElementById('weather-auto-btn');
         this.lastWeather = null;
+        this.weatherInterval = null;
+        this.minuteSyncTimeout = null;
+        this._inited = false;
     }
 
     init() {
+        if (this._inited) {
+            this.destroy();
+        }
+        this._inited = true;
+
         this.updateClockAndGreeting();
         this.scheduleMinuteSync();
         this.detectLocationAndWeather();
         this.bindModalEvents();
-        setInterval(() => this.detectLocationAndWeather(), 15 * 60 * 1000);
+        this.weatherInterval = setInterval(() => this.detectLocationAndWeather(), 15 * 60 * 1000);
 
         state.on('language:changed', () => {
             this.updateClockAndGreeting();
@@ -36,6 +44,17 @@ export class WeatherEngine {
             }
         });
         state.on('username:changed', () => this.updateClockAndGreeting());
+    }
+
+    destroy() {
+        if (this.weatherInterval) {
+            clearInterval(this.weatherInterval);
+            this.weatherInterval = null;
+        }
+        if (this.minuteSyncTimeout) {
+            clearTimeout(this.minuteSyncTimeout);
+            this.minuteSyncTimeout = null;
+        }
     }
 
     updateClockAndGreeting() {
@@ -68,9 +87,10 @@ export class WeatherEngine {
     }
 
     scheduleMinuteSync() {
+        if (this.minuteSyncTimeout) clearTimeout(this.minuteSyncTimeout);
         const now = new Date();
         const msToNext = (60 - now.getSeconds()) * 1000 - now.getMilliseconds() + 50;
-        setTimeout(() => {
+        this.minuteSyncTimeout = setTimeout(() => {
             this.updateClockAndGreeting();
             this.scheduleMinuteSync();
         }, msToNext);

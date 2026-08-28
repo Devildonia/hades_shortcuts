@@ -36,6 +36,7 @@ export class BackupManager {
             layoutMatrix: state.layoutMatrix,
             postits: readJsonStorage('glass_postits_v1', []),
             canvasPositions: readJsonStorage('canvas_positions_v1', {}),
+            customMacros: readJsonStorage('custom_macros_v1', {}),
             shortcuts: state.shortcuts
         };
 
@@ -65,9 +66,21 @@ export class BackupManager {
                     }
                     if (data.canvasPositions) {
                         localStorage.setItem('canvas_positions_v1', JSON.stringify(data.canvasPositions));
+                        if (window.layoutManager && typeof window.layoutManager.setPositions === 'function') {
+                            window.layoutManager.setPositions(data.canvasPositions);
+                        }
                     }
                     if (data.postits) {
                         localStorage.setItem('glass_postits_v1', JSON.stringify(data.postits));
+                        if (window.postitsManager && typeof window.postitsManager.setPostIts === 'function') {
+                            window.postitsManager.setPostIts(data.postits);
+                        }
+                    }
+                    if (data.customMacros) {
+                        localStorage.setItem('custom_macros_v1', JSON.stringify(data.customMacros));
+                        if (window.macroEngine && typeof window.macroEngine.setCustomMacros === 'function') {
+                            window.macroEngine.setCustomMacros(data.customMacros);
+                        }
                     }
                     if (data.layoutMatrix) {
                         state.saveLayoutMatrix(data.layoutMatrix);
@@ -84,6 +97,9 @@ export class BackupManager {
                     }
                     showToast(t.import_success, 'success');
                     if (this.renderer && this.renderer.render) this.renderer.render();
+                    if (window.layoutManager && typeof window.layoutManager.applyPositions === 'function') {
+                        window.layoutManager.applyPositions();
+                    }
                 } else {
                     showToast(t.import_error, 'error');
                 }

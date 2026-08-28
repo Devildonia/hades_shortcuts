@@ -177,6 +177,7 @@ export class WidgetsManager {
                 fm.deactivateFocus(true);
             }
 
+            this.pomodoroState.endTime = null;
             if (this.pomodoroState.mode === 'focus') {
                 this.pomodoroState.mode = 'break';
                 this.pomodoroState.duration = 5 * 60;
@@ -213,7 +214,9 @@ export class WidgetsManager {
     pausePomodoro() {
         this.pomodoroState.isRunning = false;
         if (this.pomodoroState.endTime) {
-            this.pomodoroState.remaining = Math.max(0, Math.ceil((this.pomodoroState.endTime - Date.now()) / 1000));
+            if (this.pomodoroState.endTime > Date.now()) {
+                this.pomodoroState.remaining = Math.max(0, Math.ceil((this.pomodoroState.endTime - Date.now()) / 1000));
+            }
             this.pomodoroState.endTime = null;
         }
         if (this._timerId) {

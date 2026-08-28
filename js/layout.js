@@ -24,6 +24,17 @@ export class LayoutManager {
         persistJson('canvas_positions_v1', this.positions);
     }
 
+    setPositions(newPositions) {
+        this.positions = (newPositions && typeof newPositions === 'object') ? newPositions : {};
+        this.savePositions();
+        this.applyPositions();
+    }
+
+    reloadPositions() {
+        this.positions = this.loadPositions();
+        this.applyPositions();
+    }
+
     init() {
         this.applyPositions();
         state.on('dashboard:rendered', () => this.applyPositions());

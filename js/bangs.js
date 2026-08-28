@@ -23,12 +23,25 @@ export const parseBangQuery = (rawQuery) => {
     const trimmed = rawQuery.trim();
     const firstWord = trimmed.split(/\s+/)[0].toLowerCase();
     if (BANGS_MAP[firstWord]) {
+        const bangObj = BANGS_MAP[firstWord];
         const queryRest = trimmed.slice(firstWord.length).trim();
+        if (bangObj.isDevTool) {
+            return {
+                isBang: true,
+                isDevTool: true,
+                bang: firstWord,
+                service: bangObj.name,
+                targetUrl: null,
+                query: queryRest
+            };
+        }
+        const baseUrl = bangObj.url || '';
         return {
             isBang: true,
+            isDevTool: false,
             bang: firstWord,
-            service: BANGS_MAP[firstWord].name,
-            targetUrl: queryRest ? `${BANGS_MAP[firstWord].url}${encodeURIComponent(queryRest)}` : BANGS_MAP[firstWord].url.split('?')[0],
+            service: bangObj.name,
+            targetUrl: queryRest ? `${baseUrl}${encodeURIComponent(queryRest)}` : (baseUrl ? baseUrl.split('?')[0] : ''),
             query: queryRest
         };
     }

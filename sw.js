@@ -96,6 +96,8 @@ function matchIgnoringSearch(request) {
     });
 }
 
+const FALLBACK_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="#00f2fe" stroke-width="1.5"><rect width="18" height="18" x="3" y="3" rx="4" fill="#0f172a"/><circle cx="12" cy="12" r="4" fill="#00f2fe"/></svg>`;
+
 self.addEventListener('fetch', (e) => {
     const url = new URL(e.request.url);
 
@@ -108,7 +110,12 @@ self.addEventListener('fetch', (e) => {
                             cache.put(e.request, networkResponse.clone());
                         }
                         return networkResponse;
-                    }).catch(() => cachedResponse);
+                    }).catch(() => {
+                        return cachedResponse || new Response(FALLBACK_ICON_SVG, {
+                            status: 200,
+                            headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'no-store' }
+                        });
+                    });
                     return cachedResponse || fetchPromise;
                 });
             })

@@ -76,6 +76,17 @@ export class MacroEngine {
         this.macros = { ...DEFAULT_MACROS, ...customObj };
     }
 
+    setCustomMacros(customObj) {
+        this.saveCustomMacros(customObj || {});
+        this.renderMacroList();
+    }
+
+    reloadCustomMacros() {
+        this.customMacros = this.loadCustomMacros();
+        this.macros = { ...DEFAULT_MACROS, ...this.customMacros };
+        this.renderMacroList();
+    }
+
     getMacro(trigger) {
         return this.macros[(trigger || '').toLowerCase().trim()] || null;
     }

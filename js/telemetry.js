@@ -69,8 +69,9 @@ export class TelemetryEngine {
         let frameCount = 0;
         let lastTime = performance.now();
         const checkFPS = (now) => {
+            if (this._fpsRunning === false) return;
             if (document.hidden) {
-                requestAnimationFrame(checkFPS);
+                this._fpsRafId = null;
                 return;
             }
             frameCount++;
@@ -80,9 +81,38 @@ export class TelemetryEngine {
                 frameCount = 0;
                 lastTime = now;
             }
-            requestAnimationFrame(checkFPS);
+            this._fpsRafId = requestAnimationFrame(checkFPS);
         };
-        requestAnimationFrame(checkFPS);
+
+        this._fpsRunning = true;
+        this._fpsRafId = requestAnimationFrame(checkFPS);
+
+        if (!this._visibilityBound) {
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && this._fpsRunning && !this._fpsRafId) {
+                    lastTime = performance.now();
+                    frameCount = 0;
+                    this._fpsRafId = requestAnimationFrame(checkFPS);
+                }
+            });
+            this._visibilityBound = true;
+        }
+    }
+
+    stopFPS() {
+        this._fpsRunning = false;
+        if (this._fpsRafId) {
+            cancelAnimationFrame(this._fpsRafId);
+            this._fpsRafId = null;
+        }
+    }
+
+    destroy() {
+        this.stopFPS();
+        if (this.timer) {
+            clearInterval(this.timer);
+            this.timer = null;
+        }
     }
 
     bindOnlineOffline() {

@@ -117,9 +117,24 @@ export class CryptoSyncEngine {
     applyPackagePayload(data) {
         if (data.shortcuts) state.saveShortcuts(data.shortcuts);
         if (data.categories) state.saveCategories(data.categories);
-        if (data.canvasPositions) localStorage.setItem('canvas_positions_v1', JSON.stringify(data.canvasPositions));
-        if (data.postits) localStorage.setItem('glass_postits_v1', JSON.stringify(data.postits));
-        if (data.customMacros) localStorage.setItem('custom_macros_v1', JSON.stringify(data.customMacros));
+        if (data.canvasPositions) {
+            localStorage.setItem('canvas_positions_v1', JSON.stringify(data.canvasPositions));
+            if (window.layoutManager && typeof window.layoutManager.setPositions === 'function') {
+                window.layoutManager.setPositions(data.canvasPositions);
+            }
+        }
+        if (data.postits) {
+            localStorage.setItem('glass_postits_v1', JSON.stringify(data.postits));
+            if (window.postitsManager && typeof window.postitsManager.setPostIts === 'function') {
+                window.postitsManager.setPostIts(data.postits);
+            }
+        }
+        if (data.customMacros) {
+            localStorage.setItem('custom_macros_v1', JSON.stringify(data.customMacros));
+            if (window.macroEngine && typeof window.macroEngine.setCustomMacros === 'function') {
+                window.macroEngine.setCustomMacros(data.customMacros);
+            }
+        }
         if (data.userName) state.setUserName(data.userName);
         if (data.theme) state.setTheme(data.theme);
         if (typeof data.soundEnabled === 'boolean') state.setSoundEnabled(data.soundEnabled);
@@ -131,6 +146,9 @@ export class CryptoSyncEngine {
         localStorage.setItem('sync_last_timestamp', this.lastSync);
         this.updateStatus(`✓ Sincronizado con éxito (${new Date().toLocaleTimeString()})`);
         if (this.renderer) this.renderer.render();
+        if (window.layoutManager && typeof window.layoutManager.applyPositions === 'function') {
+            window.layoutManager.applyPositions();
+        }
     }
 
     async pushToGist() {

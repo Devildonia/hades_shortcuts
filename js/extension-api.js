@@ -1,7 +1,7 @@
 // js/extension-api.js - Native Extension Integrations (TopSites Onboarding & Context Menu Sync)
 
 import { platform } from './platform.js';
-import { state, showToast } from './state.js';
+import { state, showToast, safeHttpUrl } from './state.js';
 import { soundFx } from './audio.js';
 import { getTranslation } from './i18n.js';
 
@@ -82,15 +82,25 @@ export class ExtensionAPIEngine {
         soundFx.play('chime');
         let addedCount = 0;
         sites.slice(0, 8).forEach(site => {
-            const exists = state.shortcuts.some(s => s.url === site.url);
+            if (!site || !site.url) return;
+            const validUrl = safeHttpUrl(site.url);
+            if (!validUrl) return;
+
+            const exists = state.shortcuts.some(s => s.url === validUrl || s.url === site.url);
             if (!exists) {
-                const domain = new URL(site.url).hostname.replace('www.', '');
+                let domain = '';
+                try {
+                    domain = new URL(validUrl).hostname.replace(/^www\./, '');
+                } catch (e) {
+                    domain = site.title || 'Sitio web';
+                }
+                const title = (site.title || domain || 'Sitio web').trim();
                 state.shortcuts.push({
-                    id: 'ext_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-                    title: site.title || domain,
-                    url: site.url,
-                category: 'cat_tools',
-                    icon: `https://www.google.com/s2/favicons?domain=${encodeURIComponent(site.url)}&sz=64`,
+                    id: 'ext_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+                    title: title,
+                    url: validUrl,
+                    category: 'cat_tools',
+                    icon: `https://www.google.com/s2/favicons?domain=${encodeURIComponent(validUrl)}&sz=64`,
                     desc: `Importado de tus sitios frecuentes de Chrome`,
                     tags: 'extension topsites chrome'
                 });

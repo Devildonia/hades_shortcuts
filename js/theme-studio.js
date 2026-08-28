@@ -30,6 +30,23 @@ export const UNSPLASH_PRESETS = {
     ]
 };
 
+export function sanitizeCssUrl(rawUrl) {
+    if (!rawUrl || typeof rawUrl !== 'string') return '';
+    const str = rawUrl.trim();
+    if (/^https?:\/\//i.test(str)) {
+        try {
+            const parsed = new URL(str);
+            if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+                return parsed.href.replace(/["'\\\(\)\s]/g, encodeURIComponent);
+            }
+        } catch (e) {}
+    }
+    if (/^data:image\/(png|jpeg|jpg|webp|avif|gif);base64,[A-Za-z0-9+/=]+$/i.test(str)) {
+        return str;
+    }
+    return '';
+}
+
 export class ThemeStudio {
     constructor() {
         this.primaryInput = document.getElementById('custom-theme-primary');
@@ -231,9 +248,12 @@ export class ThemeStudio {
             if (dimOverlay) dimOverlay.style.opacity = '0';
         } else if (mode === 'image') {
             bgLayer.classList.add('active');
-            bgLayer.style.backgroundImage = `url("${imageUrl || UNSPLASH_PRESETS.cyberpunk}")`;
-            bgLayer.style.filter = `blur(${blur || 0}px)`;
-            if (dimOverlay) dimOverlay.style.opacity = `${(dim || 20) / 100}`;
+            const safeUrl = sanitizeCssUrl(imageUrl) || sanitizeCssUrl(UNSPLASH_PRESETS.cyberpunk[0]);
+            bgLayer.style.backgroundImage = safeUrl ? `url("${safeUrl}")` : 'none';
+            const safeBlur = Math.max(0, Math.min(50, parseInt(blur, 10) || 0));
+            const safeDim = Math.max(0, Math.min(100, parseInt(dim, 10) || 20));
+            bgLayer.style.filter = `blur(${safeBlur}px)`;
+            if (dimOverlay) dimOverlay.style.opacity = `${safeDim / 100}`;
         }
     }
 
@@ -351,14 +371,19 @@ export class ThemeStudio {
 
         if (urlInput) {
             urlInput.onchange = (e) => {
-                const url = e.target.value.trim();
-                if (url) {
-                    this.bgConfig.mode = 'image';
-                    this.bgConfig.imageType = 'url';
-                    this.bgConfig.imageUrl = url;
-                    this.saveBgConfig();
+                const raw = e.target.value.trim();
+                if (!raw) return;
+                const safe = sanitizeCssUrl(raw);
+                if (!safe) {
+                    showToast('Por favor, introduce una URL válida (http/https).', 'error');
                     syncUI();
+                    return;
                 }
+                this.bgConfig.mode = 'image';
+                this.bgConfig.imageType = 'url';
+                this.bgConfig.imageUrl = safe;
+                this.saveBgConfig();
+                syncUI();
             };
         }
 

@@ -221,10 +221,22 @@ export class SearchEngineManager {
         }
 
         const bangInfo = parseBangQuery(trimmed);
-        if (bangInfo.isBang && bangInfo.targetUrl) {
-            soundFx.play('click');
-            this.openExternal(bangInfo.targetUrl);
-            return;
+        if (bangInfo.isBang) {
+            if (bangInfo.isDevTool) {
+                if (bangInfo.bang === '!qr' && bangInfo.query) {
+                    devTools.openQRModal(bangInfo.query);
+                    return;
+                }
+                devTools.renderBanner(trimmed, this.calcBanner);
+                if (this.calcBanner) this.calcBanner.classList.remove('hidden');
+                soundFx.play('click');
+                return;
+            }
+            if (bangInfo.targetUrl) {
+                soundFx.play('click');
+                this.openExternal(bangInfo.targetUrl);
+                return;
+            }
         }
 
         const engine = SEARCH_ENGINES[this.currentEngineKey] || SEARCH_ENGINES.google;

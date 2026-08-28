@@ -249,6 +249,8 @@ export function initApp() {
     window.personalAnalytics = personalAnalytics;
     window.spacesManager = spacesManager;
     window.macroEngine = macroEngine;
+    window.layoutManager = layoutManager;
+    window.postitsManager = postits;
     window.aiAgent = aiAgent;
     window.calendarAgenda = calendarAgenda;
     window.tagsFilter = tagsFilter;

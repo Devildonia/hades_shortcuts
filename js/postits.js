@@ -88,6 +88,17 @@ export class PostItManager {
         persistJson('glass_postits_v1', this.postits);
     }
 
+    setPostIts(newList) {
+        this.postits = Array.isArray(newList) ? newList : [];
+        this.savePostIts();
+        this.renderAll();
+    }
+
+    reloadPostIts() {
+        this.postits = this.loadPostIts();
+        this.renderAll();
+    }
+
     createPostIt(text, x = null, y = null, color = 'cyan') {
         if (this.postits.length >= 25) {
             soundFx.play('click');

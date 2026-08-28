@@ -23,6 +23,7 @@ export class TechRadarEngine {
         this.refreshBtn = null;
         this.configBtn = null;
         this.modal = null;
+        this._loadToken = 0;
     }
 
     loadFeeds() {
@@ -153,9 +154,16 @@ export class TechRadarEngine {
 
         this.renderChannelBar();
         const currentFeed = this.feeds.find(f => f.id === this.activeFeedId) || this.feeds[0];
+        const targetFeedId = currentFeed.id;
+        const reqToken = ++this._loadToken;
         
-        // Show cached or fallback immediately to prevent blank loader
+        // Fetch feed articles with race-condition protection
         const articles = await this.fetchFeedArticles(currentFeed, force);
+
+        // Discard result if user has switched channels or triggered a newer fetch
+        if (reqToken !== this._loadToken || targetFeedId !== this.activeFeedId) {
+            return;
+        }
 
         this.radarList.innerHTML = '';
         if (!articles || articles.length === 0) {
