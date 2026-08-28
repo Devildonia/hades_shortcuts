@@ -7807,6 +7807,8 @@ html.show-shortcut-tags .enlace-icono .icon-img-wrapper {
 
 .widget-pomodoro .pomodoro-time {
     color: var(--zen-ink);
+    font-size: 1.5rem;
+    letter-spacing: 0.02em;
 }
 
 /* Botones: Iniciar como la chip activa de Sakura; Reiniciar en cristal tinta */

@@ -145,7 +145,6 @@ export class PersonalAnalyticsEngine {
 
         containerEl.innerHTML = `
             <div class="smart-suggestion-pill">
-                <span class="smart-sugg-icon">⚡</span>
                 <span class="smart-sugg-msg">${textPrompt}</span>
                 <button class="smart-sugg-action-btn" id="smart-sugg-launch">${t.launch_btn || 'Lanzar ahora'}</button>
                 <button class="smart-sugg-dismiss-btn" id="smart-sugg-dismiss" title="Descartar">✕</button>
