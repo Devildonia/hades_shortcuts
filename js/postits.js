@@ -4,12 +4,27 @@ import { soundFx } from './audio.js';
 import { escapeHtml, persistJson, showToast } from './state.js';
 import { getTranslation } from './i18n.js';
 
+// Paleta de papel del Bloc de Notas (colores de post-it real).
+export const PAPER_COLORS = ['yellow', 'pink', 'green', 'blue', 'orange', 'purple'];
+
+// Mapea el color de papel del widget al tema de los post-its flotantes.
+export const PAPER_TO_POSTIT = {
+    yellow: 'yellow',
+    pink: 'magenta',
+    green: 'emerald',
+    blue: 'cyan',
+    orange: 'orange',
+    purple: 'purple'
+};
+
+export const PAPER_STORAGE_KEY = 'scratchpad_paper_color';
+
 export class PostItManager {
     constructor() {
         this.container = null;
         this.postits = this.loadPostIts();
         this.topZIndex = 1000;
-        this.colors = ['cyan', 'yellow', 'magenta', 'emerald'];
+        this.colors = ['yellow', 'cyan', 'magenta', 'emerald', 'orange', 'purple'];
     }
 
     init() {
@@ -29,7 +44,9 @@ export class PostItManager {
             pinBtn.addEventListener('click', () => {
                 const text = textarea.value.trim();
                 if (text) {
-                    this.createPostIt(text);
+                    // El post-it flotante hereda el color de papel elegido en el widget.
+                    const paper = localStorage.getItem(PAPER_STORAGE_KEY);
+                    this.createPostIt(text, null, null, PAPER_TO_POSTIT[paper] || 'yellow');
                     textarea.value = '';
                     localStorage.removeItem('bento_scratchpad_notes');
                 } else {
@@ -142,16 +159,19 @@ export class PostItManager {
         el.style.zIndex = note.zIndex || 1000;
         el.style.transform = `rotate(${note.rotation || 0}deg)`;
 
+        if (note.w) el.style.width = `${note.w}px`;
+        if (note.h) el.style.height = `${note.h}px`;
+
         el.innerHTML = `
             <div class="postit-topbar">
-                <span class="postit-pin-grip" title="Arrastrar Post-it">📌</span>
-                <span class="postit-time">${escapeHtml(note.createdAt || '')}</span>
+                <span class="postit-time" title="Arrastrar el post-it desde cualquier punto">${escapeHtml(note.createdAt || '')}</span>
                 <div class="postit-actions">
                     <button class="postit-color-btn" title="Cambiar color">🎨</button>
                     <button class="postit-delete-btn" title="Eliminar Post-it">✕</button>
                 </div>
             </div>
             <div class="postit-body" contenteditable="true" spellcheck="false">${escapeHtml(note.text)}</div>
+            <span class="postit-resize-handle" title="Redimensionar Post-it">↘</span>
         `;
 
         this.bindPostItInteractions(el, note);
@@ -212,7 +232,7 @@ export class PostItManager {
         let hasMoved = false;
 
         const onPointerDown = (e) => {
-            if (e.target.closest('.postit-actions')) return;
+            if (e.target.closest('.postit-actions, .postit-resize-handle')) return;
             // If clicking directly into body to edit, allow editing without forcing drag unless moved
             isDragging = true;
             hasMoved = false;
@@ -266,5 +286,52 @@ export class PostItManager {
         el.addEventListener('pointermove', onPointerMove);
         el.addEventListener('pointerup', onPointerUp);
         el.addEventListener('pointercancel', onPointerUp);
+
+        // Redimensión por la esquina (↘): tamaño persistido en la nota.
+        const resizeHandle = el.querySelector('.postit-resize-handle');
+        if (resizeHandle) {
+            let isResizing = false;
+            let startClientX = 0, startClientY = 0, startW = 0, startH = 0;
+
+            const onResizeDown = (e) => {
+                if (e.button !== undefined && e.button !== 0) return;
+                e.preventDefault();
+                e.stopPropagation(); // no arrastra el post-it de fondo
+                isResizing = true;
+                startClientX = e.clientX;
+                startClientY = e.clientY;
+                startW = el.offsetWidth;
+                startH = el.offsetHeight;
+                resizeHandle.classList.add('is-resizing');
+                try { resizeHandle.setPointerCapture(e.pointerId); } catch (err) {}
+            };
+
+            const onResizeMove = (e) => {
+                if (!isResizing) return;
+                const MIN_W = 150, MIN_H = 110;
+                const maxW = Math.max(MIN_W, window.innerWidth - 16);
+                const maxH = Math.max(MIN_H, window.innerHeight - 16);
+                const w = Math.max(MIN_W, Math.min(maxW, startW + (e.clientX - startClientX)));
+                const h = Math.max(MIN_H, Math.min(maxH, startH + (e.clientY - startClientY)));
+                el.style.width = `${w}px`;
+                el.style.height = `${h}px`;
+                note.w = w;
+                note.h = h;
+            };
+
+            const onResizeUp = (e) => {
+                if (!isResizing) return;
+                isResizing = false;
+                resizeHandle.classList.remove('is-resizing');
+                this.savePostIts();
+                soundFx.play('click');
+                try { resizeHandle.releasePointerCapture(e.pointerId); } catch (err) {}
+            };
+
+            resizeHandle.addEventListener('pointerdown', onResizeDown);
+            resizeHandle.addEventListener('pointermove', onResizeMove);
+            resizeHandle.addEventListener('pointerup', onResizeUp);
+            resizeHandle.addEventListener('pointercancel', onResizeUp);
+        }
     }
 }

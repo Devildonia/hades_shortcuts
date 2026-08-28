@@ -3057,6 +3057,145 @@ html.no-gold-bezel .mini-widget-card::after {
     box-shadow: 0 0 10px var(--accent-glow);
 }
 
+/* ==========================================================================
+   Bloc de Notas — Estilo Post-it Real
+   Papel de colores con pincha roja, franja adhesiva y paleta de papel.
+   El color elegido persiste y lo heredan los post-its flotantes al fijarlos.
+   ========================================================================== */
+.widget-scratchpad {
+    --paper-1: #FFF7B4;
+    --paper-2: #FFD94F;
+    --paper-ink: #55430A;
+    --paper-ink-soft: rgba(85, 67, 10, 0.55);
+    background: linear-gradient(168deg, var(--paper-1) 0%, var(--paper-2) 100%);
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.28),
+        0 14px 30px rgba(0, 0, 0, 0.38),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.widget-scratchpad.paper-pink   { --paper-1: #FFD6E2; --paper-2: #FF9FBE; --paper-ink: #6E1234; --paper-ink-soft: rgba(110, 18, 52, 0.55); }
+.widget-scratchpad.paper-green  { --paper-1: #DCF7CB; --paper-2: #A3E78E; --paper-ink: #1D5A22; --paper-ink-soft: rgba(29, 90, 34, 0.55); }
+.widget-scratchpad.paper-blue   { --paper-1: #D9F0FF; --paper-2: #9BD3FF; --paper-ink: #0B3E66; --paper-ink-soft: rgba(11, 62, 102, 0.55); }
+.widget-scratchpad.paper-orange { --paper-1: #FFE6C6; --paper-2: #FFB46B; --paper-ink: #63350A; --paper-ink-soft: rgba(99, 53, 10, 0.55); }
+.widget-scratchpad.paper-purple { --paper-1: #EBDEFF; --paper-2: #C8A7FF; --paper-ink: #40206E; --paper-ink-soft: rgba(64, 32, 110, 0.55); }
+
+/* Pincha roja centrada (la tarjeta es overflow:hidden → vive dentro) */
+.widget-scratchpad .postit-pin {
+    position: absolute;
+    top: 7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26px;
+    height: 30px;
+    z-index: 6;
+    pointer-events: none;
+}
+.widget-scratchpad .postit-pin::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #FF9A8E 0%, #E53935 48%, #7E1410 100%);
+    box-shadow:
+        0 4px 7px rgba(0, 0, 0, 0.4),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.35),
+        inset 0 2px 3px rgba(255, 255, 255, 0.4);
+}
+.widget-scratchpad .postit-pin::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 13px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    filter: blur(1.5px);
+}
+
+/* Tinta sobre el papel */
+.widget-scratchpad .widget-title-group h3 {
+    color: var(--paper-ink);
+}
+.widget-scratchpad .widget-icon {
+    color: var(--paper-ink-soft);
+}
+.widget-scratchpad .scratchpad-textarea {
+    background: transparent;
+    border-color: transparent;
+    color: var(--paper-ink);
+    font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', var(--font-body);
+    font-size: 0.92rem;
+    line-height: 1.45;
+}
+.widget-scratchpad .scratchpad-textarea:focus {
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 0 0 2px var(--paper-ink-soft);
+}
+.widget-scratchpad .scratchpad-textarea::placeholder {
+    color: var(--paper-ink-soft);
+}
+
+/* Botón de fijar adaptado al papel */
+.widget-scratchpad .scratchpad-pin-btn {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid var(--paper-ink-soft);
+    color: var(--paper-ink);
+}
+.widget-scratchpad .scratchpad-pin-btn:hover {
+    background: var(--paper-ink);
+    color: var(--paper-1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Paleta de colores de papel */
+.scratchpad-colors {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: -4px;
+}
+.scratchpad-swatch {
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.22);
+    padding: 0;
+    cursor: pointer;
+    box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.22), inset 0 2px 3px rgba(255, 255, 255, 0.5);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.scratchpad-swatch:hover {
+    transform: scale(1.18);
+}
+.scratchpad-swatch[aria-pressed="true"] {
+    box-shadow: 0 0 0 2.5px var(--paper-ink), inset 0 -3px 5px rgba(0, 0, 0, 0.22);
+    transform: scale(1.08);
+}
+.swatch-yellow { background: #FFDF6B; }
+.swatch-pink   { background: #FFA9C4; }
+.swatch-green  { background: #ABE89B; }
+.swatch-blue   { background: #A5D8FF; }
+.swatch-orange { background: #FFBE7A; }
+.swatch-purple { background: #D2B6FF; }
+
+/* Tema claro: el papel manda (no el blanco del tema) */
+[data-theme="light"] .widget-scratchpad .scratchpad-textarea {
+    background: transparent;
+    border-color: transparent;
+    color: var(--paper-ink);
+    box-shadow: none;
+}
+[data-theme="light"] .widget-scratchpad .scratchpad-textarea::placeholder {
+    color: var(--paper-ink-soft);
+}
+
 /* Pomodoro Widget */
 .pomodoro-body {
     display: flex;
@@ -3417,15 +3556,18 @@ html.no-gold-bezel .mini-widget-card::after {
     z-index: 950;
 }
 
+/* Post-it flotante: mismo lenguaje que el widget (papel, tinta, pincha) */
 .glass-postit {
     position: fixed;
     width: 240px;
     min-height: 150px;
-    padding: 12px 14px 14px;
-    border-radius: var(--radius-lg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: var(--shadow-elevated), 0 12px 35px rgba(0, 0, 0, 0.45);
+    padding: 24px 14px 14px; /* espacio superior para la pincha */
+    border-radius: 10px;
+    background: linear-gradient(168deg, var(--pp-1, #FFF7B4) 0%, var(--pp-2, #FFD94F) 100%);
+    color: var(--pp-ink, #55430A);
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', var(--font-body);
     pointer-events: auto;
     cursor: grab;
     touch-action: none;
@@ -3433,7 +3575,26 @@ html.no-gold-bezel .mini-widget-card::after {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: box-shadow 0.2s ease;
+}
+
+/* Pincha roja (como el widget) */
+.glass-postit::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #FF9A8E 0%, #E53935 48%, #7E1410 100%);
+    box-shadow:
+        0 3px 6px rgba(0, 0, 0, 0.4),
+        inset 0 -3px 4px rgba(0, 0, 0, 0.35),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+    z-index: 3;
 }
 
 .glass-postit:hover {
@@ -3464,51 +3625,28 @@ html.no-gold-bezel .mini-widget-card::after {
     to { opacity: 0; transform: scale(0.5) translateY(-20px); }
 }
 
-/* Post-it Color Themes */
-.glass-postit.color-cyan {
-    background: linear-gradient(135deg, rgba(0, 242, 254, 0.18), rgba(10, 20, 35, 0.82));
-    border: 1px solid rgba(0, 242, 254, 0.45);
-    box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2);
-}
-.glass-postit.color-yellow {
-    background: linear-gradient(135deg, rgba(250, 204, 21, 0.22), rgba(35, 25, 10, 0.82));
-    border: 1px solid rgba(250, 204, 21, 0.5);
-    box-shadow: 0 10px 30px rgba(250, 204, 21, 0.2);
-}
-.glass-postit.color-magenta {
-    background: linear-gradient(135deg, rgba(217, 70, 239, 0.22), rgba(35, 10, 35, 0.82));
-    border: 1px solid rgba(217, 70, 239, 0.5);
-    box-shadow: 0 10px 30px rgba(217, 70, 239, 0.2);
-}
-.glass-postit.color-emerald {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(10, 35, 25, 0.82));
-    border: 1px solid rgba(16, 185, 129, 0.5);
-    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
-}
+/* Paletas de papel (idénticas a las del widget) */
+.glass-postit.color-yellow  { --pp-1: #FFF7B4; --pp-2: #FFD94F; --pp-ink: #55430A; --pp-ink-soft: rgba(85, 67, 10, 0.55); }
+.glass-postit.color-cyan    { --pp-1: #D9F0FF; --pp-2: #9BD3FF; --pp-ink: #0B3E66; --pp-ink-soft: rgba(11, 62, 102, 0.55); }
+.glass-postit.color-magenta { --pp-1: #FFD6E2; --pp-2: #FF9FBE; --pp-ink: #6E1234; --pp-ink-soft: rgba(110, 18, 52, 0.55); }
+.glass-postit.color-emerald { --pp-1: #DCF7CB; --pp-2: #A3E78E; --pp-ink: #1D5A22; --pp-ink-soft: rgba(29, 90, 34, 0.55); }
+.glass-postit.color-orange  { --pp-1: #FFE6C6; --pp-2: #FFB46B; --pp-ink: #63350A; --pp-ink-soft: rgba(99, 53, 10, 0.55); }
+.glass-postit.color-purple  { --pp-1: #EBDEFF; --pp-2: #C8A7FF; --pp-ink: #40206E; --pp-ink-soft: rgba(64, 32, 110, 0.55); }
 
 .postit-topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 6px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 2px;
+    border-bottom: none;
     cursor: grab;
-}
-
-.postit-pin-grip {
-    font-size: 1rem;
-    cursor: grab;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
-    transition: transform 0.2s ease;
-}
-.postit-pin-grip:hover {
-    transform: scale(1.2) rotate(15deg);
+    color: var(--pp-ink-soft, rgba(0, 0, 0, 0.5));
 }
 
 .postit-time {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-family: var(--font-mono);
-    color: var(--text-muted);
+    color: var(--pp-ink-soft, rgba(0, 0, 0, 0.5));
 }
 
 .postit-actions {
@@ -3520,7 +3658,7 @@ html.no-gold-bezel .mini-widget-card::after {
 .postit-color-btn, .postit-delete-btn {
     background: transparent;
     border: none;
-    color: var(--text-secondary);
+    color: var(--pp-ink-soft, rgba(0, 0, 0, 0.5));
     font-size: 0.82rem;
     cursor: pointer;
     padding: 2px 6px;
@@ -3529,27 +3667,57 @@ html.no-gold-bezel .mini-widget-card::after {
 }
 
 .postit-color-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: #ffffff;
+    background: rgba(255, 255, 255, 0.4);
+    color: var(--pp-ink, #333);
 }
 
 .postit-delete-btn:hover {
-    background: rgba(239, 68, 68, 0.3);
-    color: #ef4444;
+    background: rgba(239, 68, 68, 0.25);
+    color: #b91c1c;
 }
 
 .postit-body {
     flex: 1;
-    font-family: var(--font-body);
-    font-size: 0.88rem;
+    font-family: inherit;
+    font-size: 0.9rem;
     line-height: 1.45;
-    color: var(--text-primary);
+    color: var(--pp-ink, #55430A);
+    background: transparent;
     outline: none;
     word-break: break-word;
     white-space: pre-wrap;
     user-select: text;
     cursor: text;
     min-height: 80px;
+}
+
+/* Tirador de redimensión (esquina inferior derecha) */
+.postit-resize-handle {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: var(--pp-ink-soft, rgba(0, 0, 0, 0.5));
+    cursor: nwse-resize;
+    border-radius: 5px;
+    opacity: 0.65;
+    transition: opacity 0.15s ease, background 0.15s ease;
+    touch-action: none;
+    user-select: none;
+    z-index: 4;
+}
+.glass-postit:hover .postit-resize-handle,
+.postit-resize-handle.is-resizing {
+    opacity: 1;
+}
+.postit-resize-handle:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: var(--pp-ink, #333);
 }
 
 

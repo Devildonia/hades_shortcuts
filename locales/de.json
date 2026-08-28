@@ -250,7 +250,7 @@
     "run_routine": "Routine ausführen"
   },
   "widgets": {
-    "scratchpad_title": "Glass-Notizblock",
+    "scratchpad_title": "Notizblock",
     "scratchpad_placeholder": "Gedanken, Aufgaben oder schnelle Notizen hier schreiben...",
     "scratchpad_saved": "Automatisch gespeichert",
     "pomodoro_title": "Fokus-Timer",

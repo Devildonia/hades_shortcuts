@@ -3,6 +3,7 @@
 import { state } from './state.js';
 import { soundFx } from './audio.js';
 import { i18nDictionaries } from './i18n.js';
+import { PAPER_COLORS, PAPER_STORAGE_KEY } from './postits.js';
 
 export class WidgetsManager {
     constructor() {
@@ -118,6 +119,31 @@ export class WidgetsManager {
             this.scratchpadText = textarea.value;
             state.setItem('bento_scratchpad_notes', this.scratchpadText);
             state.setItem('hades_scratchpad_content', this.scratchpadText);
+        });
+
+        // Paleta de papel: el widget luce como un post-it real y el color
+        // persiste (y lo heredan los post-its flotantes al fijarlos).
+        const card = document.getElementById('widget-scratchpad-card');
+        const swatches = card ? Array.from(card.querySelectorAll('.scratchpad-swatch')) : [];
+        if (!swatches.length) return;
+
+        const applyPaper = (name) => {
+            PAPER_COLORS.forEach(c => card.classList.remove('paper-' + c));
+            card.classList.add('paper-' + name);
+            swatches.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.paper === name)));
+        };
+
+        const saved = localStorage.getItem(PAPER_STORAGE_KEY);
+        applyPaper(PAPER_COLORS.includes(saved) ? saved : 'yellow');
+
+        swatches.forEach(btn => {
+            btn.addEventListener('click', () => {
+                soundFx.play('hover');
+                const name = btn.dataset.paper;
+                if (!PAPER_COLORS.includes(name)) return;
+                localStorage.setItem(PAPER_STORAGE_KEY, name);
+                applyPaper(name);
+            });
         });
     }
 

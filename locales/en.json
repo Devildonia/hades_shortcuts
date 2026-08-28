@@ -250,7 +250,7 @@
     "run_routine": "Run routine"
   },
   "widgets": {
-    "scratchpad_title": "Glass Scratchpad",
+    "scratchpad_title": "Sticky Notes",
     "scratchpad_placeholder": "Write thoughts, tasks or quick notes here...",
     "scratchpad_saved": "Auto-saved locally",
     "pomodoro_title": "Focus Timer",

@@ -250,7 +250,7 @@
     "run_routine": "Ejecutar rutina"
   },
   "widgets": {
-    "scratchpad_title": "Bloc de Notas Glass",
+    "scratchpad_title": "Bloc de Notas",
     "scratchpad_placeholder": "Escribe ideas, tareas o notas rápidas aquí...",
     "scratchpad_saved": "Guardado automáticamente",
     "pomodoro_title": "Temporizador Focus",
