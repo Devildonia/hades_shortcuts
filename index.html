@@ -704,34 +704,34 @@
                     </div>
                 </div>
                 <div class="settings-section">
-                    <h4 data-i18n="settings_hub.appearance.themes_label">Tema Visual</h4>
+                    <h4 data-i18n="settings_hub.appearance.themes_label" title="Elige la paleta de colores del Centro de Mando." data-i18n-title="settings_hub.appearance.themes_desc">Tema Visual</h4>
                     <div class="theme-grid-selector">
-                        <label class="theme-choice-card">
+                        <label class="theme-choice-card" title="Cian neón sobre oscuro. Alto contraste." data-i18n-title="settings_hub.appearance.themes.cyber_desc">
                             <input type="radio" name="setting-theme" value="cyber" checked>
                             <span class="theme-choice-preview cyber-preview"></span>
                             <span class="theme-choice-name" data-i18n="settings_hub.appearance.themes.cyber">Cyber Neon</span>
                         </label>
-                        <label class="theme-choice-card">
+                        <label class="theme-choice-card" title="Magenta y azul profundo. Atmósfera espacial." data-i18n-title="settings_hub.appearance.themes.nebula_desc">
                             <input type="radio" name="setting-theme" value="nebula">
                             <span class="theme-choice-preview nebula-preview"></span>
                             <span class="theme-choice-name" data-i18n="settings_hub.appearance.themes.nebula">Deep Nebula</span>
                         </label>
-                        <label class="theme-choice-card">
+                        <label class="theme-choice-card" title="Ámbar cálido. Confort visual." data-i18n-title="settings_hub.appearance.themes.sunset_desc">
                             <input type="radio" name="setting-theme" value="sunset">
                             <span class="theme-choice-preview sunset-preview"></span>
                             <span class="theme-choice-name" data-i18n="settings_hub.appearance.themes.sunset">Sunset Amber</span>
                         </label>
-                        <label class="theme-choice-card">
+                        <label class="theme-choice-card" title="Negro puro para pantallas OLED." data-i18n-title="settings_hub.appearance.themes.abyss_desc">
                             <input type="radio" name="setting-theme" value="abyss">
                             <span class="theme-choice-preview abyss-preview"></span>
                             <span class="theme-choice-name" data-i18n="settings_hub.appearance.themes.abyss">Abyss OLED</span>
                         </label>
-                        <label class="theme-choice-card">
+                        <label class="theme-choice-card" title="Verde terminal sobre oscuro." data-i18n-title="settings_hub.appearance.themes.jade_desc">
                             <input type="radio" name="setting-theme" value="jade">
                             <span class="theme-choice-preview jade-preview"></span>
                             <span class="theme-choice-name" data-i18n="settings_hub.appearance.themes.jade">Jade Terminal</span>
                         </label>
-                        <label class="theme-choice-card">
+                        <label class="theme-choice-card" title="Tema claro cristalino para entornos diurnos." data-i18n-title="settings_hub.appearance.themes.light_desc">
                             <input type="radio" name="setting-theme" value="light">
                             <span class="theme-choice-preview light-preview"></span>
                             <span class="theme-choice-name" data-i18n="settings_hub.appearance.themes.light">Crystal Light</span>
@@ -741,11 +741,11 @@
 
                                 <!-- Background Studio Section -->
                 <div class="settings-section">
-                    <h4 data-i18n="bg_studio.title">Estilo de Fondo de Pantalla</h4>
+                    <h4 data-i18n="bg_studio.title" title="Elige el estilo del fondo de pantalla." data-i18n-title="bg_studio.title_desc">Estilo de Fondo de Pantalla</h4>
                     <div class="bg-mode-selector-grid">
-                        <button class="bg-mode-chip active" type="button" data-bg-mode="aurora" data-i18n="bg_studio.mode_aurora">🌌 Aurora Canvas</button>
-                        <button class="bg-mode-chip" type="button" data-bg-mode="gradient" data-i18n="bg_studio.mode_gradient">🎨 Color / Gradiente</button>
-                        <button class="bg-mode-chip" type="button" data-bg-mode="image" data-i18n="bg_studio.mode_image">🖼️ Imagen / Unsplash</button>
+                        <button class="bg-mode-chip active" type="button" data-bg-mode="aurora" title="Malla procedural que sigue al cursor." data-i18n-title="bg_studio.mode_aurora_desc" data-i18n="bg_studio.mode_aurora">Aurora Canvas</button>
+                        <button class="bg-mode-chip" type="button" data-bg-mode="gradient" title="Color sólido o gradiente estático." data-i18n-title="bg_studio.mode_gradient_desc" data-i18n="bg_studio.mode_gradient">Color / Gradiente</button>
+                        <button class="bg-mode-chip" type="button" data-bg-mode="image" title="Fotos de Unsplash, archivo local o URL, con desenfoque y oscurecimiento." data-i18n-title="bg_studio.mode_image_desc" data-i18n="bg_studio.mode_image">Imagen</button>
                     </div>
 
                     <!-- Gradient/Color Subpanel -->
@@ -804,7 +804,7 @@
                 <div class="settings-section">
                     <div class="settings-toggle-row">
                         <div>
-                            <span class="settings-toggle-title" data-i18n="settings_hub.appearance.sound_label">Efectos de Sonido Hápticos</span>
+                            <span class="settings-toggle-title" data-i18n="settings_hub.appearance.sound_label" title="Sonidos hápticos de interfaz al interactuar." data-i18n-title="settings_hub.appearance.sound_desc">Efectos de Sonido Hápticos</span>
                         </div>
                         <label class="switch">
                             <input type="checkbox" id="setting-sound-toggle" checked>
@@ -813,15 +813,15 @@
                     </div>
                     <div class="settings-select-row">
                         <span class="settings-toggle-title" data-i18n="audio.preset_label">Efecto de Sonido Háptico</span>
-                        <select id="sound-preset-select" class="settings-select">
-                            <option value="scifi" data-i18n="audio.preset_scifi">Sci-Fi Soft Pop (Sintetizado)</option>
+                        <select id="sound-preset-select" class="settings-select" title="Elige el estilo de sonido de la interfaz." data-i18n-title="settings_hub.appearance.preset_desc">
+                            <option value="scifi" data-i18n="audio.preset_scifi">Sci-Fi Soft Pop</option>
                             <option value="mech" data-i18n="audio.preset_mech">Click Mecánico Táctil</option>
                             <option value="bubble" data-i18n="audio.preset_bubble">Burbuja Acústica</option>
                         </select>
                     </div>
                     <div class="settings-toggle-row" style="margin-top: 14px;">
                         <div>
-                            <span class="settings-toggle-title" data-i18n="settings_hub.appearance.glow_label">Resplandor Ambiental (Aurora)</span>
+                            <span class="settings-toggle-title" data-i18n="settings_hub.appearance.glow_label" title="Brillo neón en acentos, marcos e iconos." data-i18n-title="settings_hub.appearance.glow_desc">Resplandor Ambiental</span>
                         </div>
                         <label class="switch">
                             <input type="checkbox" id="setting-glow-toggle" checked>
@@ -829,7 +829,7 @@
                         </label>
                     </div>
                     <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="settings_hub.appearance.aurora_toggle">Efecto Malla Aurora Reactiva</span>
+                        <span class="settings-toggle-title" data-i18n="settings_hub.appearance.aurora_toggle" title="Malla de aurora procedural que reacciona al cursor." data-i18n-title="settings_hub.appearance.aurora_desc">Efecto Malla Aurora Reactiva</span>
                         <label class="switch">
                             <input type="checkbox" id="setting-aurora-toggle" checked>
                             <span class="slider round"></span>
@@ -837,8 +837,7 @@
                     </div>
                     <div class="settings-toggle-row" style="margin-top: 10px;">
                         <div>
-                            <span class="settings-toggle-title" data-i18n="settings_hub.appearance.solar_label">Iluminación Solar Circadiana</span>
-                            <p class="settings-hint" data-i18n="settings_hub.appearance.solar_desc" style="margin: 4px 0 0 0;">Adapta el resplandor según la hora del día.</p>
+                            <span class="settings-toggle-title" data-i18n="settings_hub.appearance.solar_label" title="Adapta el resplandor ambiental según la posición real del sol (Amanecer, Cenit, Crepúsculo, Noche)." data-i18n-title="settings_hub.appearance.solar_desc">Iluminación Solar Circadiana</span>
                         </div>
                         <label class="switch">
                             <input type="checkbox" id="setting-solar-toggle">

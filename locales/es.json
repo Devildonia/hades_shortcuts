@@ -155,7 +155,7 @@
     "appearance": {
       "themes_label": "Tema Visual",
       "sound_label": "Efectos de Sonido Hápticos",
-      "glow_label": "Resplandor Ambiental (Aurora)",
+      "glow_label": "Resplandor Ambiental",
       "themes": {
         "cyber": "Cyber Neon",
         "nebula": "Deep Nebula",
@@ -163,11 +163,22 @@
         "abyss": "Abyss OLED",
         "jade": "Jade Terminal",
         "light": "Crystal Light",
-        "sunset": "Sunset Amber"
+        "sunset": "Sunset Amber",
+        "cyber_desc": "Cian neón sobre oscuro. Alto contraste.",
+        "nebula_desc": "Magenta y azul profundo. Atmósfera espacial.",
+        "sunset_desc": "Ámbar cálido. Confort visual.",
+        "abyss_desc": "Negro puro para pantallas OLED.",
+        "jade_desc": "Verde terminal sobre oscuro.",
+        "light_desc": "Tema claro cristalino para entornos diurnos."
       },
       "aurora_toggle": "Efecto Malla Aurora Reactiva",
       "solar_label": "Iluminación Solar Circadiana",
-      "solar_desc": "Adapta el resplandor ambiental según la posición real del sol (Amanecer, Cenit, Crepúsculo, Noche)."
+      "solar_desc": "Adapta el resplandor ambiental según la posición real del sol (Amanecer, Cenit, Crepúsculo, Noche).",
+      "themes_desc": "Elige la paleta de colores del Centro de Mando.",
+      "sound_desc": "Sonidos hápticos de interfaz al interactuar.",
+      "preset_desc": "Elige el estilo de sonido de la interfaz.",
+      "glow_desc": "Brillo neón en acentos, marcos e iconos.",
+      "aurora_desc": "Malla de aurora procedural que reacciona al cursor."
     },
     "layout": {
       "edit_mode_title": "Modo Edición del Tablero",
@@ -297,7 +308,7 @@
   },
   "audio": {
     "preset_label": "Efecto de Sonido Háptico",
-    "preset_scifi": "Sci-Fi Soft Pop (Sintetizado)",
+    "preset_scifi": "Sci-Fi Soft Pop",
     "preset_mech": "Click Mecánico Táctil",
     "preset_bubble": "Burbuja Acústica"
   },
@@ -463,9 +474,13 @@
   },
   "bg_studio": {
     "title": "Estilo de Fondo de Pantalla",
-    "mode_aurora": "🌌 Aurora Canvas",
-    "mode_gradient": "🎨 Color / Gradiente",
-    "mode_image": "🖼️ Imagen / Unsplash",
+    "mode_aurora": "Aurora Canvas",
+    "mode_gradient": "Color / Gradiente",
+    "mode_image": "Imagen",
+    "title_desc": "Elige el estilo del fondo de pantalla.",
+    "mode_aurora_desc": "Malla procedural que sigue al cursor.",
+    "mode_gradient_desc": "Color sólido o gradiente estático.",
+    "mode_image_desc": "Fotos de Unsplash, archivo local o URL, con desenfoque y oscurecimiento.",
     "unsplash_topic": "Temática Unsplash:",
     "topic_cyberpunk": "Cyberpunk & Tech",
     "topic_space": "Espacio Profundo",

@@ -155,7 +155,7 @@
     "appearance": {
       "themes_label": "Visuelles Design",
       "sound_label": "Haptische Soundeffekte",
-      "glow_label": "Ambientes Aurora-Leuchten",
+      "glow_label": "Ambientes Leuchten",
       "themes": {
         "cyber": "Cyber Neon",
         "nebula": "Deep Nebula",
@@ -163,11 +163,22 @@
         "abyss": "Abyss OLED",
         "jade": "Jade Terminal",
         "light": "Crystal Light",
-        "sunset": "Sunset Amber"
+        "sunset": "Sunset Amber",
+        "cyber_desc": "Neon-Cyan auf Dunkel. Hoher Kontrast.",
+        "nebula_desc": "Magenta und tiefes Blau. Weltraum-Atmosphäre.",
+        "sunset_desc": "Warmer Bernstein. Visuelles Komfort.",
+        "abyss_desc": "Reines Schwarz für OLED-Displays.",
+        "jade_desc": "Terminal-Grün auf Dunkel.",
+        "light_desc": "Kristallhelles Theme für helle Umgebungen."
       },
       "aurora_toggle": "Reaktiver Aurora-Mesh-Effekt",
       "solar_label": "Zirkadiane Solarbeleuchtung",
-      "solar_desc": "Passt das Umgebungslicht dynamisch an den Sonnenzyklus an (Dämmerung, Mittag, Abend, Nacht)."
+      "solar_desc": "Passt das Umgebungslicht dynamisch an den Sonnenzyklus an (Dämmerung, Mittag, Abend, Nacht).",
+      "themes_desc": "Wähle die Farbpalette des Kommandozentrums.",
+      "sound_desc": "Haptische Soundeffekte der Oberfläche bei der Interaktion.",
+      "preset_desc": "Wähle den Sound-Stil der Oberfläche.",
+      "glow_desc": "Neon-Glow auf Akzenten, Rahmen und Icons.",
+      "aurora_desc": "Prozedurales Aurora-Mesh, das auf den Cursor reagiert."
     },
     "layout": {
       "edit_mode_title": "Dashboard-Bearbeitungsmodus",
@@ -297,7 +308,7 @@
   },
   "audio": {
     "preset_label": "Haptischer Sound-Effekt",
-    "preset_scifi": "Sci-Fi Soft Pop (Synthetisiert)",
+    "preset_scifi": "Sci-Fi Soft Pop",
     "preset_mech": "Mechanischer Klick",
     "preset_bubble": "Akustische Blase"
   },
@@ -463,9 +474,13 @@
   },
   "bg_studio": {
     "title": "Hintergrund- & Wallpaper-Stil",
-    "mode_aurora": "🌌 Aurora Canvas",
-    "mode_gradient": "🎨 Farbe / Farbverlauf",
-    "mode_image": "🖼️ Bild / Unsplash",
+    "mode_aurora": "Aurora Canvas",
+    "mode_gradient": "Farbe / Farbverlauf",
+    "mode_image": "Bild",
+    "title_desc": "Wähle den Stil der Hintergrundoberfläche.",
+    "mode_aurora_desc": "Prozedurales Mesh, das dem Cursor folgt.",
+    "mode_gradient_desc": "Statische Farbe oder Farbverlauf.",
+    "mode_image_desc": "Unsplash-Fotos, lokale Datei oder URL, mit Unschärfe und Abdunkelung.",
     "unsplash_topic": "Unsplash-Thema:",
     "topic_cyberpunk": "Cyberpunk & Tech",
     "topic_space": "Tiefer Weltraum",

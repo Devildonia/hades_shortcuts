@@ -155,7 +155,7 @@
     "appearance": {
       "themes_label": "Visual Theme",
       "sound_label": "Haptic Sound Effects",
-      "glow_label": "Ambient Aurora Glow",
+      "glow_label": "Ambient Glow",
       "themes": {
         "cyber": "Cyber Neon",
         "nebula": "Deep Nebula",
@@ -163,11 +163,22 @@
         "abyss": "Abyss OLED",
         "jade": "Jade Terminal",
         "light": "Crystal Light",
-        "sunset": "Sunset Amber"
+        "sunset": "Sunset Amber",
+        "cyber_desc": "Neon cyan on dark. High contrast.",
+        "nebula_desc": "Magenta and deep blue. Space atmosphere.",
+        "sunset_desc": "Warm amber. Visual comfort.",
+        "abyss_desc": "Pure black for OLED displays.",
+        "jade_desc": "Terminal green on dark.",
+        "light_desc": "Crystal-light theme for bright environments."
       },
       "aurora_toggle": "Reactive Aurora Mesh Effect",
       "solar_label": "Circadian Solar Lighting",
-      "solar_desc": "Dynamically shifts ambient lighting based on solar cycle (Dawn, Noon, Twilight, Midnight)."
+      "solar_desc": "Dynamically shifts ambient lighting based on solar cycle (Dawn, Noon, Twilight, Midnight).",
+      "themes_desc": "Pick the color palette of the Command Center.",
+      "sound_desc": "Haptic interface sounds while interacting.",
+      "preset_desc": "Choose the interface sound style.",
+      "glow_desc": "Neon glow on accents, bezels and icons.",
+      "aurora_desc": "Procedural aurora mesh that reacts to the cursor."
     },
     "layout": {
       "edit_mode_title": "Dashboard Edit Mode",
@@ -297,7 +308,7 @@
   },
   "audio": {
     "preset_label": "Haptic Sound Preset",
-    "preset_scifi": "Sci-Fi Soft Pop (Procedural)",
+    "preset_scifi": "Sci-Fi Soft Pop",
     "preset_mech": "Mechanical Switch Click",
     "preset_bubble": "Acoustic Bubble"
   },
@@ -463,9 +474,13 @@
   },
   "bg_studio": {
     "title": "Wallpaper & Background Style",
-    "mode_aurora": "🌌 Aurora Canvas",
-    "mode_gradient": "🎨 Solid / Gradient",
-    "mode_image": "🖼️ Image / Unsplash",
+    "mode_aurora": "Aurora Canvas",
+    "mode_gradient": "Solid / Gradient",
+    "mode_image": "Image",
+    "title_desc": "Choose the wallpaper style.",
+    "mode_aurora_desc": "Procedural mesh that follows the cursor.",
+    "mode_gradient_desc": "Static solid color or gradient.",
+    "mode_image_desc": "Unsplash photos, local file or URL, with blur and dim.",
     "unsplash_topic": "Unsplash Topic:",
     "topic_cyberpunk": "Cyberpunk & Tech",
     "topic_space": "Deep Space",
