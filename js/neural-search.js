@@ -58,12 +58,46 @@ export class NeuralSearchEngine {
         return results.length > 0 ? results : null;
     }
 
+    // LIVE (se ejecuta en cada tecla desde filterShortcuts): SOLO previsualiza
+    // "Pulsa Enter". Sin efectos secundarios: no abre el agente IA ni hace fetch.
+    // La ejecución real ocurre en executeAICommand() al pulsar Enter, consistente
+    // con bangs/macros/devtools (regresión: antes saltaba la ventana IA con la
+    // primera letra escrita tras "!ai ").
     handleAICommands(query, bannerEl) {
-        const trimmed = query.trim();
+        const trimmed = (query || '').trim();
         const t = (i18nDictionaries[state.language] || i18nDictionaries.es).neural || {};
 
-        if (trimmed.startsWith('!ai ') || trimmed.startsWith('!ask ')) {
-            const prompt = trimmed.replace(/^!(ai|ask)\s+/, '').trim();
+        const aiMatch = trimmed.match(/^!(ai|ask)\s+(\S.*)$/i);
+        if (aiMatch) {
+            if (bannerEl) {
+                bannerEl.innerHTML = `<span>🤖 <strong>${escapeHtml(t.ai_answer_title || 'Asistente IA')}:</strong></span> <span>${escapeHtml(t.ai_preview || 'Pulsa Enter para preguntar')} — <em>"${escapeHtml(aiMatch[2].trim())}"</em></span>`;
+                bannerEl.classList.remove('hidden');
+            }
+            return true;
+        }
+
+        const tMatch = trimmed.match(/^!t\s+(\S.*)$/i);
+        if (tMatch) {
+            if (bannerEl) {
+                bannerEl.innerHTML = `<span>🌐 <strong>${escapeHtml(t.translate_title || 'Traducción')}:</strong></span> <span>${escapeHtml(t.t_preview || 'Pulsa Enter para traducir')} — <em>"${escapeHtml(tMatch[1].trim())}"</em></span>`;
+                bannerEl.classList.remove('hidden');
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    // ENTER (llamado desde search.executeSearch): ejecuta la acción real
+    // (abre el agente IA o lanza la traducción en vivo). Devuelve true si la
+    // consulta era un comando reconocido.
+    executeAICommand(query, bannerEl) {
+        const trimmed = (query || '').trim();
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).neural || {};
+
+        const aiMatch = trimmed.match(/^!(ai|ask)\s+(\S.*)$/i);
+        if (aiMatch) {
+            const prompt = aiMatch[2].trim();
             if (!prompt) return false;
             if (aiAgent && typeof aiAgent.openAndQuery === 'function') {
                 aiAgent.openAndQuery(prompt);
@@ -74,12 +108,13 @@ export class NeuralSearchEngine {
             return true;
         }
 
-        if (trimmed.startsWith('!t ')) {
-            const textToTrans = trimmed.slice(3).trim();
+        const tMatch = trimmed.match(/^!t\s+(\S.*)$/i);
+        if (tMatch) {
+            const textToTrans = tMatch[1].trim();
             if (!textToTrans) return false;
 
             if (bannerEl) {
-                bannerEl.innerHTML = `<span>🌐 <strong>${t.translate_title || 'Traducción'}:</strong></span> <span>Traduciendo <em>"${escapeHtml(textToTrans)}"</em>...</span>`;
+                bannerEl.innerHTML = `<span>🌐 <strong>${escapeHtml(t.translate_title || 'Traducción')}:</strong></span> <span>Traduciendo <em>"${escapeHtml(textToTrans)}"</em>...</span>`;
                 bannerEl.classList.remove('hidden');
             }
 

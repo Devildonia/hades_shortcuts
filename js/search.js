@@ -220,6 +220,13 @@ export class SearchEngineManager {
             return;
         }
 
+        // !ai / !ask / !t: en vivo solo previsualizan; aquí (Enter) ejecutan la
+        // acción real. Regresión: antes disparaban en cada tecla.
+        if (neuralSearch.executeAICommand(trimmed, this.calcBanner)) {
+            soundFx.play('click');
+            return;
+        }
+
         const bangInfo = parseBangQuery(trimmed);
         if (bangInfo.isBang) {
             if (bangInfo.isDevTool) {

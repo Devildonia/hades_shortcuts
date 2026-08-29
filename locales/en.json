@@ -357,7 +357,9 @@
   "neural": {
     "ai_answer_title": "Local AI Assistant",
     "translate_title": "Quick Translation",
-    "semantic_match": "AI Semantic Match"
+    "semantic_match": "AI Semantic Match",
+    "ai_preview": "Press Enter to ask",
+    "t_preview": "Press Enter to translate"
   },
   "analytics": {
     "tab_title": "Habits & Analytics",

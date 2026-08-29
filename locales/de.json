@@ -357,7 +357,9 @@
   "neural": {
     "ai_answer_title": "Lokaler KI-Assistent",
     "translate_title": "Schnellübersetzung",
-    "semantic_match": "Semantische KI-Übereinstimmung"
+    "semantic_match": "Semantische KI-Übereinstimmung",
+    "ai_preview": "Enter drücken, um die Frage zu stellen",
+    "t_preview": "Enter drücken, um zu übersetzen"
   },
   "analytics": {
     "tab_title": "Gewohnheiten & Analytics",
