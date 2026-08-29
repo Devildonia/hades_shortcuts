@@ -127,13 +127,17 @@ self.addEventListener('fetch', (e) => {
         fetch(e.request)
             .then((res) => {
                 if (res && res.status === 200 && e.request.method === 'GET') {
-                    const cloneA = res.clone();
-                    const cloneB = res.clone();
-                    caches.open(CACHE_NAME).then((cache) => {
-                        cache.put(e.request, cloneA);
-                        const clean = new URL(e.request.url);
-                        if (clean.search) cache.put(clean.href, cloneB);
-                    });
+                    // Solo cachear same-origin (evita cachear APIs de terceros)
+                    const reqUrl = new URL(e.request.url);
+                    const isSameOrigin = reqUrl.origin === self.location.origin;
+                    if (isSameOrigin) {
+                        const cloneA = res.clone();
+                        const cloneB = res.clone();
+                        caches.open(CACHE_NAME).then((cache) => {
+                            cache.put(e.request, cloneA);
+                            if (reqUrl.search) cache.put(reqUrl.href, cloneB);
+                        });
+                    }
                 }
                 return res;
             })

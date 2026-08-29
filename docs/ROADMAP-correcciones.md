@@ -57,9 +57,9 @@
 
 ---
 
-## Fase 2 — Rendimiento (P1)
+## Fase 2 — Rendimiento (P1) ✅ COMPLETADO
 
-### T2.1 Búsqueda: eliminar layout thrashing y re-parseo
+### T2.1 ✅ Búsqueda: eliminar layout thrashing y re-parseo
 - Archivo: `js/search.js` → `filterShortcuts()`.
 - Cambio: (a) `card.textContent` en vez de `card.innerText`; (b) hoisear
   `const parsed = tagsFilter.parseQuery(query)` ANTES del bucle por tarjeta.
@@ -67,7 +67,7 @@
   de filtro con 60 tarjetas (antes/después, debe bajar de forma medible).
 - Esfuerzo: S.
 
-### T2.2 Service Worker: acotar la caché
+### T2.2 ✅ Service Worker: acotar la caché
 - Archivo: `sw.js` → handler de `fetch`.
 - Cambio: solo hacer `cache.put` para peticiones **same-origin** (o allowlist:
   same-origin + `/iconos/` + `fonts/`). Excluir APIs de terceros (github,
@@ -77,7 +77,7 @@
   fetches de APIs → la caché solo contiene assets propios.
 - Esfuerzo: M.
 
-### T2.3 Theme Studio: guardar sin escribir por tick
+### T2.3 ✅ Theme Studio: guardar sin escribir por tick
 - Archivo: `js/theme-studio.js`.
 - Cambio: (a) sliders `blur`/`dim`: aplicar valor en vivo, pero `saveBgConfig()`
   con debounce ~200 ms y al `change` final; (b) `handleColorChange()`: pasar por
@@ -85,7 +85,7 @@
 - Verificación: manual — mover slider rápido no satura el storage; suite en verde.
 - Esfuerzo: S.
 
-### T2.4 Weather: timeouts en red
+### T2.4 ✅ Weather: timeouts en red
 - Archivo: `js/weather.js` → `fetchWeatherForCoords()`, `detectLocationAndWeather()`.
 - Cambio: `AbortController` + timeout 8-10 s en los fetches a `open-meteo`,
   `ipwho.is` y geocoding (mismo criterio que `fetchTextMaybeProxy` de `state.js`).
@@ -93,8 +93,8 @@
   colgadas.
 - Esfuerzo: S-M.
 
-**Done de Fase 2:** búsqueda mediblemente más fluida, caché SW acotada, sin
-promesas de red sin límite.
+**Done de Fase 2:** ✅ búsqueda sin layout thrashing, caché SW acotada a same-origin,
+debounce en sliders, timeouts 10 s en fetches de weather. Suite 137/137 en verde.
 
 ---
 

@@ -160,6 +160,7 @@ export class SearchEngineManager {
 
         const semanticHits = (!commandMode && query.length >= 3) ? (neuralSearch.semanticSearch(rawQuery) || []) : [];
         const semanticIds = new Set(semanticHits.filter((h) => h.score >= 35).map((h) => h.id));
+        const parsedFilter = tagsFilter.parseQuery(query);
 
         categories.forEach(cat => {
             const group = cat.getAttribute('data-group');
@@ -180,9 +181,8 @@ export class SearchEngineManager {
                 const title = (card.getAttribute('data-title') || '').toLowerCase();
                 const tags = (card.getAttribute('data-tags') || '').toLowerCase();
                 const desc = (card.getAttribute('data-desc') || '').toLowerCase();
-                const text = (card.innerText || card.textContent || '').toLowerCase();
+                const text = (card.textContent || '').toLowerCase();
 
-                const parsedFilter = tagsFilter.parseQuery(query);
                 const matchesQuery = !commandMode && (!query || tagsFilter.matches(shortcut, parsedFilter) || title.includes(query) || tags.includes(query) || desc.includes(query) || text.includes(query) || semanticIds.has(sid));
 
                 if (matchesPill && matchesQuery) {

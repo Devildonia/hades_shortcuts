@@ -216,7 +216,7 @@ export class ThemeStudio {
         const primary = this.primaryInput ? this.primaryInput.value : '#00f2fe';
         const secondary = this.secondaryInput ? this.secondaryInput.value : '#4facfe';
         this.applyCustomColors(primary, secondary);
-        localStorage.setItem('custom_theme_colors', JSON.stringify({ primary, secondary }));
+        persistJson('custom_theme_colors', { primary, secondary });
     }
 
     resetCustomColors() {
@@ -390,20 +390,35 @@ export class ThemeStudio {
             };
         }
 
+        // Debounce para sliders (aplicar en vivo, guardar con retardo ~200 ms)
+        let sliderTimer = null;
+        const debouncedSave = () => {
+            if (sliderTimer) clearTimeout(sliderTimer);
+            sliderTimer = setTimeout(() => { this.saveBgConfig(); }, 200);
+        };
+        const flushSave = () => {
+            if (sliderTimer) { clearTimeout(sliderTimer); sliderTimer = null; }
+            this.saveBgConfig();
+        };
+
         if (blurSlider) {
             blurSlider.oninput = (e) => {
                 this.bgConfig.blur = parseInt(e.target.value);
                 if (blurDisplay) blurDisplay.textContent = `${e.target.value}px`;
-                this.saveBgConfig();
+                this.applyBackground();
+                debouncedSave();
             };
+            blurSlider.onchange = flushSave;
         }
 
         if (dimSlider) {
             dimSlider.oninput = (e) => {
                 this.bgConfig.dim = parseInt(e.target.value);
                 if (dimDisplay) dimDisplay.textContent = `${e.target.value}%`;
-                this.saveBgConfig();
+                this.applyBackground();
+                debouncedSave();
             };
+            dimSlider.onchange = flushSave;
         }
     }
 }

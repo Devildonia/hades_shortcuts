@@ -3,6 +3,13 @@
 import { state, escapeHtml, showToast } from './state.js';
 import { i18nDictionaries, getTranslation } from './i18n.js';
 
+const WEATHER_TIMEOUT_MS = 10000;
+function fetchWithTimeout(url, opts = {}) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), WEATHER_TIMEOUT_MS);
+    return fetch(url, { ...opts, signal: ctrl.signal }).finally(() => clearTimeout(timer));
+}
+
 export class WeatherEngine {
     constructor() {
         this.liveTimeEl = document.getElementById('live-time');
@@ -128,7 +135,7 @@ export class WeatherEngine {
     async fetchWeatherForCoords(lat, lon, cityName) {
         try {
             const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,is_day&timezone=auto`;
-            const res = await fetch(url);
+            const res = await fetchWithTimeout(url);
             const data = await res.json();
             if (data && data.current) {
                 const temp = data.current.temperature_2m;
@@ -162,7 +169,7 @@ export class WeatherEngine {
         let resolved = false;
 
         try {
-            const ipRes = await fetch('https://ipwho.is/');
+            const ipRes = await fetchWithTimeout('https://ipwho.is/');
             const ipData = await ipRes.json();
             if (ipData && ipData.success !== false && ipData.latitude) {
                 detectedCity = ipData.city || 'Tu Zona';
@@ -177,7 +184,7 @@ export class WeatherEngine {
                 const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Madrid';
                 const parts = tz.split('/');
                 const tzCity = (parts[1] || 'Madrid').replace(/_/g, ' ');
-                const geoSearchRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(tzCity)}&count=1&language=es&format=json`);
+                const geoSearchRes = await fetchWithTimeout(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(tzCity)}&count=1&language=es&format=json`);
                 const geoSearchData = await geoSearchRes.json();
                 if (geoSearchData.results && geoSearchData.results.length > 0) {
                     detectedCity = geoSearchData.results[0].name;
@@ -233,7 +240,7 @@ export class WeatherEngine {
 
             if (this.weatherSearchBtn) this.weatherSearchBtn.textContent = '...';
             try {
-                const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=es&format=json`);
+                const res = await fetchWithTimeout(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=es&format=json`);
                 const data = await res.json();
                 if (this.weatherCityResults) {
                     this.weatherCityResults.innerHTML = '';
