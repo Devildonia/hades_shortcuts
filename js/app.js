@@ -93,6 +93,11 @@ export function initUserNameSystem(weather, settingsHub) {
     };
 
     if (brandTitle) brandTitle.addEventListener('click', openModal);
+    // T5.3 (Fase 5): #brand-user-name declara role="button" tabindex="0" en index.html,
+    // así que debe responder a teclado (Enter/Space) además del click.
+    if (brandName) brandName.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); }
+    });
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     if (input) {
         input.addEventListener('input', updatePreview);

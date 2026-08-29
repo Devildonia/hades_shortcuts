@@ -8304,3 +8304,28 @@ html.show-shortcut-tags .enlace-icono .icon-img-wrapper {
     transform: translateY(-1px);
     box-shadow: 0 5px 14px rgba(43, 43, 51, 0.4);
 }
+
+/* ==========================================================================
+   T5.2 (Fase 5) · Aviso sin JavaScript
+   La app es 100% JS: si JS está desactivado no se renderiza nada más, así que
+   el <noscript> ocupa toda la pantalla como única información visible.
+   ========================================================================== */
+.noscript-banner {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 32px 24px;
+    background: #0b1020;
+    color: #e6edf7;
+    text-align: center;
+    font-family: "Outfit", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.noscript-banner strong { font-size: 22px; font-weight: 700; color: #9fd0ff; letter-spacing: 0.2px; }
+.noscript-banner em { color: #8fa3c0; font-size: 13px; font-style: normal; }

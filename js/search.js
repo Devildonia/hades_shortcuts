@@ -261,8 +261,10 @@ export class SearchEngineManager {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     const focused = document.querySelector('.enlace-icono.bento-kbd-focus:not(.hidden-by-filter)');
-                    if (focused && focused.href) {
-                        this.openExternal(focused.href);
+                    // T5.1 (Fase 5): las tarjetas son <div role="link">; la URL vive en data-href.
+                    const target = focused ? (focused.getAttribute('data-href') || focused.href) : null;
+                    if (target) {
+                        this.openExternal(target);
                         return;
                     }
                     this.executeSearch(this.searchInput.value);

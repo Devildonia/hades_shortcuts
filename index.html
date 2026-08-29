@@ -34,6 +34,15 @@
     <script type="module" src="js/app.js?v=1.0.0-rc-1.dragfix"></script>
 </head>
 <body>
+    <!-- T5.2 (Fase 5): la app es 100% JS; sin JS no renderiza nada. Este aviso es
+         el único contenido estático visible, por lo que es ES/EN (sin i18n posible). -->
+    <noscript>
+        <div class="noscript-banner" role="alert">
+            <strong>JavaScript requerido</strong>
+            <span>HaDeS' Shortcuts necesita JavaScript activo para funcionar.</span>
+            <em>(This app requires JavaScript to run. Please enable it and reload.)</em>
+        </div>
+    </noscript>
     <canvas id="aurora-bg-canvas" class="aurora-canvas"></canvas>
     <div id="custom-bg-layer" class="custom-bg-layer"></div>
     <div id="custom-bg-dim-overlay" class="custom-bg-dim-overlay"></div>

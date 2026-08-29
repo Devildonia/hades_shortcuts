@@ -234,9 +234,9 @@ Añadir claves (es/en/fr/de) y sustituirlas:
 
 ---
 
-## Fase 5 — Validez HTML y accesibilidad (P2)
+## Fase 5 — Validez HTML y accesibilidad (P2) ✅ COMPLETADO
 
-### T5.1 Tarjetas: `<a>` con `<button>` anidados → HTML válido
+### T5.1 ✅ Tarjetas: `<a>` con `<button>` anidados → HTML válido
 - Archivos: `js/render.js` (+ ajustes menores en `style.css` si hacen falta).
 - Cambio: la tarjeta pasa de `<a class="enlace-icono" href target rel>` a
   `<div class="enlace-icono" role="link" tabindex="0">`. La navegación pasa a
@@ -250,26 +250,36 @@ Añadir claves (es/en/fr/de) y sustituirlas:
   teclado abre URL, drag & drop en edit-mode funciona, botones editar/borrar
   siguen funcionando, tooltip y spotlight intactos.
 - Esfuerzo: M.
+- Hecho: tarjeta → `<div class="enlace-icono" role="link" tabindex="0" data-href>`;
+  navegación por `openSafeUrl()` (importado en `render.js`); `keydown` Enter/Space;
+  `js/search.js` Enter usa `data-href`; 6 tests nuevos en `tests/validity-a11y.test.js`.
 
-### T5.2 `<noscript>` en index.html
+### T5.2 ✅ `<noscript>` en index.html
 - Cambio: bloque `<noscript>` con mensaje claro (la app requiere JavaScript).
 - Esfuerzo: S.
+- Hecho: `<noscript>` tras `<body>` (ES+EN) + CSS `.noscript-banner` en `style.css`.
 
-### T5.3 Marca de usuario: teclado en `role="button"`
+### T5.3 ✅ Marca de usuario: teclado en `role="button"`
 - Archivo: `js/app.js` → `initUserNameSystem()`.
 - Cambio: `brandTitle` (que ya tiene click) recibe `keydown` (Enter/Space →
   `openModal`), ya que `#brand-user-name` declara `role="button" tabindex="0"`
   en `index.html`.
 - Verificación: manual — Tab hasta la marca + Enter abre el modal.
 - Esfuerzo: S.
+- Hecho: `#brand-user-name` (role="button" tabindex="0") ahora escucha `keydown`
+  (Enter/Space → `openModal`), igual patrón que weather-widget.
 
-### T5.4 Recorrido final de roles
+### T5.4 ✅ Recorrido final de roles
 - Cambio: grep de `role="button"` en `index.html` y confirmar que cada uno tiene
   handler de teclado (weather: ya tiene; brand: T5.3; resto: verificar y anotar).
 - Esfuerzo: S.
+- Hecho: solo 2 `role="button"` en index.html — `#brand-user-name` (T5.3) y
+  `#weather-widget` (ya tenía Enter/Space en `js/weather.js:234`). Sin roles
+  creados por JS (grep limpio). Guardas de fuente en los tests T5.3/T5.4.
 
-**Done de Fase 5:** HTML válido en la grilla, sin roles de botón sin teclado,
-suite + checklist manual en verde.
+**Done de Fase 5:** ✅ HTML válido en la grilla (tarjetas `<div role="link">`),
+sin roles de botón sin teclado, `<noscript>` presente. Suite completa: **154/154 en verde**
+(146→154, +8 tests en `tests/validity-a11y.test.js`). App principal arranca sin errores.
 
 ---
 

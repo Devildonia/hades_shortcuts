@@ -1,6 +1,6 @@
 import { tagsFilter } from './tags-filter.js';
 import { personalAnalytics } from './personal-analytics.js';
-import { state, escapeHtml, normalizeTags, safeHttpUrl, bindIconFallback } from './state.js';
+import { state, escapeHtml, normalizeTags, safeHttpUrl, bindIconFallback, openSafeUrl } from './state.js';
 import { i18nDictionaries } from './i18n.js';
 import { soundFx } from './audio.js';
 import { focusMode } from './focus-mode.js';
@@ -136,20 +136,29 @@ export class DashboardRenderer {
             const grid = section.querySelector('.iconos-grupo');
 
             shortcutsInCat.forEach(shortcut => {
-                const card = document.createElement('a');
-                const href = safeHttpUrl(shortcut.url) || '#';
-                card.href = href;
-                card.target = '_blank';
-                card.rel = 'noopener noreferrer';
+                // T5.1 (Fase 5, P2): la tarjeta pasa de <a> a <div role="link"> para que el
+                // HTML sea válido (antes se anidaban los <button> de edición dentro de <a>).
+                // La navegación ya no es nativa: pasa por openSafeUrl() y se añade teclado.
+                const card = document.createElement('div');
+                const href = safeHttpUrl(shortcut.url) || '';
                 card.className = 'enlace-icono';
-                card.addEventListener('click', (e) => {
+                card.setAttribute('role', 'link');
+                card.setAttribute('tabindex', '0');
+                if (href) card.setAttribute('data-href', href);
+                const activateCard = (e) => {
                     if (state.editMode) return; // Edición: sin navegación, sin analítica, sin Zen Shield
+                    if (!href) return;
                     if (focusMode && focusMode.isActive && focusMode.isUrlBlocked(href)) {
                         e.preventDefault();
                         focusMode.showZenShield(href);
                         return;
                     }
                     personalAnalytics.logLaunch(shortcut.id, shortcut.title);
+                    openSafeUrl(href, '_blank');
+                };
+                card.addEventListener('click', activateCard);
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateCard(e); }
                 });
                 card.setAttribute('data-id', shortcut.id);
                 card.setAttribute('data-title', shortcut.title);
