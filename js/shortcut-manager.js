@@ -1,6 +1,6 @@
 // js/shortcut-manager.js - Add / Edit / Delete Shortcut Modal with Alphabetical Icon Dropdown (A-Z with Left Thumbnails)
 
-import { state, safeHttpUrl, showToast } from './state.js';
+import { state, safeHttpUrl, showToast, sanitizeIconUrl } from './state.js';
 import { i18nDictionaries, getTranslation } from './i18n.js';
 import { soundFx } from './audio.js';
 
@@ -177,7 +177,7 @@ export class ShortcutManager {
             return;
         }
 
-        let icon = this.customIconInput.value.trim() || this.selectedIcon;
+        let icon = sanitizeIconUrl(this.customIconInput.value) || sanitizeIconUrl(this.selectedIcon) || 'iconos/aliexpress.webp';
         const category = this.catSelect.value;
         const desc = this.descInput.value.trim();
         const tags = this.tagsInput.value.trim();

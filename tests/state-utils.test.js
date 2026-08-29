@@ -1,6 +1,6 @@
 // tests/state-utils.test.js — Utilidades de seguridad y estado (escapeHtml, safeHttpUrl, normalizeTags, openSafeUrl).
 import { test, expect } from './harness.js';
-import { escapeHtml, safeHttpUrl, normalizeTags, openSafeUrl } from '../js/state.js';
+import { escapeHtml, safeHttpUrl, normalizeTags, openSafeUrl, sanitizeIconUrl } from '../js/state.js';
 
 test('escapeHtml: neutraliza HTML y atributos (XSS básico)', () => {
     const out = escapeHtml('<img src=x onerror=alert(1)>');
@@ -78,4 +78,34 @@ test('openSafeUrl: abre URL https con noopener,noreferrer', () => {
     } finally {
         window.open = origOpen;
     }
+});
+
+test('sanitizeIconUrl: acepta badges cortos (emoji/texto) sin scheme', () => {
+    expect(sanitizeIconUrl('⚡')).toBe('⚡');
+    expect(sanitizeIconUrl('💻')).toBe('💻');
+    expect(sanitizeIconUrl('Work')).toBe('Work');
+});
+
+test('sanitizeIconUrl: acepta URLs http(s), data:image base64 y presets iconos/*', () => {
+    expect(sanitizeIconUrl('https://ejemplo.com/logo.png')).toBe('https://ejemplo.com/logo.png');
+    expect(sanitizeIconUrl('http://ejemplo.com/a.png')).toBe('http://ejemplo.com/a.png');
+    expect(sanitizeIconUrl('data:image/png;base64,iVBORw0KGgo=')).toContain('data:image/png;base64,');
+    expect(sanitizeIconUrl('iconos/gmail.webp')).toBe('iconos/gmail.webp');
+    expect(sanitizeIconUrl('iconos/MiniMax.webp')).toBe('iconos/MiniMax.webp');
+});
+
+test('sanitizeIconUrl: rechaza markup XSS y schemes peligrosos', () => {
+    expect(sanitizeIconUrl('<img src=x onerror=alert(1)>')).toBe('');
+    expect(sanitizeIconUrl('javascript:alert(1)')).toBe('');
+    expect(sanitizeIconUrl('vbscript:msgbox(1)')).toBe('');
+    expect(sanitizeIconUrl('data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==')).toBe('');
+    expect(sanitizeIconUrl('chrome-extension://abc/index.html')).toBe('');
+    expect(sanitizeIconUrl('file:///etc/passwd')).toBe('');
+});
+
+test('sanitizeIconUrl: entrada null/undefined/vacío devuelve ""', () => {
+    expect(sanitizeIconUrl(null)).toBe('');
+    expect(sanitizeIconUrl(undefined)).toBe('');
+    expect(sanitizeIconUrl('')).toBe('');
+    expect(sanitizeIconUrl('   ')).toBe('');
 });

@@ -1,6 +1,6 @@
 // js/macros.js - Contextual Multi-Action Macro & Routine Engine (Visual No-Code Studio)
 
-import { state, escapeHtml, persistJson, openSafeUrl } from './state.js';
+import { state, escapeHtml, persistJson, openSafeUrl, sanitizeIconUrl } from './state.js';
 import { soundFx } from './audio.js';
 import { ambientAudio } from './ambient-audio.js';
 import { focusMode } from './focus-mode.js';
@@ -153,7 +153,7 @@ export class MacroEngine {
             card.innerHTML = `
                 <div class="macro-item-header">
                     <span class="macro-badge">${escapeHtml(trigger)}</span>
-                    <span style="font-size: 1.2rem;">${macro.icon || '⚡'}</span>
+                    <span style="font-size: 1.2rem;">${escapeHtml(macro.icon || '⚡')}</span>
                     <h4 style="margin: 0; font-size: 0.95rem; color: var(--text-primary);">${escapeHtml(copy.name)}</h4>
                 </div>
                 <p class="macro-item-desc">${escapeHtml(copy.desc || (macro.shortcuts || []).join(', '))}</p>
@@ -218,7 +218,7 @@ export class MacroEngine {
         if (trigger.length <= 1) return;
 
         const name = (document.getElementById('macro-form-name').value || '').trim() || trigger;
-        const icon = (document.getElementById('macro-form-icon').value || '').trim() || '⚡';
+        const icon = sanitizeIconUrl(document.getElementById('macro-form-icon').value) || '⚡';
         const ambient = document.getElementById('macro-form-ambient').value || null;
         const pomodoro = document.getElementById('macro-form-pomodoro').value || null;
 

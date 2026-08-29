@@ -61,3 +61,30 @@ test('MacroEngine: setCustomMacros y reloadCustomMacros sincronizan memoria', ({
     expect(engine.customMacros['!sync_test']).toBeTruthy();
     expect(engine.macros['!sync_test'].name).toBe('Sync Test');
 });
+
+test('MacroEngine.renderMacroList: icono malicioso se escapa y no se inyecta como <img>', ({ expect }) => {
+    const engine = new MacroEngine();
+    engine.saveCustomMacros({
+        '!evil': {
+            name: 'Evil',
+            desc: 'x',
+            shortcuts: [],
+            ambient: null,
+            pomodoro: null,
+            icon: '<img src=x onerror=alert(1)>'
+        }
+    });
+
+    const container = document.getElementById('macros-list-container');
+    expect(container).toBeTruthy();
+    engine.renderMacroList();
+
+    // El HTML generado debe contener la versión escapada... 
+    expect(container.innerHTML).toContain('&lt;img');
+    // ...y NO el <img> activo original
+    expect(container.innerHTML).not.toContain('<img src=x');
+    // Y no debe existir ningún <img> dentro del header del ítem malicioso
+    const item = container.querySelector('.macro-item-header');
+    expect(item).toBeTruthy();
+    expect(item.querySelector('img')).toBeNull();
+});

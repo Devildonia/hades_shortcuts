@@ -339,6 +339,27 @@ export function safeHttpUrl(url) {
     return '';
 }
 
+/**
+ * Sanitiza un icono (emoji/texto, URL http(s), data:image base64 o preset iconos/*).
+ * Rechaza markup (< >), javascript:/vbscript: y cualquier otro scheme.
+ * Devuelve '' si el valor no es seguro para usarse como icono.
+ */
+export function sanitizeIconUrl(rawIcon) {
+    if (rawIcon === null || rawIcon === undefined || String(rawIcon).trim() === '') return '';
+    const str = String(rawIcon).trim();
+    if (/<|>/.test(str)) return '';
+    if (/^https?:\/\//i.test(str)) {
+        try {
+            const u = new URL(str);
+            return (u.protocol === 'http:' || u.protocol === 'https:') ? u.href : '';
+        } catch (e) { return ''; }
+    }
+    if (/^data:image\/(png|jpeg|jpg|webp|avif|gif);base64,[A-Za-z0-9+\/=]+$/i.test(str)) return str;
+    if (/^iconos\/[A-Za-z0-9._-]+\.(webp|png|jpe?g|gif|svg)$/i.test(str)) return str;
+    if (str.length <= 16 && !str.includes(':')) return str; // Badge corto (emoji/texto), sin schemes
+    return '';
+}
+
 // Optional URL guard hook. The Zen Distraction Shield (focus mode)
 // registers itself here so that EVERY programmatic navigation funnels
 // through the same filter, no matter which module calls openSafeUrl.
