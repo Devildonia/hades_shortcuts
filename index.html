@@ -878,10 +878,9 @@
             <!-- Tab 3: Layout & Shortcuts -->
             <div class="settings-tab-pane" id="tab-pane-layout">
                 <div class="settings-section">
-                    <h4 data-i18n="settings_hub.layout.edit_mode_title">Modo Edición del Tablero</h4>
-                    <p class="settings-hint" data-i18n="settings_hub.layout.edit_mode_desc">Activa para arrastrar cajones, reordenar iconos, editarlos o eliminarlos.</p>
+                    <h4 data-i18n="settings_hub.layout.edit_mode_title" title="Activa para arrastrar cajones, reordenar iconos, editarlos o eliminarlos." data-i18n-title="settings_hub.layout.edit_mode_desc">Modo Edición</h4>
                     <div class="settings-toggle-row">
-                        <span class="settings-toggle-title" data-i18n="settings_hub.layout.edit_mode_toggle">Activar Modo Edición</span>
+                        <span class="settings-toggle-title" data-i18n="settings_hub.layout.edit_mode_toggle" title="Permite arrastrar, reordenar, editar o eliminar iconos y cajones." data-i18n-title="settings_hub.layout.edit_mode_toggle_desc">Activar Modo Edición</span>
                         <label class="switch">
                             <input type="checkbox" id="setting-edit-mode-toggle">
                             <span class="slider round"></span>
@@ -890,30 +889,30 @@
                 </div>
 
                 <div class="settings-section">
-                    <h4 data-i18n="settings_hub.layout.visual_title">Apariencia</h4>
+                    <h4 data-i18n="settings_hub.layout.visual_title" title="Ajustes visuales generales del tablero." data-i18n-title="settings_hub.layout.visual_desc">Apariencia</h4>
                     <div class="settings-toggle-row">
-                        <span class="settings-toggle-title" data-i18n="settings_hub.layout.show_tags_toggle">Mostrar etiquetas</span>
+                        <span class="settings-toggle-title" data-i18n="settings_hub.layout.show_tags_toggle" title="Muestra las etiquetas (#tags) de cada atajo." data-i18n-title="settings_hub.layout.show_tags_desc">Mostrar etiquetas</span>
                         <label class="switch">
                             <input type="checkbox" id="setting-show-tags-toggle">
                             <span class="slider round"></span>
                         </label>
                     </div>
                     <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="settings_hub.layout.chrome_bezel_toggle">Marcos plateados</span>
+                        <span class="settings-toggle-title" data-i18n="settings_hub.layout.chrome_bezel_toggle" title="Marcos plateados en las categorías de atajos." data-i18n-title="settings_hub.layout.chrome_bezel_desc">Marcos plateados</span>
                         <label class="switch">
                             <input type="checkbox" id="setting-chrome-bezel-toggle" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
                     <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="settings_hub.layout.gold_bezel_toggle">Marcos dorados (Widgets)</span>
+                        <span class="settings-toggle-title" data-i18n="settings_hub.layout.gold_bezel_toggle" title="Marcos dorados en los widgets y cajones del tablero." data-i18n-title="settings_hub.layout.gold_bezel_desc">Marcos dorados</span>
                         <label class="switch">
                             <input type="checkbox" id="setting-gold-bezel-toggle" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
                     <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="settings_hub.layout.blue_bezel_toggle">Marcos azules (Perfiles · IA · Búsqueda)</span>
+                        <span class="settings-toggle-title" data-i18n="settings_hub.layout.blue_bezel_toggle" title="Marcos azules en Perfiles, Agente IA y barra de búsqueda." data-i18n-title="settings_hub.layout.blue_bezel_desc">Marcos azules</span>
                         <label class="switch">
                             <input type="checkbox" id="setting-blue-bezel-toggle" checked>
                             <span class="slider round"></span>
@@ -922,44 +921,90 @@
                 </div>
 
                 <div class="settings-section">
-                    <h4 data-i18n="widgets.toggle_widgets_title">Mini-Widgets Bento & Módulos</h4>
+                    <h4 data-i18n="widgets.toggle_widgets_title" title="Widgets y módulos del tablero." data-i18n-title="widgets.toggle_widgets_desc">Widgets</h4>
                     <div class="settings-toggle-row">
-                        <span class="settings-toggle-title" data-i18n="widgets.toggle_scratchpad">Mostrar Bloc de Notas</span>
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_scratchpad" title="Bloc de notas con post-its flotantes." data-i18n-title="widgets.toggle_scratchpad_desc">Mostrar Bloc de Notas</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-widget-scratchpad" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
                     <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="widgets.toggle_calendar">Mostrar Agenda & Calendario</span>
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_calendar" title="Agenda con calendario y feed iCal." data-i18n-title="widgets.toggle_calendar_desc">Mostrar Agenda & Calendario</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-widget-calendar" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
                     <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="widgets.toggle_ambient">Mostrar Audio Ambiental</span>
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_ambient" title="Sonido ambiental procedural: lluvia, espacio, 432Hz y olas." data-i18n-title="widgets.toggle_ambient_desc">Mostrar Audio Ambiental</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-widget-ambient" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
                     <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="widgets.toggle_pomodoro">Mostrar Temporizador Focus</span>
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_pomodoro" title="Temporizador de enfoque tipo Pomodoro." data-i18n-title="widgets.toggle_pomodoro_desc">Mostrar Temporizador Focus</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-widget-pomodoro" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
                     <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="widgets.toggle_radar">Mostrar Tech Radar & RSS</span>
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_radar" title="Titulares de tecnología y feeds RSS." data-i18n-title="widgets.toggle_radar_desc">Mostrar Tech Radar & RSS</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-widget-radar" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
+                </div>
+
+                <div class="settings-section">
+                    <h4 data-i18n="widgets.toggle_panels_title" title="Elementos del encabezado del tablero." data-i18n-title="widgets.toggle_panels_desc">Encabezado</h4>
+                    <div class="settings-toggle-row">
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_profiles" title="Numpad de perfiles: Work, Personal y 3D." data-i18n-title="widgets.toggle_profiles_desc">Mostrar cajón de Perfiles</span>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-panel-spaces" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
                     <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="widgets.toggle_telemetry">Mostrar Telemetría del Sistema</span>
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_ai" title="Cajón del Asistente IA contextual." data-i18n-title="widgets.toggle_ai_desc">Mostrar cajón de Agente IA</span>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-panel-ai" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_search" title="Barra de búsqueda omnibox con bangs y atajos." data-i18n-title="widgets.toggle_search_desc">Mostrar barra de búsqueda</span>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-panel-search" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_clock" title="Reloj con la hora actual." data-i18n-title="widgets.toggle_clock_desc">Mostrar reloj (Hora)</span>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-panel-clock" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_weather" title="Clima de tu ciudad." data-i18n-title="widgets.toggle_weather_desc">Mostrar Tiempo (clima)</span>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-panel-weather" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_brand" title="El encabezado 'HaDeS' Shortcuts'." data-i18n-title="widgets.toggle_brand_desc">Mostrar encabezado (HaDeS' Shortcuts)</span>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-panel-brand" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_telemetry" title="Telemetría en vivo: estado, ping, FPS y batería." data-i18n-title="widgets.toggle_telemetry_desc">Mostrar Telemetría del Sistema</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-widget-telemetry" checked>
                             <span class="slider round"></span>
@@ -968,54 +1013,7 @@
                 </div>
 
                 <div class="settings-section">
-                    <h4 data-i18n="widgets.toggle_panels_title">Cajones del tablero</h4>
-                    <div class="settings-toggle-row">
-                        <span class="settings-toggle-title" data-i18n="widgets.toggle_profiles">Mostrar cajón de Perfiles</span>
-                        <label class="switch">
-                            <input type="checkbox" id="toggle-panel-spaces" checked>
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="widgets.toggle_ai">Mostrar cajón de Agente IA</span>
-                        <label class="switch">
-                            <input type="checkbox" id="toggle-panel-ai" checked>
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="widgets.toggle_search">Mostrar barra de búsqueda</span>
-                        <label class="switch">
-                            <input type="checkbox" id="toggle-panel-search" checked>
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="widgets.toggle_clock">Mostrar reloj (Hora)</span>
-                        <label class="switch">
-                            <input type="checkbox" id="toggle-panel-clock" checked>
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="widgets.toggle_weather">Mostrar Tiempo (clima)</span>
-                        <label class="switch">
-                            <input type="checkbox" id="toggle-panel-weather" checked>
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
-                        <span class="settings-toggle-title" data-i18n="widgets.toggle_brand">Mostrar encabezado (HaDeS' Shortcuts)</span>
-                        <label class="switch">
-                            <input type="checkbox" id="toggle-panel-brand" checked>
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="settings-section">
-                    <h4 data-i18n="widgets.toggle_categories_title">Categorías</h4>
-                    <p class="settings-hint" data-i18n="widgets.toggle_categories_hint">Oculta cualquier cajón de categorías del tablero.</p>
+                    <h4 data-i18n="widgets.toggle_categories_title" title="Oculta cualquier cajón de categorías del tablero." data-i18n-title="widgets.toggle_categories_hint">Categorías</h4>
                     <div id="category-toggles-container"></div>
                 </div>
 
