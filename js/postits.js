@@ -23,8 +23,26 @@ export class PostItManager {
     constructor() {
         this.container = null;
         this.postits = this.loadPostIts();
-        this.topZIndex = 1000;
+        this.MAX_Z_INDEX = 900;
+        this.topZIndex = 100;
         this.colors = ['yellow', 'cyan', 'magenta', 'emerald', 'orange', 'purple'];
+    }
+
+    _bumpZIndex() {
+        // Siempre por encima del máximo existente (incluye notas cargadas desde storage).
+        const currentMax = this.postits.length
+            ? Math.max(...this.postits.map(p => p.zIndex || 0))
+            : 0;
+        let base = Math.max(this.topZIndex, currentMax);
+        if (base + 1 > this.MAX_Z_INDEX) {
+            // Rebaseline preservando el orden relativo: 1..n. El nuevo máximo queda en n+1 (≤ 900).
+            const order = [...this.postits].sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
+            order.forEach((p, i) => { p.zIndex = i + 1; });
+            base = order.length;
+        }
+        base += 1;
+        this.topZIndex = base;
+        return base;
     }
 
     init() {
@@ -135,7 +153,7 @@ export class PostItManager {
             y: initialY,
             color: color || 'cyan',
             rotation: parseFloat(rotation),
-            zIndex: ++this.topZIndex,
+            zIndex: this._bumpZIndex(),
             createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         };
 
@@ -181,7 +199,7 @@ export class PostItManager {
     bindPostItInteractions(el, note) {
         // Bring to front on pointer down
         el.addEventListener('pointerdown', () => {
-            note.zIndex = ++this.topZIndex;
+            note.zIndex = this._bumpZIndex();
             el.style.zIndex = note.zIndex;
         });
 

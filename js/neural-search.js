@@ -99,22 +99,6 @@ export class NeuralSearchEngine {
         return `Consultando base de conocimiento para: "<em>${escapeHtml(prompt)}</em>"...`;
     }
 
-    async fetchLiveInstantKnowledge(prompt, bannerEl) {
-        try {
-            const url = `https://api.duckduckgo.com/?q=${encodeURIComponent(prompt)}&format=json&no_html=1&skip_disambig=1`;
-            const res = await fetch(url);
-            const data = await res.json();
-            if (data && (data.AbstractText || data.Answer)) {
-                const answer = data.Answer || data.AbstractText;
-                if (bannerEl) {
-                    bannerEl.innerHTML = `<span>🧠 <strong>Asistente IA:</strong></span> <span>${escapeHtml(answer)}</span>`;
-                }
-            }
-        } catch (e) {
-            showToast(getTranslation('toasts.ai_network_error') || 'Could not reach the online assistant.', 'error');
-        }
-    }
-
     async fetchLiveTranslation(text, bannerEl) {
         try {
             const targetLang = state.language === 'en' ? 'es' : 'en';

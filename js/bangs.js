@@ -66,6 +66,9 @@ export const evaluateArithmetic = (expression) => {
             if (peek() === '-' || peek() === '+') get();
             while (pos < str.length && /[0-9\.]/.test(peek())) get();
             const numStr = str.slice(start, pos);
+            // Rechazar decimales malformados (más de un '.')
+            const dotCount = (numStr.match(/\./g) || []).length;
+            if (dotCount > 1) throw new Error('Invalid number: multiple dots');
             const val = parseFloat(numStr);
             if (isNaN(val)) throw new Error('Invalid number');
             return val;

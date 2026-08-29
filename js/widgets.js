@@ -7,7 +7,19 @@ import { PAPER_COLORS, PAPER_STORAGE_KEY } from './postits.js';
 
 export class WidgetsManager {
     constructor() {
-        this.scratchpadText = localStorage.getItem('bento_scratchpad_notes') || localStorage.getItem('hades_scratchpad_content') || '';
+        // Migración: leer de la clave nueva primero; si está vacía y la legacy tiene datos, migrar
+        const NEW_KEY = 'hades_scratchpad_content';
+        const OLD_KEY = 'bento_scratchpad_notes';
+        let text = localStorage.getItem(NEW_KEY);
+        if (!text) {
+            const legacy = localStorage.getItem(OLD_KEY);
+            if (legacy) {
+                localStorage.setItem(NEW_KEY, legacy);
+                localStorage.removeItem(OLD_KEY);
+                text = legacy;
+            }
+        }
+        this.scratchpadText = text || '';
         this.storageKey = 'hades_pomodoro_state_v1';
         this.pomodoroState = this.loadPomodoroState();
         this._timerId = null;
@@ -118,7 +130,6 @@ export class WidgetsManager {
         textarea.value = this.scratchpadText;
         textarea.addEventListener('input', () => {
             this.scratchpadText = textarea.value;
-            state.setItem('bento_scratchpad_notes', this.scratchpadText);
             state.setItem('hades_scratchpad_content', this.scratchpadText);
         });
 

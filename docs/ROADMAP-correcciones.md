@@ -98,9 +98,9 @@ debounce en sliders, timeouts 10 s en fetches de weather. Suite 137/137 en verde
 
 ---
 
-## Fase 3 — Lógica y UX (P1)
+## Fase 3 — Lógica y UX (P1) ✅ COMPLETADO
 
-### T3.1 Weather: primera pintura desde caché
+### T3.1 ✅ Weather: primera pintura desde caché
 - Archivo: `js/weather.js` → `init()`.
 - Cambio: leer `weather_cache_v2`; si existe y tiene < 24 h, llamar
   `renderWeatherUI(city, temp, code, isDay)` de inmediato (paint instantáneo) y
@@ -109,7 +109,7 @@ debounce en sliders, timeouts 10 s en fetches de weather. Suite 137/137 en verde
   fetch.
 - Esfuerzo: S.
 
-### T3.2 Bangs: rechazar decimales malformados
+### T3.2 ✅ Bangs: rechazar decimales malformados
 - Archivo: `js/bangs.js` → `parseNumber()` de `evaluateArithmetic`.
 - Cambio: tras consumir dígitos, si el fragmento contiene más de un `.` →
   lanzar error (el caller devuelve `null`).
@@ -117,21 +117,21 @@ debounce en sliders, timeouts 10 s en fetches de weather. Suite 137/137 en verde
   `evaluateArithmetic('1.5+2.5') === '4'` (regresión).
 - Esfuerzo: S.
 
-### T3.3 Spaces: guardia de Alt+1..6 mientras se escribe
+### T3.3 ✅ Spaces: guardia de Alt+1..6 mientras se escribe
 - Archivo: `js/spaces.js` → `bindKeyboardShortcuts`.
 - Cambio: si `document.activeElement` es input/textarea/contenteditable → no
   capturar (mismo patrón de `initGlobalShortcuts` en `js/app.js`).
 - Verificación: manual — escribir en post-it/scratchpad con Alt+1 no cambia space.
 - Esfuerzo: S.
 
-### T3.4 Radial HUD: guardia de Alt+C / Alt+W mientras se escribe
+### T3.4 ✅ Radial HUD: guardia de Alt+C / Alt+W mientras se escribe
 - Archivo: `js/radial-hud.js` → `bindEvents()`.
 - Cambio: misma guardia de T3.3 para el atajo Alt+C/W; no `preventDefault` si
   hay foco en campo de edición.
 - Verificación: manual — Alt+C dentro del omnibox no abre el HUD ni bloquea el carácter.
 - Esfuerzo: S.
 
-### T3.5 Post-its: techo de z-index
+### T3.5 ✅ Post-its: techo de z-index
 - Archivo: `js/postits.js`.
 - Cambio: `const MAX_Z_INDEX = 900;` (patrón de `js/layout.js`). Al superar el
   techo, rebasear: restar la cantidad mínima para que el orden relativo se
@@ -140,33 +140,33 @@ debounce en sliders, timeouts 10 s en fetches de weather. Suite 137/137 en verde
   ≤ 900 y el último apilado sigue siendo el superior.
 - Esfuerzo: S-M.
 
-### T3.6 Backup: confirmar antes de importar
+### T3.6 ✅ Backup: confirmar antes de importar
 - Archivo: `js/backup.js` → `importBackup()`.
 - Cambio: `confirm()` con clave nueva `settings_hub.backup.import_confirm`
   (añadida a los 4 diccionarios) ANTES de aplicar el payload.
 - Verificación: manual + tests de i18n de la Fase 4.
 - Esfuerzo: S.
 
-### T3.7 Editor de atajos: confirmar borrado
+### T3.7 ✅ Editor de atajos: confirmar borrado
 - Archivo: `js/shortcut-manager.js` → `deleteShortcut()`.
 - Cambio: `confirm()` con clave nueva `toasts.confirm_delete_shortcut` (4 idiomas).
 - Verificación: manual.
 - Esfuerzo: S.
 
-### T3.8 TopSites: favicon con hostname, no URL completa
+### T3.8 ✅ TopSites: favicon con hostname, no URL completa
 - Archivo: `js/extension-api.js` → `importTopSitesToShortcuts()`.
 - Cambio: `domain=${encodeURIComponent(domain)}` donde `domain` es el hostname
   (ya se calcula unas líneas arriba).
 - Verificación: manual en extensión (o lectura de código; el path no corre en PWA).
 - Esfuerzo: S (1 línea).
 
-### T3.9 DevTools: clipboard sin rejection huérfana
+### T3.9 ✅ DevTools: clipboard sin rejection huérfana
 - Archivo: `js/devtools.js` → `bindCopyBtns()`.
 - Cambio: `navigator.clipboard.writeText(text).catch(() => {})`.
 - Verificación: lectura de código + manual.
 - Esfuerzo: S (1 línea).
 
-### T3.10 Neural Search: quitar código muerto
+### T3.10 ✅ Neural Search: quitar código muerto
 - Archivo: `js/neural-search.js`.
 - Cambio: eliminar `fetchLiveInstantKnowledge()` (nunca se invoca). Las
   respuestas rápidas hardcodeadas: mover a diccionario i18n (clave
@@ -174,7 +174,7 @@ debounce en sliders, timeouts 10 s en fetches de weather. Suite 137/137 en verde
 - Verificación: suite en verde; grep sin referencias a la función.
 - Esfuerzo: S.
 
-### T3.11 Scratchpad: una sola clave de storage
+### T3.11 ✅ Scratchpad: una sola clave de storage
 - Archivo: `js/widgets.js` → `bindScratchpad`.
 - Cambio: escribir solo en `hades_scratchpad_content`. Migración: al iniciar,
   si la nueva clave está vacía y `bento_scratchpad_notes` tiene datos → copiar
@@ -182,8 +182,9 @@ debounce en sliders, timeouts 10 s en fetches de weather. Suite 137/137 en verde
 - Verificación: manual — nota existente migra; escritura nueva solo toca 1 clave.
 - Esfuerzo: S.
 
-**Done de Fase 3:** 2 tests nuevos (T3.2, T3.5), guardias de teclado verificadas,
-sin escrituras duplicadas de storage.
+**Done de Fase 3:** 4 tests nuevos (T3.2 ×2 decimales, T3.5 ×2 techo de z-index),
+guardias de teclado verificadas, sin escrituras duplicadas de storage.
+Suite completa: **141/141 en verde** (estable en 3 ejecuciones headless).
 
 ---
 

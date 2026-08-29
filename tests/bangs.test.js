@@ -89,3 +89,13 @@ test('arithmetic: entrada no numérica devuelve null', () => {
 test('arithmetic: número suelto sin operador devuelve null', () => {
     expect(evaluateArithmetic('42')).toBeNull();
 });
+
+test('arithmetic: decimales malformados (1.2.3) se rechazan', () => {
+    expect(evaluateArithmetic('1.2.3')).toBeNull();
+});
+
+test('arithmetic: decimales válidos con operador funcionan (regresión)', () => {
+    expect(evaluateArithmetic('1.5+2.5')).toBe('4');
+    expect(evaluateArithmetic('2.5*4')).toBe('10');
+    expect(evaluateArithmetic('10.5/2')).toBe('5.25');
+});

@@ -100,7 +100,7 @@ export class ExtensionAPIEngine {
                     title: title,
                     url: validUrl,
                     category: 'cat_tools',
-                    icon: `https://www.google.com/s2/favicons?domain=${encodeURIComponent(validUrl)}&sz=64`,
+                    icon: `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`,
                     desc: `Importado de tus sitios frecuentes de Chrome`,
                     tags: 'extension topsites chrome'
                 });

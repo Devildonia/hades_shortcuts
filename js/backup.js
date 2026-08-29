@@ -61,6 +61,8 @@ export class BackupManager {
             try {
                 const data = JSON.parse(e.target.result);
                 if (data.shortcuts && Array.isArray(data.shortcuts)) {
+                    const confirmMsg = t.import_confirm || '¿Importar este backup? Se reemplazarán los atajos, post-its, macros y ajustes actuales.';
+                    if (!confirm(confirmMsg)) return;
                     state.saveShortcuts(data.shortcuts);
                     if (data.categoriesOrder && Array.isArray(data.categoriesOrder)) {
                         state.saveCategoriesOrder(data.categoriesOrder);

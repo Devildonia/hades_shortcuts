@@ -201,6 +201,9 @@ export class ShortcutManager {
     }
 
     deleteShortcut(id) {
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).shortcut_editor;
+        const confirmMsg = t.delete_confirm || '¿Eliminar este acceso directo? Esta acción no se puede deshacer.';
+        if (!confirm(confirmMsg)) return;
         const list = state.shortcuts.filter(s => s.id !== id);
         state.saveShortcuts(list);
         this.closeModal();

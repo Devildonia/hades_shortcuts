@@ -156,7 +156,7 @@ export class DevToolsEngine {
             btn.onclick = () => {
                 const text = btn.getAttribute('data-copy');
                 if (text && navigator.clipboard) {
-                    navigator.clipboard.writeText(text);
+                    navigator.clipboard.writeText(text).catch(() => {});
                     soundFx.play('click');
                     const original = btn.textContent;
                     btn.textContent = '✓ Copiado';

@@ -8,6 +8,9 @@ import { MacroEngine } from '../js/macros.js';
 import { CryptoSyncEngine } from '../js/crypto-sync.js';
 import { BackupManager } from '../js/backup.js';
 
+// Mock de confirm() para headless browser (evita bloqueo del event loop)
+window.confirm = () => true;
+
 // Reproduce lo que app.js expone en el navegador real
 function installManagers() {
     window.layoutManager = new LayoutManager();

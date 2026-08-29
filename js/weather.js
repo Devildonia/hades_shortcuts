@@ -39,8 +39,9 @@ export class WeatherEngine {
         this._inited = true;
 
         this.updateClockAndGreeting();
+        this.paintFromCache(); // Primera pintura instantánea desde caché
         this.scheduleMinuteSync();
-        this.detectLocationAndWeather();
+        this.detectLocationAndWeather(); // Refrescar en segundo plano
         this.bindModalEvents();
         this.weatherInterval = setInterval(() => this.detectLocationAndWeather(), 15 * 60 * 1000);
 
@@ -130,6 +131,18 @@ export class WeatherEngine {
         const info = this.getWeatherInfo(code, isDay);
         if (this.weatherIconEl) this.weatherIconEl.textContent = info.icon;
         if (this.weatherConditionEl) this.weatherConditionEl.textContent = info.desc;
+    }
+
+    paintFromCache() {
+        try {
+            const raw = localStorage.getItem('weather_cache_v2');
+            if (!raw) return;
+            const cached = JSON.parse(raw);
+            if (!cached || !cached.temp) return;
+            // Pintar aunque sea stale (mejor que nada); el refresh de fondo lo actualizará
+            this.renderWeatherUI(cached.city || '—', cached.temp, cached.code, cached.isDay);
+            this.lastWeather = cached;
+        } catch (e) { /* caché corrupta: ignorar */ }
     }
 
     async fetchWeatherForCoords(lat, lon, cityName) {

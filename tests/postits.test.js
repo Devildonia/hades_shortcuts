@@ -145,6 +145,42 @@ test('PostItManager: post-it incluye tirador ↘ y el resize persiste w/h', ({ e
     manager.renderAll();
 });
 
+test('PostItManager: techo de z-index (T3.5) — todo ≤ 900 y el último apilado es el superior', ({ expect }) => {
+    const manager = new PostItManager();
+    // Tres notas con z-index bajos.
+    manager.postits = [
+        { id: 'z_a', text: 'a', x: 10, y: 10, color: 'yellow', zIndex: 1 },
+        { id: 'z_b', text: 'b', x: 20, y: 20, color: 'cyan', zIndex: 2 },
+        { id: 'z_c', text: 'c', x: 30, y: 30, color: 'magenta', zIndex: 3 }
+    ];
+
+    let last = 0;
+    for (let i = 0; i < 1200; i++) {
+        last = manager._bumpZIndex();
+        // Traer al frente la nota i%3 (asignándole el z devuelto).
+        manager.postits[i % 3].zIndex = last;
+        expect(last).toBeLessThanOrEqual(900);
+        // La nota que acaba de apilarse debe ser el máximo absoluto.
+        expect(last).toBe(Math.max(...manager.postits.map(n => n.zIndex)));
+    }
+
+    // Invariante final: ningún z-index supera el techo y el último sigue siendo el superior.
+    expect(Math.max(...manager.postits.map(n => n.zIndex))).toBeLessThanOrEqual(900);
+    expect(Math.max(...manager.postits.map(n => n.zIndex))).toBe(last);
+});
+
+test('PostItManager: _bumpZIndex respeta z-index altos cargados de storage', ({ expect }) => {
+    const manager = new PostItManager();
+    manager.postits = [
+        { id: 's_a', text: 'a', x: 10, y: 10, color: 'yellow', zIndex: 850 },
+        { id: 's_b', text: 'b', x: 20, y: 20, color: 'cyan', zIndex: 895 }
+    ];
+    const z = manager._bumpZIndex();
+    manager.postits[1].zIndex = z;
+    expect(z).toBeGreaterThan(895);
+    expect(z).toBeLessThanOrEqual(900);
+});
+
 test('i18n: locales/es.json mantiene "Bloc de Notas" (regresión del título con "Glass")', async ({ expect }) => {
     const res = await fetch('../locales/es.json');
     expect(res.ok).toBe(true);

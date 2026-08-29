@@ -209,6 +209,11 @@ export class RadialHUDEngine {
 
         document.addEventListener('keydown', (e) => {
             if (e.altKey && (e.key === 'c' || e.key === 'C' || e.key === 'w' || e.key === 'W')) {
+                // Guardia: no capturar si el usuario está escribiendo en un campo
+                const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+                const isEditing = activeTag === 'input' || activeTag === 'textarea' || (document.activeElement && document.activeElement.isContentEditable);
+                if (isEditing) return;
+
                 e.preventDefault();
                 this.toggle(window.innerWidth / 2, window.innerHeight / 2);
                 return;

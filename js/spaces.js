@@ -206,6 +206,11 @@ export class SpacesEngine {
     bindKeyboardShortcuts() {
         document.addEventListener('keydown', (e) => {
             if (e.altKey && !e.ctrlKey && !e.shiftKey) {
+                // Guardia: no capturar si el usuario está escribiendo en un campo
+                const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+                const isEditing = activeTag === 'input' || activeTag === 'textarea' || (document.activeElement && document.activeElement.isContentEditable);
+                if (isEditing) return;
+
                 const num = parseInt(e.key, 10);
                 if (num >= 1 && num <= this.data.spaces.length) {
                     e.preventDefault();
