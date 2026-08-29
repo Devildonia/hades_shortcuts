@@ -532,6 +532,9 @@
     "local_failed": "El motor local no pudo generar una respuesta.",
     "fallback_suffix": "Respondiendo con el motor local.",
     "error": {
+      "empty": "respuesta vacía del modelo",
+      "missing_key": "falta la clave API (configúrala en Ajustes)",
+      "network": "error de red",
       "aborted": "generación detenida",
       "timeout": "sin respuesta en {sec} s (timeout)",
       "http": "el proveedor respondió HTTP {code}",
@@ -544,6 +547,8 @@
       "openai": "OpenAI",
       "anthropic": "Anthropic"
     },
+    "system_prompt": "Eres el Asistente IA de HaDeS. Contexto de atajos del usuario: {context}. Responde en español conciso.",
+    "user_label": "Usuario",
     "heuristics": {
       "focus": "Puedes activar el **Modo Focus** con el atajo **Alt+F** o con el botón **Modo Focus** de la cabecera. Silencia el ruido y deja solo lo esencial de tu espacio activo.",
       "recommend": "Te recomiendo estas herramientas populares de alta productividad:\n\n* **[Hugging Face Spaces](https://huggingface.co/spaces)** `#ia #ml` — Modelos y demos interactivos.\n* **[Shadertoy](https://shadertoy.com)** `#3d #shaders` — Creación de shaders procedurales WebGL.\n* **[Excalidraw](https://excalidraw.com)** `#diseno #canvas` — Pizarra virtual colaborativa.\n\n*Haz clic en cualquier enlace para visitarla.*",

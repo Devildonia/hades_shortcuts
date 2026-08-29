@@ -157,7 +157,7 @@ export class AIAgentEngine {
             return body;
         } catch (err) {
             if (err && err.name === 'AbortError') throw err;
-            throw new Error('error de red: ' + ((err && err.message) ? err.message : String(err)));
+            throw new Error(getTranslation('ai_agent.error.network') + ': ' + ((err && err.message) ? err.message : String(err)));
         } finally {
             clearTimeout(timer);
             if (this.abortController === controller) this.abortController = null;
@@ -171,10 +171,10 @@ export class AIAgentEngine {
             const data = await this.httpJson(cfg.ollamaEndpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ model: cfg.ollamaModel, prompt: `${systemPrompt}\n\nUsuario: ${userText}`, stream: false })
+                body: JSON.stringify({ model: cfg.ollamaModel, prompt: `${systemPrompt}\n\n${getTranslation('ai_agent.user_label')}: ${userText}`, stream: false })
             });
             const text = (data && typeof data.response === 'string') ? data.response : '';
-            if (!text) throw new Error('respuesta vacía del modelo');
+            if (!text) throw new Error(getTranslation('ai_agent.error.empty'));
             return text;
         }
 
@@ -191,12 +191,12 @@ export class AIAgentEngine {
                 })
             });
             const text = (((data && data.choices) || [])[0]?.message?.content) || '';
-            if (!text) throw new Error('respuesta vacía del modelo');
+            if (!text) throw new Error(getTranslation('ai_agent.error.empty'));
             return text;
         }
 
         if (cfg.provider === 'openai') {
-            if (!cfg.openaiApiKey) throw new Error('falta la clave API (configúrala en Ajustes)');
+            if (!cfg.openaiApiKey) throw new Error(getTranslation('ai_agent.error.missing_key'));
             const data = await this.httpJson('https://api.openai.com/v1/chat/completions', {
                 method: 'POST',
                 headers: {
@@ -212,12 +212,12 @@ export class AIAgentEngine {
                 })
             });
             const text = (((data && data.choices) || [])[0]?.message?.content) || '';
-            if (!text) throw new Error('respuesta vacía del modelo');
+            if (!text) throw new Error(getTranslation('ai_agent.error.empty'));
             return text;
         }
 
         if (cfg.provider === 'anthropic') {
-            if (!cfg.anthropicApiKey) throw new Error('falta la clave API (configúrala en Ajustes)');
+            if (!cfg.anthropicApiKey) throw new Error(getTranslation('ai_agent.error.missing_key'));
             const data = await this.httpJson('https://api.anthropic.com/v1/messages', {
                 method: 'POST',
                 headers: {
@@ -232,7 +232,7 @@ export class AIAgentEngine {
                 })
             });
             const text = ((data && data.content) || []).map((c) => (c && c.text) || '').join('\n');
-            if (!text) throw new Error('respuesta vacía del modelo');
+            if (!text) throw new Error(getTranslation('ai_agent.error.empty'));
             return text;
         }
 
@@ -272,7 +272,7 @@ export class AIAgentEngine {
 
         try {
             const ctx = this.buildSystemContext();
-            const systemPrompt = `Eres el Asistente IA de HaDeS. Contexto de atajos del usuario: ${JSON.stringify(ctx.shortcuts)}. Responde en español conciso.`;
+            const systemPrompt = (getTranslation('ai_agent.system_prompt') || '').replace('{context}', JSON.stringify(ctx.shortcuts));
             const text = await this.requestProvider(systemPrompt, userText);
             aiMsgDiv.innerHTML = this.formatMarkdown(text);
             soundFx.play('chime');

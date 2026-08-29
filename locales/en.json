@@ -532,6 +532,9 @@
     "local_failed": "The local engine could not generate a response.",
     "fallback_suffix": "Responding with the local engine.",
     "error": {
+      "empty": "empty response from the model",
+      "missing_key": "missing API key (set it in Settings)",
+      "network": "network error",
       "aborted": "generation stopped",
       "timeout": "no response within {sec} s (timeout)",
       "http": "provider returned HTTP {code}",
@@ -544,6 +547,8 @@
       "openai": "OpenAI",
       "anthropic": "Anthropic"
     },
+    "system_prompt": "You are the HaDeS AI Assistant. User shortcuts context: {context}. Respond concisely in English.",
+    "user_label": "User",
     "heuristics": {
       "focus": "You can enable **Focus Mode** with the **Alt+F** shortcut or the **Focus Mode** button in the header. It silences the noise and keeps only the essentials of your active space.",
       "recommend": "Here are some popular, high-productivity tools I recommend:\n\n* **[Hugging Face Spaces](https://huggingface.co/spaces)** `#ai #ml` — Interactive models and demos.\n* **[Shadertoy](https://shadertoy.com)** `#3d #shaders` — Procedural WebGL shader creation.\n* **[Excalidraw](https://excalidraw.com)** `#design #canvas` — Collaborative virtual whiteboard.\n\n*Click any link to visit it.*",

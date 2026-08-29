@@ -532,6 +532,9 @@
     "local_failed": "Der lokale Motor konnte keine Antwort erzeugen.",
     "fallback_suffix": "Antwort über den lokalen Motor.",
     "error": {
+      "empty": "leere Antwort des Modells",
+      "missing_key": "API-Schlüssel fehlt (in Einstellungen festlegen)",
+      "network": "Netzwerkfehler",
       "aborted": "Generierung gestoppt",
       "timeout": "keine Antwort innerhalb von {sec} s (Timeout)",
       "http": "der Anbieter hat HTTP {code} zurückgegeben",
@@ -544,6 +547,8 @@
       "openai": "OpenAI",
       "anthropic": "Anthropic"
     },
+    "system_prompt": "Du bist der KI-Assistent von HaDeS. Kontext der Benutzer-Shortcuts: {context}. Antworte knapp auf Deutsch.",
+    "user_label": "Benutzer",
     "heuristics": {
       "focus": "Du kannst den **Fokusmodus** mit dem Shortcut **Alt+F** oder dem **Fokusmodus**-Knopf in der Kopfzeile aktivieren. Er dämpft den Lärm und behält nur das Wesentliche deines aktiven Spaces bei.",
       "recommend": "Hier sind beliebte, produktivitätsstarke Tools, die ich empfehle:\n\n* **[Hugging Face Spaces](https://huggingface.co/spaces)** `#ki #ml` — Interaktive Modelle und Demos.\n* **[Shadertoy](https://shadertoy.com)** `#3d #shaders` — Prozedurale WebGL-Shaders erstellen.\n* **[Excalidraw](https://excalidraw.com)** `#design #canvas` — Kollaboratives virtuelles Whiteboard.\n\n*Klicke auf einen beliebigen Link, um ihn zu öffnen.*",
