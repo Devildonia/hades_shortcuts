@@ -6,7 +6,7 @@ os.makedirs(dist_dir, exist_ok=True)
 zip_path = os.path.join(dist_dir, 'hades-shortcuts-chrome-v1.0.0-rc-1.zip')
 
 include_files = ['index.html', 'style.css', 'manifest.json', 'site.webmanifest', 'sw.js', 'og-preview.png', 'LICENSE', 'favicon.ico']
-include_dirs = ['js', 'iconos', 'locales', '_locales', 'sounds', 'fonts']
+include_dirs = ['js', 'iconos', 'locales', '_locales', 'fonts']
 
 with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
     for f in include_files:

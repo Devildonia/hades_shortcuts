@@ -1,7 +1,7 @@
 <div align="center">
 
 # HaDeS' Shortcuts (v1.0.0-rc-1)
-### *A high-performance, ultra-aesthetic browser command center, productivity OS & startpage*
+### *A cyberpunk browser command center & startpage — vanilla HTML/CSS/JS, zero runtime dependencies*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Online%20Preview-brightgreen?logo=github)](https://devildonia.github.io/hades_shortcuts/)
@@ -10,6 +10,7 @@
 [![Pure Vanilla](https://img.shields.io/badge/Stack-Vanilla%20HTML%20%2F%20CSS%20%2F%20JS-yellow.svg)](https://developer.mozilla.org/en-US/)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20Zero-brightgreen.svg)]()
 [![i18n](https://img.shields.io/badge/i18n-ES%20%7C%20EN%20%7C%20FR%20%7C%20DE-purple.svg)]()
+[![Tests](https://img.shields.io/badge/Tests-160%20in--browser%2C%200%20dependencies-brightgreen)](tests/index.html)
 
 <br />
 
@@ -27,11 +28,12 @@
 <br />
 
 [Live Demo](https://devildonia.github.io/hades_shortcuts/) ·
-[Features](#-key-features) ·
-[Architecture](#-architecture) ·
-[Keyboard](#-keyboard-shortcuts) ·
-[Bangs](#-devtools-omnibox--bang-commands) ·
-[Quick Start](#-quick-start)
+[Features](#key-features) ·
+[Architecture](#architecture) ·
+[Keyboard](#keyboard-shortcuts) ·
+[Bangs](#devtools-omnibox--bang-commands) ·
+[Quick Start](#quick-start) ·
+[Testing](#testing)
 
 </div>
 
@@ -46,7 +48,7 @@ First release candidate of 1.0. Chrome MV3 `version` stays numeric (`1.0.0`); th
 - **PWA cache** `hades-shortcuts-v1.0.0-cache`; startpage loads `js/app.js` (stale `js/bundle.js` removed).
 - **Six visual themes**: Cyber Neon, Deep Nebula, Sunset Amber, **Abyss OLED**, **Jade Terminal**, Crystal Light.
 - **Contained Command Center settings** (max 620px) with six tabs, including Habits & Analytics.
-- **52 bundled shortcuts** across 10 Bento categories, including **Spotify** in Audio Generation, **eBay** in Shopping & Payments, and a full **Gaming** row.
+- **57 bundled shortcuts** across 11 Bento categories, including **Spotify** in Audio Generation, **eBay** in Shopping & Payments, and a full **Gaming** row.
 - **Arc-style spaces** filter categories in place: Work & Dev (all), Personal & Leisure (social, shopping, gaming…), 3D & AI Creation (Gemini lives with Google Workspace).
 - Empty category boxes stay hidden unless Edit Mode is on. Widget titles use inline SVG instead of emoji.
 - Macro **Run / Edit** actions are equal-width Bento chips.
@@ -152,7 +154,7 @@ flowchart TB
 | Module | Role |
 | :--- | :--- |
 | `app.js` | Lifecycle orchestrator |
-| `state.js` | Reactive store, 10 categories, 52 default shortcuts |
+| `state.js` | Reactive store, 11 categories, 57 default shortcuts |
 | `i18n.js` | Dictionary loader + embedded fallbacks |
 | `render.js` | Bento cards, tooltips, empty-category skip |
 | `search.js` | Omnibox, engine picker, clear-X, bangs bridge |
@@ -162,6 +164,7 @@ flowchart TB
 | `macros.js` | Visual routine studio + `!work` / `!focus` / `!chill` / `!3d` / `!social` |
 | `focus-mode.js` | Deep Focus + social Zen Shield |
 | `widgets.js` | Scratchpad + Pomodoro |
+| `weather.js` | City weather widget + search modal |
 | `calendar-agenda.js` | Client-side iCal + manual events |
 | `tech-radar.js` | RSS/Atom reader |
 | `ambient-audio.js` / `audio.js` | Procedural soundscapes + haptic clicks |
@@ -176,7 +179,7 @@ flowchart TB
 | `platform.js` | Web vs Chrome MV3 differences |
 | `sw-extension.js` | Extension background worker |
 
-Supporting files: `manifest.json` (Chrome new-tab override), `site.webmanifest` + `sw.js` (PWA), `iconos/` (55 WebP shortcuts + PWA icons), `locales/`, `sounds/` (optional haptic fallbacks — synthesis is Web Audio).
+Supporting files: `manifest.json` (Chrome new-tab override), `site.webmanifest` + `sw.js` (PWA), `iconos/` (60 WebP shortcuts + PWA icons), `locales/`, `tests/` (zero-dependency browser suite). All audio is synthesized at runtime with the Web Audio API (`js/audio.js`, `js/ambient-audio.js`) — zero sample files shipped.
 
 ---
 
@@ -189,7 +192,7 @@ Three atmosphere modes from **Settings → Appearance**:
 - **Image / Unsplash** — curated topics, random photo, local `FileReader` upload, custom URL, live **Blur** and **Dim** sliders.
 
 ### Visual Macro Studio
-No-code routines in **Settings → Macros & Routines**: custom bang, title, shortcut checkboxes, ambient preset, Pomodoro action. Run them from the omnibox (`!gaming`) or the equal-width **Run / Edit** chips on each card.
+No-code routines in **Settings → Macros & Routines**: custom bang, title, shortcut checkboxes, ambient preset, Pomodoro action. Run them from the omnibox (`!work`) or the equal-width **Run / Edit** chips on each card.
 
 ### Bento Calendar & Agenda
 Client-side RFC 5545 iCal (Google, Outlook, iCloud, Nextcloud, Proton). Manual events with title, time, and Meet / Zoom / Teams / Discord links. A neon pulse fires when a meeting is within 15 minutes.
@@ -197,13 +200,16 @@ Client-side RFC 5545 iCal (Google, Outlook, iCloud, Nextcloud, Proton). Manual e
 ### Widget visibility
 Independent toggles in **Settings → Layout & Shortcuts**: Scratchpad, Calendar, Ambient Audio, Focus Timer, Tech Radar, System Telemetry capsule.
 
+### Live weather
+A nav-bar weather chip shows the temperature and conditions for your city (geolocation, IP fallback, or a manual city search such as Vigo or Madrid). The chosen city and last reading persist in `localStorage`.
+
 ### Contextual AI agent
-Ground-truth injection of shortcuts, tags, spaces, calendar, focus state, and radar headlines. Providers: local heuristic (zero keys), Ollama / LM Studio on `localhost:11434`, or OpenAI / Anthropic with a session-only key. Bang: `!ai` / `!ask`.
+Ground-truth injection of shortcuts, tags, spaces, calendar, focus state, and radar headlines. Providers: local heuristic (zero keys), Ollama (`localhost:11434`), LM Studio (`localhost:1234`, OpenAI-compatible endpoint), or OpenAI / Anthropic with a session-only key. Bang: `!ai` / `!ask`.
 
 ### Spaces
 | Profile | Default filter | Default theme |
 | :--- | :--- | :--- |
-| Work & Dev | All 10 categories | Cyber Neon |
+| Work & Dev | All 11 categories | Cyber Neon |
 | Personal & Leisure | Social, Shopping, Gaming, Google, Tools, Video | Deep Nebula |
 | 3D & AI Creation | 3D, AI, Art, Audio, Video, Google (Gemini) | Sunset Amber |
 
@@ -238,7 +244,7 @@ Web Audio API: Cyber Rain, Deep Space brown noise, 432 Hz binaural alpha, Cosmic
 - GitHub Personal Access Tokens (PAT) live in `sessionStorage` (tab session only) and should strictly be created with minimal permissions: **`gist` scope only** (or Fine-Grained Token with Gists Read & Write).
 - Local Ollama inference: when accessing from the browser, launch Ollama with CORS enabled (`OLLAMA_ORIGINS="*" ollama serve`).
 - AES-256-GCM is used for **Gist dashboard sync**, not for LLM API keys.
-- 52 bundled shortcuts; ranking in `neural-search.js` is local token overlap.
+- 57 bundled shortcuts; ranking in `neural-search.js` is local token overlap.
 
 ---
 
@@ -257,6 +263,8 @@ Web Audio API: Cyber Rain, Deep Space brown noise, 432 Hz binaural alpha, Cosmic
 | `!qr <link>` | Scannable offline QR (Nayuki encoder → canvas) | `!qr https://github.com` |
 | `!yt` / `!gh` / `!w` / `!r` / `!m` | YouTube, GitHub, Wikipedia, Reddit, Maps | `!gh three.js` |
 | `!civitai` / `!tr` / `!npm` / `!ddg` | Model hub, Translate, NPM, DuckDuckGo | `!ddg privacy` |
+| `!ai <prompt>` / `!ask <prompt>` | Contextual AI agent (local heuristic / Ollama / LM Studio / cloud) | `!ai summarize my day` |
+| `!t <text>` | Quick translate (MyMemory) | `!t hello world` |
 | `<math>` | Instant calculator | `150 * 1.21` |
 
 ---
@@ -309,6 +317,26 @@ locales/
 ```
 
 UI chrome, greetings, widget copy, settings, and shortcut tooltips stay in parity across the four dictionaries.
+
+---
+
+## Testing
+
+Zero-dependency test suite — **no Node, no npm, no build**. Vanilla ES modules that run directly in the browser:
+
+```bash
+python -m http.server 8080
+# → open http://localhost:8080/tests/
+```
+
+**160 tests across 22 modules** cover the bangs math evaluator (zero-`eval`), the drag/resize editing engine, i18n anti-divergence (`locales/*.json` ↔ embedded dict, all four languages), E2EE Gist crypto, PWA, layout, accessibility, and more. Machine-readable results are exposed at `window.__testResults` (JSON) for future CI.
+
+Headless one-liner (no GUI):
+
+```bash
+msedge --headless --virtual-time-budget=30000 --dump-dom http://localhost:8080/tests/ 2>/dev/null | grep -o "<title>[^<]*</title>"
+# → ✅ Tests: 160/160 pasaron
+```
 
 ---
 
