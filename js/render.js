@@ -153,6 +153,11 @@ export class DashboardRenderer {
                         focusMode.showZenShield(href);
                         return;
                     }
+                    // Determinista: ocultar el tooltip ANTES de abrir el enlace. La malla
+                    // blur/visibilitychange no está garantizada (pestaña nueva en segundo
+                    // plano o carrera de foco con tabindex=0): sin esto el tooltip
+                    // quedaría anclado sobre la tarjeta tras el clic.
+                    this.hideTooltip();
                     personalAnalytics.logLaunch(shortcut.id, shortcut.title);
                     openSafeUrl(href, '_blank');
                 };
