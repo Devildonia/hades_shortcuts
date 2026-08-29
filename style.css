@@ -112,6 +112,50 @@
 
     --shadow-subtle: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
     --shadow-elevated: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 242, 254, 0.08);
+
+    /* 3D depth treatment for controls (keycap-inspired: top highlight, side bevel,
+       extruded body lip, soft drop). Applied to settings/macro/segmented buttons. */
+    --btn3d-dark:
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        inset 0 -3px 5px rgba(0, 0, 0, 0.45),
+        inset 2px 0 4px rgba(255, 255, 255, 0.03),
+        inset -2px 0 4px rgba(0, 0, 0, 0.35),
+        0 4px 0 rgba(0, 0, 0, 0.55),
+        0 6px 2px rgba(0, 0, 0, 0.3),
+        0 10px 18px rgba(0, 0, 0, 0.45);
+    --btn3d-dark-hover:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        inset 0 -3px 5px rgba(0, 0, 0, 0.45),
+        inset 2px 0 4px rgba(255, 255, 255, 0.04),
+        inset -2px 0 4px rgba(0, 0, 0, 0.35),
+        0 4px 0 rgba(0, 0, 0, 0.55),
+        0 7px 3px rgba(0, 0, 0, 0.32),
+        0 12px 20px rgba(0, 0, 0, 0.5),
+        0 0 14px var(--accent-glow);
+    --btn3d-dark-pressed:
+        inset 0 3px 7px rgba(0, 0, 0, 0.65),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.05),
+        0 1px 0 rgba(0, 0, 0, 0.4),
+        0 2px 5px rgba(0, 0, 0, 0.35),
+        0 0 14px var(--accent-glow);
+    --btn3d-primary:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+        0 4px 0 color-mix(in srgb, var(--accent-primary) 62%, #000),
+        0 7px 3px rgba(0, 0, 0, 0.3),
+        0 12px 20px var(--accent-glow);
+    --btn3d-primary-hover:
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+        0 4px 0 color-mix(in srgb, var(--accent-primary) 62%, #000),
+        0 8px 4px rgba(0, 0, 0, 0.32),
+        0 14px 24px var(--accent-glow),
+        0 0 18px var(--accent-glow);
+    --btn3d-primary-pressed:
+        inset 0 3px 8px rgba(0, 0, 0, 0.4),
+        0 1px 0 color-mix(in srgb, var(--accent-primary) 62%, #000),
+        0 2px 6px var(--accent-glow);
+
     --chrome-hairline: #141418;
     --chrome-inset-hi: rgba(255, 255, 255, 0.22);
     --chrome-inset-lo: rgba(0, 0, 0, 0.45);
@@ -194,6 +238,35 @@
     
     --shadow-subtle: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 4px 10px -2px rgba(0, 0, 0, 0.03);
     --shadow-elevated: 0 20px 35px -10px rgba(0, 0, 0, 0.08), 0 0 20px rgba(2, 132, 199, 0.12);
+
+    /* 3D depth — light theme (softer, lighter extrusion lip) */
+    --btn3d-dark:
+        inset 0 1px 0 rgba(255, 255, 255, 0.75),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.08),
+        0 3px 0 rgba(15, 23, 42, 0.14),
+        0 5px 10px rgba(15, 23, 42, 0.12);
+    --btn3d-dark-hover:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.08),
+        0 3px 0 rgba(15, 23, 42, 0.14),
+        0 7px 14px rgba(15, 23, 42, 0.16),
+        0 0 12px var(--accent-glow);
+    --btn3d-dark-pressed:
+        inset 0 2px 5px rgba(0, 0, 0, 0.12),
+        0 1px 0 rgba(15, 23, 42, 0.12),
+        0 1px 3px rgba(15, 23, 42, 0.1);
+    --btn3d-primary:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 3px 0 color-mix(in srgb, var(--accent-primary) 68%, #000),
+        0 6px 12px var(--accent-glow);
+    --btn3d-primary-hover:
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 3px 0 color-mix(in srgb, var(--accent-primary) 68%, #000),
+        0 8px 16px var(--accent-glow);
+    --btn3d-primary-pressed:
+        inset 0 2px 5px rgba(0, 0, 0, 0.2),
+        0 1px 0 color-mix(in srgb, var(--accent-primary) 68%, #000);
+
     --chrome-hairline: #6e6e76;
     --chrome-inset-hi: rgba(255, 255, 255, 0.85);
     --chrome-inset-lo: rgba(0, 0, 0, 0.12);
@@ -2682,12 +2755,13 @@ input:checked + .slider:before {
     white-space: nowrap;
     max-width: 100%;
     box-sizing: border-box;
+    box-shadow: var(--btn3d-dark);
 }
 
 .settings-action-btn.primary {
     background: var(--accent-primary);
     color: #000;
-    box-shadow: 0 4px 14px var(--accent-glow);
+    box-shadow: var(--btn3d-primary);
 }
 
 .settings-action-btn.secondary {
@@ -2710,6 +2784,31 @@ input:checked + .slider:before {
 .settings-action-btn.danger:hover {
     background: #ff4b4b;
     color: #fff;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        inset 0 -3px 5px rgba(0, 0, 0, 0.45),
+        0 4px 0 rgba(0, 0, 0, 0.55),
+        0 12px 20px rgba(0, 0, 0, 0.5),
+        0 0 16px rgba(255, 75, 75, 0.4);
+}
+
+.settings-action-btn:hover {
+    box-shadow: var(--btn3d-dark-hover);
+}
+
+.settings-action-btn:active {
+    transform: translateY(4px);
+    box-shadow: var(--btn3d-dark-pressed);
+}
+
+.settings-action-btn.primary:hover {
+    filter: brightness(1.05);
+    box-shadow: var(--btn3d-primary-hover);
+}
+
+.settings-action-btn.primary:active {
+    transform: translateY(4px);
+    box-shadow: var(--btn3d-primary-pressed);
 }
 
 .settings-file-label {
@@ -2731,11 +2830,18 @@ input:checked + .slider:before {
     letter-spacing: 0.01em;
     cursor: pointer;
     transition: var(--transition-fast);
+    box-shadow: var(--btn3d-dark);
 }
 
 .settings-file-label:hover {
     background: rgba(255, 255, 255, 0.15);
     border-color: var(--accent-primary);
+    box-shadow: var(--btn3d-dark-hover);
+}
+
+.settings-file-label:active {
+    transform: translateY(4px);
+    box-shadow: var(--btn3d-dark-pressed);
 }
 
 /* Edit Mode Drag & Actions */
@@ -4207,6 +4313,7 @@ html.no-gold-bezel .search-box-wrapper::after {
     white-space: nowrap;
     cursor: pointer;
     transition: var(--transition-fast);
+    box-shadow: var(--btn3d-dark);
 }
 
 .macro-action-icon {
@@ -4231,7 +4338,7 @@ html.no-gold-bezel .search-box-wrapper::after {
     background: color-mix(in srgb, var(--accent-primary) 14%, transparent);
     border-color: var(--accent-primary);
     color: var(--accent-primary);
-    box-shadow: 0 4px 12px var(--accent-glow);
+    box-shadow: var(--btn3d-dark-hover);
 }
 
 .macro-action-btn.macro-del-btn {
@@ -4244,6 +4351,16 @@ html.no-gold-bezel .search-box-wrapper::after {
     background: #ef4444;
     border-color: #ef4444;
     color: #fff;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 4px 0 rgba(0, 0, 0, 0.55),
+        0 12px 20px rgba(0, 0, 0, 0.5),
+        0 0 16px rgba(255, 75, 75, 0.4);
+}
+
+.macro-action-btn:active {
+    transform: translateY(4px);
+    box-shadow: var(--btn3d-dark-pressed);
 }
 
 
@@ -7118,6 +7235,7 @@ body.focus-mode-active #aurora-bg {
     white-space: nowrap;
     cursor: pointer;
     transition: var(--transition-fast);
+    box-shadow: var(--btn3d-dark);
 }
 
 .create-macro-btn .create-macro-icon {
@@ -7129,11 +7247,12 @@ body.focus-mode-active #aurora-bg {
 .create-macro-btn:hover {
     border-color: var(--accent-primary);
     background: var(--accent-glow);
-    box-shadow: 0 0 14px var(--accent-glow);
+    box-shadow: var(--btn3d-dark-hover);
 }
 
 .create-macro-btn:active {
-    transform: translateY(1px);
+    transform: translateY(4px);
+    box-shadow: var(--btn3d-dark-pressed);
 }
 
 
@@ -7259,11 +7378,13 @@ body.focus-mode-active #aurora-bg {
     cursor: pointer;
     transition: all 0.2s;
     user-select: none;
+    box-shadow: var(--btn3d-dark);
 }
 
 .bg-mode-chip:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: var(--btn3d-dark-hover);
 }
 
 .bg-mode-chip.active {
@@ -8402,6 +8523,17 @@ html.show-shortcut-tags .enlace-icono .icon-img-wrapper {
     background: rgba(255, 255, 255, 0.7);
     border: 1px solid rgba(43, 43, 51, 0.3);
     color: var(--paper-ink);
+    /* El modal de calendario (estética papel) no usa el tratamiento 3D del drawer */
+    box-shadow: none;
+}
+
+.calendar-modal-card .settings-action-btn.secondary:hover {
+    box-shadow: none;
+}
+
+.calendar-modal-card .settings-action-btn.secondary:active {
+    transform: none;
+    box-shadow: none;
 }
 
 .calendar-modal-card .settings-action-btn.primary,
