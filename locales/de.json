@@ -146,6 +146,7 @@
     "tabs": {
       "appearance": "Erscheinungsbild",
       "language": "Sprache",
+      "language_desc": "Wählen Sie die Sprache der Benutzeroberfläche.",
       "weather": "Wetter",
       "layout": "Layout & Verknüpfungen",
       "backup": "Sicherung & Wiederherstellung",

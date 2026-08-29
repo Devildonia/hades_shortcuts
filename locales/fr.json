@@ -146,6 +146,7 @@
     "tabs": {
       "appearance": "Apparence",
       "language": "Langue",
+      "language_desc": "Choisissez la langue de l'interface du Centre de Mando.",
       "weather": "Météo",
       "layout": "Mise en page & Raccourcis",
       "backup": "Sauvegarde",

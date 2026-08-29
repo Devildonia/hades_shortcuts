@@ -146,6 +146,7 @@
     "tabs": {
       "appearance": "Appearance",
       "language": "Language",
+      "language_desc": "Choose the interface language of the Command Center.",
       "weather": "Weather",
       "layout": "Layout & Shortcuts",
       "backup": "Backup & Restore",

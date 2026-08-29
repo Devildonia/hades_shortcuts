@@ -146,6 +146,7 @@
     "tabs": {
       "appearance": "Apariencia",
       "language": "Idioma",
+      "language_desc": "Elige el idioma de la interfaz del Centro de Mando.",
       "weather": "Clima",
       "layout": "Diseño & Atajos",
       "backup": "Copia de Seguridad",
