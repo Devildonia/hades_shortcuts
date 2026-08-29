@@ -291,7 +291,11 @@ export class SettingsHub {
             // Cajones del tablero: perfiles, agente IA y barra de búsqueda
             { id: 'toggle-panel-spaces', target: 'spaces-switcher-bar', key: 'panel_spaces_visible' },
             { id: 'toggle-panel-ai', target: 'ai-launcher-card', key: 'panel_ai_visible' },
-            { id: 'toggle-panel-search', target: 'zone-hero', key: 'panel_search_visible' }
+            { id: 'toggle-panel-search', target: 'zone-hero', key: 'panel_search_visible' },
+            // Encabezado: hora, tiempo (clima) y título HaDeS' Shortcuts
+            { id: 'toggle-panel-clock', target: 'clock-widget', key: 'panel_clock_visible' },
+            { id: 'toggle-panel-weather', target: 'weather-widget', key: 'panel_weather_visible' },
+            { id: 'toggle-panel-brand', target: 'zone-header-center', key: 'panel_brand_visible' }
         ];
     }
 
