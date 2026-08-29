@@ -218,7 +218,7 @@
     },
     "profile": {
       "title": "Profil Utilisateur",
-      "desc": "Personnalisez votre nom ou pseudo pour le Centre de Commande et les salutations :"
+      "desc": "Personnalisez votre nom ou pseudo pour le Centre de Commande et les salutations."
     },
     "macros": {
       "title": "Routines & Déclencheurs Rapides",
@@ -314,7 +314,7 @@
   },
   "theme_studio": {
     "title": "Studio de Thème Personnalisé",
-    "desc": "Personnalisez les couleurs d'accent et les reflets néon en temps réel :",
+    "desc": "Personnalisez les couleurs d'accent et les reflets néon en temps réel.",
     "primary_label": "Couleur Primaire (Accent) :",
     "secondary_label": "Couleur Secondaire :",
     "reset_colors_btn": "Réinitialiser les Couleurs",
@@ -486,7 +486,8 @@
     "topic_space": "Espace Profond",
     "topic_nature": "Nature & Montagnes",
     "topic_arch": "Architecture Minimaliste",
-    "upload_local": "📁 Téléverser un Fichier",
+    "upload_local": "Téléverser un Fichier",
+    "refresh_photo": "Photo Aléatoire",
     "custom_url": "URL d'Image Personnalisée",
     "custom_url_placeholder": "https://images.unsplash.com/...",
     "blur_label": "Effet de Flou :",

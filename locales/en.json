@@ -218,7 +218,7 @@
     },
     "profile": {
       "title": "User Profile",
-      "desc": "Customize your name or alias for the Command Center and greetings:"
+      "desc": "Customize your name or alias for the Command Center and greetings."
     },
     "macros": {
       "title": "Routines & Quick Triggers",
@@ -314,7 +314,7 @@
   },
   "theme_studio": {
     "title": "Custom Theme Studio",
-    "desc": "Customize accent colors and neon spotlight in real-time:",
+    "desc": "Customize accent colors and neon spotlight in real-time.",
     "primary_label": "Primary Accent Color:",
     "secondary_label": "Secondary Color:",
     "reset_colors_btn": "Reset Default Colors",
@@ -486,7 +486,8 @@
     "topic_space": "Deep Space",
     "topic_nature": "Nature & Mountains",
     "topic_arch": "Minimalist Architecture",
-    "upload_local": "📁 Upload Local File",
+    "upload_local": "Upload Local File",
+    "refresh_photo": "Random Photo",
     "custom_url": "Custom Image URL",
     "custom_url_placeholder": "https://images.unsplash.com/...",
     "blur_label": "Blur Effect:",

@@ -218,7 +218,7 @@
     },
     "profile": {
       "title": "Benutzerprofil",
-      "desc": "Passen Sie Ihren Namen oder Alias für das Command Center und die Begrüßungen an:"
+      "desc": "Passen Sie Ihren Namen oder Alias für das Command Center und die Begrüßungen an."
     },
     "macros": {
       "title": "Routinen & Schnell-Trigger",
@@ -314,7 +314,7 @@
   },
   "theme_studio": {
     "title": "Individuelles Theme-Studio",
-    "desc": "Akzentfarben und Neon-Leuchten in Echtzeit anpassen:",
+    "desc": "Akzentfarben und Neon-Leuchten in Echtzeit anpassen.",
     "primary_label": "Primäre Akzentfarbe:",
     "secondary_label": "Sekundärfarbe:",
     "reset_colors_btn": "Standardfarben wiederherstellen",
@@ -486,7 +486,8 @@
     "topic_space": "Tiefer Weltraum",
     "topic_nature": "Natur & Berge",
     "topic_arch": "Minimalistische Architektur",
-    "upload_local": "📁 Lokale Datei laden",
+    "upload_local": "Lokale Datei laden",
+    "refresh_photo": "Zufälliges Foto",
     "custom_url": "Benutzerdefinierte Bild-URL",
     "custom_url_placeholder": "https://images.unsplash.com/...",
     "blur_label": "Weichzeichnung (Blur):",

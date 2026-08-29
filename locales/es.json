@@ -218,7 +218,7 @@
     },
     "profile": {
       "title": "Perfil de Usuario",
-      "desc": "Personaliza tu nombre o alias para el Centro de Mando y saludos:"
+      "desc": "Personaliza tu nombre o alias para el Centro de Mando y saludos."
     },
     "macros": {
       "title": "Rutinas & Disparadores Rápidos",
@@ -314,7 +314,7 @@
   },
   "theme_studio": {
     "title": "Theme Studio Personalizado",
-    "desc": "Personaliza los colores de acento y resplandor neón en tiempo real:",
+    "desc": "Personaliza los colores de acento y resplandor neón en tiempo real.",
     "primary_label": "Color Primario (Acento):",
     "secondary_label": "Color Secundario:",
     "reset_colors_btn": "Restablecer Colores Predeterminados",
@@ -486,7 +486,8 @@
     "topic_space": "Espacio Profundo",
     "topic_nature": "Naturaleza & Montañas",
     "topic_arch": "Arquitectura Minimalista",
-    "upload_local": "📁 Cargar Archivo Local",
+    "upload_local": "Cargar Archivo Local",
+    "refresh_photo": "Foto Aleatoria",
     "custom_url": "URL de Imagen Personalizada",
     "custom_url_placeholder": "https://images.unsplash.com/...",
     "blur_label": "Desenfoque (Blur):",

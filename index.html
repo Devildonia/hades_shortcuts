@@ -695,8 +695,7 @@
             <div class="settings-tab-pane active" id="tab-pane-appearance">
                 <!-- User Profile Section -->
                 <div class="settings-section">
-                    <h4 data-i18n="settings_hub.profile.title">Perfil de Usuario</h4>
-                    <p class="settings-hint" data-i18n="settings_hub.profile.desc">Personaliza tu nombre o alias para el Centro de Mando y saludos:</p>
+                    <h4 data-i18n="settings_hub.profile.title" title="Personaliza tu nombre o alias para el Centro de Mando y saludos." data-i18n-title="settings_hub.profile.desc">Perfil de Usuario</h4>
                     <div style="display: flex; gap: 8px; margin-top: 8px;">
                         <label class="visually-hidden" for="drawer-user-name-input" data-i18n="user_modal.title">Nombre</label>
                         <input type="text" id="drawer-user-name-input" class="settings-select" placeholder="Tu nombre..." maxlength="25" style="flex: 1;" data-i18n-placeholder="user_modal.input_placeholder">
@@ -773,10 +772,10 @@
                         </div>
                         <div class="macro-form-row" style="margin-top: 10px; display: flex; gap: 10px;">
                             <label class="settings-action-btn secondary" style="cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; flex: 1; margin: 0; padding: 8px 12px; font-size: 0.78rem;">
-                                <span data-i18n="bg_studio.upload_local">📁 Cargar Archivo</span>
+                                <span data-i18n="bg_studio.upload_local">Cargar Archivo Local</span>
                                 <input type="file" id="bg-file-upload-input" accept="image/*" style="display: none;">
                             </label>
-                            <button class="settings-action-btn secondary" type="button" id="bg-refresh-unsplash-btn" style="flex: 1; margin: 0; padding: 8px 12px; font-size: 0.78rem;">🔄 Foto Aleatoria</button>
+                            <button class="settings-action-btn secondary" type="button" id="bg-refresh-unsplash-btn" data-i18n="bg_studio.refresh_photo">Foto Aleatoria</button>
                         </div>
                         <div class="macro-form-field" style="margin-top: 10px;">
                             <label data-i18n="bg_studio.custom_url">URL de Imagen Personalizada</label>
@@ -848,8 +847,7 @@
 
                 <!-- Custom Theme Studio Section -->
                 <div class="settings-section">
-                    <h4 data-i18n="theme_studio.title">Theme Studio Personalizado</h4>
-                    <p class="settings-hint" data-i18n="theme_studio.desc">Personaliza los colores de acento y resplandor neón en tiempo real:</p>
+                    <h4 data-i18n="theme_studio.title" title="Personaliza los colores de acento y resplandor neón en tiempo real." data-i18n-title="theme_studio.desc">Theme Studio Personalizado</h4>
                     <div class="theme-color-inputs">
                         <label class="color-picker-label">
                             <span data-i18n="theme_studio.primary_label">Color Primario:</span>
