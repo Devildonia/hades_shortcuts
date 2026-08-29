@@ -7058,20 +7058,42 @@ body.focus-mode-active #aurora-bg {
 
 /* --- Visual Macro Studio & Editor Modal --- */
 .create-macro-btn {
-    background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(168, 85, 247, 0.25));
-    border: 1px solid rgba(0, 242, 254, 0.4);
-    color: #00f2fe;
-    font-size: 0.8rem;
+    flex: 0 0 auto;
+    height: 36px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    box-sizing: border-box;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--accent-glow);
+    background: linear-gradient(135deg, var(--accent-glow), transparent 70%);
+    color: var(--accent-primary);
+    font-family: var(--font-body);
+    font-size: 0.78rem;
     font-weight: 700;
-    padding: 6px 14px;
-    border-radius: 20px;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    white-space: nowrap;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--transition-fast);
+}
+
+.create-macro-btn .create-macro-icon {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 auto;
 }
 
 .create-macro-btn:hover {
-    background: linear-gradient(135deg, rgba(0, 242, 254, 0.35), rgba(168, 85, 247, 0.4));
-    box-shadow: 0 0 14px rgba(0, 242, 254, 0.3);
+    border-color: var(--accent-primary);
+    background: var(--accent-glow);
+    box-shadow: 0 0 14px var(--accent-glow);
+}
+
+.create-macro-btn:active {
+    transform: translateY(1px);
 }
 
 

@@ -24,8 +24,7 @@ test('MacroEngine: creación, persistencia y edición de custom macros', ({ expe
             desc: 'Abre Spotify y Discord con sonido ambiental binaural',
             shortcuts: ['spotify', 'discord'],
             ambient: 'binaural',
-            pomodoro: 'start',
-            icon: '⚡'
+            pomodoro: 'start'
         }
     };
 
@@ -53,8 +52,7 @@ test('MacroEngine: setCustomMacros y reloadCustomMacros sincronizan memoria', ({
             desc: 'Test in memory sync',
             shortcuts: [],
             ambient: null,
-            pomodoro: null,
-            icon: '🧪'
+            pomodoro: null
         }
     });
 
@@ -62,16 +60,15 @@ test('MacroEngine: setCustomMacros y reloadCustomMacros sincronizan memoria', ({
     expect(engine.macros['!sync_test'].name).toBe('Sync Test');
 });
 
-test('MacroEngine.renderMacroList: icono malicioso se escapa y no se inyecta como <img>', ({ expect }) => {
+test('MacroEngine.renderMacroList: HTML malicioso se escapa y no se inyecta', ({ expect }) => {
     const engine = new MacroEngine();
     engine.saveCustomMacros({
         '!evil': {
-            name: 'Evil',
+            name: '<img src=x onerror=alert(1)>',
             desc: 'x',
             shortcuts: [],
             ambient: null,
-            pomodoro: null,
-            icon: '<img src=x onerror=alert(1)>'
+            pomodoro: null
         }
     });
 
@@ -81,6 +78,8 @@ test('MacroEngine.renderMacroList: icono malicioso se escapa y no se inyecta com
 
     // El HTML generado debe contener la versión escapada... 
     expect(container.innerHTML).toContain('&lt;img');
+    // ...y el nombre malicioso NO debe aparecer sin escapar en ningún h4
+    expect(container.querySelector('.macro-item-header h4')?.innerHTML).not.toContain('<img');
     // ...y NO el <img> activo original
     expect(container.innerHTML).not.toContain('<img src=x');
     // Y no debe existir ningún <img> dentro del header del ítem malicioso

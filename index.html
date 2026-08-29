@@ -626,10 +626,6 @@
                         <label data-i18n="macros_studio.trigger_label">Comando Trigger</label>
                         <input type="text" id="macro-form-trigger" placeholder="!gaming" autocomplete="off">
                     </div>
-                    <div class="macro-form-field" style="width: 80px;">
-                        <label data-i18n="macros_studio.icon_label">Icono</label>
-                        <input type="text" id="macro-form-icon" placeholder="🎮" maxlength="4">
-                    </div>
                 </div>
                 <div class="macro-form-field">
                     <label data-i18n="macros_studio.name_label">Nombre de la Rutina</label>
@@ -640,18 +636,18 @@
                         <label data-i18n="macros_studio.ambient_label">Audio Ambiental</label>
                         <select id="macro-form-ambient">
                             <option value="" data-i18n="macros_studio.ambient_none">Ninguno</option>
-                            <option value="rain" data-i18n="macros_studio.ambient_rain">🌧️ Lluvia</option>
-                            <option value="space" data-i18n="macros_studio.ambient_space">🚀 Espacio</option>
-                            <option value="binaural" data-i18n="macros_studio.ambient_binaural">☕ 432Hz</option>
-                            <option value="waves" data-i18n="macros_studio.ambient_waves">🌊 Olas</option>
+                            <option value="rain" data-i18n="macros_studio.ambient_rain">Lluvia</option>
+                            <option value="space" data-i18n="macros_studio.ambient_space">Espacio</option>
+                            <option value="binaural" data-i18n="macros_studio.ambient_binaural">432Hz</option>
+                            <option value="waves" data-i18n="macros_studio.ambient_waves">Olas</option>
                         </select>
                     </div>
                     <div class="macro-form-field" style="flex: 1;">
                         <label data-i18n="macros_studio.pomodoro_label">Acción Pomodoro</label>
                         <select id="macro-form-pomodoro">
                             <option value="" data-i18n="macros_studio.pomodoro_none">Sin cambios</option>
-                            <option value="start" data-i18n="macros_studio.pomodoro_start">▶ Iniciar 25m</option>
-                            <option value="reset" data-i18n="macros_studio.pomodoro_reset">🔄 Reiniciar</option>
+                            <option value="start" data-i18n="macros_studio.pomodoro_start">Iniciar 25m</option>
+                            <option value="reset" data-i18n="macros_studio.pomodoro_reset">Reiniciar</option>
                         </select>
                     </div>
                 </div>
@@ -1031,11 +1027,11 @@
             <div class="settings-tab-pane" id="tab-pane-macros">
                 <div class="settings-section">
                     <div class="macros-tab-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 12px;">
-                        <div>
-                            <h4 data-i18n="settings_hub.macros.title" style="margin: 0;">Rutinas & Disparadores Rápidos</h4>
-                            <p class="settings-hint" data-i18n="settings_hub.macros.desc" style="margin: 4px 0 0 0;">Escribe estos comandos en la barra de búsqueda para ejecutar múltiples acciones en 1 segundo:</p>
-                        </div>
-                        <button class="create-macro-btn" id="create-macro-btn" data-i18n="macros_studio.create_btn">➕ Nueva Macro</button>
+                        <h4 data-i18n="settings_hub.macros.title" data-i18n-title="settings_hub.macros.desc" style="margin: 0;">Rutinas & Disparadores Rápidos</h4>
+                        <button class="create-macro-btn" id="create-macro-btn">
+                            <svg class="create-macro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                            <span data-i18n="macros_studio.create_btn">Nueva Macro</span>
+                        </button>
                     </div>
                     <div class="macros-list-container" id="macros-list-container">
                         <div class="macro-item-card">

@@ -228,7 +228,7 @@
     },
     "macros": {
       "title": "Rutinas & Disparadores Rápidos",
-      "desc": "Escribe estos comandos en la barra de búsqueda para ejecutar múltiples acciones en 1 segundo:"
+      "desc": "Escribe estos comandos en la barra de búsqueda para ejecutar múltiples acciones en 1 segundo"
     },
     "sync": {
       "title": "🔒 Sincronización en la Nube Cifrada (E2EE)",
@@ -439,11 +439,10 @@
   },
   "macros_studio": {
     "title": "Gestor de Macros & Rutinas",
-    "create_btn": "➕ Nueva Macro",
+    "create_btn": "Nueva Macro",
     "edit_title": "Editor de Macro Visual",
     "trigger_label": "Comando Trigger (ej: !gaming)",
     "name_label": "Nombre de la Rutina",
-    "icon_label": "Icono Emoji",
     "shortcuts_label": "Selecciona los Atajos a Abrir:",
     "ambient_label": "Audio Ambiental:",
     "pomodoro_label": "Acción del Pomodoro:",
@@ -453,13 +452,13 @@
     "edit_btn": "Editar",
     "delete_btn": "Eliminar",
     "ambient_none": "Ninguno",
-    "ambient_rain": "🌧️ Lluvia",
-    "ambient_space": "🚀 Espacio",
-    "ambient_binaural": "☕ 432Hz",
-    "ambient_waves": "🌊 Olas",
+    "ambient_rain": "Lluvia",
+    "ambient_space": "Espacio",
+    "ambient_binaural": "432Hz",
+    "ambient_waves": "Olas",
     "pomodoro_none": "Sin cambios",
-    "pomodoro_start": "▶ Iniciar 25m",
-    "pomodoro_reset": "🔄 Reiniciar",
+    "pomodoro_start": "Iniciar 25m",
+    "pomodoro_reset": "Reiniciar",
     "opens": "Abre {list}"
   },
   "calendar_full": {
@@ -642,6 +641,14 @@
     "social": {
       "name": "Modo Comunidad & Redes",
       "desc": "Abre Discord, X (Twitter) e Instagram"
+    },
+    "media": {
+      "name": "Modo Media & Video IA",
+      "desc": "Abre Kling, Hedra y Suno con sonido de oleaje"
+    },
+    "game": {
+      "name": "Modo Gaming & Dev",
+      "desc": "Abre Steam, itch.io y Epic Games"
     }
   },
   "ambient": {

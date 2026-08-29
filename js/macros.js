@@ -1,6 +1,6 @@
 // js/macros.js - Contextual Multi-Action Macro & Routine Engine (Visual No-Code Studio)
 
-import { state, escapeHtml, persistJson, openSafeUrl, sanitizeIconUrl } from './state.js';
+import { state, escapeHtml, persistJson, openSafeUrl } from './state.js';
 import { soundFx } from './audio.js';
 import { ambientAudio } from './ambient-audio.js';
 import { focusMode } from './focus-mode.js';
@@ -16,40 +16,49 @@ export const DEFAULT_MACROS = {
         desc: 'Opens GitHub, Claude and ChatGPT, starts Pomodoro and rain audio',
         shortcuts: ['github', 'claude', 'chatgpt'],
         ambient: 'rain',
-        pomodoro: 'start',
-        icon: '💻'
+        pomodoro: 'start'
     },
     '!focus': {
         name: 'Deep Focus mode',
         desc: 'Distraction-free 25m Focus session with 432 Hz alpha soundscape and Pomodoro timer',
         shortcuts: [],
         ambient: 'binaural',
-        pomodoro: 'start',
-        icon: '🎯'
+        pomodoro: 'start'
     },
     '!chill': {
         name: 'Relax & Audio mode',
         desc: 'Opens YouTube and Suno, and starts cosmic surf audio',
         shortcuts: ['youtube', 'suno'],
         ambient: 'waves',
-        pomodoro: 'reset',
-        icon: '☕'
+        pomodoro: 'reset'
     },
     '!3d': {
         name: '3D & AI Generation mode',
         desc: 'Opens Meshy AI, Tripo 3D and Civitai with deep-space audio',
         shortcuts: ['meshy', 'tripo3d', 'civitai'],
         ambient: 'space',
-        pomodoro: 'start',
-        icon: '🎨'
+        pomodoro: 'start'
     },
     '!social': {
         name: 'Community & Social mode',
         desc: 'Opens Discord, X (Twitter) and Instagram',
         shortcuts: ['discord', 'x', 'instagram'],
         ambient: null,
-        pomodoro: null,
-        icon: '💬'
+        pomodoro: null
+    },
+    '!media': {
+        name: 'AI Media & Video mode',
+        desc: 'Opens Kling, Hedra and Suno with waves ambience',
+        shortcuts: ['kling', 'hedra', 'suno'],
+        ambient: 'waves',
+        pomodoro: null
+    },
+    '!game': {
+        name: 'Gaming & Dev mode',
+        desc: 'Opens Steam, itch.io and Epic Games',
+        shortcuts: ['steam', 'itchio', 'epic'],
+        ambient: null,
+        pomodoro: null
     }
 };
 
@@ -153,7 +162,6 @@ export class MacroEngine {
             card.innerHTML = `
                 <div class="macro-item-header">
                     <span class="macro-badge">${escapeHtml(trigger)}</span>
-                    <span style="font-size: 1.2rem;">${escapeHtml(macro.icon || '⚡')}</span>
                     <h4 style="margin: 0; font-size: 0.95rem; color: var(--text-primary);">${escapeHtml(copy.name)}</h4>
                 </div>
                 <p class="macro-item-desc">${escapeHtml(copy.desc || (macro.shortcuts || []).join(', '))}</p>
@@ -176,11 +184,10 @@ export class MacroEngine {
         this.modal = document.getElementById('macro-editor-modal');
         if (!this.modal) return;
 
-        const macro = trigger ? this.getMacro(trigger) : { name: '', icon: '🎮', shortcuts: [], ambient: '', pomodoro: '' };
+        const macro = trigger ? this.getMacro(trigger) : { name: '', shortcuts: [], ambient: '', pomodoro: '' };
         const copy = trigger && macro ? this.displayCopy(trigger, macro) : { name: '' };
         document.getElementById('macro-form-trigger').value = trigger || '!';
         document.getElementById('macro-form-name').value = copy.name || macro.name || '';
-        document.getElementById('macro-form-icon').value = macro.icon || '⚡';
         document.getElementById('macro-form-ambient').value = macro.ambient || '';
         document.getElementById('macro-form-pomodoro').value = macro.pomodoro || '';
 
@@ -218,7 +225,6 @@ export class MacroEngine {
         if (trigger.length <= 1) return;
 
         const name = (document.getElementById('macro-form-name').value || '').trim() || trigger;
-        const icon = sanitizeIconUrl(document.getElementById('macro-form-icon').value) || '⚡';
         const ambient = document.getElementById('macro-form-ambient').value || null;
         const pomodoro = document.getElementById('macro-form-pomodoro').value || null;
 
@@ -234,8 +240,7 @@ export class MacroEngine {
             desc: opensTpl.replace('{list}', checkedShortcuts.join(', ')),
             shortcuts: checkedShortcuts,
             ambient,
-            pomodoro,
-            icon
+            pomodoro
         };
 
         this.saveCustomMacros(custom);

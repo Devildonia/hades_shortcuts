@@ -228,7 +228,7 @@
     },
     "macros": {
       "title": "Routines & Déclencheurs Rapides",
-      "desc": "Tapez ces commandes dans la recherche pour exécuter des routines multi-actions :"
+      "desc": "Tapez ces commandes dans la recherche pour exécuter des routines multi-actions"
     },
     "sync": {
       "title": "🔒 Synchronisation Cloud Chiffrée (E2EE)",
@@ -439,11 +439,10 @@
   },
   "macros_studio": {
     "title": "Studio de Macros & Routines",
-    "create_btn": "➕ Nouvelle Macro",
+    "create_btn": "Nouvelle Macro",
     "edit_title": "Éditeur Visuel de Macro",
     "trigger_label": "Commande Trigger (ex: !gaming)",
     "name_label": "Nom de la Routine",
-    "icon_label": "Icône Emoji",
     "shortcuts_label": "Sélectionner les Raccourcis :",
     "ambient_label": "Audio Ambiant :",
     "pomodoro_label": "Action Pomodoro :",
@@ -453,13 +452,13 @@
     "edit_btn": "Modifier",
     "delete_btn": "Supprimer",
     "ambient_none": "Aucun",
-    "ambient_rain": "🌧️ Pluie",
-    "ambient_space": "🚀 Espace",
-    "ambient_binaural": "☕ 432Hz",
-    "ambient_waves": "🌊 Vagues",
+    "ambient_rain": "Pluie",
+    "ambient_space": "Espace",
+    "ambient_binaural": "432Hz",
+    "ambient_waves": "Vagues",
     "pomodoro_none": "Aucun changement",
-    "pomodoro_start": "▶ Démarrer 25m",
-    "pomodoro_reset": "🔄 Réinitialiser",
+    "pomodoro_start": "Démarrer 25m",
+    "pomodoro_reset": "Réinitialiser",
     "opens": "Ouvre {list}"
   },
   "calendar_full": {
@@ -642,6 +641,14 @@
     "social": {
       "name": "Mode Communauté & Réseaux",
       "desc": "Ouvre Discord, X (Twitter) et Instagram"
+    },
+    "media": {
+      "name": "Mode Media & Vidéo IA",
+      "desc": "Ouvre Kling, Hedra et Suno avec un son d’océan"
+    },
+    "game": {
+      "name": "Mode Gaming & Dev",
+      "desc": "Ouvre Steam, itch.io et Epic Games"
     }
   },
   "ambient": {
