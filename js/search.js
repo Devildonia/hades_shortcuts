@@ -176,7 +176,7 @@ export class SearchEngineManager {
                     tags: card.getAttribute('data-tags') || '',
                     desc: card.getAttribute('data-desc') || '',
                     category: cat.getAttribute('data-cat-id'),
-                    url: card.getAttribute('href') || ''
+                    url: card.getAttribute('data-href') || '' // T5.1: las tarjetas son <div>; la URL vive en data-href
                 };
                 const title = (card.getAttribute('data-title') || '').toLowerCase();
                 const tags = (card.getAttribute('data-tags') || '').toLowerCase();

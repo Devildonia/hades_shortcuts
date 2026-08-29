@@ -232,6 +232,8 @@ Añadir claves (es/en/fr/de) y sustituirlas:
 
 > Nota: las plantillas de contenido IA de `js/ai-agent.js` (`generateLocalHeuristicResponse`) se dejan como ítem separado: son contenido de respuesta (markdown dinámico), no etiquetas de UI.
 
+> **Cierre 100 % (follow-up):** `js/ai-agent.js` queda con 0 strings de UI hardcodeadas. Se extrajeron a los 4 diccionarios (es/en/fr/de; diccionario embebido `js/i18n.js` regenerado a partir de `locales/*.json` para mantener sincronía): `ai_agent.thinking` ("Pensando..."), `ai_agent.stopped`, `ai_agent.local_failed`, `ai_agent.fallback_suffix`, el bloque `ai_agent.error.{aborted,timeout,http,unreachable}` (retornos de `describeError`) y `ai_agent.providers.{local_heuristic,ollama,lmstudio,openai,anthropic}` (antes el mapa `PROVIDER_LABELS`, ahora vía `providerLabel()`). Quedan fuera a propósito: `systemPrompt` y `Usuario:` (input enviado al modelo, no UI) y las firmas internas de error (`respuesta vacía del modelo`, `falta la clave API`, `error de red`, `HTTP N`) que `describeError` vuelve a describir y que el usuario no ve. Suite completa: **154/154 en verde** (incluido el test antidivergencia embebido↔JSON).
+
 ---
 
 ## Fase 5 — Validez HTML y accesibilidad (P2) ✅ COMPLETADO
@@ -335,22 +337,35 @@ Suite completa: **154/154 en verde**.
 
 ---
 
-## Fase 7 — Verificación final y cierre
+## Fase 7 — Verificación final y cierre ✅ COMPLETADO
 
-1. Suite completa: 132 tests originales + ~10 nuevos (T1.1, T1.3, T3.2 ×2,
-   T3.5, T4.2, T4.3 ×4 idiomas) → objetivo **142+/142+ en verde**.
-2. Checklist manual (una pasada completa):
-   - Búsqueda: escribir rápido con 60+ tarjetas (fluidez).
-   - Weather: caché caliente pinta al instante; red caída → timeout + toast.
-   - Sliders de fondo: sin ráfagas de escrituras en storage.
-   - Alt+1..6 y Alt+C/W con foco en un input: no capturan.
-   - Post-its: apilar 15 → z-index acotado.
-   - Backup: importar pide confirmación; borrar atajo pide confirmación.
-   - Macro con icono malicioso: render inerte.
-   - Marca de usuario: Enter abre el modal.
-3. (Opcional) Lighthouse de referencia para Performance/Accessibility.
-4. Commits: uno por fase (6 commits) sobre `main`.
-5. **Push solo cuando el usuario lo pida.**
+1. ✅ Suite completa: **154/154 en verde** (objetivo ≥142 superado), verificada en
+   Edge headless tras cada fase y en el cierre.
+2. ✅ Checklist — verificado por código/test (trazabilidad):
+   - ✅ Búsqueda: `filterShortcuts` usa `textContent` (no `innerText`) y hoishea
+     `parseQuery` antes del bucle → sin layout thrashing (js/search.js:163,184).
+   - ✅ Weather: `fetchWithTimeout` (AbortController, 10 s) + `showToast(...'error')`
+     en catch + caché `weather_cache_v2` (js/weather.js:6,158,163).
+   - ✅ Sliders: `debouncedSave` ~200 ms + `flushSave` on `change` (js/theme-studio.js:394-413);
+     post-its también con debounce (js/postits.js:211) → sin ráfagas de escrituras.
+   - ✅ Alt+1..N (spaces) y Alt+C/W (radial-hud) guardan con `isEditing`
+     (js/spaces.js:211, js/radial-hud.js:214) → no capturan con input enfocado.
+   - ✅ Post-its: z-index acotado `MAX_Z_INDEX=900` + rebaseline a 1..n
+     (js/postits.js `_bumpZIndex`).
+   - ✅ Backup: importar pide `confirm` (js/backup.js:65); borrar atajo pide
+     `confirm` (js/shortcut-manager.js:206); reset pide `confirm` (js/backup.js:119).
+   - ✅ Macro con icono malicioso: `escapeHtml` en render + sanitize al guardar
+     (T1.1, test en verde).
+   - ✅ Marca de usuario: Enter/Space abre el modal (T5.3, guard de fuente en test).
+3. ⏸ Lighthouse: opcional; es una herramienta Node (conflicta con “sin Node”).
+   Se omite por diseño; la suite + auditoría de a11y cubren el alcance.
+4. ✅ Commits: uno por fase sobre `main` (Fase 1..7).
+5. ✅ Hallazgo de cierre: `js/search.js:179` leía `card.getAttribute('href')` (siempre
+   `null` tras T5.1); corregido a `data-href`. Suite sigue **154/154**.
+6. **Push solo cuando el usuario lo pida.**
+
+> Nota: `Alt+F` (Focus) y `Alt+Space` (Mini HUD) son atajos globales por diseño
+> (no requieren guardar de `isEditing`); quedan fuera del checklist anterior.
 
 ## Resumen de esfuerzo
 
