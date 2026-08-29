@@ -187,7 +187,8 @@
       "show_pomodoro": "Show Focus Timer",
       "show_radar": "Show Tech Radar & RSS",
       "show_telemetry": "Show System Telemetry",
-      "gold_bezel_toggle": "Gold Frames (Widgets)"
+      "gold_bezel_toggle": "Gold Frames (Widgets)",
+      "blue_bezel_toggle": "Blue frames (Profiles · AI · Search)"
     },
     "backup": {
       "export_title": "Export Configuration",
@@ -260,6 +261,12 @@
     "pomodoro_pause": "Pause",
     "pomodoro_reset": "Reset",
     "toggle_widgets_title": "Bento Mini-Widgets & Modules",
+    "toggle_panels_title": "Dashboard panels",
+    "toggle_profiles": "Show Profiles panel",
+    "toggle_ai": "Show AI Agent panel",
+    "toggle_search": "Show search bar",
+    "toggle_categories_title": "Categories",
+    "toggle_categories_hint": "Hide any category panel from the dashboard.",
     "toggle_scratchpad": "Show Scratchpad Notes",
     "toggle_pomodoro": "Show Focus Timer",
     "scratchpad_pin": "Pin Post-it",

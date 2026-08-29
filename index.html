@@ -915,6 +915,13 @@
                             <span class="slider round"></span>
                         </label>
                     </div>
+                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                        <span class="settings-toggle-title" data-i18n="settings_hub.layout.blue_bezel_toggle">Marcos azules (Perfiles · IA · Búsqueda)</span>
+                        <label class="switch">
+                            <input type="checkbox" id="setting-blue-bezel-toggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="settings-section">
@@ -962,6 +969,38 @@
                         </label>
                     </div>
                 </div>
+
+                <div class="settings-section">
+                    <h4 data-i18n="widgets.toggle_panels_title">Cajones del tablero</h4>
+                    <div class="settings-toggle-row">
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_profiles">Mostrar cajón de Perfiles</span>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-panel-spaces" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_ai">Mostrar cajón de Agente IA</span>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-panel-ai" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                        <span class="settings-toggle-title" data-i18n="widgets.toggle_search">Mostrar barra de búsqueda</span>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-panel-search" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h4 data-i18n="widgets.toggle_categories_title">Categorías</h4>
+                    <p class="settings-hint" data-i18n="widgets.toggle_categories_hint">Oculta cualquier cajón de categorías del tablero.</p>
+                    <div id="category-toggles-container"></div>
+                </div>
+
                 <div class="settings-section">
                     <button class="settings-action-btn primary" id="drawer-add-shortcut-btn" data-i18n="settings_hub.layout.add_shortcut_btn">➕ Añadir Nuevo Acceso Directo</button>
                 </div>

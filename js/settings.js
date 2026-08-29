@@ -4,7 +4,7 @@ import { macroEngine } from './macros.js';
 // js/settings.js - Slide-Over Settings Drawer Hub
 
 import { state } from './state.js';
-import { updateDocumentLocalization, loadLocaleAsync, getTranslation } from './i18n.js';
+import { updateDocumentLocalization, loadLocaleAsync, getTranslation, i18nDictionaries } from './i18n.js';
 import { soundFx } from './audio.js';
 
 export class SettingsHub {
@@ -27,6 +27,7 @@ export class SettingsHub {
         this.tagsToggle = document.getElementById('setting-show-tags-toggle');
         this.chromeBezelToggle = document.getElementById('setting-chrome-bezel-toggle');
         this.goldBezelToggle = document.getElementById('setting-gold-bezel-toggle');
+        this.blueBezelToggle = document.getElementById('setting-blue-bezel-toggle');
         this.addShortcutBtn = document.getElementById('drawer-add-shortcut-btn');
         this.layoutResetBtn = document.getElementById('layout-reset-defaults-btn');
         this.toggleScratchpad = document.getElementById('toggle-widget-scratchpad');
@@ -132,6 +133,7 @@ export class SettingsHub {
         if (this.tagsToggle) this.tagsToggle.checked = state.showShortcutTags;
         if (this.chromeBezelToggle) this.chromeBezelToggle.checked = state.showChromeBezel !== false;
         if (this.goldBezelToggle) this.goldBezelToggle.checked = state.showGoldBezel !== false;
+        if (this.blueBezelToggle) this.blueBezelToggle.checked = state.showBlueBezel !== false;
 
         this.syncWidgetToggles();
     }
@@ -207,7 +209,23 @@ export class SettingsHub {
             });
         }
 
+        if (this.blueBezelToggle) {
+            this.blueBezelToggle.addEventListener('change', (e) => {
+                soundFx.play('click');
+                state.setShowBlueBezel(e.target.checked);
+            });
+        }
+
         this.bindWidgetToggles();
+        this.bindCategoryToggles();
+
+        // Re-aplica la visibilidad de categorías tras cada render del tablero
+        // (cambio de espacio, modo edición, etc.) y refresca las etiquetas al cambiar idioma.
+        state.on('dashboard:rendered', () => this.syncCategoryToggles());
+        state.on('language:changed', () => {
+            this.buildCategoryToggles();
+            this.syncCategoryToggles();
+        });
 
         if (this.layoutResetBtn) {
             this.layoutResetBtn.addEventListener('click', () => {
@@ -269,8 +287,76 @@ export class SettingsHub {
             { id: 'toggle-widget-ambient', target: 'widget-ambient-card', key: 'widget_ambient_visible' },
             { id: 'toggle-widget-pomodoro', target: 'widget-pomodoro-card', key: 'widget_pomodoro_visible' },
             { id: 'toggle-widget-radar', target: 'widget-tech-radar-card', key: 'widget_tech_radar_visible' },
-            { id: 'toggle-widget-telemetry', target: 'telemetry-capsule', key: 'widget_telemetry_visible' }
+            { id: 'toggle-widget-telemetry', target: 'telemetry-capsule', key: 'widget_telemetry_visible' },
+            // Cajones del tablero: perfiles, agente IA y barra de búsqueda
+            { id: 'toggle-panel-spaces', target: 'spaces-switcher-bar', key: 'panel_spaces_visible' },
+            { id: 'toggle-panel-ai', target: 'ai-launcher-card', key: 'panel_ai_visible' },
+            { id: 'toggle-panel-search', target: 'zone-hero', key: 'panel_search_visible' }
         ];
+    }
+
+    getPanelCategories() {
+        const t = (typeof i18nDictionaries !== 'undefined' && i18nDictionaries[state.language]) || {};
+        return state.categories.map(cat => ({
+            id: `toggle-cat-${cat.id}`,
+            selector: `[data-cat-id="${cat.id}"]`,
+            key: `category_visible_${cat.id}`,
+            label: (t.categories && t.categories[cat.id]) || cat.defaultTitle
+        }));
+    }
+
+    buildCategoryToggles() {
+        const container = document.getElementById('category-toggles-container');
+        if (!container) return;
+        const prev = {};
+        container.querySelectorAll('input[type="checkbox"]').forEach(cb => { prev[cb.id] = cb.checked; });
+        container.innerHTML = '';
+        this.getPanelCategories().forEach(({ id, label }, i) => {
+            const row = document.createElement('div');
+            row.className = 'settings-toggle-row';
+            if (i > 0) row.style.marginTop = '10px';
+            const span = document.createElement('span');
+            span.className = 'settings-toggle-title';
+            span.textContent = label;
+            const labelEl = document.createElement('label');
+            labelEl.className = 'switch';
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.id = id;
+            const slider = document.createElement('span');
+            slider.className = 'slider round';
+            labelEl.appendChild(input);
+            labelEl.appendChild(slider);
+            row.appendChild(span);
+            row.appendChild(labelEl);
+            container.appendChild(row);
+            if (prev[id] !== undefined) input.checked = prev[id];
+        });
+    }
+
+    syncCategoryToggles() {
+        this.getPanelCategories().forEach(({ id, selector, key }) => {
+            const toggle = document.getElementById(id);
+            const el = document.querySelector(selector);
+            const isVisible = localStorage.getItem(key) !== 'false';
+            if (el) el.classList.toggle('hidden', !isVisible);
+            if (toggle) toggle.checked = isVisible;
+        });
+    }
+
+    bindCategoryToggles() {
+        this.buildCategoryToggles();
+        this.syncCategoryToggles();
+        this.getPanelCategories().forEach(({ id, selector, key }) => {
+            const toggle = document.getElementById(id);
+            if (!toggle) return;
+            toggle.addEventListener('change', (e) => {
+                soundFx.play('click');
+                const el = document.querySelector(selector);
+                if (el) el.classList.toggle('hidden', !e.target.checked);
+                localStorage.setItem(key, e.target.checked ? 'true' : 'false');
+            });
+        });
     }
 
     syncWidgetToggles() {

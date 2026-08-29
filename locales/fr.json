@@ -187,7 +187,8 @@
       "show_pomodoro": "Afficher le Minuteur Focus",
       "show_radar": "Afficher Tech Radar & RSS",
       "show_telemetry": "Afficher la Télémétrie Système",
-      "gold_bezel_toggle": "Cadres dorés (Widgets)"
+      "gold_bezel_toggle": "Cadres dorés (Widgets)",
+      "blue_bezel_toggle": "Cadres bleus (Profils · IA · Recherche)"
     },
     "backup": {
       "export_title": "Exporter la Configuration",
@@ -260,6 +261,12 @@
     "pomodoro_pause": "Pause",
     "pomodoro_reset": "Réinitialiser",
     "toggle_widgets_title": "Mini-Widgets Bento & Modules",
+    "toggle_panels_title": "Panneaux du tableau de bord",
+    "toggle_profiles": "Afficher le panneau Profils",
+    "toggle_ai": "Afficher le panneau Agent IA",
+    "toggle_search": "Afficher la barre de recherche",
+    "toggle_categories_title": "Catégories",
+    "toggle_categories_hint": "Masquer tout panneau de catégories du tableau de bord.",
     "toggle_scratchpad": "Afficher le Bloc-notes",
     "toggle_pomodoro": "Afficher le Minuteur Focus",
     "scratchpad_pin": "Épingler Post-it",

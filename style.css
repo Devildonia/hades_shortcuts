@@ -8329,3 +8329,30 @@ html.show-shortcut-tags .enlace-icono .icon-img-wrapper {
 }
 .noscript-banner strong { font-size: 22px; font-weight: 700; color: #9fd0ff; letter-spacing: 0.2px; }
 .noscript-banner em { color: #8fa3c0; font-size: 13px; font-style: normal; }
+
+/* ==========================================================================
+   Marco azul desactivado — familia perfiles (Perfiles · Agente IA · Búsqueda)
+   Mantiene la sombra neutra de profundidad; retira aro, spotlight y bezel.
+   ========================================================================== */
+html.no-blue-bezel .space-numpad-card,
+html.no-blue-bezel .ai-launcher-card,
+html.no-blue-bezel .search-box-wrapper {
+    border-color: var(--card-border);
+    box-shadow: var(--shadow-subtle);
+}
+
+html.no-blue-bezel .space-numpad-card:hover,
+html.no-blue-bezel .ai-launcher-card:hover,
+html.no-blue-bezel .search-box-wrapper:hover {
+    border-color: var(--card-border-hover);
+    box-shadow: var(--shadow-elevated);
+}
+
+html.no-blue-bezel .space-numpad-card::before,
+html.no-blue-bezel .ai-launcher-card::before,
+html.no-blue-bezel .search-box-wrapper::before,
+html.no-blue-bezel .space-numpad-card::after,
+html.no-blue-bezel .ai-launcher-card::after,
+html.no-blue-bezel .search-box-wrapper::after {
+    display: none;
+}

@@ -108,6 +108,7 @@ export class AppState {
         this.showShortcutTags = this.getItem('show_shortcut_tags', 'false') === 'true';
         this.showChromeBezel = this.getItem('show_chrome_bezel', 'true') !== 'false';
         this.showGoldBezel = this.getItem('show_gold_bezel', 'true') !== 'false';
+        this.showBlueBezel = this.getItem('show_blue_bezel', 'true') !== 'false';
         this.layoutMatrix = this.loadLayoutMatrix();
         this.listeners = new Map();
     }
@@ -259,6 +260,18 @@ export class AppState {
         this.setItem('show_gold_bezel', this.showGoldBezel ? 'true' : 'false');
         this.applyGoldBezel();
         this.emit('gold:visibility', this.showGoldBezel);
+    }
+
+    applyBlueBezel() {
+        if (typeof document === 'undefined') return;
+        document.documentElement.classList.toggle('no-blue-bezel', !this.showBlueBezel);
+    }
+
+    setShowBlueBezel(enabled) {
+        this.showBlueBezel = !!enabled;
+        this.setItem('show_blue_bezel', this.showBlueBezel ? 'true' : 'false');
+        this.applyBlueBezel();
+        this.emit('blue:visibility', this.showBlueBezel);
     }
 
     saveShortcuts(list) {

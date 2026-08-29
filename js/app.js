@@ -166,6 +166,7 @@ export function initApp() {
     state.applyShortcutTagsVisibility();
     state.applyChromeBezel();
     state.applyGoldBezel();
+    state.applyBlueBezel();
     state.on('theme:changed', (newTheme) => {
         document.documentElement.setAttribute('data-theme', newTheme);
         soundFx.play('click');
