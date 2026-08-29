@@ -13,7 +13,8 @@ export const SORTED_PRESET_ICONS = [
     'OptimizeGLB.webp', 'patreon.webp', 'paypal.webp', 'pccomponentes.webp', 'perplexity.webp', 'photoroom.webp',
     'qwen.webp', 'reddit.webp', 'seaartai.webp', 'seaverse.webp', 'shadertoy.webp', 'shakkerai.webp',
     'spotify.webp', 'steam.webp', 'suno.webp', 'tensorart.webp', 'threads.webp', 'tiktok.webp', 'translate.webp',
-    'tripo3d.webp', 'wallapop.webp', 'x.webp', 'xbox.webp', 'youtube.webp'
+    'tripo3d.webp', 'wallapop.webp', 'x.webp', 'xbox.webp', 'youtube.webp',
+    'kimi.webp', 'onedrive.webp', 'sketchfab.webp', 'telegram.webp', 'whatsapp.webp'
 ].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
 
 export class ShortcutManager {

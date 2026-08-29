@@ -12,6 +12,7 @@ export const DEFAULT_CATEGORIES = [
     { id: 'cat_google', group: 'productividad', color: 'tag-blue', defaultTitle: 'Google Workspace & AI' },
     { id: 'cat_tools', group: 'productividad', color: 'tag-emerald', defaultTitle: 'Herramientas & Dev' },
     { id: 'cat_social', group: 'social-compras', color: 'tag-cyan', defaultTitle: 'Comunidad & Redes' },
+    { id: 'cat_messaging', group: 'social-compras', color: 'tag-emerald', defaultTitle: 'Mensajería' },
     { id: 'cat_shopping', group: 'social-compras', color: 'tag-orange', defaultTitle: 'Compras & Pagos' },
     { id: 'cat_video', group: 'ia-creativa', color: 'tag-red', defaultTitle: 'Vídeo & Generación IA' },
     { id: 'cat_gaming', group: 'social-compras', color: 'tag-purple', defaultTitle: 'Gaming' }
@@ -22,12 +23,14 @@ export const DEFAULT_SHORTCUTS = [
     { id: 'meshy', title: 'Meshy AI', url: 'https://www.meshy.ai/discover', icon: 'iconos/meshy.webp', category: 'cat_3d', tags: '3d, ai, modelado, mesh' },
     { id: 'tripo3d', title: 'Tripo 3D', url: 'https://studio.tripo3d.ai/', icon: 'iconos/tripo3d.webp', category: 'cat_3d', tags: '3d, ai, studio, mesh' },
     { id: 'ludoai', title: 'Ludo.ai', url: 'https://ludo.ai', icon: 'iconos/ludoai.webp', category: 'cat_3d', tags: '3d, gamedev, ai, research' },
+    { id: 'sketchfab', title: 'Sketchfab', url: 'https://sketchfab.com/', icon: 'iconos/sketchfab.webp', category: 'cat_3d', tags: '3d, modelos, viewer, assets, marketplace, escaneo' },
     // AI
     { id: 'chatgpt', title: 'ChatGPT', url: 'https://chatgpt.com/', icon: 'iconos/chatgpt.webp', category: 'cat_ai', tags: 'ai, openai, gpt4, chat' },
     { id: 'deepseek', title: 'DeepSeek', url: 'https://chat.deepseek.com/', icon: 'iconos/deepseek.webp', category: 'cat_ai', tags: 'ai, code, reasoning, llm' },
     { id: 'claude', title: 'Claude', url: 'https://claude.ai/', icon: 'iconos/claude.webp', category: 'cat_ai', tags: 'ai, anthropic, sonnet, coding' },
     { id: 'qwen', title: 'Qwen', url: 'https://chat.qwen.ai/', icon: 'iconos/qwen.webp', category: 'cat_ai', tags: 'ai, alibaba, qwen, chat' },
     { id: 'seaverse', title: 'SeaVerse', url: 'https://seaverse.ai/', icon: 'iconos/seaverse.webp', category: 'cat_ai', tags: 'ai, 3d, tools, virtual' },
+    { id: 'kimi', title: 'Kimi', url: 'https://kimi.com/', icon: 'iconos/kimi.webp', category: 'cat_ai', tags: 'ai, llm, moonshot, kimi, chat, razonamiento, contexto largo' },
     // Arte
     { id: 'civitai', title: 'Civitai', url: 'https://civitai.com/', icon: 'iconos/civitai.webp', category: 'cat_art', tags: 'arte, models, lora, checkpoints' },
     { id: 'shakker', title: 'Shakker', url: 'https://www.shakker.ai/', icon: 'iconos/shakkerai.webp', category: 'cat_art', tags: 'arte, ai, image, hd' },
@@ -52,6 +55,7 @@ export const DEFAULT_SHORTCUTS = [
     { id: 'github', title: 'GitHub', url: 'https://github.com/Devildonia', icon: 'iconos/github.webp', category: 'cat_tools', tags: 'github codigo repositorios git devildonia dev' },
     { id: 'optimizeglb', title: 'OptimizeGLB', url: 'https://optimizeglb.com/dashboard', icon: 'iconos/OptimizeGLB.webp', category: 'cat_tools', tags: 'optimizeglb glb gltf 3d optimizador compresion dev 3dmodel' },
     { id: 'translate', title: 'Traductor', url: 'https://translate.google.com/', icon: 'iconos/translate.webp', category: 'cat_tools', tags: 'traductor google translate idiomas' },
+    { id: 'onedrive', title: 'OneDrive', url: 'https://onedrive.com/', icon: 'iconos/onedrive.webp', category: 'cat_tools', tags: 'onedrive microsoft cloud storage archivos sync' },
     // Social
     { id: 'instagram', title: 'Instagram', url: 'https://www.instagram.com/', icon: 'iconos/instagram.webp', category: 'cat_social', tags: 'social, fotos, meta, feed' },
     { id: 'facebook', title: 'Facebook', url: 'https://www.facebook.com/', icon: 'iconos/facebook.webp', category: 'cat_social', tags: 'social, amigos, meta' },
@@ -60,8 +64,11 @@ export const DEFAULT_SHORTCUTS = [
     { id: 'threads', title: 'Threads', url: 'https://www.threads.net/', icon: 'iconos/threads.webp', category: 'cat_social', tags: 'social, meta, microblogging, feed' },
     { id: 'patreon', title: 'Patreon', url: 'https://www.patreon.com/', icon: 'iconos/patreon.webp', category: 'cat_social', tags: 'creadores, suscripcion, crowdfunding' },
     { id: 'reddit', title: 'Reddit', url: 'https://www.reddit.com/', icon: 'iconos/reddit.webp', category: 'cat_social', tags: 'social reddit foros comunidad noticias karma' },
-    { id: 'discord', title: 'Discord', url: 'https://discord.com/app', icon: 'iconos/discord.webp', category: 'cat_social', tags: 'chat, voice, gamedev, community' },
     { id: 'linkedin', title: 'LinkedIn', url: 'https://www.linkedin.com/', icon: 'iconos/linkedin.webp', category: 'cat_social', tags: 'empleo, trabajo, network, profesional' },
+    // Mensajería
+    { id: 'discord', title: 'Discord', url: 'https://discord.com/app', icon: 'iconos/discord.webp', category: 'cat_messaging', tags: 'chat, voice, gamedev, community, mensajeria' },
+    { id: 'whatsapp', title: 'WhatsApp', url: 'https://web.whatsapp.com/', icon: 'iconos/whatsapp.webp', category: 'cat_messaging', tags: 'chat, mensajeria, whatsapp, mensajes, video' },
+    { id: 'telegram', title: 'Telegram', url: 'https://web.telegram.org/', icon: 'iconos/telegram.webp', category: 'cat_messaging', tags: 'chat, mensajeria, telegram, mensajes, bots, canales' },
     // Shopping
     { id: 'amazon', title: 'Amazon', url: 'https://www.amazon.es/', icon: 'iconos/amazon.webp', category: 'cat_shopping', tags: 'compras, tienda, retail' },
     { id: 'aliexpress', title: 'AliExpress', url: 'https://es.aliexpress.com/', icon: 'iconos/aliexpress.webp', category: 'cat_shopping', tags: 'compras, importacion, tienda' },
