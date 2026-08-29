@@ -1,9 +1,9 @@
 // js/app.js - Master Orchestrator for HaDeS' Shortcuts Next-Gen
 import { macroEngine } from './macros.js';
 import { aiAgent } from './ai-agent.js';
-import { state } from './state.js';
+import { state, setStorageFullMsg } from './state.js';
 import { soundFx } from './audio.js';
-import { updateDocumentLocalization, loadLocaleAsync } from './i18n.js';
+import { updateDocumentLocalization, loadLocaleAsync, getTranslation } from './i18n.js';
 import { WeatherEngine } from './weather.js';
 import { SearchEngineManager } from './search.js';
 import { DashboardRenderer } from './render.js';
@@ -258,6 +258,9 @@ export function initApp() {
     window.widgetsManager = widgetsManager;
     extensionApi.init();
     miniHud.init();
+
+    // Registra el mensaje traducido de error de storage en la capa base (state.js).
+    setStorageFullMsg(() => getTranslation('toasts.storage_full') || 'No se pudo guardar (almacenamiento lleno o bloqueado).');
 
     loadLocaleAsync(state.language).then(() => {
         document.documentElement.lang = state.language || 'es';

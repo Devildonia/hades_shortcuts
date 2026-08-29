@@ -3,6 +3,7 @@
 import { soundFx } from './audio.js';
 import { escapeHtml } from './state.js';
 import { renderQrToCanvas } from './qrcode.js';
+import { getTranslation } from './i18n.js';
 
 export class DevToolsEngine {
     constructor() {
@@ -102,31 +103,34 @@ export class DevToolsEngine {
         };
     }
 
+    _copyLabel() { return getTranslation('devtools.copy') || '📋 Copiar'; }
+    _copiedLabel() { return getTranslation('devtools.copied') || '✓ Copiado'; }
+
     renderBanner(query, bannerEl) {
         if (!bannerEl) return false;
 
         if (/^!uuid(\s|$)/i.test(query)) {
             const uuid = this.generateUUID();
-            bannerEl.innerHTML = `<div class="devtool-result-row"><span>🔑 <strong>UUIDv4:</strong></span> <code class="devtool-code">${uuid}</code> <button class="devtool-copy-btn" data-copy="${uuid}">📋 Copiar</button></div>`;
+            bannerEl.innerHTML = `<div class="devtool-result-row"><span>🔑 <strong>UUIDv4:</strong></span> <code class="devtool-code">${uuid}</code> <button class="devtool-copy-btn" data-copy="${uuid}">${this._copyLabel()}</button></div>`;
             this.bindCopyBtns(bannerEl);
             return true;
         }
         if (/^!b64d\s+/i.test(query)) {
             const decoded = this.decodeBase64(query.replace(/^!b64d\s+/i, '').trim());
-            bannerEl.innerHTML = `<div class="devtool-result-row"><span>🔓 <strong>Base64 Decoded:</strong></span> <code class="devtool-code">${escapeHtml(decoded)}</code> <button class="devtool-copy-btn" data-copy="${escapeHtml(decoded)}">📋 Copiar</button></div>`;
+            bannerEl.innerHTML = `<div class="devtool-result-row"><span>🔓 <strong>Base64 Decoded:</strong></span> <code class="devtool-code">${escapeHtml(decoded)}</code> <button class="devtool-copy-btn" data-copy="${escapeHtml(decoded)}">${this._copyLabel()}</button></div>`;
             this.bindCopyBtns(bannerEl);
             return true;
         }
         if (/^!b64\s+/i.test(query)) {
             const encoded = this.encodeBase64(query.replace(/^!b64\s+/i, '').trim());
-            bannerEl.innerHTML = `<div class="devtool-result-row"><span>🔒 <strong>Base64 Encoded:</strong></span> <code class="devtool-code">${encoded}</code> <button class="devtool-copy-btn" data-copy="${encoded}">📋 Copiar</button></div>`;
+            bannerEl.innerHTML = `<div class="devtool-result-row"><span>🔒 <strong>Base64 Encoded:</strong></span> <code class="devtool-code">${encoded}</code> <button class="devtool-copy-btn" data-copy="${encoded}">${this._copyLabel()}</button></div>`;
             this.bindCopyBtns(bannerEl);
             return true;
         }
         if (/^!color\s+/i.test(query)) {
             const color = this.parseColor(query.replace(/^!color\s+/i, '').trim());
             if (color) {
-                bannerEl.innerHTML = `<div class="devtool-result-row"><span class="color-preview-chip" style="background: ${color.hex}"></span> <span><strong>${color.hex}</strong> | ${color.rgb} | ${color.hsl}</span> <button class="devtool-copy-btn" data-copy="${color.hex}">📋 Copiar</button></div>`;
+                bannerEl.innerHTML = `<div class="devtool-result-row"><span class="color-preview-chip" style="background: ${color.hex}"></span> <span><strong>${color.hex}</strong> | ${color.rgb} | ${color.hsl}</span> <button class="devtool-copy-btn" data-copy="${color.hex}">${this._copyLabel()}</button></div>`;
             } else {
                 bannerEl.innerHTML = `<span>🎨 <em>Color no reconocido (ej: !color #00f2fe, rgb(0,242,254), cyan)</em></span>`;
             }
@@ -136,7 +140,7 @@ export class DevToolsEngine {
         if (/^!(epoch|time)(\s|$)/i.test(query)) {
             const tInfo = this.parseEpoch(query.replace(/^!(epoch|time)\s*/i, ''));
             if (tInfo) {
-                bannerEl.innerHTML = `<div class="devtool-result-row"><span>⏰ <strong>Fecha:</strong> ${tInfo.local}</span> <span>(UNIX: <code>${tInfo.epochSec}</code>)</span> <button class="devtool-copy-btn" data-copy="${tInfo.epochSec}">📋 Copiar</button></div>`;
+                bannerEl.innerHTML = `<div class="devtool-result-row"><span>⏰ <strong>Fecha:</strong> ${tInfo.local}</span> <span>(UNIX: <code>${tInfo.epochSec}</code>)</span> <button class="devtool-copy-btn" data-copy="${tInfo.epochSec}">${this._copyLabel()}</button></div>`;
                 this.bindCopyBtns(bannerEl);
                 return true;
             }
@@ -159,7 +163,7 @@ export class DevToolsEngine {
                     navigator.clipboard.writeText(text).catch(() => {});
                     soundFx.play('click');
                     const original = btn.textContent;
-                    btn.textContent = '✓ Copiado';
+                    btn.textContent = this._copiedLabel();
                     setTimeout(() => { btn.textContent = original; }, 1800);
                 }
             };
@@ -203,7 +207,7 @@ export class DevToolsEngine {
             ctx.font = '14px system-ui, sans-serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText('Texto demasiado largo para QR', 128, 120);
+            ctx.fillText(getTranslation('devtools.qr_too_long') || 'Texto demasiado largo para QR', 128, 120);
             ctx.fillStyle = '#8892a6';
             ctx.font = '11px system-ui, sans-serif';
             ctx.fillText(String(err && err.message || err), 128, 142);
@@ -228,7 +232,7 @@ export class DevToolsEngine {
                     await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
                     if (this.qrCopyBtn) {
                         const original = this.qrCopyBtn.textContent;
-                        this.qrCopyBtn.textContent = '✓ ¡Copiado!';
+                        this.qrCopyBtn.textContent = this._copiedLabel();
                         setTimeout(() => { this.qrCopyBtn.textContent = original; }, 2000);
                     }
                 }

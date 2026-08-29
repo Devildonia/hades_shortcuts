@@ -2,6 +2,7 @@
 
 import { state, escapeHtml, persistJson } from './state.js';
 import { soundFx } from './audio.js';
+import { getTranslation } from './i18n.js';
 
 const PROVIDER_TIMEOUT_MS = 25000;
 const MAX_MESSAGES = 60;
@@ -101,12 +102,12 @@ export class AIAgentEngine {
 
         // 1. Modo Focus
         if (/\b(focus|concentracion|concentration|fokuss)/.test(p)) {
-            return `Puedes activar el **Modo Focus** con el atajo **Alt+F** o con el botón **Modo Focus** de la cabecera. Silencia el ruido y deja solo lo esencial de tu espacio activo.`;
+            return getTranslation('ai_agent.heuristics.focus');
         }
 
         // 2. Recomendaciones
         if (/\b(recomien|sugier|recommen|suggest|recommand|suggere|empfehl)/.test(p)) {
-            return `Te recomiendo estas herramientas populares de alta productividad:\n\n* **[Hugging Face Spaces](https://huggingface.co/spaces)** \`#ia #ml\` — Modelos y demos interactivos.\n* **[Shadertoy](https://shadertoy.com)** \`#3d #shaders\` — Creación de shaders procedurales WebGL.\n* **[Excalidraw](https://excalidraw.com)** \`#diseno #canvas\` — Pizarra virtual colaborativa.\n\n*Haz clic en cualquier enlace para visitarla.*`;
+            return getTranslation('ai_agent.heuristics.recommend');
         }
 
         // 3. Búsqueda de atajos guardados
@@ -124,17 +125,21 @@ export class AIAgentEngine {
                 const list = matched.slice(0, 5)
                     .map((s) => `* **[${AIAgentEngine.sanitizeMd(s.title)}](${AIAgentEngine.sanitizeMd(s.url)})** \`${AIAgentEngine.sanitizeMd(s.category || 'general')}\` ${(Array.isArray(s.tags) ? s.tags : []).slice(0, 3).map((t) => `#${AIAgentEngine.sanitizeMd(t)}`).join(' ')}`)
                     .join('\n');
-                return `He analizado tu dashboard actual y tienes **${matched.length} herramientas** relevantes guardadas:\n\n${list}\n\n¿Deseas que abra alguna o que busquemos una nueva para añadirla?`;
+                return getTranslation('ai_agent.heuristics.matched')
+                    .replace('{count}', String(matched.length))
+                    .replace('{list}', list);
             }
 
             if (ctx.totalShortcuts > 0) {
-                return `En tu espacio activo tienes **${ctx.totalShortcuts} atajos**, pero ninguno coincide con esa búsqueda. Prueba a pedirme *herramientas de 3D*, *herramientas de IA* o que te *recomiende nuevas*.`;
+                return getTranslation('ai_agent.heuristics.no_match')
+                    .replace('{count}', String(ctx.totalShortcuts));
             }
 
-            return `Ahora mismo no tienes atajos guardados en tu dashboard. Puedo recomendarte algunas herramientas de arranque: pregúntame *recomiéndame nuevas herramientas*.`;
+            return getTranslation('ai_agent.heuristics.none_saved');
         }
 
-        return `Entendido. Conozco tus **${ctx.totalShortcuts} atajos** en el espacio activo. Puedes preguntarme:\n- *"¿Qué herramientas de 3D o IA tengo?"*\n- *"Recomiéndame nuevas herramientas para diseño"*\n- *"¿Cómo activo el modo Focus?"*`;
+        return getTranslation('ai_agent.heuristics.fallback')
+            .replace('{count}', String(ctx.totalShortcuts));
     }
 
     // --- Proveedor: timeout + abort + validación de respuesta ---

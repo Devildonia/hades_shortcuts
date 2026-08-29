@@ -170,7 +170,6 @@
       "visual_title": "Appearance",
       "show_tags_toggle": "Show tags",
       "chrome_bezel_toggle": "Chrome frames",
-      "gold_bezel_toggle": "Gold Frames (Widgets)",
       "add_shortcut_btn": "➕ Add New Shortcut",
       "editing_active_badge": "Edit Mode Active",
       "reset_layout_title": "Reset Original Layout",
@@ -181,7 +180,8 @@
       "show_ambient": "Show Ambient Audio",
       "show_pomodoro": "Show Focus Timer",
       "show_radar": "Show Tech Radar & RSS",
-      "show_telemetry": "Show System Telemetry"
+      "show_telemetry": "Show System Telemetry",
+      "gold_bezel_toggle": "Gold Frames (Widgets)"
     },
     "backup": {
       "export_title": "Export Configuration",
@@ -194,6 +194,7 @@
       "reset_desc": "Reset dashboard back to the original 52 default shortcuts.",
       "reset_btn": "⚠️ Reset to Default",
       "reset_confirm": "Are you sure you want to restore factory defaults? Customizations will be lost.",
+      "import_confirm": "Import this backup? Your current shortcuts, post-its, macros and settings will be replaced.",
       "import_success": "Backup successfully restored!",
       "import_error": "The backup file is invalid or corrupted."
     },
@@ -218,6 +219,7 @@
   "shortcut_editor": {
     "add_title": "Add New Shortcut",
     "edit_title": "Edit Shortcut",
+    "delete_confirm": "Are you sure you want to delete this shortcut?",
     "title_label": "Shortcut Name",
     "title_placeholder": "e.g. Notion, Figma, Spotify...",
     "url_label": "Target URL",
@@ -232,7 +234,6 @@
     "tags_placeholder": "comma separated (e.g. music, streaming)",
     "save_btn": "Save Shortcut",
     "delete_btn": "Delete Shortcut",
-    "delete_confirm": "Are you sure you want to delete this shortcut?",
     "cancel_btn": "Cancel"
   },
   "bangs": {
@@ -289,7 +290,11 @@
     "desc": "Customize accent colors and neon spotlight in real-time:",
     "primary_label": "Primary Accent Color:",
     "secondary_label": "Secondary Color:",
-    "reset_colors_btn": "Reset Default Colors"
+    "reset_colors_btn": "Reset Default Colors",
+    "storage_full": "Not enough browser space to save the image.",
+    "image_saved": "Background image saved successfully.",
+    "image_error": "Error processing the image.",
+    "invalid_url": "Please enter a valid URL (http/https)."
   },
   "importer": {
     "title": "Import Browser Bookmarks",
@@ -300,13 +305,18 @@
     "import_btn": "Import Bookmarks",
     "success_msg": "Successfully imported {count} shortcuts!",
     "error_msg": "No valid bookmarks found in selected file.",
-    "topsites_btn": "Import frequent Chrome sites"
+    "topsites_btn": "Import frequent Chrome sites",
+    "all_duplicates": "All bookmarks already exist in your shortcuts.",
+    "duplicates_skipped": "{count} duplicates skipped"
   },
   "devtools": {
     "qr_title": "Generated QR Code",
     "qr_hint": "Scan with your phone camera to open or beam link instantly.",
     "qr_copy": "📋 Copy Image",
-    "qr_download": "⬇️ Download PNG"
+    "qr_download": "⬇️ Download PNG",
+    "copy": "📋 Copy",
+    "copied": "✓ Copied",
+    "qr_too_long": "Text too long for QR"
   },
   "hud": {
     "placeholder": "Launch app or quick shortcut..."
@@ -354,7 +364,9 @@
     "suggestion_text": "You usually open {title} at {hour}",
     "launch_btn": "Launch Now",
     "export_btn": "📥 Export Metrics as JSON",
-    "reset_btn": "🗑️ Clear Usage History"
+    "reset_btn": "🗑️ Clear Usage History",
+    "streak_label": "day streak",
+    "dismiss": "Dismiss"
   },
   "nav": {
     "ai_agent": "AI Agent",
@@ -363,7 +375,18 @@
     "focus_active": "Focus Active"
   },
   "sync": {
-    "token_session_notice": "Your GitHub token is stored exclusively in session memory (sessionStorage) and is automatically wiped when you close the browser."
+    "token_session_notice": "Your GitHub token is stored exclusively in session memory (sessionStorage) and is automatically wiped when you close the browser.",
+    "last_sync": "Last sync: {time}",
+    "not_connected": "Not connected",
+    "synced_ok": "✓ Synced successfully ({time})",
+    "push_missing_inputs": "Enter your GitHub Token and Encryption Password.",
+    "pushing": "Encrypting data and uploading to GitHub...",
+    "pushed_ok": "✓ Data uploaded and encrypted in Gist ({id}...)",
+    "push_error": "Upload error: {msg}",
+    "pull_missing_inputs": "Enter Token, Gist ID and Encryption Password.",
+    "pulling": "Downloading and decrypting data...",
+    "restore_error": "Restore error: {msg}",
+    "restore_failed": "Could not restore the Gist."
   },
   "macros_studio": {
     "title": "Macros & Workflow Studio",
@@ -445,7 +468,9 @@
     "ai_network_error": "Could not reach the online assistant. Try again later.",
     "sync_push_error": "Could not sync with chrome.storage.",
     "reset_done": "Factory defaults restored.",
-    "postit_limit": "You reached the 25 floating-note limit. Delete one to pin another."
+    "postit_limit": "You reached the 25 floating-note limit. Delete one to pin another.",
+    "reset_analytics_confirm": "Do you want to reset your local usage history and statistics?",
+    "storage_full": "Could not save (storage full or blocked)."
   },
   "calendar_feed": {
     "title": "Configure Calendar Feed (iCal / ICS)",
@@ -482,26 +507,34 @@
     "hello": "Hi. I am your contextual assistant. I know your shortcuts, spaces and agenda. How can I help?",
     "placeholder": "Ask about your shortcuts or request recommendations...",
     "send": "Send",
-    "stop": "Stop",
-    "new_chat": "New chat",
-    "settings": "Settings",
     "provider": "Provider",
     "openai_key": "API key (session)",
     "anthropic_key": "API key (session)",
     "ollama_endpoint": "Ollama endpoint",
+    "opt_local": "Local (heuristic)",
+    "opt_ollama": "Ollama",
+    "opt_openai": "OpenAI",
+    "opt_anthropic": "Anthropic",
+    "prompt_3d": "Which 3D or AI tools do I have saved?",
+    "prompt_suggest": "Recommend 3 new productivity tools",
+    "prompt_focus": "How do I turn on Focus Mode?",
+    "stop": "Stop",
+    "new_chat": "New chat",
+    "settings": "Settings",
     "ollama_model": "Model",
     "lmstudio_endpoint": "LM Studio endpoint",
     "lmstudio_model": "Model",
     "openai_model": "Model",
     "anthropic_model": "Model",
-    "opt_local": "Local (heuristic)",
-    "opt_ollama": "Ollama",
     "opt_lmstudio": "LM Studio",
-    "opt_openai": "OpenAI",
-    "opt_anthropic": "Anthropic",
-    "prompt_3d": "Which 3D or AI tools do I have saved?",
-    "prompt_suggest": "Recommend 3 new productivity tools",
-    "prompt_focus": "How do I turn on Focus Mode?"
+    "heuristics": {
+      "focus": "You can enable **Focus Mode** with the **Alt+F** shortcut or the **Focus Mode** button in the header. It silences the noise and keeps only the essentials of your active space.",
+      "recommend": "Here are some popular, high-productivity tools I recommend:\n\n* **[Hugging Face Spaces](https://huggingface.co/spaces)** `#ai #ml` — Interactive models and demos.\n* **[Shadertoy](https://shadertoy.com)** `#3d #shaders` — Procedural WebGL shader creation.\n* **[Excalidraw](https://excalidraw.com)** `#design #canvas` — Collaborative virtual whiteboard.\n\n*Click any link to visit it.*",
+      "matched": "I analyzed your current dashboard and you have **{count} relevant tools** saved:\n\n{list}\n\nWould you like me to open one, or shall we find a new one to add?",
+      "no_match": "Your active space has **{count} shortcuts**, but none match that search. Try asking for *3D tools*, *AI tools* or ask me to *recommend new ones*.",
+      "none_saved": "You don't have any shortcuts saved on your dashboard yet. I can recommend some starter tools: ask me *recommend new tools*.",
+      "fallback": "Understood. I know your **{count} shortcuts** in the active space. You can ask me:\n- *\"Which 3D or AI tools do I have?\"*\n- *\"Recommend new tools for design\"*\n- *\"How do I turn on Focus Mode?\"*"
+    }
   },
   "spaces": {
     "label": "Profiles",
@@ -534,5 +567,14 @@
       "name": "Community & Social mode",
       "desc": "Opens Discord, X (Twitter) and Instagram"
     }
+  },
+  "ambient": {
+    "pause": "Pause",
+    "play": "Play"
+  },
+  "ext": {
+    "topsites_denied": "TopSites permission denied or unavailable.",
+    "topsites_added": "Imported {count} frequent sites.",
+    "topsites_none": "No new sites to import."
   }
 }

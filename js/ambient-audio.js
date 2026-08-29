@@ -1,6 +1,7 @@
 // js/ambient-audio.js - Procedural Web Audio API Ambient Focus Generator (0 KB, 100% Offline)
 
 import { soundFx } from './audio.js';
+import { getTranslation } from './i18n.js';
 
 export class AmbientSoundEngine {
     constructor() {
@@ -48,7 +49,9 @@ export class AmbientSoundEngine {
 
     updatePlayBtnVisuals() {
         if (this.playBtn) this.playBtn.classList.toggle('is-playing', this.isPlaying);
-        if (this.playText) this.playText.textContent = this.isPlaying ? 'Pausar' : 'Reproducir';
+        if (this.playText) this.playText.textContent = this.isPlaying
+            ? (getTranslation('ambient.pause') || 'Pausar')
+            : (getTranslation('ambient.play') || 'Reproducir');
         if (this.card) this.card.classList.toggle('is-playing', this.isPlaying);
     }
 

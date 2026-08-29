@@ -170,7 +170,6 @@
       "visual_title": "Apariencia",
       "show_tags_toggle": "Mostrar etiquetas",
       "chrome_bezel_toggle": "Marcos plateados",
-      "gold_bezel_toggle": "Marcos dorados (Widgets)",
       "add_shortcut_btn": "➕ Añadir Nuevo Acceso Directo",
       "editing_active_badge": "Modo Edición Activado",
       "reset_layout_title": "Restablecer Diseño Original",
@@ -181,7 +180,8 @@
       "show_ambient": "Mostrar Audio Ambiental",
       "show_pomodoro": "Mostrar Temporizador Focus",
       "show_radar": "Mostrar Tech Radar & RSS",
-      "show_telemetry": "Mostrar Telemetría del Sistema"
+      "show_telemetry": "Mostrar Telemetría del Sistema",
+      "gold_bezel_toggle": "Marcos dorados (Widgets)"
     },
     "backup": {
       "export_title": "Exportar Configuración",
@@ -194,6 +194,7 @@
       "reset_desc": "Restaura los 52 accesos directos originales predeterminados.",
       "reset_btn": "⚠️ Restablecer Valores",
       "reset_confirm": "¿Estás seguro de que deseas restablecer los valores de fábrica? Se perderán las personalizaciones.",
+      "import_confirm": "¿Importar este backup? Se reemplazarán los atajos, post-its, macros y ajustes actuales.",
       "import_success": "¡Copia de seguridad restaurada con éxito!",
       "import_error": "El archivo de respaldo no es válido o está dañado."
     },
@@ -218,6 +219,7 @@
   "shortcut_editor": {
     "add_title": "Añadir Nuevo Acceso Directo",
     "edit_title": "Editar Acceso Directo",
+    "delete_confirm": "¿Seguro que deseas eliminar este acceso directo?",
     "title_label": "Nombre del Atajo",
     "title_placeholder": "Ej: Notion, Figma, Spotify...",
     "url_label": "URL de Destino",
@@ -232,7 +234,6 @@
     "tags_placeholder": "separadas por comas (ej: musica, streaming)",
     "save_btn": "Guardar Atajo",
     "delete_btn": "Eliminar Atajo",
-    "delete_confirm": "¿Seguro que deseas eliminar este acceso directo?",
     "cancel_btn": "Cancelar"
   },
   "bangs": {
@@ -289,7 +290,11 @@
     "desc": "Personaliza los colores de acento y resplandor neón en tiempo real:",
     "primary_label": "Color Primario (Acento):",
     "secondary_label": "Color Secundario:",
-    "reset_colors_btn": "Restablecer Colores Predeterminados"
+    "reset_colors_btn": "Restablecer Colores Predeterminados",
+    "storage_full": "Espacio insuficiente en el navegador para guardar la imagen.",
+    "image_saved": "Imagen de fondo guardada con éxito.",
+    "image_error": "Error al procesar la imagen.",
+    "invalid_url": "Por favor, introduce una URL válida (http/https)."
   },
   "importer": {
     "title": "Importar Marcadores de Navegador",
@@ -300,13 +305,18 @@
     "import_btn": "Importar Marcadores",
     "success_msg": "¡Se han importado {count} accesos directos con éxito!",
     "error_msg": "No se encontraron marcadores válidos en el archivo seleccionado.",
-    "topsites_btn": "Importar sitios frecuentes de Chrome"
+    "topsites_btn": "Importar sitios frecuentes de Chrome",
+    "all_duplicates": "Todos los marcadores ya existen en tus accesos directos.",
+    "duplicates_skipped": "{count} duplicados omitidos"
   },
   "devtools": {
     "qr_title": "Código QR Generado",
     "qr_hint": "Escanea con la cámara de tu móvil para abrir o transferir al instante.",
     "qr_copy": "📋 Copiar Imagen",
-    "qr_download": "⬇️ Descargar PNG"
+    "qr_download": "⬇️ Descargar PNG",
+    "copy": "📋 Copiar",
+    "copied": "✓ Copiado",
+    "qr_too_long": "Texto demasiado largo para QR"
   },
   "hud": {
     "placeholder": "Lanzar aplicación o atajo rápido..."
@@ -354,7 +364,9 @@
     "suggestion_text": "Sueles abrir {title} a las {hour}",
     "launch_btn": "Lanzar ahora",
     "export_btn": "📥 Exportar Métricas en JSON",
-    "reset_btn": "🗑️ Borrar Historial de Uso"
+    "reset_btn": "🗑️ Borrar Historial de Uso",
+    "streak_label": "días de racha",
+    "dismiss": "Descartar"
   },
   "nav": {
     "ai_agent": "Agente IA",
@@ -363,7 +375,18 @@
     "focus_active": "Focus Activo"
   },
   "sync": {
-    "token_session_notice": "Tu token de GitHub se almacena exclusivamente en memoria de sesión (sessionStorage) y se destruye automáticamente al cerrar el navegador."
+    "token_session_notice": "Tu token de GitHub se almacena exclusivamente en memoria de sesión (sessionStorage) y se destruye automáticamente al cerrar el navegador.",
+    "last_sync": "Última sincronización: {time}",
+    "not_connected": "No conectado",
+    "synced_ok": "✓ Sincronizado con éxito ({time})",
+    "push_missing_inputs": "Introduce tu GitHub Token y Contraseña de Cifrado.",
+    "pushing": "Cifrando datos y subiendo a GitHub...",
+    "pushed_ok": "✓ Datos subidos y cifrados en Gist ({id}...)",
+    "push_error": "Error al subir: {msg}",
+    "pull_missing_inputs": "Introduce Token, Gist ID y Contraseña de Cifrado.",
+    "pulling": "Descargando y descifrando datos...",
+    "restore_error": "Error al restaurar: {msg}",
+    "restore_failed": "No se pudo restaurar el Gist."
   },
   "macros_studio": {
     "title": "Gestor de Macros & Rutinas",
@@ -445,7 +468,9 @@
     "ai_network_error": "No se pudo consultar el asistente en red. Prueba de nuevo más tarde.",
     "sync_push_error": "No se pudo sincronizar con chrome.storage.",
     "reset_done": "Valores restablecidos.",
-    "postit_limit": "Has alcanzado el límite de 25 notas flotantes. Elimina alguna para fijar una nueva."
+    "postit_limit": "Has alcanzado el límite de 25 notas flotantes. Elimina alguna para fijar una nueva.",
+    "reset_analytics_confirm": "¿Deseas reiniciar tu historial local de uso y estadísticas?",
+    "storage_full": "No se pudo guardar (almacenamiento lleno o bloqueado)."
   },
   "calendar_feed": {
     "title": "Configurar Feed de Calendario (iCal / ICS)",
@@ -501,7 +526,15 @@
     "opt_anthropic": "Anthropic",
     "prompt_3d": "¿Qué herramientas de 3D o IA tengo guardadas?",
     "prompt_suggest": "Recomiéndame 3 herramientas nuevas de productividad",
-    "prompt_focus": "¿Cómo activo el modo Focus?"
+    "prompt_focus": "¿Cómo activo el modo Focus?",
+    "heuristics": {
+      "focus": "Puedes activar el **Modo Focus** con el atajo **Alt+F** o con el botón **Modo Focus** de la cabecera. Silencia el ruido y deja solo lo esencial de tu espacio activo.",
+      "recommend": "Te recomiendo estas herramientas populares de alta productividad:\n\n* **[Hugging Face Spaces](https://huggingface.co/spaces)** `#ia #ml` — Modelos y demos interactivos.\n* **[Shadertoy](https://shadertoy.com)** `#3d #shaders` — Creación de shaders procedurales WebGL.\n* **[Excalidraw](https://excalidraw.com)** `#diseno #canvas` — Pizarra virtual colaborativa.\n\n*Haz clic en cualquier enlace para visitarla.*",
+      "matched": "He analizado tu dashboard actual y tienes **{count} herramientas** relevantes guardadas:\n\n{list}\n\n¿Deseas que abra alguna o que busquemos una nueva para añadirla?",
+      "no_match": "En tu espacio activo tienes **{count} atajos**, pero ninguno coincide con esa búsqueda. Prueba a pedirme *herramientas de 3D*, *herramientas de IA* o que te *recomiende nuevas*.",
+      "none_saved": "Ahora mismo no tienes atajos guardados en tu dashboard. Puedo recomendarte algunas herramientas de arranque: pregúntame *recomiéndame nuevas herramientas*.",
+      "fallback": "Entendido. Conozco tus **{count} atajos** en el espacio activo. Puedes preguntarme:\n- *\"¿Qué herramientas de 3D o IA tengo?\"*\n- *\"Recomiéndame nuevas herramientas para diseño\"*\n- *\"¿Cómo activo el modo Focus?\"*"
+    }
   },
   "spaces": {
     "label": "Perfiles",
@@ -534,5 +567,14 @@
       "name": "Modo Comunidad & Redes",
       "desc": "Abre Discord, X (Twitter) e Instagram"
     }
+  },
+  "ambient": {
+    "pause": "Pausar",
+    "play": "Reproducir"
+  },
+  "ext": {
+    "topsites_denied": "Permiso de TopSites denegado o no disponible.",
+    "topsites_added": "Se importaron {count} sitios frecuentes.",
+    "topsites_none": "No había sitios nuevos que importar."
   }
 }

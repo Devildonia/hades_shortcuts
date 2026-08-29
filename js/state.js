@@ -78,6 +78,11 @@ export const DEFAULT_SHORTCUTS = [
     { id: 'hedra', title: 'Hedra', url: 'https://www.hedra.com/', icon: 'iconos/hedra.webp', category: 'cat_video', tags: 'video, ai, avatar, talking' }
 ];
 
+// Inyección del mensaje de error de storage (evita dependencia circular state → i18n).
+// La capa superior (app.js) registra aquí el texto traducido; por defecto queda el español.
+let storageFullMsg = null;
+export function setStorageFullMsg(fn) { storageFullMsg = fn; }
+
 export class AppState {
     constructor() {
         this.shortcuts = this.loadShortcuts();
@@ -109,7 +114,7 @@ export class AppState {
             if (typeof localStorage !== 'undefined') localStorage.setItem(k, v);
             return true;
         } catch (e) {
-            showToast('No se pudo guardar (almacenamiento lleno o bloqueado).', 'error');
+            showToast((typeof storageFullMsg === 'function' ? (storageFullMsg() || null) : null) || 'No se pudo guardar (almacenamiento lleno o bloqueado).', 'error');
             return false;
         }
     }

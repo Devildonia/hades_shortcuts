@@ -4,7 +4,7 @@ import { macroEngine } from './macros.js';
 // js/settings.js - Slide-Over Settings Drawer Hub
 
 import { state } from './state.js';
-import { updateDocumentLocalization, loadLocaleAsync } from './i18n.js';
+import { updateDocumentLocalization, loadLocaleAsync, getTranslation } from './i18n.js';
 import { soundFx } from './audio.js';
 
 export class SettingsHub {
@@ -89,7 +89,7 @@ export class SettingsHub {
         if (resetAnalyticsBtn) {
             resetAnalyticsBtn.onclick = () => {
                 soundFx.play('click');
-                if (confirm('¿Deseas reiniciar tu historial local de uso y estadísticas?')) {
+                if (confirm(getTranslation('toasts.reset_analytics_confirm') || '¿Deseas reiniciar tu historial local de uso y estadísticas?')) {
                     personalAnalytics.resetData();
                     this.renderAnalyticsTab();
                 }
@@ -257,7 +257,7 @@ export class SettingsHub {
         const chartBox = document.getElementById('analytics-chart-box');
 
         if (totalEl) totalEl.textContent = personalAnalytics.data.totalLaunches || 0;
-        if (streakEl) streakEl.textContent = `${personalAnalytics.data.streakDays || 1} 🔥`;
+        if (streakEl) streakEl.textContent = `${personalAnalytics.data.streakDays || 1} ${getTranslation('analytics.streak_label') || 'días de racha'}`;
         if (peakEl) peakEl.textContent = personalAnalytics.getPeakProductivityHour();
         if (chartBox) chartBox.innerHTML = personalAnalytics.generate7DayChartSVG();
     }

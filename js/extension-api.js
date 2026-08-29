@@ -30,8 +30,10 @@ export class ExtensionAPIEngine {
             const status = document.getElementById('import-bookmarks-status');
             if (status) {
                 status.textContent = added === false
-                    ? 'Permiso de TopSites denegado o no disponible.'
-                    : (added > 0 ? `Se importaron ${added} sitios frecuentes.` : 'No había sitios nuevos que importar.');
+                    ? (getTranslation('ext.topsites_denied') || 'Permiso de TopSites denegado o no disponible.')
+                    : (added > 0
+                        ? (getTranslation('ext.topsites_added') || 'Se importaron {count} sitios frecuentes.').replace('{count}', added)
+                        : (getTranslation('ext.topsites_none') || 'No había sitios nuevos que importar.'));
             }
         });
     }

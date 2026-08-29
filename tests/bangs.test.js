@@ -1,6 +1,7 @@
 // tests/bangs.test.js — Regresión de bangs (bug crítico #1) y evaluador aritmético (zero-eval).
 import { test, expect } from './harness.js';
-import { BANGS_MAP, parseBangQuery, evaluateArithmetic } from '../js/bangs.js';
+import { BANGS_MAP, parseBangQuery, evaluateArithmetic, buildBangUrl, resolveBangUrl } from '../js/bangs.js';
+import { state } from '../js/state.js';
 
 const DEVTOOL_BANGS = Object.keys(BANGS_MAP).filter((k) => BANGS_MAP[k].isDevTool);
 
@@ -48,6 +49,43 @@ test('bangs: bang en mayúsculas se normaliza a minúsculas', () => {
 test('bangs: texto que no es bang devuelve isBang false', () => {
     const r = parseBangQuery('hola mundo');
     expect(r.isBang).toBe(false);
+});
+
+// ——— T4.2: bang !w resuelve Wikipedia según el idioma activo ———
+
+test('bangs T4.2: !w resuelve el subdominio según state.language (en → en.wikipedia)', () => {
+    const prev = state.language;
+    try {
+        state.language = 'en';
+        const r = parseBangQuery('!w hello');
+        expect(r.isBang).toBe(true);
+        expect(r.targetUrl).toBe('https://en.wikipedia.org/wiki/Special:Search?search=hello');
+
+        state.language = 'fr';
+        expect(parseBangQuery('!w bonjour').targetUrl).toContain('fr.wikipedia.org');
+    } finally {
+        state.language = prev;
+    }
+});
+
+test('bangs T4.2: !w por defecto es español y respeta el idioma explícito', () => {
+    const prev = state.language;
+    try {
+        state.language = 'es';
+        expect(parseBangQuery('!w hola').targetUrl).toBe('https://es.wikipedia.org/wiki/Special:Search?search=hola');
+        // El argumento explícito tiene prioridad sobre state.language.
+        expect(parseBangQuery('!w hola', 'de').targetUrl).toContain('de.wikipedia.org');
+    } finally {
+        state.language = prev;
+    }
+});
+
+test('bangs T4.2: buildBangUrl/resolveBangUrl resuelven {lang} y son no-op sin placeholder', () => {
+    expect(buildBangUrl('!w', 'en')).toBe('https://en.wikipedia.org/wiki/Special:Search?search=');
+    expect(buildBangUrl('!w')).toBe('https://es.wikipedia.org/wiki/Special:Search?search='); // default es
+    expect(buildBangUrl('!yt', 'fr')).toBe('https://www.youtube.com/results?search_query='); // sin {lang}
+    expect(resolveBangUrl('https://{lang}.example/x', 'de')).toBe('https://de.example/x');
+    expect(buildBangUrl('!nope', 'en')).toBe('');
 });
 
 // ——— Evaluador aritmético (CSP-safe, zero eval) ———

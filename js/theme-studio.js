@@ -2,6 +2,7 @@
 
 import { soundFx } from './audio.js';
 import { persistJson, showToast } from './state.js';
+import { getTranslation } from './i18n.js';
 
 export const UNSPLASH_PRESETS = {
     cyberpunk: [
@@ -356,16 +357,16 @@ export class ThemeStudio {
                     if (!saved) {
                         this.bgConfig = previousConfig;
                         this.applyBackground();
-                        showToast('Espacio insuficiente en el navegador para guardar la imagen.', 'error');
+                        showToast(getTranslation('theme_studio.storage_full') || 'Espacio insuficiente en el navegador para guardar la imagen.', 'error');
                     } else {
-                        showToast('Imagen de fondo guardada con éxito.', 'success');
+                        showToast(getTranslation('theme_studio.image_saved') || 'Imagen de fondo guardada con éxito.', 'success');
                         syncUI();
                     }
                 } catch (err) {
                     console.error('[ThemeStudio] Error al procesar imagen de fondo:', err);
                     this.bgConfig = previousConfig;
                     this.applyBackground();
-                    showToast(err.message || 'Error al procesar la imagen.', 'error');
+                    showToast(err.message || (getTranslation('theme_studio.image_error') || 'Error al procesar la imagen.'), 'error');
                 } finally {
                     fileInput.value = '';
                 }
@@ -378,7 +379,7 @@ export class ThemeStudio {
                 if (!raw) return;
                 const safe = sanitizeCssUrl(raw);
                 if (!safe) {
-                    showToast('Por favor, introduce una URL válida (http/https).', 'error');
+                    showToast(getTranslation('theme_studio.invalid_url') || 'Por favor, introduce una URL válida (http/https).', 'error');
                     syncUI();
                     return;
                 }

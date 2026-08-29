@@ -1,9 +1,11 @@
 // js/bangs.js - Bang Query Parser & Zero-Eval CSP-Compliant Math Evaluator
 
+import { state } from './state.js';
+
 export const BANGS_MAP = {
     '!yt': { name: 'YouTube', url: 'https://www.youtube.com/results?search_query=' },
     '!gh': { name: 'GitHub', url: 'https://github.com/search?q=' },
-    '!w': { name: 'Wikipedia', url: 'https://es.wikipedia.org/wiki/Special:Search?search=' },
+    '!w': { name: 'Wikipedia', url: 'https://{lang}.wikipedia.org/wiki/Special:Search?search=' },
     '!r': { name: 'Reddit', url: 'https://www.reddit.com/search/?q=' },
     '!m': { name: 'Google Maps', url: 'https://www.google.com/maps/search/' },
     '!civitai': { name: 'Civitai', url: 'https://civitai.com/?query=' },
@@ -19,7 +21,28 @@ export const BANGS_MAP = {
     '!time': { name: 'Date & Time', isDevTool: true }
 };
 
-export const parseBangQuery = (rawQuery) => {
+// Subdominios de Wikipedia soportados por idioma activo (T4.2).
+const WIKI_SUBDOMAINS = { es: 'es', en: 'en', fr: 'fr', de: 'de' };
+
+/**
+ * Resuelve el placeholder `{lang}` de una URL de bang al subdominio de
+ * Wikipedia correspondiente al idioma dado (es/en/fr/de). Por defecto 'es'.
+ */
+export const resolveBangUrl = (url, lang) => {
+    const sub = WIKI_SUBDOMAINS[lang] || 'es';
+    return String(url || '').replace('{lang}', sub);
+};
+
+/**
+ * Construye la URL base de un bang resolviendo su idioma (T4.2).
+ * `buildBangUrl('!w', 'en')` → 'https://en.wikipedia.org/wiki/Special:Search?search='
+ */
+export const buildBangUrl = (bang, lang) => {
+    const entry = BANGS_MAP[bang];
+    return entry ? resolveBangUrl(entry.url, lang) : '';
+};
+
+export const parseBangQuery = (rawQuery, lang) => {
     const trimmed = rawQuery.trim();
     const firstWord = trimmed.split(/\s+/)[0].toLowerCase();
     if (BANGS_MAP[firstWord]) {
@@ -35,7 +58,8 @@ export const parseBangQuery = (rawQuery) => {
                 query: queryRest
             };
         }
-        const baseUrl = bangObj.url || '';
+        const resolvedLang = (lang && WIKI_SUBDOMAINS[lang]) ? lang : (state.language || 'es');
+        const baseUrl = resolveBangUrl(bangObj.url || '', resolvedLang);
         return {
             isBang: true,
             isDevTool: false,

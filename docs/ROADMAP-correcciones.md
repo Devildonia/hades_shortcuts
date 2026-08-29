@@ -188,9 +188,9 @@ Suite completa: **141/141 en verde** (estable en 3 ejecuciones headless).
 
 ---
 
-## Fase 4 — i18n (P2)
+## Fase 4 — i18n (P2) ✅ COMPLETADO
 
-### T4.1 Extraer strings hardcodeadas a los 4 diccionarios
+### T4.1 ✅ Extraer strings hardcodeadas a los 4 diccionarios
 Añadir claves (es/en/fr/de) y sustituirlas:
 
 | Módulo | Strings actuales | Nueva clave |
@@ -203,12 +203,15 @@ Añadir claves (es/en/fr/de) y sustituirlas:
 | `js/devtools.js` | `📋 Copiar`, `✓ Copiado`, texto de error QR | `devtools.copy` / `devtools.copied` / `devtools.qr_too_long` |
 | `js/extension-api.js` | 3 mensajes TopSites | `ext.topsites_denied` / `ext.topsites_added` / `ext.topsites_none` |
 | `js/importer.js` | ternario manual 4 idiomas ×2 | `importer.all_duplicates` / `importer.duplicates_skipped` |
+| `js/theme-studio.js` | 3 toasts de imagen + 1 de URL | `theme_studio.storage_full` / `image_saved` / `image_error` / `invalid_url` |
+| `js/state.js` | toast «storage lleno» | `toasts.storage_full` vía inyección `setStorageFullMsg()` (evita ciclo state↔i18n) |
+| `js/crypto-sync.js` | toast «No se pudo restaurar el Gist» | `sync.restore_failed` |
 
 - Verificación: grep final — 0 strings de UI hardcodeadas en `js/` (excluidos
   defaults de fallback `|| '...'`, que quedan como seguridad).
 - Esfuerzo: M.
 
-### T4.2 Bang `!w`: Wikipedia por idioma activo
+### T4.2 ✅ Bang `!w`: Wikipedia por idioma activo
 - Archivo: `js/bangs.js` → `BANGS_MAP['!w']`.
 - Cambio: resolver el dominio según `state.language` (es → es.wikipedia,
   en → en.wikipedia, fr → fr.wikipedia, de → de.wikipedia). `parseBangQuery`
@@ -217,7 +220,7 @@ Añadir claves (es/en/fr/de) y sustituirlas:
   `en.wikipedia.org`.
 - Esfuerzo: S.
 
-### T4.3 Test de consistencia embebido ↔ locales/*.json
+### T4.3 ✅ Test de consistencia embebido ↔ locales/*.json
 - Archivo: `tests/index.html` (o helper en `js/i18n.js`).
 - Cambio: test que `fetch`ea `locales/{es,en,fr,de}.json` y compare el **conjunto
   de claves** (recursivo) contra `i18nDictionaries[lang]`. Detecta desviaciones
@@ -225,7 +228,9 @@ Añadir claves (es/en/fr/de) y sustituirlas:
 - Verificación: test pasa hoy y fallaría si una copia diverge.
 - Esfuerzo: S-M.
 
-**Done de Fase 4:** i18n sin strings sueltas + test antidivergencia en verde.
+**Done de Fase 4:** i18n sin strings sueltas — grep final: 0 toasts/confirms/alerts hardcodeados en `js/` (se añadieron `theme-studio.js`, `state.js` e `sync.restore_failed` más allá de la tabla original) + bang `!w` por idioma + test antidivergencia embebido↔JSON en verde (456→462 claves/lang, en sincronía). Suite completa: **146/146 en verde**.
+
+> Nota: las plantillas de contenido IA de `js/ai-agent.js` (`generateLocalHeuristicResponse`) se dejan como ítem separado: son contenido de respuesta (markdown dinámico), no etiquetas de UI.
 
 ---
 

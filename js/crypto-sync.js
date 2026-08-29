@@ -2,6 +2,7 @@
 
 import { state, showToast, readJsonStorage } from './state.js';
 import { soundFx } from './audio.js';
+import { getTranslation } from './i18n.js';
 
 export class CryptoSyncEngine {
     constructor(renderer) {
@@ -28,7 +29,9 @@ export class CryptoSyncEngine {
     syncUI() {
         if (this.tokenInput) this.tokenInput.value = this.githubToken;
         if (this.gistInput) this.gistInput.value = this.gistId;
-        this.updateStatus(this.lastSync ? `Última sincronización: ${new Date(parseInt(this.lastSync)).toLocaleString()}` : 'No conectado');
+        this.updateStatus(this.lastSync
+            ? (getTranslation('sync.last_sync') || 'Última sincronización: {time}').replace('{time}', new Date(parseInt(this.lastSync)).toLocaleString())
+            : (getTranslation('sync.not_connected') || 'No conectado'));
     }
 
     updateStatus(msg, isError = false) {
@@ -146,7 +149,7 @@ export class CryptoSyncEngine {
 
         this.lastSync = Date.now().toString();
         localStorage.setItem('sync_last_timestamp', this.lastSync);
-        this.updateStatus(`✓ Sincronizado con éxito (${new Date().toLocaleTimeString()})`);
+        this.updateStatus((getTranslation('sync.synced_ok') || '✓ Sincronizado con éxito ({time})').replace('{time}', new Date().toLocaleTimeString()));
         if (this.renderer) this.renderer.render();
         if (window.layoutManager && typeof window.layoutManager.applyPositions === 'function') {
             window.layoutManager.applyPositions();
@@ -157,12 +160,12 @@ export class CryptoSyncEngine {
         const token = (this.tokenInput ? this.tokenInput.value : this.githubToken).trim();
         const pass = (this.passInput ? this.passInput.value : '').trim();
         if (!token || !pass) {
-            this.updateStatus('Introduce tu GitHub Token y Contraseña de Cifrado.', true);
+            this.updateStatus(getTranslation('sync.push_missing_inputs') || 'Introduce tu GitHub Token y Contraseña de Cifrado.', true);
             return;
         }
 
         soundFx.play('click');
-        this.updateStatus('Cifrando datos y subiendo a GitHub...');
+        this.updateStatus(getTranslation('sync.pushing') || 'Cifrando datos y subiendo a GitHub...');
 
         try {
             const rawData = JSON.stringify(this.getPackagePayload());
@@ -205,9 +208,9 @@ export class CryptoSyncEngine {
             this.lastSync = Date.now().toString();
             localStorage.setItem('sync_last_timestamp', this.lastSync);
             soundFx.play('chime');
-            this.updateStatus(`✓ Datos subidos y cifrados en Gist (${resData.id.slice(0, 8)}...)`);
+            this.updateStatus((getTranslation('sync.pushed_ok') || '✓ Datos subidos y cifrados en Gist ({id}...)').replace('{id}', resData.id.slice(0, 8)));
         } catch (err) {
-            this.updateStatus(`Error al subir: ${err.message}`, true);
+            this.updateStatus((getTranslation('sync.push_error') || 'Error al subir: {msg}').replace('{msg}', err.message), true);
         }
     }
 
@@ -217,12 +220,12 @@ export class CryptoSyncEngine {
         const pass = (this.passInput ? this.passInput.value : '').trim();
 
         if (!token || !gistId || !pass) {
-            this.updateStatus('Introduce Token, Gist ID y Contraseña de Cifrado.', true);
+            this.updateStatus(getTranslation('sync.pull_missing_inputs') || 'Introduce Token, Gist ID y Contraseña de Cifrado.', true);
             return;
         }
 
         soundFx.play('click');
-        this.updateStatus('Descargando y descifrando datos...');
+        this.updateStatus(getTranslation('sync.pulling') || 'Descargando y descifrando datos...');
 
         try {
             const res = await fetch(`https://api.github.com/gists/${gistId}`, {
@@ -241,8 +244,8 @@ export class CryptoSyncEngine {
             this.applyPackagePayload(parsed);
             soundFx.play('chime');
         } catch (err) {
-            this.updateStatus(`Error al restaurar: ${err && err.message ? err.message : 'contraseña o datos no válidos'}`, true);
-            showToast('No se pudo restaurar el Gist.', 'error');
+            this.updateStatus((getTranslation('sync.restore_error') || 'Error al restaurar: {msg}').replace('{msg}', err && err.message ? err.message : 'contraseña o datos no válidos'), true);
+            showToast(getTranslation('sync.restore_failed') || 'No se pudo restaurar el Gist.', 'error');
         }
     }
 

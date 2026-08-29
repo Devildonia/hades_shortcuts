@@ -170,7 +170,6 @@
       "visual_title": "Apparence",
       "show_tags_toggle": "Afficher les tags",
       "chrome_bezel_toggle": "Cadres chromés",
-      "gold_bezel_toggle": "Cadres dorés (Widgets)",
       "add_shortcut_btn": "➕ Ajouter un Nouveau Raccourci",
       "editing_active_badge": "Mode Édition Activé",
       "reset_layout_title": "Réinitialiser la Disposition",
@@ -181,7 +180,8 @@
       "show_ambient": "Afficher l'Audio Ambiant",
       "show_pomodoro": "Afficher le Minuteur Focus",
       "show_radar": "Afficher Tech Radar & RSS",
-      "show_telemetry": "Afficher la Télémétrie Système"
+      "show_telemetry": "Afficher la Télémétrie Système",
+      "gold_bezel_toggle": "Cadres dorés (Widgets)"
     },
     "backup": {
       "export_title": "Exporter la Configuration",
@@ -194,6 +194,7 @@
       "reset_desc": "Restaure les 52 raccourcis originaux par défaut.",
       "reset_btn": "⚠️ Réinitialiser par Défaut",
       "reset_confirm": "Êtes-vous sûr de vouloir réinitialiser ? Les personnalisations seront perdues.",
+      "import_confirm": "Importer ce backup ? Vos raccourcis, post-its, macros et réglages actuels seront remplacés.",
       "import_success": "Sauvegarde restaurée avec succès !",
       "import_error": "Le fichier de sauvegarde est invalide ou corrompu."
     },
@@ -218,6 +219,7 @@
   "shortcut_editor": {
     "add_title": "Ajouter un Nouveau Raccourci",
     "edit_title": "Modifier le Raccourci",
+    "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce raccourci ?",
     "title_label": "Nom du Raccourci",
     "title_placeholder": "Ex : Notion, Figma, Spotify...",
     "url_label": "URL de Destination",
@@ -232,7 +234,6 @@
     "tags_placeholder": "séparés par des virgules (ex : musique, streaming)",
     "save_btn": "Enregistrer le Raccourci",
     "delete_btn": "Supprimer le Raccourci",
-    "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce raccourci ?",
     "cancel_btn": "Annuler"
   },
   "bangs": {
@@ -289,7 +290,11 @@
     "desc": "Personnalisez les couleurs d'accent et les reflets néon en temps réel :",
     "primary_label": "Couleur Primaire (Accent) :",
     "secondary_label": "Couleur Secondaire :",
-    "reset_colors_btn": "Réinitialiser les Couleurs"
+    "reset_colors_btn": "Réinitialiser les Couleurs",
+    "storage_full": "Espace insuffisant dans le navigateur pour enregistrer l'image.",
+    "image_saved": "Image de fond enregistrée avec succès.",
+    "image_error": "Erreur lors du traitement de l'image.",
+    "invalid_url": "Veuillez saisir une URL valide (http/https)."
   },
   "importer": {
     "title": "Importer les Favoris du Navigateur",
@@ -300,13 +305,18 @@
     "import_btn": "Importer les Favoris",
     "success_msg": "{count} raccourcis importés avec succès !",
     "error_msg": "Aucun favori valide trouvé dans le fichier sélectionné.",
-    "topsites_btn": "Importer les sites fréquents de Chrome"
+    "topsites_btn": "Importer les sites fréquents de Chrome",
+    "all_duplicates": "Tous les marque-pages existent déjà dans vos raccourcis.",
+    "duplicates_skipped": "{count} doublons ignorés"
   },
   "devtools": {
     "qr_title": "Code QR Généré",
     "qr_hint": "Scannez avec votre appareil photo pour ouvrir instantanément.",
     "qr_copy": "📋 Copier l'image",
-    "qr_download": "⬇️ Télécharger PNG"
+    "qr_download": "⬇️ Télécharger PNG",
+    "copy": "📋 Copier",
+    "copied": "✓ Copié",
+    "qr_too_long": "Texte trop long pour un QR"
   },
   "hud": {
     "placeholder": "Lancer une application ou un raccourci..."
@@ -354,7 +364,9 @@
     "suggestion_text": "Vous ouvrez souvent {title} à {hour}",
     "launch_btn": "Lancer maintenant",
     "export_btn": "📥 Exporter les Métriques en JSON",
-    "reset_btn": "🗑️ Effacer l'Historique"
+    "reset_btn": "🗑️ Effacer l'Historique",
+    "streak_label": "jours de série",
+    "dismiss": "Ignorer"
   },
   "nav": {
     "ai_agent": "Agent IA",
@@ -363,7 +375,18 @@
     "focus_active": "Focus Actif"
   },
   "sync": {
-    "token_session_notice": "Votre jeton GitHub est stocké uniquement dans la mémoire de session (sessionStorage) et s'efface automatiquement à la fermeture du navigateur."
+    "token_session_notice": "Votre jeton GitHub est stocké uniquement dans la mémoire de session (sessionStorage) et s'efface automatiquement à la fermeture du navigateur.",
+    "last_sync": "Dernière synchronisation : {time}",
+    "not_connected": "Non connecté",
+    "synced_ok": "✓ Synchronisé avec succès ({time})",
+    "push_missing_inputs": "Saisissez votre jeton GitHub et votre mot de passe de chiffrement.",
+    "pushing": "Chiffrement des données et téléversement vers GitHub...",
+    "pushed_ok": "✓ Données téléversées et chiffrées dans le Gist ({id}...)",
+    "push_error": "Erreur d'envoi : {msg}",
+    "pull_missing_inputs": "Saisissez le jeton, l'ID Gist et le mot de passe de chiffrement.",
+    "pulling": "Téléchargement et déchiffrement des données...",
+    "restore_error": "Erreur de restauration : {msg}",
+    "restore_failed": "Impossible de restaurer le Gist."
   },
   "macros_studio": {
     "title": "Studio de Macros & Routines",
@@ -445,7 +468,9 @@
     "ai_network_error": "Impossible de joindre l'assistant en ligne. Réessayez plus tard.",
     "sync_push_error": "Impossible de synchroniser avec chrome.storage.",
     "reset_done": "Valeurs d'usine restaurées.",
-    "postit_limit": "Limite de 25 notes flottantes atteinte. Supprimez-en une pour en épingler une autre."
+    "postit_limit": "Limite de 25 notes flottantes atteinte. Supprimez-en une pour en épingler une autre.",
+    "reset_analytics_confirm": "Souhaitez-vous réinitialiser votre historique d'utilisation local et vos statistiques ?",
+    "storage_full": "Impossible d'enregistrer (stockage plein ou bloqué)."
   },
   "calendar_feed": {
     "title": "Configurer le flux calendrier (iCal / ICS)",
@@ -482,26 +507,34 @@
     "hello": "Bonjour. Je suis votre assistant contextuel. Je connais vos raccourcis, espaces et agenda. Comment puis-je aider ?",
     "placeholder": "Posez une question sur vos raccourcis ou demandez des suggestions...",
     "send": "Envoyer",
-    "stop": "Arrêter",
-    "new_chat": "Nouvelle conversation",
-    "settings": "Réglages",
     "provider": "Fournisseur",
     "openai_key": "Clé (session)",
     "anthropic_key": "Clé (session)",
     "ollama_endpoint": "Endpoint Ollama",
+    "opt_local": "Local (heuristique)",
+    "opt_ollama": "Ollama",
+    "opt_openai": "OpenAI",
+    "opt_anthropic": "Anthropic",
+    "prompt_3d": "Quels outils 3D ou IA ai-je enregistrés ?",
+    "prompt_suggest": "Recommande 3 nouveaux outils de productivité",
+    "prompt_focus": "Comment activer le mode Focus ?",
+    "stop": "Arrêter",
+    "new_chat": "Nouvelle conversation",
+    "settings": "Réglages",
     "ollama_model": "Modèle",
     "lmstudio_endpoint": "Endpoint LM Studio",
     "lmstudio_model": "Modèle",
     "openai_model": "Modèle",
     "anthropic_model": "Modèle",
-    "opt_local": "Local (heuristique)",
-    "opt_ollama": "Ollama",
     "opt_lmstudio": "LM Studio",
-    "opt_openai": "OpenAI",
-    "opt_anthropic": "Anthropic",
-    "prompt_3d": "Quels outils 3D ou IA ai-je enregistrés ?",
-    "prompt_suggest": "Recommande 3 nouveaux outils de productivité",
-    "prompt_focus": "Comment activer le mode Focus ?"
+    "heuristics": {
+      "focus": "Tu peux activer le **Mode Focus** avec le raccourci **Alt+F** ou le bouton **Mode Focus** de l'en-tête. Il silencie le bruit et ne garde que l'essentiel de ton espace actif.",
+      "recommend": "Je te recommande ces outils populaires très productifs :\n\n* **[Hugging Face Spaces](https://huggingface.co/spaces)** `#ia #ml` — Modèles et démos interactives.\n* **[Shadertoy](https://shadertoy.com)** `#3d #shaders` — Création de shaders WebGL procéduraux.\n* **[Excalidraw](https://excalidraw.com)** `#design #canvas` — Tableau blanc virtuel collaboratif.\n\n*Clique sur n'importe quel lien pour le visiter.*",
+      "matched": "J'ai analysé ton dashboard actuel et tu as **{count} outils** pertinents enregistrés :\n\n{list}\n\nSouhaites-tu en ouvrir un, ou cherchons-en un nouveau à ajouter ?",
+      "no_match": "Dans ton espace actif, tu as **{count} raccourcis**, mais aucun ne correspond à cette recherche. Essaie de me demander des *outils 3D*, des *outils IA* ou demande-moi de *recommander de nouveaux*.",
+      "none_saved": "Pour l'instant, tu n'as aucun raccourci enregistré sur ton dashboard. Je peux te recommander quelques outils de départ : demande-moi *recommande-moi de nouveaux outils*.",
+      "fallback": "Compris. Je connais tes **{count} raccourcis** dans l'espace actif. Tu peux me demander :\n- *\"Quels outils 3D ou IA ai-je ?\"*\n- *\"Recommande de nouveaux outils pour le design\"*\n- *\"Comment activer le Mode Focus ?\"*"
+    }
   },
   "spaces": {
     "label": "Profils",
@@ -534,5 +567,14 @@
       "name": "Mode Communauté & Réseaux",
       "desc": "Ouvre Discord, X (Twitter) et Instagram"
     }
+  },
+  "ambient": {
+    "pause": "Pause",
+    "play": "Lecture"
+  },
+  "ext": {
+    "topsites_denied": "Permission TopSites refusée ou indisponible.",
+    "topsites_added": "Importation de {count} sites fréquents.",
+    "topsites_none": "Aucun nouveau site à importer."
   }
 }

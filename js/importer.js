@@ -117,10 +117,7 @@ export class BookmarksImporter {
 
         if (imported.length === 0) {
             if (duplicateCount > 0) {
-                const dupMsg = (state.language === 'en' ? 'All bookmarks already exist in your shortcuts.' :
-                               state.language === 'fr' ? 'Tous les marque-pages existent déjà dans vos raccourcis.' :
-                               state.language === 'de' ? 'Alle Lesezeichen sind bereits in Ihren Verknüpfungen vorhanden.' :
-                               'Todos los marcadores ya existen en tus accesos directos.');
+                const dupMsg = this.getMsg('all_duplicates') || 'Todos los marcadores ya existen en tus accesos directos.';
                 this.showStatus(dupMsg, 'info');
                 showToast(dupMsg, 'info');
             } else {
@@ -137,10 +134,7 @@ export class BookmarksImporter {
 
         let successText = this.getMsg('success_msg').replace('{count}', imported.length);
         if (duplicateCount > 0) {
-            const skipSuffix = (state.language === 'en' ? ` (${duplicateCount} duplicates skipped)` :
-                               state.language === 'fr' ? ` (${duplicateCount} doublons ignorés)` :
-                               state.language === 'de' ? ` (${duplicateCount} Duplikate übersprungen)` :
-                               ` (${duplicateCount} duplicados omitidos)`);
+            const skipSuffix = ` (${(this.getMsg('duplicates_skipped') || '{count} duplicados omitidos').replace('{count}', duplicateCount)})`;
             successText += skipSuffix;
         }
 
