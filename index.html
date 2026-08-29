@@ -1072,8 +1072,7 @@
 
             <div class="settings-tab-pane" id="tab-pane-analytics">
                 <div class="settings-section">
-                    <h4 data-i18n="analytics.title">Métricas de Uso y Hábitos (100% Local)</h4>
-                    <p class="settings-hint" data-i18n="analytics.desc">Estadísticas privadas calculadas únicamente en tu navegador.</p>
+                    <h4 data-i18n="analytics.title" data-i18n-title="analytics.desc">Métricas de Uso y Hábitos (100% Local)</h4>
                     <div class="analytics-stats-row" style="display:flex; gap:16px; flex-wrap:wrap; margin: 12px 0;">
                         <div><strong id="analytics-total-launches">0</strong><div class="settings-hint" data-i18n="analytics.total_launches">Lanzamientos</div></div>
                         <div><strong id="analytics-streak-days">1</strong><div class="settings-hint" data-i18n="analytics.streak">Racha</div></div>
@@ -1092,8 +1091,7 @@
 
                 <!-- E2EE Cloud Sync Section (Phase 4) -->
                 <div class="settings-section">
-                    <h4 data-i18n="settings_hub.sync.title">🔒 Sincronización en la Nube Cifrada (E2EE)</h4>
-                    <p class="settings-hint" data-i18n="settings_hub.sync.desc">Sincroniza tus atajos, notas y configuraciones entre todos tus ordenadores y móviles con cifrado militar AES-256-GCM vía GitHub Gist privado:</p>
+                    <h4 data-i18n="settings_hub.sync.title" data-i18n-title="settings_hub.sync.desc">Sincronización en la Nube Cifrada (E2EE)</h4>
                     
                     <div class="sync-form-grid">
                         <div class="form-group">
@@ -1111,40 +1109,36 @@
                     </div>
 
                     <div class="sync-actions-row">
-                        <button class="settings-action-btn primary" id="sync-push-btn" data-i18n="settings_hub.sync.push_btn">⬆️ Subir y Cifrar</button>
-                        <button class="settings-action-btn secondary" id="sync-pull-btn" data-i18n="settings_hub.sync.pull_btn">⬇️ Descargar y Descifrar</button>
+                        <button class="settings-action-btn primary" id="sync-push-btn" data-i18n="settings_hub.sync.push_btn">Subir y Cifrar</button>
+                        <button class="settings-action-btn secondary" id="sync-pull-btn" data-i18n="settings_hub.sync.pull_btn">Descargar y Descifrar</button>
                     </div>
                     <div id="sync-status-msg" class="sync-status-msg"></div>
                 </div>
 
                 <div class="settings-section">
-                    <h4 data-i18n="importer.title">Importar Marcadores de Navegador</h4>
-                    <p class="settings-hint" data-i18n="importer.desc">Importa un archivo bookmarks.html exportado desde Chrome, Firefox, Edge o Brave:</p>
+                    <h4 data-i18n="importer.title" data-i18n-title="importer.desc">Importar Marcadores de Navegador</h4>
                     <input type="file" id="bookmark-file-input" accept=".html,.htm" style="display: none;">
-                    <button class="settings-action-btn primary" id="import-bookmarks-btn" data-i18n="importer.select_file_btn">📁 Seleccionar Archivo HTML</button>
+                    <button class="settings-action-btn primary" id="import-bookmarks-btn" data-i18n="importer.select_file_btn">Seleccionar Archivo HTML</button>
                     <button class="settings-action-btn secondary hidden" id="import-topsites-btn" type="button" data-i18n="importer.topsites_btn">Importar sitios frecuentes de Chrome</button>
                     <div id="import-bookmarks-status" class="import-status-msg"></div>
                 </div>
 
                 <div class="settings-section">
-                    <h4 data-i18n="settings_hub.backup.export_title">Exportar Configuración</h4>
-                    <p class="settings-hint" data-i18n="settings_hub.backup.export_desc">Descarga un archivo JSON con todos tus atajos y preferencias.</p>
-                    <button class="settings-action-btn secondary" id="export-backup-btn" data-i18n="settings_hub.backup.export_btn">📥 Descargar Copia (*.json)</button>
+                    <h4 data-i18n="settings_hub.backup.export_title" data-i18n-title="settings_hub.backup.export_desc">Exportar Configuración</h4>
+                    <button class="settings-action-btn secondary" id="export-backup-btn" data-i18n="settings_hub.backup.export_btn">Descargar Copia (*.json)</button>
                 </div>
 
                 <div class="settings-section">
-                    <h4 data-i18n="settings_hub.backup.import_title">Restaurar Configuración</h4>
-                    <p class="settings-hint" data-i18n="settings_hub.backup.import_desc">Carga un archivo de respaldo JSON previamente exportado.</p>
+                    <h4 data-i18n="settings_hub.backup.import_title" data-i18n-title="settings_hub.backup.import_desc">Restaurar Configuración</h4>
                     <label class="settings-file-label">
-                        <span data-i18n="settings_hub.backup.import_btn">📤 Restaurar desde Archivo</span>
+                        <span data-i18n="settings_hub.backup.import_btn">Restaurar desde Archivo</span>
                         <input type="file" id="import-backup-file" accept=".json" class="hidden">
                     </label>
                 </div>
 
                 <div class="settings-section danger-section">
-                    <h4 data-i18n="settings_hub.backup.reset_title">Restablecer de Fábrica</h4>
-                    <p class="settings-hint" data-i18n="settings_hub.backup.reset_desc">Restaura los 52 accesos directos originales predeterminados.</p>
-                    <button class="settings-action-btn danger" id="reset-defaults-btn" data-i18n="settings_hub.backup.reset_btn">⚠️ Restablecer Valores</button>
+                    <h4 data-i18n="settings_hub.backup.reset_title" data-i18n-title="settings_hub.backup.reset_desc">Restablecer de Fábrica</h4>
+                    <button class="settings-action-btn danger" id="reset-defaults-btn" data-i18n="settings_hub.backup.reset_btn">Restablecer Valores</button>
                 </div>
             </div>
         </div>
@@ -1244,8 +1238,8 @@
                 <p class="qr-hint" data-i18n="devtools.qr_hint">Escanea con la cámara de tu móvil para abrir o transferir al instante.</p>
             </div>
             <div class="shortcut-modal-footer">
-                <button class="settings-action-btn secondary" id="qr-copy-btn" data-i18n="devtools.qr_copy">📋 Copiar Imagen</button>
-                <button class="settings-action-btn primary" id="qr-download-btn" data-i18n="devtools.qr_download">⬇️ Descargar PNG</button>
+                <button class="settings-action-btn secondary" id="qr-copy-btn" data-i18n="devtools.qr_copy">Copiar Imagen</button>
+                <button class="settings-action-btn primary" id="qr-download-btn" data-i18n="devtools.qr_download">Descargar PNG</button>
             </div>
         </div>
     </div>

@@ -210,13 +210,13 @@
     "backup": {
       "export_title": "Konfiguration exportieren",
       "export_desc": "Laden Sie eine JSON-Datei mit all Ihren Verknüpfungen und Einstellungen herunter.",
-      "export_btn": "📥 Sicherung herunterladen (*.json)",
+      "export_btn": "Sicherung herunterladen (*.json)",
       "import_title": "Konfiguration wiederherstellen",
       "import_desc": "Laden Sie eine zuvor exportierte JSON-Sicherungsdatei.",
-      "import_btn": "📤 Aus Datei wiederherstellen",
+      "import_btn": "Aus Datei wiederherstellen",
       "reset_title": "Werkseinstellungen",
       "reset_desc": "Stellt die ursprünglichen 52 Standard-Verknüpfungen wieder her.",
-      "reset_btn": "⚠️ Auf Standard zurücksetzen",
+      "reset_btn": "Auf Standard zurücksetzen",
       "reset_confirm": "Möchten Sie wirklich die Werkseinstellungen wiederherstellen?",
       "import_confirm": "Dieses Backup importieren? Ihre aktuellen Shortcuts, Post-its, Macros und Einstellungen werden ersetzt.",
       "import_success": "Sicherung erfolgreich wiederhergestellt!",
@@ -231,13 +231,13 @@
       "desc": "Geben Sie diese Befehle in die Suchleiste ein, um Multi-Aktions-Routinen auszuführen"
     },
     "sync": {
-      "title": "🔒 Verschlüsselte Cloud-Synchronisierung (E2EE)",
-      "desc": "Synchronisieren Sie Ihre Verknüpfungen und Notizen mit militärischer AES-256-GCM-Verschlüsselung via privatem GitHub Gist:",
+      "title": "Verschlüsselte Cloud-Synchronisierung (E2EE)",
+      "desc": "Synchronisieren Sie Ihre Verknüpfungen und Notizen mit militärischer AES-256-GCM-Verschlüsselung via privatem GitHub Gist",
       "token_label": "GitHub Personal Access Token (PAT)",
       "pass_label": "Master-Verschlüsselungskennwort",
       "gist_label": "Gist-ID (Optional, wird automatisch erstellt)",
-      "push_btn": "⬆️ Hochladen & Verschlüsseln",
-      "pull_btn": "⬇️ Herunterladen & Entschlüsseln"
+      "push_btn": "Hochladen & Verschlüsseln",
+      "pull_btn": "Herunterladen & Entschlüsseln"
     }
   },
   "shortcut_editor": {
@@ -345,8 +345,8 @@
   },
   "importer": {
     "title": "Browser-Lesezeichen importieren",
-    "desc": "Importieren Sie eine aus Chrome, Firefox, Edge oder Brave exportierte bookmarks.html-Datei:",
-    "select_file_btn": "📁 HTML-Datei auswählen",
+    "desc": "Importieren Sie eine aus Chrome, Firefox, Edge oder Brave exportierte bookmarks.html-Datei",
+    "select_file_btn": "HTML-Datei auswählen",
     "merge_mode": "Mit meinen vorhandenen Verknüpfungen zusammenführen",
     "replace_mode": "Alle Verknüpfungen ersetzen",
     "import_btn": "Lesezeichen importieren",
@@ -359,8 +359,8 @@
   "devtools": {
     "qr_title": "Generierter QR-Code",
     "qr_hint": "Scannen Sie mit der Kamera, um den Link sofort zu öffnen.",
-    "qr_copy": "📋 Bild kopieren",
-    "qr_download": "⬇️ PNG herunterladen",
+    "qr_copy": "Bild kopieren",
+    "qr_download": "PNG herunterladen",
     "copy": "📋 Kopieren",
     "copied": "✓ Kopiert",
     "qr_too_long": "Text zu lang für QR"
@@ -412,8 +412,8 @@
     "chart_title": "Aktivität der letzten 7 Tage",
     "suggestion_text": "Sie öffnen normalerweise {title} um {hour}",
     "launch_btn": "Jetzt starten",
-    "export_btn": "📥 Metriken als JSON exportieren",
-    "reset_btn": "🗑️ Verlauf löschen",
+    "export_btn": "Metriken als JSON exportieren",
+    "reset_btn": "Verlauf löschen",
     "streak_label": "Tage Serie",
     "dismiss": "Verwerfen"
   },

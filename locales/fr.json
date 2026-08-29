@@ -210,13 +210,13 @@
     "backup": {
       "export_title": "Exporter la Configuration",
       "export_desc": "Téléchargez un fichier JSON avec tous vos raccourcis et préférences.",
-      "export_btn": "📥 Télécharger la Sauvegarde (*.json)",
+      "export_btn": "Télécharger la Sauvegarde (*.json)",
       "import_title": "Restaurer la Configuration",
       "import_desc": "Chargez un fichier de sauvegarde JSON préalablement exporté.",
-      "import_btn": "📤 Restaurer depuis le Fichier",
+      "import_btn": "Restaurer depuis le Fichier",
       "reset_title": "Réinitialisation d'Usine",
       "reset_desc": "Restaure les 52 raccourcis originaux par défaut.",
-      "reset_btn": "⚠️ Réinitialiser par Défaut",
+      "reset_btn": "Réinitialiser par Défaut",
       "reset_confirm": "Êtes-vous sûr de vouloir réinitialiser ? Les personnalisations seront perdues.",
       "import_confirm": "Importer ce backup ? Vos raccourcis, post-its, macros et réglages actuels seront remplacés.",
       "import_success": "Sauvegarde restaurée avec succès !",
@@ -231,13 +231,13 @@
       "desc": "Tapez ces commandes dans la recherche pour exécuter des routines multi-actions"
     },
     "sync": {
-      "title": "🔒 Synchronisation Cloud Chiffrée (E2EE)",
-      "desc": "Synchronisez vos raccourcis et notes avec le chiffrement AES-256-GCM via GitHub Gist privé :",
+      "title": "Synchronisation Cloud Chiffrée (E2EE)",
+      "desc": "Synchronisez vos raccourcis et notes avec le chiffrement AES-256-GCM via GitHub Gist privé",
       "token_label": "GitHub Token d'accès personnel (PAT)",
       "pass_label": "Mot de passe maître de chiffrement",
       "gist_label": "Gist ID (Optionnel, auto-créé)",
-      "push_btn": "⬆️ Téléverser et Chiffrer",
-      "pull_btn": "⬇️ Télécharger et Déchiffrer"
+      "push_btn": "Téléverser et Chiffrer",
+      "pull_btn": "Télécharger et Déchiffrer"
     }
   },
   "shortcut_editor": {
@@ -345,8 +345,8 @@
   },
   "importer": {
     "title": "Importer les Favoris du Navigateur",
-    "desc": "Importez un fichier bookmarks.html exporté depuis Chrome, Firefox, Edge ou Brave :",
-    "select_file_btn": "📁 Sélectionner un Fichier HTML",
+    "desc": "Importez un fichier bookmarks.html exporté depuis Chrome, Firefox, Edge ou Brave",
+    "select_file_btn": "Sélectionner un Fichier HTML",
     "merge_mode": "Fusionner avec mes raccourcis actuels",
     "replace_mode": "Remplacer tous les raccourcis",
     "import_btn": "Importer les Favoris",
@@ -359,8 +359,8 @@
   "devtools": {
     "qr_title": "Code QR Généré",
     "qr_hint": "Scannez avec votre appareil photo pour ouvrir instantanément.",
-    "qr_copy": "📋 Copier l'image",
-    "qr_download": "⬇️ Télécharger PNG",
+    "qr_copy": "Copier l'image",
+    "qr_download": "Télécharger PNG",
     "copy": "📋 Copier",
     "copied": "✓ Copié",
     "qr_too_long": "Texte trop long pour un QR"
@@ -412,8 +412,8 @@
     "chart_title": "Activité des 7 Derniers Jours",
     "suggestion_text": "Vous ouvrez souvent {title} à {hour}",
     "launch_btn": "Lancer maintenant",
-    "export_btn": "📥 Exporter les Métriques en JSON",
-    "reset_btn": "🗑️ Effacer l'Historique",
+    "export_btn": "Exporter les Métriques en JSON",
+    "reset_btn": "Effacer l'Historique",
     "streak_label": "jours de série",
     "dismiss": "Ignorer"
   },

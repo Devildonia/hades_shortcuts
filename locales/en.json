@@ -210,13 +210,13 @@
     "backup": {
       "export_title": "Export Configuration",
       "export_desc": "Download a JSON file containing all your shortcuts, custom layout, and preferences.",
-      "export_btn": "📥 Download Backup (*.json)",
+      "export_btn": "Download Backup (*.json)",
       "import_title": "Restore Configuration",
       "import_desc": "Load a previously exported JSON backup file.",
-      "import_btn": "📤 Restore from File",
+      "import_btn": "Restore from File",
       "reset_title": "Factory Reset",
       "reset_desc": "Reset dashboard back to the original 52 default shortcuts.",
-      "reset_btn": "⚠️ Reset to Default",
+      "reset_btn": "Reset to Default",
       "reset_confirm": "Are you sure you want to restore factory defaults? Customizations will be lost.",
       "import_confirm": "Import this backup? Your current shortcuts, post-its, macros and settings will be replaced.",
       "import_success": "Backup successfully restored!",
@@ -231,13 +231,13 @@
       "desc": "Type these commands in the search bar to run multi-action routines instantly"
     },
     "sync": {
-      "title": "🔒 Encrypted Cloud Sync (E2EE)",
-      "desc": "Sync your shortcuts, notes, and preferences across devices with military-grade AES-256-GCM encryption via private GitHub Gists:",
+      "title": "Encrypted Cloud Sync (E2EE)",
+      "desc": "Sync your shortcuts, notes, and preferences across devices with military-grade AES-256-GCM encryption via private GitHub Gists",
       "token_label": "GitHub Personal Access Token (PAT)",
       "pass_label": "Master Encryption Password",
       "gist_label": "Gist ID (Optional, auto-created on upload)",
-      "push_btn": "⬆️ Upload & Encrypt",
-      "pull_btn": "⬇️ Download & Decrypt"
+      "push_btn": "Upload & Encrypt",
+      "pull_btn": "Download & Decrypt"
     }
   },
   "shortcut_editor": {
@@ -345,8 +345,8 @@
   },
   "importer": {
     "title": "Import Browser Bookmarks",
-    "desc": "Import a bookmarks.html file exported from Chrome, Firefox, Edge or Brave:",
-    "select_file_btn": "📁 Select HTML File",
+    "desc": "Import a bookmarks.html file exported from Chrome, Firefox, Edge or Brave",
+    "select_file_btn": "Select HTML File",
     "merge_mode": "Merge with my existing shortcuts",
     "replace_mode": "Replace all shortcuts",
     "import_btn": "Import Bookmarks",
@@ -359,8 +359,8 @@
   "devtools": {
     "qr_title": "Generated QR Code",
     "qr_hint": "Scan with your phone camera to open or beam link instantly.",
-    "qr_copy": "📋 Copy Image",
-    "qr_download": "⬇️ Download PNG",
+    "qr_copy": "Copy Image",
+    "qr_download": "Download PNG",
     "copy": "📋 Copy",
     "copied": "✓ Copied",
     "qr_too_long": "Text too long for QR"
@@ -412,8 +412,8 @@
     "chart_title": "Activity Over Last 7 Days",
     "suggestion_text": "You usually open {title} at {hour}",
     "launch_btn": "Launch Now",
-    "export_btn": "📥 Export Metrics as JSON",
-    "reset_btn": "🗑️ Clear Usage History",
+    "export_btn": "Export Metrics as JSON",
+    "reset_btn": "Clear Usage History",
     "streak_label": "day streak",
     "dismiss": "Dismiss"
   },
