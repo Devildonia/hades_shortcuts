@@ -187,6 +187,7 @@ export class DashboardRenderer {
                 card.innerHTML = `
                     ${editButtons}
                     <div class="icon-img-wrapper">
+                        <span class="icon-glint" aria-hidden="true"></span>
                         <img src="${escapeHtml(shortcut.icon || '')}" alt="${escapeHtml(shortcut.title)}" width="60" height="60" loading="lazy">
                     </div>
                     <span class="icon-title">${escapeHtml(shortcut.title)}</span>

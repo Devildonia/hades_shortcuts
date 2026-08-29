@@ -1511,6 +1511,58 @@ body.category-expanded-active {
     filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4));
 }
 
+/* Destello especular al pasar por encima: se reproduce una vez por hover y vuelve a
+   dispararse solo al salir del icono y volver (el :hover reinicia la animación). */
+.icon-img-wrapper .icon-glint {
+    position: absolute;
+    top: -25%;
+    left: 0;
+    width: 55%;
+    height: 150%;
+    pointer-events: none;
+    z-index: 5;
+    mix-blend-mode: screen;
+    opacity: 0;
+    transform: translateX(-150%) skewX(-20deg);
+    background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0.85) 46%,
+        rgba(255, 255, 255, 0.98) 50%,
+        rgba(255, 255, 255, 0.85) 54%,
+        rgba(255, 255, 255, 0) 70%,
+        transparent 100%
+    );
+    filter: blur(0.4px);
+}
+
+.enlace-icono:hover .icon-img-wrapper .icon-glint {
+    animation: iconGlint 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes iconGlint {
+    0%   { transform: translateX(-150%) skewX(-20deg); opacity: 0; }
+    18%  { opacity: 0.95; }
+    60%  { opacity: 0.85; }
+    85%  { transform: translateX(180%) skewX(-20deg); opacity: 0; }
+    100% { transform: translateX(180%) skewX(-20deg); opacity: 0; }
+}
+
+[data-theme="light"] .icon-img-wrapper .icon-glint {
+    mix-blend-mode: normal;
+    background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0.55) 46%,
+        rgba(255, 255, 255, 0.72) 50%,
+        rgba(255, 255, 255, 0.55) 54%,
+        rgba(255, 255, 255, 0) 70%,
+        transparent 100%
+    );
+}
+
 [data-theme="light"] .enlace-icono:hover .icon-img-wrapper {
     background: rgba(255, 255, 255, 0.55);
     border-color: rgba(255, 255, 255, 1);
