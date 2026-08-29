@@ -1,5 +1,9 @@
 // js/state.js - Central Reactive State & Persistence Manager
 
+// T6.3 (Fase 6): única fuente de verdad de la versión de la app. La importan
+// backup.js y crypto-sync.js, y guía el cache-busting de index.html (v=1.0.0-rc-1).
+export const APP_VERSION = '1.0.0-rc-1';
+
 export const DEFAULT_CATEGORIES = [
     { id: 'cat_3d', group: 'ia-creativa', color: 'tag-cyan', defaultTitle: '3D Modeling & AI' },
     { id: 'cat_ai', group: 'ia-creativa', color: 'tag-magenta', defaultTitle: 'Inteligencia Artificial' },

@@ -6,8 +6,8 @@
   "description": "Ultra-aesthetic cyberpunk startpage, glassmorphism bento grid, offline AI semantic search, focus soundscapes and productivity tools.",
   "default_locale": "en",
   "icons": {
-    "16": "iconos/pwa-192.png",
-    "48": "iconos/pwa-192.png",
+    "16": "iconos/pwa-16.png",
+    "48": "iconos/pwa-48.png",
     "128": "iconos/pwa-512.png"
   },
   "chrome_url_overrides": {

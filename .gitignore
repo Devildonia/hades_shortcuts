@@ -13,3 +13,6 @@ nul
 docs/screenshots/demo.mp4
 docs/screenshots/_preview/
 docs/screenshots/_demo_raw/
+
+# Build artifacts (T6.1: el .zip se distribuye como asset de GitHub Release)
+dist/

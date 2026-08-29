@@ -5,7 +5,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Online%20Preview-brightgreen?logo=github)](https://devildonia.github.io/hades_shortcuts/)
-[![Chrome Extension](https://img.shields.io/badge/Chrome%20Extension-v1.0.0--rc--1%20MV3-blue?logo=googlechrome)](dist/hades-shortcuts-chrome-v1.0.0-rc-1.zip)
+[![Chrome Extension](https://img.shields.io/badge/Chrome%20Extension-v1.0.0--rc--1%20MV3-blue?logo=googlechrome)](https://github.com/Devildonia/hades_shortcuts/releases/latest/download/hades-shortcuts-chrome-v1.0.0-rc-1.zip)
 [![PWA Ready](https://img.shields.io/badge/PWA-Installable%20Desktop-orange?logo=pwa)](https://devildonia.github.io/hades_shortcuts/)
 [![Pure Vanilla](https://img.shields.io/badge/Stack-Vanilla%20HTML%20%2F%20CSS%20%2F%20JS-yellow.svg)](https://developer.mozilla.org/en-US/)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20Zero-brightgreen.svg)]()
@@ -74,6 +74,9 @@ First release candidate of 1.0. Chrome MV3 `version` stays numeric (`1.0.0`); th
 | <img src="docs/screenshots/settings-drawer.png" width="420" alt="Contained settings drawer with six themes" /> | <img src="docs/screenshots/devtools-qr-preview.png" width="420" alt="Client-side QR modal" /> |
 
 </div>
+
+> **Screenshots** — `docs/screenshots/` se mantiene en el repo (no Git LFS): GitHub renderiza estas
+> vistas embebidas directamente, y moverlas a LFS rompería las imágenes en el README sin beneficio real.
 
 ---
 
@@ -282,7 +285,7 @@ Web Audio API: Cyber Rain, Deep Space brown noise, 432 Hz binaural alpha, Cosmic
 **[https://devildonia.github.io/hades_shortcuts/](https://devildonia.github.io/hades_shortcuts/)**
 
 ### Chrome / Edge / Brave (Manifest V3)
-1. Download [`dist/hades-shortcuts-chrome-v1.0.0-rc-1.zip`](dist/hades-shortcuts-chrome-v1.0.0-rc-1.zip) or clone this repo.
+1. Download the extension from the [GitHub Releases page](https://github.com/Devildonia/hades_shortcuts/releases) (`hades-shortcuts-chrome-v1.0.0-rc-1.zip`), or clone this repo.
 2. Open `chrome://extensions/`, enable **Developer Mode**.
 3. **Load unpacked** and select the project folder.
 4. <kbd>Ctrl</kbd> + <kbd>T</kbd> opens the Command Center as your new tab.

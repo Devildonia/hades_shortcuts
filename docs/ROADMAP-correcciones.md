@@ -283,39 +283,55 @@ sin roles de botón sin teclado, `<noscript>` presente. Suite completa: **154/15
 
 ---
 
-## Fase 6 — Repositorio y versiones (P3)
+## Fase 6 — Repositorio y versiones (P3) ✅ COMPLETADO (repo)
 
-### T6.1 `dist/*.zip` fuera de git
+### T6.1 ✅ (repo) `dist/*.zip` fuera de git
 - Cambio: subir `hades-shortcuts-chrome-v1.0.0-rc-1.zip` como asset de un
   GitHub Release, borrarlo del árbol, añadir `dist/` a `.gitignore` y nota en
   README (desde dónde descargarlo).
 - Esfuerzo: S.
+- Hecho (lado repo): `git rm --cached` del zip (queda en disco, regenerable con
+  `package-extension.py`), `dist/` añadido a `.gitignore`, README apunta a
+  `github.com/Devildonia/hades_shortcuts/releases` (badge + Quick Start).
+- ⏳ Pendiente (acción externa): crear el GitHub Release con el zip como asset
+  para que el link `releases/latest/download/...` funcione:
+  `gh release create v1.0.0-rc-1 dist/hades-shortcuts-chrome-v1.0.0-rc-1.zip --notes "v1.0.0-rc-1"`
 
-### T6.2 Screenshots: decisión explícita
+### T6.2 ✅ Screenshots: decisión explícita
 - Mantener `docs/screenshots/` en el repo (el README los renderiza en GitHub;
   moverlos a LFS rompería las vistas embebidas sin beneficio real). Anotar la
   decisión en README o este roadmap. Sin acción de código.
+- Hecho: nota añadida bajo “Visual showcase” del README (razón: vistas embebidas).
 
-### T6.3 Versión única
+### T6.3 ✅ Versión única
 - Cambio: constante `APP_VERSION = '1.0.0-rc-1'` en `js/state.js` (o `app.js`),
   importada por `js/backup.js`, `js/crypto-sync.js` y cualquier otro sitio que
   la repita. `manifest.json` conserva `version: "1.0.0"` (requisito semver de
   Chrome) + `version_name` rc.
 - Verificación: grep — 1 definición, N imports.
 - Esfuerzo: S.
+- Hecho: `export const APP_VERSION` en `js/state.js`; `backup.js` y
+  `crypto-sync.js` la importan. grep: literal `1.0.0-rc-1` solo en `state.js`
+  (def), 2 imports. `manifest.json`: `version: "1.0.0"` + `version_name` rc.
 
-### T6.4 Iconos reales 16/48 en el manifest
+### T6.4 ✅ Iconos reales 16/48 en el manifest
 - Cambio: generar `iconos/pwa-16.png` y `iconos/pwa-48.png` desde `pwa-192.png`
   (script one-shot con Python/Pillow, fuera del proyecto) y referenciarlos en
   `manifest.json`.
 - Esfuerzo: S.
+- Hecho: Pillow (LANCZOS) genera 16×16 y 48×48 RGBA; `manifest.json` →
+  `16→pwa-16.png, 48→pwa-48.png, 128→pwa-512.png`. JSON validado.
 
-### T6.5 Cache-busting unificado
+### T6.5 ✅ Cache-busting unificado
 - Cambio: `js/app.js?v=1.0.0-rc-1.dragfix` → versión limpia al liberar (la
   constante de T6.3 guía el valor).
 - Esfuerzo: S.
+- Hecho: `index.html` → `style.css?v=1.0.0-rc-1` y `js/app.js?v=1.0.0-rc-1`
+  (mismo valor que `APP_VERSION`, sin sufijo `.dragfix`).
 
-**Done de Fase 6:** repo ~1 MB más ligero, versión única, iconos correctos.
+**Done de Fase 6:** ✅ zip fuera de git (`dist/` en .gitignore), versión única
+(`APP_VERSION` en `state.js`, 2 imports), iconos 16/48 reales, cache-bust unificado.
+Suite completa: **154/154 en verde**.
 
 ---
 

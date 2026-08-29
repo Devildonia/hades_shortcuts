@@ -1,6 +1,6 @@
 // js/backup.js - JSON Backup & Restore Engine
 
-import { state, readJsonStorage, showToast } from './state.js';
+import { state, readJsonStorage, showToast, APP_VERSION } from './state.js';
 import { i18nDictionaries, getTranslation } from './i18n.js';
 import { soundFx } from './audio.js';
 
@@ -20,7 +20,7 @@ export class BackupManager {
 
     exportBackup() {
         const data = {
-            version: '1.0.0-rc-1',
+            version: APP_VERSION,
             exportedAt: new Date().toISOString(),
             settings: {
                 userName: state.userName,
