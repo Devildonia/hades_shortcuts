@@ -527,6 +527,23 @@
     "openai_model": "Model",
     "anthropic_model": "Model",
     "opt_lmstudio": "LM Studio",
+    "thinking": "Thinking...",
+    "stopped": "Generation stopped.",
+    "local_failed": "The local engine could not generate a response.",
+    "fallback_suffix": "Responding with the local engine.",
+    "error": {
+      "aborted": "generation stopped",
+      "timeout": "no response within {sec} s (timeout)",
+      "http": "provider returned HTTP {code}",
+      "unreachable": "could not connect to the provider"
+    },
+    "providers": {
+      "local_heuristic": "Local engine",
+      "ollama": "Ollama",
+      "lmstudio": "LM Studio",
+      "openai": "OpenAI",
+      "anthropic": "Anthropic"
+    },
     "heuristics": {
       "focus": "You can enable **Focus Mode** with the **Alt+F** shortcut or the **Focus Mode** button in the header. It silences the noise and keeps only the essentials of your active space.",
       "recommend": "Here are some popular, high-productivity tools I recommend:\n\n* **[Hugging Face Spaces](https://huggingface.co/spaces)** `#ai #ml` — Interactive models and demos.\n* **[Shadertoy](https://shadertoy.com)** `#3d #shaders` — Procedural WebGL shader creation.\n* **[Excalidraw](https://excalidraw.com)** `#design #canvas` — Collaborative virtual whiteboard.\n\n*Click any link to visit it.*",

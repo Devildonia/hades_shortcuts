@@ -527,6 +527,23 @@
     "prompt_3d": "¿Qué herramientas de 3D o IA tengo guardadas?",
     "prompt_suggest": "Recomiéndame 3 herramientas nuevas de productividad",
     "prompt_focus": "¿Cómo activo el modo Focus?",
+    "thinking": "Pensando...",
+    "stopped": "Generación detenida.",
+    "local_failed": "El motor local no pudo generar una respuesta.",
+    "fallback_suffix": "Respondiendo con el motor local.",
+    "error": {
+      "aborted": "generación detenida",
+      "timeout": "sin respuesta en {sec} s (timeout)",
+      "http": "el proveedor respondió HTTP {code}",
+      "unreachable": "no se pudo conectar con el proveedor"
+    },
+    "providers": {
+      "local_heuristic": "Motor local",
+      "ollama": "Ollama",
+      "lmstudio": "LM Studio",
+      "openai": "OpenAI",
+      "anthropic": "Anthropic"
+    },
     "heuristics": {
       "focus": "Puedes activar el **Modo Focus** con el atajo **Alt+F** o con el botón **Modo Focus** de la cabecera. Silencia el ruido y deja solo lo esencial de tu espacio activo.",
       "recommend": "Te recomiendo estas herramientas populares de alta productividad:\n\n* **[Hugging Face Spaces](https://huggingface.co/spaces)** `#ia #ml` — Modelos y demos interactivos.\n* **[Shadertoy](https://shadertoy.com)** `#3d #shaders` — Creación de shaders procedurales WebGL.\n* **[Excalidraw](https://excalidraw.com)** `#diseno #canvas` — Pizarra virtual colaborativa.\n\n*Haz clic en cualquier enlace para visitarla.*",

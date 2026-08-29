@@ -6,13 +6,6 @@ import { getTranslation } from './i18n.js';
 
 const PROVIDER_TIMEOUT_MS = 25000;
 const MAX_MESSAGES = 60;
-const PROVIDER_LABELS = {
-    local_heuristic: 'Motor local',
-    ollama: 'Ollama',
-    lmstudio: 'LM Studio',
-    openai: 'OpenAI',
-    anthropic: 'Anthropic'
-};
 
 export class AIAgentEngine {
     constructor() {
@@ -249,12 +242,18 @@ export class AIAgentEngine {
     describeError(err) {
         if (err && err.name === 'AbortError') {
             return this.userAborted
-                ? 'generación detenida'
-                : `sin respuesta en ${PROVIDER_TIMEOUT_MS / 1000} s (timeout)`;
+                ? getTranslation('ai_agent.error.aborted')
+                : getTranslation('ai_agent.error.timeout').replace('{sec}', String(PROVIDER_TIMEOUT_MS / 1000));
         }
         const m = /HTTP (\d{3})/.exec(String((err && err.message) || ''));
-        if (m) return `el proveedor respondió HTTP ${m[1]}`;
-        return 'no se pudo conectar con el proveedor';
+        if (m) return getTranslation('ai_agent.error.http').replace('{code}', m[1]);
+        return getTranslation('ai_agent.error.unreachable');
+    }
+
+    // Etiqueta legible del proveedor activo (desde i18n; si no existe, el identificador)
+    providerLabel(provider) {
+        const label = getTranslation('ai_agent.providers.' + provider);
+        return label || provider;
     }
 
     // --- Envío de consulta con fallback local explícito ---
@@ -269,7 +268,7 @@ export class AIAgentEngine {
         if (this.inputEl) this.inputEl.value = '';
         this.setGeneratingUi(true);
 
-        const aiMsgDiv = this.appendMessage('ai', 'Pensando...');
+        const aiMsgDiv = this.appendMessage('ai', getTranslation('ai_agent.thinking'));
 
         try {
             const ctx = this.buildSystemContext();
@@ -279,18 +278,18 @@ export class AIAgentEngine {
             soundFx.play('chime');
         } catch (err) {
             if (err && err.name === 'AbortError' && this.userAborted) {
-                aiMsgDiv.innerHTML = '<em>Generación detenida.</em>';
+                aiMsgDiv.innerHTML = `<em>${escapeHtml(getTranslation('ai_agent.stopped'))}</em>`;
             } else {
-                const label = PROVIDER_LABELS[this.config.provider] || this.config.provider;
+                const label = this.providerLabel(this.config.provider);
                 const reason = this.describeError(err);
                 let local = '';
                 try {
                     local = await this.generateLocalHeuristicResponse(userText);
                 } catch (e) {
-                    local = 'El motor local no pudo generar una respuesta.';
+                    local = getTranslation('ai_agent.local_failed');
                 }
                 aiMsgDiv.innerHTML =
-                    `<div class="ai-fallback-note"><strong>${escapeHtml(label)}:</strong> ${escapeHtml(reason)}. Respondiendo con el motor local.</div>` +
+                    `<div class="ai-fallback-note"><strong>${escapeHtml(label)}:</strong> ${escapeHtml(reason)}. ${escapeHtml(getTranslation('ai_agent.fallback_suffix'))}</div>` +
                     this.formatMarkdown(local);
             }
         } finally {
