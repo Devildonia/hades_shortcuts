@@ -113,7 +113,10 @@ test('PostItManager: post-it incluye tirador ↘ y el resize persiste w/h', ({ e
         manager.container.id = 'postits-canvas';
         document.body.appendChild(manager.container);
     }
-    const note = { id: 't_resize', text: 'redimensionable', x: 10, y: 10, color: 'yellow', rotation: 0, zIndex: 5, createdAt: '00:00' };
+    // Tamaño inicial explícito: tests/index.html no carga style.css, así que .glass-postit
+    // no tiene width por CSS. Con w/h definidos, renderSingle fija el tamaño y offsetWidth
+    // es determinista, haciendo estable la aserción de +30/+40 del handler de resize.
+    const note = { id: 't_resize', text: 'redimensionable', x: 10, y: 10, w: 240, h: 150, color: 'yellow', rotation: 0, zIndex: 5, createdAt: '00:00' };
     manager.postits.push(note);
     manager.renderSingle(note, false);
 

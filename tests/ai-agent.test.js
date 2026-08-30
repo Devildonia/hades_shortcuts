@@ -68,6 +68,10 @@ test('AIAgentEngine: formatMarkdown escapa HTML malicioso y bloquea enlaces java
 test('AIAgentEngine: heurística local es robusta ante acentos y varios idiomas', async ({ expect }) => {
     const engine = new AIAgentEngine();
     const original = state.shortcuts;
+    const originalLang = state.language;
+    // La heurística responde en el idioma de la app; fijamos 'es' para verificar
+    // la frase en español ("2 herramientas") sin depender del locale del navegador.
+    state.language = 'es';
     state.shortcuts = [
         { title: 'Blender', url: 'https://blender.org', category: '3d', tags: ['3d', 'modelado'] },
         { title: 'Hugging Face', url: 'https://huggingface.co', category: 'ia', tags: ['ia', 'ml'] }
@@ -86,6 +90,7 @@ test('AIAgentEngine: heurística local es robusta ante acentos y varios idiomas'
         expect(both).toContain('2 herramientas');
     } finally {
         state.shortcuts = original;
+        state.language = originalLang;
     }
 });
 
@@ -172,6 +177,9 @@ test('AIAgentEngine: HTTP 401 cae al motor local con aviso explícito', async ({
     const engine = new AIAgentEngine();
     engine.config.provider = 'openai';
     engine.config.openaiApiKey = 'sk-invalida';
+    const originalLang = state.language;
+    // El aviso de fallback se verifica en español ("motor local"); fijamos 'es'.
+    state.language = 'es';
 
     const originalFetch = globalThis.fetch;
     globalThis.fetch = () => Promise.resolve({
@@ -186,6 +194,7 @@ test('AIAgentEngine: HTTP 401 cae al motor local con aviso explícito', async ({
         expect(engine.messagesContainer.innerHTML).toContain('motor local');
     } finally {
         globalThis.fetch = originalFetch;
+        state.language = originalLang;
     }
 });
 

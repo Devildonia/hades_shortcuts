@@ -201,13 +201,15 @@
       "show_telemetry": "Mostrar Telemetría del Sistema",
       "gold_bezel_toggle": "Marcos dorados",
       "blue_bezel_toggle": "Marcos azules",
-      "lilac_bezel_toggle": "Marco lila",
+      "lilac_bezel_toggle": "Marcos lila",
       "visual_desc": "Ajustes visuales generales del tablero.",
       "show_tags_desc": "Muestra las etiquetas (#tags) de cada atajo.",
       "chrome_bezel_desc": "Marcos plateados en las categorías de atajos.",
       "gold_bezel_desc": "Marcos dorados en los widgets y cajones del tablero.",
       "blue_bezel_desc": "Marcos azules en Perfiles, Agente IA y barra de búsqueda.",
       "lilac_bezel_desc": "Marco lila alrededor del cajón de Ajustes.",
+      "green_bezel_toggle": "Marcos verdes",
+      "green_bezel_desc": "Marcos verdes en el reloj, telemetría, clima, Modo Focus y botón de Ajustes.",
       "edit_mode_toggle_desc": "Permite arrastrar, reordenar, editar o eliminar iconos y cajones."
     },
     "backup": {

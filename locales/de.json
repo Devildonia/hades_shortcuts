@@ -201,13 +201,15 @@
       "show_telemetry": "System-Telemetrie anzeigen",
       "gold_bezel_toggle": "Goldene Rahmen",
       "blue_bezel_toggle": "Blaue Ränder",
-      "lilac_bezel_toggle": "Lilafarbener Rahmen",
+      "lilac_bezel_toggle": "Lilafarbene Ränder",
       "visual_desc": "Allgemeine visuelle Einstellungen des Dashboards.",
       "show_tags_desc": "Zeigt die Tags jedes Schnelltasts an.",
       "chrome_bezel_desc": "Silberne Rahmen um die Shortcut-Kategorien.",
       "gold_bezel_desc": "Goldene Rahmen um Widgets und Panels des Dashboards.",
       "blue_bezel_desc": "Blaue Ränder um Profile, KI-Agent und Suchleiste.",
       "lilac_bezel_desc": "Lilafarbener Rahmen um das Einstellungen-Feld.",
+      "green_bezel_toggle": "Grüne Ränder",
+      "green_bezel_desc": "Grüne Ränder um Uhr, Telemetrie, Wetter, Fokus-Modus und Einstellungs-Button.",
       "edit_mode_toggle_desc": "Ermöglicht Ziehen, Neuordnen, Bearbeiten oder Löschen von Icons und Panels."
     },
     "backup": {

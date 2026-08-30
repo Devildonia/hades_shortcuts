@@ -201,13 +201,15 @@
       "show_telemetry": "Show System Telemetry",
       "gold_bezel_toggle": "Gold Frames",
       "blue_bezel_toggle": "Blue frames",
-      "lilac_bezel_toggle": "Lilac frame",
+      "lilac_bezel_toggle": "Lilac frames",
       "visual_desc": "General visual settings of the dashboard.",
       "show_tags_desc": "Shows the tags of each shortcut.",
       "chrome_bezel_desc": "Silver frames on the shortcut categories.",
       "gold_bezel_desc": "Gold frames on the dashboard widgets and panels.",
       "blue_bezel_desc": "Blue frames on Profiles, AI Agent and search bar.",
       "lilac_bezel_desc": "Lilac frame around the Settings drawer.",
+      "green_bezel_toggle": "Green frames",
+      "green_bezel_desc": "Green frames on clock, telemetry, weather, Focus Mode and Settings button.",
       "edit_mode_toggle_desc": "Allows dragging, reordering, editing or deleting icons and panels."
     },
     "backup": {
