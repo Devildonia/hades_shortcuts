@@ -8835,3 +8835,102 @@ html.no-lilac-bezel .settings-drawer-card::before,
 html.no-lilac-bezel .settings-drawer-card::after {
     display: none;
 }
+
+/* ==========================================================================
+   Marco verde metálico — chips del encabezado (reloj · telemetría · clima ·
+   Modo Focus · botón Ajustes).
+   Mismo lenguaje cromo (conic-gradient + mask) que los marcos dorado/azul/lila,
+   en paleta esmeralda. Se desactiva con `html.no-green-bezel` (Ajustes).
+   ========================================================================== */
+/* Los chips del encabezado necesitan ser contenedor de posicionamiento para
+   que el aro cromo (position:absolute) se ancle a cada chip individualmente. */
+.widget-clock,
+.telemetry-capsule,
+.widget-weather,
+.focus-toggle-btn,
+.settings-main-btn {
+    position: relative;
+}
+
+.widget-clock::after,
+.telemetry-capsule::after,
+.widget-weather::after,
+.focus-toggle-btn::after,
+.settings-main-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 5px;
+    pointer-events: none;
+    z-index: 6;
+    background:
+        radial-gradient(
+            220px circle at var(--gold-lx, 30%) var(--gold-ly, 10%),
+            rgba(232, 255, 240, 0.95) 0%,
+            rgba(126, 226, 168, 0.55) 22%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from -40deg,
+            #04231a 0deg,
+            #1c7a5a 28deg,
+            #a6f0cd 50deg,
+            #0e523c 82deg,
+            #0a3626 122deg,
+            #37b07f 164deg,
+            #0a4630 204deg,
+            #8ff0b8 242deg,
+            #073222 284deg,
+            #2ea873 326deg,
+            #04231a 360deg
+        );
+    background-blend-mode: screen, normal;
+    -webkit-mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    -webkit-mask-origin: content-box, border-box;
+    -webkit-mask-clip: content-box, border-box;
+    mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    mask-origin: content-box, border-box;
+    mask-clip: content-box, border-box;
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .widget-clock::after,
+[data-theme="light"] .telemetry-capsule::after,
+[data-theme="light"] .widget-weather::after,
+[data-theme="light"] .focus-toggle-btn::after,
+[data-theme="light"] .settings-main-btn::after {
+    background:
+        radial-gradient(
+            220px circle at var(--gold-lx, 30%) var(--gold-ly, 10%),
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(126, 226, 168, 0.45) 22%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from -40deg,
+            #0f5238 0deg,
+            #34c08a 30deg,
+            #ffffff 50deg,
+            #1e8a5e 84deg,
+            #146a48 126deg,
+            #5fe0a8 168deg,
+            #1e7a52 206deg,
+            #b8f5d6 244deg,
+            #10523a 288deg,
+            #3ec08f 328deg,
+            #0f5238 360deg
+        );
+}
+
+/* Marco verde desactivado (Ajustes → Marco verde): retira el aro cromo de los
+   chips del encabezado; la sombra/neuma del chip se conserva. */
+html.no-green-bezel .widget-clock::after,
+html.no-green-bezel .telemetry-capsule::after,
+html.no-green-bezel .widget-weather::after,
+html.no-green-bezel .focus-toggle-btn::after,
+html.no-green-bezel .settings-main-btn::after {
+    display: none;
+}

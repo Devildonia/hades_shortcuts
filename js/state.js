@@ -110,6 +110,7 @@ export class AppState {
         this.showGoldBezel = this.getItem('show_gold_bezel', 'true') !== 'false';
         this.showBlueBezel = this.getItem('show_blue_bezel', 'true') !== 'false';
         this.showLilacBezel = this.getItem('show_lilac_bezel', 'true') !== 'false';
+        this.showGreenBezel = this.getItem('show_green_bezel', 'false') === 'true';
         this.layoutMatrix = this.loadLayoutMatrix();
         this.listeners = new Map();
     }
@@ -285,6 +286,18 @@ export class AppState {
         this.setItem('show_lilac_bezel', this.showLilacBezel ? 'true' : 'false');
         this.applyLilacBezel();
         this.emit('lilac:visibility', this.showLilacBezel);
+    }
+
+    applyGreenBezel() {
+        if (typeof document === 'undefined') return;
+        document.documentElement.classList.toggle('no-green-bezel', !this.showGreenBezel);
+    }
+
+    setShowGreenBezel(enabled) {
+        this.showGreenBezel = !!enabled;
+        this.setItem('show_green_bezel', this.showGreenBezel ? 'true' : 'false');
+        this.applyGreenBezel();
+        this.emit('green:visibility', this.showGreenBezel);
     }
 
     saveShortcuts(list) {

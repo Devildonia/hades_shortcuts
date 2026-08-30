@@ -178,6 +178,7 @@ export function initApp() {
     state.applyGoldBezel();
     state.applyBlueBezel();
     state.applyLilacBezel();
+    state.applyGreenBezel();
     state.on('theme:changed', (newTheme) => {
         document.documentElement.setAttribute('data-theme', newTheme);
         soundFx.play('click');
