@@ -167,6 +167,7 @@ export function initApp() {
     state.applyChromeBezel();
     state.applyGoldBezel();
     state.applyBlueBezel();
+    state.applyLilacBezel();
     state.on('theme:changed', (newTheme) => {
         document.documentElement.setAttribute('data-theme', newTheme);
         soundFx.play('click');
@@ -281,6 +282,25 @@ export function initApp() {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
 }
+
+// Escape-hatch de recarga limpia: desregistra el Service Worker, vacía todas las
+// cachés (CacheStorage) y recarga la página. Útil si el SW queda en un estado
+// extraño. Invocable desde la consola: hadesHardReload()
+window.hadesHardReload = async function () {
+    try {
+        if ('serviceWorker' in navigator) {
+            const regs = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(regs.map((r) => r.unregister()));
+        }
+        if ('caches' in window) {
+            const keys = await caches.keys();
+            await Promise.all(keys.map((k) => caches.delete(k)));
+        }
+    } catch (err) {
+        console.warn('[hades] hadesHardReload:', err);
+    }
+    location.reload();
+};
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initApp);

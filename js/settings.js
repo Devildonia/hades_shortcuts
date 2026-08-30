@@ -28,6 +28,7 @@ export class SettingsHub {
         this.chromeBezelToggle = document.getElementById('setting-chrome-bezel-toggle');
         this.goldBezelToggle = document.getElementById('setting-gold-bezel-toggle');
         this.blueBezelToggle = document.getElementById('setting-blue-bezel-toggle');
+        this.lilacBezelToggle = document.getElementById('setting-lilac-bezel-toggle');
         this.addShortcutBtn = document.getElementById('drawer-add-shortcut-btn');
         this.layoutResetBtn = document.getElementById('layout-reset-defaults-btn');
         this.toggleScratchpad = document.getElementById('toggle-widget-scratchpad');
@@ -134,6 +135,7 @@ export class SettingsHub {
         if (this.chromeBezelToggle) this.chromeBezelToggle.checked = state.showChromeBezel !== false;
         if (this.goldBezelToggle) this.goldBezelToggle.checked = state.showGoldBezel !== false;
         if (this.blueBezelToggle) this.blueBezelToggle.checked = state.showBlueBezel !== false;
+        if (this.lilacBezelToggle) this.lilacBezelToggle.checked = state.showLilacBezel !== false;
 
         this.syncWidgetToggles();
     }
@@ -213,6 +215,13 @@ export class SettingsHub {
             this.blueBezelToggle.addEventListener('change', (e) => {
                 soundFx.play('click');
                 state.setShowBlueBezel(e.target.checked);
+            });
+        }
+
+        if (this.lilacBezelToggle) {
+            this.lilacBezelToggle.addEventListener('change', (e) => {
+                soundFx.play('click');
+                state.setShowLilacBezel(e.target.checked);
             });
         }
 

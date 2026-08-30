@@ -2417,24 +2417,108 @@ body.category-expanded-active {
     transition: opacity 0.25s ease;
 }
 
+/* Cajón de Settings: marco lila (familia propia; widgets = oro, categorías = plata,
+   perfiles/IA/búsqueda = azul) */
 .settings-drawer-card {
+    --gold-lx: 28%;
+    --gold-ly: 12%;
+    --gold-angle: -38deg;
     width: min(620px, calc(100vw - 40px));
     max-width: 620px;
     min-width: 0;
     max-height: 88vh;
     height: auto;
     background: var(--bg-secondary);
-    border: 1px solid var(--card-border-hover);
+    border: 1px solid transparent;
     border-radius: var(--radius-xl);
     padding: 28px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 40px var(--accent-glow);
+    box-shadow:
+        0 0 0 1px rgba(167, 139, 250, 0.35),
+        inset 0 1px 0 rgba(221, 214, 254, 0.3),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.35),
+        0 25px 60px rgba(0, 0, 0, 0.75),
+        var(--shadow-subtle);
     display: flex;
     flex-direction: column;
     gap: 20px;
     overflow: hidden;
     contain: inline-size;
+    position: relative;
+    isolation: isolate;
     color-scheme: dark;
     animation: modalPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Spotlight lila del cursor (mismo efecto que el azul de la familia perfiles) */
+.settings-drawer-card::before {
+    content: '';
+    position: absolute;
+    top: var(--mouse-y, -1000px);
+    left: var(--mouse-x, -1000px);
+    transform: translate(-50%, -50%);
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.16) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.settings-drawer-card:hover::before {
+    opacity: 1;
+}
+
+.settings-drawer-card:hover {
+    box-shadow:
+        0 0 0 1px rgba(196, 181, 253, 0.55),
+        0 0 28px rgba(139, 92, 246, 0.28),
+        inset 0 1px 0 rgba(237, 233, 254, 0.5),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.35),
+        0 25px 60px rgba(0, 0, 0, 0.75),
+        var(--shadow-elevated);
+}
+
+/* Bezel cromo-lila: misma estructura de mask que el dorado, paleta lila */
+.settings-drawer-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 6px;
+    pointer-events: none;
+    z-index: 4;
+    background:
+        radial-gradient(
+            280px circle at var(--gold-lx) var(--gold-ly),
+            rgba(237, 233, 254, 0.98) 0%,
+            rgba(167, 139, 250, 0.6) 20%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from var(--gold-angle),
+            #140b2e 0deg,
+            #6d4dd3 30deg,
+            #c4b5fd 50deg,
+            #4c2fa8 84deg,
+            #1e1050 126deg,
+            #8b5cf6 168deg,
+            #37247a 206deg,
+            #a78bfa 244deg,
+            #241260 288deg,
+            #7c5fd6 328deg,
+            #140b2e 360deg
+        );
+    background-blend-mode: screen, normal;
+    -webkit-mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    -webkit-mask-origin: content-box, border-box;
+    -webkit-mask-clip: content-box, border-box;
+    mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    mask-origin: content-box, border-box;
+    mask-clip: content-box, border-box;
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.55);
 }
 
 @keyframes modalPopIn {
@@ -4533,9 +4617,37 @@ html.no-gold-bezel .search-box-wrapper::after {
 
 [data-theme="light"] .settings-drawer-card {
     background: rgba(255, 255, 255, 0.96);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12), 0 0 30px rgba(2, 132, 199, 0.08);
+    border: 1px solid transparent;
+    box-shadow:
+        0 0 0 1px rgba(167, 139, 250, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 20px 50px rgba(0, 0, 0, 0.12),
+        var(--shadow-subtle);
     color-scheme: light;
+}
+
+[data-theme="light"] .settings-drawer-card::after {
+    background:
+        radial-gradient(
+            280px circle at var(--gold-lx) var(--gold-ly),
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(167, 139, 250, 0.55) 20%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from var(--gold-angle),
+            #6d4dd3 0deg,
+            #a78bfa 30deg,
+            #ffffff 50deg,
+            #8b5cf6 84deg,
+            #7c5fd6 126deg,
+            #c4b5fd 168deg,
+            #8b6ce0 206deg,
+            #ddd6fe 244deg,
+            #7c5fd6 288deg,
+            #a78bfa 328deg,
+            #6d4dd3 360deg
+        );
 }
 
 [data-theme="light"] .settings-tab-pane.active {
@@ -8600,5 +8712,24 @@ html.no-blue-bezel .search-box-wrapper::before,
 html.no-blue-bezel .space-numpad-card::after,
 html.no-blue-bezel .ai-launcher-card::after,
 html.no-blue-bezel .search-box-wrapper::after {
+    display: none;
+}
+
+/* ==========================================================================
+   Marco lila desactivado — cajón de Settings
+   Mantiene la sombra neutra de profundidad; retira aro, spotlight y bezel.
+   ========================================================================== */
+html.no-lilac-bezel .settings-drawer-card {
+    border-color: var(--card-border);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), var(--shadow-subtle);
+}
+
+html.no-lilac-bezel .settings-drawer-card:hover {
+    border-color: var(--card-border-hover);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), var(--shadow-elevated);
+}
+
+html.no-lilac-bezel .settings-drawer-card::before,
+html.no-lilac-bezel .settings-drawer-card::after {
     display: none;
 }

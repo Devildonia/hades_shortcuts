@@ -201,11 +201,13 @@
       "show_telemetry": "Afficher la Télémétrie Système",
       "gold_bezel_toggle": "Cadres dorés",
       "blue_bezel_toggle": "Cadres bleus",
+      "lilac_bezel_toggle": "Cadre lilas",
       "visual_desc": "Réglages visuels généraux du tableau de bord.",
       "show_tags_desc": "Affiche les tags de chaque raccourci.",
       "chrome_bezel_desc": "Cadres chromés sur les catégories de raccourcis.",
       "gold_bezel_desc": "Cadres dorés sur les widgets et panneaux du tableau de bord.",
       "blue_bezel_desc": "Cadres bleus sur Profils, Agent IA et barre de recherche.",
+      "lilac_bezel_desc": "Cadre lilas autour du panneau Paramètres.",
       "edit_mode_toggle_desc": "Permet de glisser, réorganiser, modifier ou supprimer icônes et panneaux."
     },
     "backup": {
