@@ -537,6 +537,40 @@ body.settings-open {
     transform: scale(1.02);
 }
 
+/* Logo H de marca: sustituye SOLO la primera letra "H" cuando el nombre es
+   el default "HaDeS" (app.js añade .brand-logo-mode a .brand-title). Si el
+   usuario personaliza su nombre, el logo se oculta y aparece la letra H
+   normal junto al resto del nombre. */
+.brand-logo {
+    display: none;
+    height: 1.45em;
+    width: auto;
+    /* .brand-title tiene gap: 4px; el -20px hace que "aDeS" se monte "a caballo"
+       sobre el canal alfa (transparencia) de la H, sin que se note, de modo que
+       se lea como una sola palabra (HaDeS). */
+    margin-right: -20px;
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    flex: 0 0 auto;
+    position: relative;
+    z-index: 0;
+}
+
+/* El nombre (aDeS) debe pintarse POR ENCIMA del logo para el solapamiento. */
+.brand-user-name {
+    position: relative;
+    z-index: 1;
+}
+
+.brand-title.brand-logo-mode .brand-logo {
+    display: inline-block;
+}
+
+.brand-title.brand-logo-mode .brand-name-h {
+    display: none;
+}
+
 .accent-text {
     background: var(--accent-gradient);
     -webkit-background-clip: text;

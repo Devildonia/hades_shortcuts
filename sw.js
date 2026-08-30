@@ -12,7 +12,7 @@
 // `'no-store'` es el único modo que NUNCA lee/escribe la caché HTTP del
 // navegador: garantiza una descarga completa (200) en cada carga.
 
-const CACHE_VERSION = '1.2.0';
+const CACHE_VERSION = '1.7.2';
 const CACHE_NAME = `hades-shortcuts-v${CACHE_VERSION}`;
 const STATIC_ASSETS = [
     './',
@@ -59,6 +59,7 @@ const STATIC_ASSETS = [
     './js/bangs.js',
     './iconos/pwa-192.png',
     './iconos/pwa-512.png',
+    './iconos/H.webp',
     './locales/es.json',
     './locales/en.json',
     './locales/fr.json',

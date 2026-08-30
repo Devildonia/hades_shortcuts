@@ -44,11 +44,21 @@ export function initUserNameSystem(weather, settingsHub) {
     const preview = document.getElementById('user-preview-text');
     const drawerInput = document.getElementById('drawer-user-name-input');
     const drawerSaveBtn = document.getElementById('drawer-user-save-btn');
+    const nameH = document.getElementById('brand-name-h');
+    const nameRest = document.getElementById('brand-name-rest');
 
     const updateDisplay = (name) => {
         const trimmed = (name || 'HaDeS').trim();
         const suffix = trimmed.toLowerCase().endsWith('s') ? "'" : "'s";
-        if (brandName) brandName.textContent = trimmed;
+        if (brandName) {
+            // Logo H de marca: solo sustituye la primera letra "H" si el nombre
+            // sigue siendo el default "HaDeS". Si el usuario lo personaliza,
+            // el logo se oculta y el nombre completo se muestra como texto.
+            const useLogo = trimmed === 'HaDeS';
+            if (nameH) nameH.textContent = useLogo ? 'H' : trimmed.charAt(0);
+            if (nameRest) nameRest.textContent = useLogo ? 'aDeS' : trimmed.slice(1);
+            if (brandTitle) brandTitle.classList.toggle('brand-logo-mode', useLogo);
+        }
         if (brandSuffix) brandSuffix.textContent = suffix;
         if (drawerInput) drawerInput.value = trimmed;
         if (input) input.value = trimmed;
