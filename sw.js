@@ -143,8 +143,18 @@ self.addEventListener('fetch', (e) => {
     //    (ni siquiera revalidada/304), de modo que cada carga (F5 / Ctrl+F5 / nueva
     //    pestaña) obtiene la versión actual completa del servidor. La caché del SW
     //    solo se usa si la red falla (offline).
+    //
+    //    FIX Brave (2026-08): Brave mantiene su propia capa de red (Shields / Fast
+    //    Browser) que ignora hasta `cache: 'no-store'` y usa la URL como clave de
+    //    caché. Añadimos un query-string de cache-busting (`__v` = timestamp) a la
+    //    petición REAL de red: la URL cambia en cada carga, así que esa caché no
+    //    tiene nada que devolver. El resultado se sigue guardando bajo la URL
+    //    original (`cache.put(req, ...)`) para que el respaldo offline no se rompa.
+    //    (GitHub Pages y la mayoría de servidores ignoran la query en la ruta.)
+    const bustUrl = new URL(req.url);
+    bustUrl.searchParams.set('__v', Date.now().toString(36));
     e.respondWith(
-        fetch(req, { cache: 'no-store' })
+        fetch(bustUrl.href, { cache: 'no-store' })
             .then((res) => {
                 if (res && res.status === 200) {
                     const cloneA = res.clone();
