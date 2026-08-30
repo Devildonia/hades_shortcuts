@@ -1,6 +1,13 @@
-// sw.js - Service Worker for HaDeS' Shortcuts PWA (Network-First with Offline Cache & Stale-While-Revalidate Icons)
+// sw.js - Service Worker for HaDeS' Shortcuts PWA
+// Estrategia: NETWORK-FIRST (siempre fresco) para código (HTML/CSS/JS) e imágenes,
+// forzando la red con `cache: 'reload'` para que ni un Ctrl+F5 devuelva assets
+// caducos de la caché heurística del navegador (python http.server solo envía
+// Last-Modified). La caché del SW queda SOLO como respaldo offline.
+// Fuentes: cache-first (inmutables, evitan re-descargarlas en cada carga).
+// Bump de CACHE_VERSION invalida la caché anterior (assets viejos) al activar.
 
-const CACHE_NAME = 'hades-shortcuts-v1.0.0-cache';
+const CACHE_VERSION = '1.1.0';
+const CACHE_NAME = `hades-shortcuts-v${CACHE_VERSION}`;
 const STATIC_ASSETS = [
     './',
     './index.html',
@@ -99,48 +106,58 @@ function matchIgnoringSearch(request) {
 const FALLBACK_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="#00f2fe" stroke-width="1.5"><rect width="18" height="18" x="3" y="3" rx="4" fill="#0f172a"/><circle cx="12" cy="12" r="4" fill="#00f2fe"/></svg>`;
 
 self.addEventListener('fetch', (e) => {
-    const url = new URL(e.request.url);
+    const req = e.request;
+    if (req.method !== 'GET') return; // Solo GET es cachable/servible.
 
-    if (url.pathname.includes('/iconos/') || url.pathname.endsWith('.webp') || url.pathname.endsWith('.png') || url.pathname.endsWith('.ico')) {
+    let url;
+    try { url = new URL(req.url); } catch { return; }
+    if (url.origin !== self.location.origin) return; // Terceros: deja fluir (no cachear APIs).
+
+    // 1) Fuentes: cache-first con revalidación en 2º plano (inmutables).
+    if (/\.(woff2?|ttf|otf|eot)(\?|$)/i.test(url.pathname + url.search)) {
         e.respondWith(
-            caches.open(CACHE_NAME).then((cache) => {
-                return cache.match(e.request).then((cachedResponse) => {
-                    const fetchPromise = fetch(e.request).then((networkResponse) => {
-                        if (networkResponse && networkResponse.status === 200) {
-                            cache.put(e.request, networkResponse.clone());
-                        }
-                        return networkResponse;
-                    }).catch(() => {
-                        return cachedResponse || new Response(FALLBACK_ICON_SVG, {
-                            status: 200,
-                            headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'no-store' }
-                        });
-                    });
-                    return cachedResponse || fetchPromise;
-                });
-            })
+            caches.match(req).then((hit) => hit || fetch(req).then((res) => {
+                if (res && res.status === 200) {
+                    const clone = res.clone();
+                    caches.open(CACHE_NAME).then((cache) => cache.put(req, clone));
+                }
+                return res;
+            }))
         );
         return;
     }
 
+    const isImage =
+        url.pathname.includes('/iconos/') ||
+        url.pathname.endsWith('.ico') ||
+        /\.(webp|png|jpe?g|gif|svg)(\?|$)/i.test(url.pathname + url.search);
+
+    // 2) Código (HTML/CSS/JS) + imágenes: NETWORK-FIRST forzado a red.
+    //    `cache: 'reload'` obliga a no leer de la caché HTTP del navegador, de modo
+    //    que cada carga (F5 / Ctrl+F5) obtiene la versión actual del servidor.
+    //    La caché del SW solo se usa si la red falla (offline).
     e.respondWith(
-        fetch(e.request)
+        fetch(req, { cache: 'reload' })
             .then((res) => {
-                if (res && res.status === 200 && e.request.method === 'GET') {
-                    // Solo cachear same-origin (evita cachear APIs de terceros)
-                    const reqUrl = new URL(e.request.url);
-                    const isSameOrigin = reqUrl.origin === self.location.origin;
-                    if (isSameOrigin) {
-                        const cloneA = res.clone();
-                        const cloneB = res.clone();
-                        caches.open(CACHE_NAME).then((cache) => {
-                            cache.put(e.request, cloneA);
-                            if (reqUrl.search) cache.put(reqUrl.href, cloneB);
-                        });
-                    }
+                if (res && res.status === 200) {
+                    const cloneA = res.clone();
+                    const cloneB = res.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(req, cloneA);
+                        if (url.search) cache.put(url.href, cloneB);
+                    });
                 }
                 return res;
             })
-            .catch(() => matchIgnoringSearch(e.request))
+            .catch(() => matchIgnoringSearch(req).then((hit) => {
+                if (hit) return hit;
+                if (isImage) {
+                    return new Response(FALLBACK_ICON_SVG, {
+                        status: 200,
+                        headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'no-store' }
+                    });
+                }
+                return new Response('Offline', { status: 503, statusText: 'Offline' });
+            }))
     );
 });
