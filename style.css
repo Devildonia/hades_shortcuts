@@ -6004,15 +6004,20 @@ html.no-gold-bezel .search-box-wrapper::after {
 }
 
 /* --- Profile Numpad (6 slots 1-6) --- */
-/* Misma tipografía que las cajas de categorías (.categoria h2), centrada */
+/* Misma tipografía y color que las cajas de categorías (.categoria h2), centrada.
+   .ai-launcher-card añade un punto luminoso cian (familia azul) como las categorías. */
 .spaces-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     font-family: var(--font-display);
     font-size: 0.92rem;
     font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     text-align: center;
-    color: var(--text-muted);
+    color: var(--text-primary);
     align-self: center;
 }
 
@@ -6093,7 +6098,8 @@ html.no-gold-bezel .search-box-wrapper::after {
 }
 
 /* --- Agente IA launcher: cajón de la familia azul (perfiles) ---
-    Etiqueta arriba (alineada con PERFILES) + botón que ocupa el resto */
+    Etiqueta arriba (alineada con PERFILES) + botón keycap 3D compacto,
+    con la misma profundidad que las teclas del numpad de perfiles. */
 .ai-launcher-card {
     align-items: stretch;
     justify-content: flex-start;
@@ -6101,43 +6107,105 @@ html.no-gold-bezel .search-box-wrapper::after {
     padding: 14px 18px;
 }
 
+/* Contenedor que ocupa el resto del cajón (bajo la etiqueta) y centra la
+   tecla keycap 3D compacta en vertical, de modo que la etiqueta queda arriba
+   alineada con PERFILES y el botón no estira a toda la altura del cajón. */
+.ai-launcher-btn-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Keycap 3D (mismo lenguaje que .space-key): cúpula superior, bisel lateral,
+   cuerpo extruido bajo la tecla. Paleta fría cian/azul propia del cajón. */
 .ai-launcher-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 1;
     width: 100%;
-    min-height: 78px;
+    min-height: 56px;
     padding: 10px 16px;
     border-radius: 14px;
-    background: linear-gradient(135deg, rgba(0, 242, 254, 0.10), rgba(168, 85, 247, 0.14));
-    border: 1px solid rgba(0, 242, 254, 0.40);
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    border-top-color: rgba(191, 235, 254, 0.30);
+    background:
+        radial-gradient(150% 100% at 50% -10%, rgba(255, 255, 255, 0.16) 0%, rgba(191, 235, 254, 0.05) 42%, transparent 68%),
+        linear-gradient(180deg, rgba(0, 242, 254, 0.14) 0%, rgba(0, 0, 0, 0.10) 55%, rgba(0, 0, 0, 0.30) 100%),
+        rgba(10, 15, 29, 0.85);
+    box-shadow:
+        inset 0 1px 0 rgba(191, 235, 254, 0.25),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.5),
+        inset 3px 0 6px rgba(255, 255, 255, 0.04),
+        inset -3px 0 6px rgba(0, 0, 0, 0.4),
+        0 5px 0 rgba(0, 0, 0, 0.6),
+        0 7px 2px rgba(0, 0, 0, 0.35),
+        0 12px 20px rgba(0, 0, 0, 0.5);
     cursor: pointer;
     text-align: center;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    transition: transform 0.12s ease, box-shadow 0.16s ease, border-color 0.16s ease, background 0.16s ease;
 }
 
 .ai-launcher-btn:hover {
-    border-color: #00f2fe;
-    box-shadow: 0 0 22px rgba(0, 242, 254, 0.35), inset 0 1px 0 rgba(191, 235, 254, 0.25);
-    transform: translateY(-2px);
+    border-color: color-mix(in srgb, #00f2fe 55%, rgba(0, 0, 0, 0.6));
+    box-shadow:
+        inset 0 1px 0 rgba(191, 235, 254, 0.34),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.5),
+        inset 3px 0 6px rgba(255, 255, 255, 0.05),
+        inset -3px 0 6px rgba(0, 0, 0, 0.4),
+        0 5px 0 rgba(0, 0, 0, 0.6),
+        0 7px 2px rgba(0, 0, 0, 0.35),
+        0 12px 22px rgba(0, 0, 0, 0.55),
+        0 0 16px rgba(0, 242, 254, 0.26);
 }
 
+/* Tecla pulsada: el keycap hunde sobre su base (la extrusión desaparece) y
+   brilla en cian, igual que .space-key:active */
 .ai-launcher-btn:active {
-    transform: translateY(0) scale(0.985);
+    transform: translateY(5px);
+    background:
+        radial-gradient(150% 100% at 50% -10%, rgba(255, 255, 255, 0.08) 0%, transparent 55%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.08) 100%),
+        rgba(0, 242, 254, 0.16);
+    border-color: rgba(0, 242, 254, 0.55);
+    border-top-color: rgba(0, 242, 254, 0.30);
+    box-shadow:
+        inset 0 3px 8px rgba(0, 0, 0, 0.75),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.06),
+        0 1px 0 rgba(0, 0, 0, 0.55),
+        0 2px 5px rgba(0, 0, 0, 0.45),
+        0 0 22px rgba(0, 242, 254, 0.35);
+}
+
+.ai-launcher-btn:focus-visible {
+    outline: 2px solid color-mix(in srgb, #00f2fe 70%, #ffffff);
+    outline-offset: 2px;
 }
 
 .ai-launcher-name {
     font-family: var(--font-display);
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: 800;
     letter-spacing: 0.8px;
     color: var(--text-primary);
 }
 
 [data-theme="light"] .ai-launcher-btn {
-    background: linear-gradient(135deg, rgba(0, 180, 216, 0.10), rgba(124, 58, 237, 0.10));
+    background:
+        radial-gradient(150% 100% at 50% -10%, rgba(255, 255, 255, 0.55) 0%, transparent 65%),
+        linear-gradient(180deg, rgba(0, 180, 216, 0.18) 0%, rgba(0, 0, 0, 0.06) 55%, rgba(0, 0, 0, 0.18) 100%),
+        rgba(255, 255, 255, 0.75);
     border-color: rgba(0, 150, 190, 0.45);
+    border-top-color: rgba(255, 255, 255, 0.8);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.12),
+        inset 3px 0 6px rgba(255, 255, 255, 0.2),
+        inset -3px 0 6px rgba(0, 0, 0, 0.1),
+        0 5px 0 rgba(0, 40, 70, 0.35),
+        0 8px 16px rgba(0, 40, 70, 0.25);
 }
 
 [data-theme="light"] .ai-launcher-name {
