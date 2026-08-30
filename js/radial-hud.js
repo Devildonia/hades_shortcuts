@@ -15,14 +15,14 @@ export class RadialHUDEngine {
         this.cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
         this.previousActiveElement = null;
         this.actions = [
-            { id: 'favs', icon: '⭐', labelKey: 'favs', action: () => this.toggleFavsSubOrbit() },
-            { id: 'audio', icon: '🎧', labelKey: 'audio', action: () => ambientAudio.toggle() },
-            { id: 'pomodoro', icon: '⏳', labelKey: 'pomodoro', action: () => document.getElementById('pomodoro-start-btn')?.click() },
-            { id: 'postit', icon: '📌', labelKey: 'postit', action: () => this.createPostitUnderCursor() },
-            { id: 'theme', icon: '🌓', labelKey: 'theme', action: () => state.setTheme(state.theme === 'cyber' ? 'light' : (state.theme === 'light' ? 'nebula' : 'cyber')) },
-            { id: 'qr', icon: '📱', labelKey: 'qr', action: () => this.openQRQuick() },
-            { id: 'search', icon: '🔍', labelKey: 'search', action: () => this.focusOmnibox() },
-            { id: 'settings', icon: '⚙️', labelKey: 'settings', action: () => document.getElementById('settings-btn')?.click() }
+            { id: 'favs', icon: 'iconos/favorito.webp', labelKey: 'favs', action: () => this.toggleFavsSubOrbit() },
+            { id: 'audio', icon: 'iconos/audio.webp', labelKey: 'audio', action: () => ambientAudio.toggle() },
+            { id: 'pomodoro', icon: 'iconos/pomodoro.webp', labelKey: 'pomodoro', action: () => document.getElementById('pomodoro-start-btn')?.click() },
+            { id: 'postit', icon: 'iconos/postit.webp', labelKey: 'postit', action: () => this.createPostitUnderCursor() },
+            { id: 'theme', icon: 'iconos/temas.webp', labelKey: 'theme', action: () => state.setTheme(state.theme === 'cyber' ? 'light' : (state.theme === 'light' ? 'nebula' : 'cyber')) },
+            { id: 'qr', icon: 'iconos/qr.webp', labelKey: 'qr', action: () => this.openQRQuick() },
+            { id: 'search', icon: 'iconos/buscar.webp', labelKey: 'search', action: () => this.focusOmnibox() },
+            { id: 'settings', icon: 'iconos/settings.webp', labelKey: 'settings', action: () => document.getElementById('settings-btn')?.click() }
         ];
     }
 
@@ -34,7 +34,7 @@ export class RadialHUDEngine {
     renderRadialNodes() {
         if (!this.hudWheel) return;
         this.hudWheel.innerHTML = '';
-        const radius = 125, total = this.actions.length;
+        const radius = 160, total = this.actions.length;
         const t = (i18nDictionaries[state.language] || i18nDictionaries.es).radial_hud || {};
 
         this.actions.forEach((act, idx) => {
@@ -50,7 +50,9 @@ export class RadialHUDEngine {
             btn.setAttribute('title', t[act.labelKey] || act.id);
             btn.style.setProperty('--node-x', `${x}px`);
             btn.style.setProperty('--node-y', `${y}px`);
-            btn.innerHTML = `<span class="radial-node-icon">${act.icon}</span><span class="radial-node-label">${t[act.labelKey] || act.id}</span>`;
+            // Mismo lenguaje visual que los iconos de categorías: cristal compartido
+            // (.icon-img-wrapper) + destello especular al hover (.icon-glint).
+            btn.innerHTML = `<span class="icon-img-wrapper radial-node-icon"><span class="icon-glint" aria-hidden="true"></span><img src="${escapeHtml(act.icon)}" alt="" width="60" height="60" loading="eager"></span><span class="radial-node-label">${t[act.labelKey] || act.id}</span>`;
 
             if (act.id === 'favs') this.renderFavoritesSubOrbit(btn);
 
@@ -70,6 +72,45 @@ export class RadialHUDEngine {
             });
             this.hudWheel.appendChild(btn);
         });
+    }
+
+    /** Cuerda útil de la burbuja en la vertical exacta donde está la etiqueta. */
+    nodeChord(btn, label) {
+        const b = btn.getBoundingClientRect();
+        const l = label.getBoundingClientRect();
+        const d = (l.top + l.height / 2) - (b.top + b.height / 2);
+        const R = b.width / 2 - 2; // borde de 2px
+        return 2 * Math.sqrt(Math.max(R * R - d * d, 0));
+    }
+
+    /** Ajusta cada etiqueta al diámetro de su burbuja, midiendo con la fuente
+        real (Outfit): si aún está cargando, espera a document.fonts.ready
+        (la fuente fallback distorsiona el ancho ~25 %). Adaptativo por locale:
+        solo las más largas reducen, y solo lo justo. Si alguna no entra ni en
+        el mínimo, el ellipsis de CSS actúa de red de seguridad. */
+    fitNodeLabels() {
+        if (!this.hudWheel) return;
+        const MIN_PX = 8, STEP = 0.25;
+        const fit = () => {
+            this.hudWheel.querySelectorAll('.radial-node-btn').forEach(btn => {
+                const label = btn.querySelector('.radial-node-label');
+                if (!label) return;
+                label.style.fontSize = ''; // resetea ajustes previos y remide
+                let size = parseFloat(getComputedStyle(label).fontSize);
+                if (!Number.isFinite(size) || size <= 0) return;
+                let guard = 0;
+                while (label.scrollWidth > this.nodeChord(btn, label) + 0.5) {
+                    if (size <= MIN_PX || guard++ > 32) break;
+                    size = Math.max(MIN_PX, size - STEP);
+                    label.style.fontSize = `${size}px`;
+                }
+            });
+        };
+        if (document.fonts && document.fonts.status !== 'loaded') {
+            document.fonts.ready.then(() => { if (this.isOpen) fit(); });
+            return;
+        }
+        fit();
     }
 
     getMostUsedShortcuts() {
@@ -98,10 +139,18 @@ export class RadialHUDEngine {
         const subContainer = document.createElement('div');
         subContainer.className = 'radial-sub-favs';
         const top3 = this.getMostUsedShortcuts();
-        const offsets = [{ x: -44, y: -58 }, { x: 0, y: -74 }, { x: 44, y: -58 }];
+        // 3 sub-favoritos en arco sobre FAVORITOS, más cerca del nodo que antes.
+        // IMPORTANTE: los sub-items son hijos del nodo, y el nodo está en
+        // scale(1.18) en hover (= justo cuando el sub-menú se ve). Eso infla por 1.18
+        // tanto el tamaño como estos offsets. Por tanto trabajo en el espacio LOCAL
+        // del nodo (radio 50, item 28) y el gap visual = 1.18 * gap_local:
+        //   centro (0,-88):  gap local 10 -> visual ~12px
+        //   lados (±64,-66): gap local ~14 -> visual ~16px
+        //   centro-lado:     gap local ~12 -> visual ~14px  (sin solapes, arco que bulge arriba)
+        const offsets = [{ x: -64, y: -66 }, { x: 0, y: -88 }, { x: 64, y: -66 }];
 
         top3.forEach((sc, i) => {
-            const pos = offsets[i] || { x: 0, y: -50 };
+            const pos = offsets[i] || { x: 0, y: -88 };
             const subBtn = document.createElement('button');
             subBtn.className = 'radial-sub-fav-item';
             subBtn.title = sc.title || 'Favorito';
@@ -145,6 +194,9 @@ export class RadialHUDEngine {
             this.hudOverlay.classList.remove('hidden');
             this.hudOverlay.setAttribute('aria-hidden', 'false');
         }
+        // El overlay está en display:none hasta aquí: solo ahora las etiquetas
+        // son medibles y se ajustan al diámetro de su burbuja (por locale).
+        requestAnimationFrame(() => this.fitNodeLabels());
         setTimeout(() => {
             const firstBtn = this.hudWheel ? this.hudWheel.querySelector('.radial-node-btn, button') : null;
             if (firstBtn) firstBtn.focus();
