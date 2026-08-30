@@ -1,12 +1,18 @@
 // sw.js - Service Worker for HaDeS' Shortcuts PWA
 // Estrategia: NETWORK-FIRST (siempre fresco) para código (HTML/CSS/JS) e imágenes,
-// forzando la red con `cache: 'reload'` para que ni un Ctrl+F5 devuelva assets
-// caducos de la caché heurística del navegador (python http.server solo envía
-// Last-Modified). La caché del SW queda SOLO como respaldo offline.
+// forzando la red con `cache: 'no-store'` para que NI un Ctrl+F5 devuelva assets
+// caducos de la caché heurística del navegador (Brave la mantiene agresiva e
+// ignora el Cache-Control). La caché del SW queda SOLO como respaldo offline.
 // Fuentes: cache-first (inmutables, evitan re-descargarlas en cada carga).
 // Bump de CACHE_VERSION invalida la caché anterior (assets viejos) al activar.
+//
+// NOTA (fix 2026-08): antes usaba `cache: 'reload'`, que revalida pero puede
+// devolver el cuerpo de la caché HTTP local si el servidor contesta 304 (en
+// Brave, con caché heurística, ese cuerpo era stale → página "antigua").
+// `'no-store'` es el único modo que NUNCA lee/escribe la caché HTTP del
+// navegador: garantiza una descarga completa (200) en cada carga.
 
-const CACHE_VERSION = '1.1.0';
+const CACHE_VERSION = '1.2.0';
 const CACHE_NAME = `hades-shortcuts-v${CACHE_VERSION}`;
 const STATIC_ASSETS = [
     './',
@@ -133,11 +139,12 @@ self.addEventListener('fetch', (e) => {
         /\.(webp|png|jpe?g|gif|svg)(\?|$)/i.test(url.pathname + url.search);
 
     // 2) Código (HTML/CSS/JS) + imágenes: NETWORK-FIRST forzado a red.
-    //    `cache: 'reload'` obliga a no leer de la caché HTTP del navegador, de modo
-    //    que cada carga (F5 / Ctrl+F5) obtiene la versión actual del servidor.
-    //    La caché del SW solo se usa si la red falla (offline).
+    //    `cache: 'no-store'` garantiza que NUNCA se lea la caché HTTP del navegador
+    //    (ni siquiera revalidada/304), de modo que cada carga (F5 / Ctrl+F5 / nueva
+    //    pestaña) obtiene la versión actual completa del servidor. La caché del SW
+    //    solo se usa si la red falla (offline).
     e.respondWith(
-        fetch(req, { cache: 'reload' })
+        fetch(req, { cache: 'no-store' })
             .then((res) => {
                 if (res && res.status === 200) {
                     const cloneA = res.clone();
