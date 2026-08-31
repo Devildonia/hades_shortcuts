@@ -352,10 +352,10 @@ export class SettingsHub {
         const prev = {};
         container.querySelectorAll('input[type="checkbox"]').forEach(cb => { prev[cb.id] = cb.checked; });
         container.innerHTML = '';
-        this.getPanelCategories().forEach(({ id, label }, i) => {
+        this.getPanelCategories().forEach(({ id, label }) => {
             const row = document.createElement('div');
             row.className = 'settings-toggle-row';
-            if (i > 0) row.style.marginTop = '10px';
+            // margin-top: 10px lo aporta la regla base .settings-toggle-row (css/settings.css)
             const span = document.createElement('span');
             span.className = 'settings-toggle-title';
             span.textContent = label;

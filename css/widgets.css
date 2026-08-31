@@ -446,6 +446,19 @@
     color: var(--text-secondary);
 }
 
+.floating-edit-content .settings-action-btn {
+    width: auto;
+    padding: 6px 14px;
+}
+
+.floating-edit-content #reset-layout-btn-bar {
+    margin-right: 8px;
+}
+
+.floating-edit-content #exit-edit-mode-btn {
+    padding: 6px 18px;
+}
+
 
 /* ==========================================================================
    Floating Glass Post-it Notes System
@@ -766,6 +779,16 @@
 }
 
 /* QR Modal Styles */
+.qr-header-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.qr-header-title .qr-header-icon {
+    font-size: 1.25rem;
+}
+
 .qr-modal-card {
     max-width: 360px;
     text-align: center;
@@ -895,6 +918,7 @@
 
 .ambient-slider {
     flex: 1;
+    width: 100%;
     -webkit-appearance: none;
     appearance: none;
     height: 4px;

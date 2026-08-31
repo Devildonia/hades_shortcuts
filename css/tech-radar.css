@@ -1039,6 +1039,25 @@
     margin-bottom: 14px;
 }
 
+.rss-form-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.rss-icon-input {
+    width: 80px;
+}
+
+.rss-name-input {
+    flex: 1;
+}
+
+.rss-url-input {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
 .rss-modal-form input {
     padding: 10px 14px;
     background: rgba(255, 255, 255, 0.05);
@@ -1896,11 +1915,26 @@ body.focus-mode-active #aurora-bg {
     margin-bottom: 12px;
 }
 
+.macro-form-row--gap-10 {
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.macro-form-row--spaced {
+    margin-top: 12px;
+}
+
 .macro-form-field {
     display: flex;
     flex-direction: column;
     gap: 6px;
     margin-bottom: 12px;
+    /* Crece dentro de .macro-form-row; sin efecto fuera de un flex parent */
+    flex: 1;
+}
+
+.macro-form-field--spaced {
+    margin-top: 10px;
 }
 
 .macro-form-field label {
@@ -2052,6 +2086,37 @@ body.focus-mode-active #aurora-bg {
 .bg-grad-btn:hover {
     transform: scale(1.05);
     box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+}
+
+/* Paleta de cada preset (antes era background inline por botón) */
+.bg-grad-midnight { background: linear-gradient(135deg, #0f172a, #020617); }
+.bg-grad-cyberpunk { background: linear-gradient(135deg, #050811, #001f3f); }
+.bg-grad-velvet { background: linear-gradient(135deg, #18002e, #090014); }
+.bg-grad-emerald { background: linear-gradient(135deg, #001a14, #000a08); }
+.bg-grad-oled { background: #000000; }
+
+.bg-upload-btn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex: 1;
+    margin: 0;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+}
+
+.slider-row-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+}
+
+.slider-row-value {
+    color: var(--accent-primary);
+    font-weight: 700;
 }
 
 .hades-toast {

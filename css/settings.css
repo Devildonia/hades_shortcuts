@@ -289,6 +289,18 @@
     gap: 8px;
 }
 
+.macros-tab-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.macros-tab-header h4 {
+    margin: 0;
+}
+
 .settings-section > h4::before,
 .macros-tab-header h4::before {
     content: '';
@@ -306,10 +318,20 @@
     margin: 0;
 }
 
+.settings-hint--block {
+    display: block;
+    margin-bottom: 8px;
+}
+
 .settings-toggle-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-top: 10px;
+}
+
+.settings-toggle-row--gap-lg {
+    margin-top: 14px;
 }
 
 .settings-toggle-title {
@@ -418,6 +440,10 @@ input:checked + .slider:before {
     font-size: 0.9rem;
     color: var(--text-primary);
     outline: none;
+}
+
+.settings-select--grow {
+    flex: 1;
 }
 
 .settings-action-btn {
@@ -685,6 +711,13 @@ input:checked + .slider:before {
     margin-top: 6px;
 }
 
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+}
+
 .modal-footer-right {
     display: flex;
     gap: 8px;
@@ -705,6 +738,31 @@ input:checked + .slider:before {
 .jade-preview { background: #34d399; box-shadow: 0 0 8px #34d399; }
 .light-preview { background: #0284c7; box-shadow: 0 0 8px #0284c7; }
 
+
+/* Limpieza de estilos inline (modales de settings): reglas extraídas de style="" del HTML */
+.profile-name-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.analytics-stats-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 12px 0;
+}
+
+.analytics-actions-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+#reset-theme-colors-btn {
+    margin-top: 10px;
+}
 
 /* Settings Main Button */
 .settings-main-btn {

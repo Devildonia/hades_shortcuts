@@ -28,20 +28,20 @@
     <link rel="apple-touch-icon" href="iconos/pwa-192.png">
 
     <!-- Stylesheet (13 módulos; el orden importa: base → layout → widgets → misc) -->
-    <!-- ?v=…-rc-1b: cache-bust de los 13 módulos (Brave mantiene caché heurística agresiva) -->
-    <link rel="stylesheet" href="css/base.css?v=1.0.0-rc-1b">
-    <link rel="stylesheet" href="css/layout.css?v=1.0.0-rc-1b">
-    <link rel="stylesheet" href="css/categories.css?v=1.0.0-rc-1b">
-    <link rel="stylesheet" href="css/overlays-base.css?v=1.0.0-rc-1b">
-    <link rel="stylesheet" href="css/weather.css?v=1.0.0-rc-1b">
-    <link rel="stylesheet" href="css/settings.css?v=1.0.0-rc-1b">
-    <link rel="stylesheet" href="css/search-extra.css?v=1.0.0-rc-1b">
-    <link rel="stylesheet" href="css/widgets.css?v=1.0.0-rc-1b">
-    <link rel="stylesheet" href="css/themes-pickers.css?v=1.0.0-rc-1b">
-    <link rel="stylesheet" href="css/hud.css?v=1.0.0-rc-1b">
-    <link rel="stylesheet" href="css/tech-radar.css?v=1.0.0-rc-1b">
-    <link rel="stylesheet" href="css/calendar.css?v=1.0.0-rc-1b">
-    <link rel="stylesheet" href="css/misc.css?v=1.0.0-rc-1b">
+    <!-- ?v=…-rc-1c: cache-bust de los 13 módulos (Brave mantiene caché heurística agresiva) -->
+    <link rel="stylesheet" href="css/base.css?v=1.0.0-rc-1c">
+    <link rel="stylesheet" href="css/layout.css?v=1.0.0-rc-1c">
+    <link rel="stylesheet" href="css/categories.css?v=1.0.0-rc-1c">
+    <link rel="stylesheet" href="css/overlays-base.css?v=1.0.0-rc-1c">
+    <link rel="stylesheet" href="css/weather.css?v=1.0.0-rc-1c">
+    <link rel="stylesheet" href="css/settings.css?v=1.0.0-rc-1c">
+    <link rel="stylesheet" href="css/search-extra.css?v=1.0.0-rc-1c">
+    <link rel="stylesheet" href="css/widgets.css?v=1.0.0-rc-1c">
+    <link rel="stylesheet" href="css/themes-pickers.css?v=1.0.0-rc-1c">
+    <link rel="stylesheet" href="css/hud.css?v=1.0.0-rc-1c">
+    <link rel="stylesheet" href="css/tech-radar.css?v=1.0.0-rc-1c">
+    <link rel="stylesheet" href="css/calendar.css?v=1.0.0-rc-1c">
+    <link rel="stylesheet" href="css/misc.css?v=1.0.0-rc-1c">
 
     <!-- Master Script Module -->
     <script type="module" src="js/app.js?v=1.0.0-rc-1"></script>
@@ -456,14 +456,14 @@
             </div>
             <p class="rss-modal-desc" data-i18n="rss_modal.desc">Sigue cualquier blog, medio o repositorio en tu Tech Radar (100% en local):</p>
             <div class="rss-modal-form">
-                <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <div class="rss-form-row">
                     <label class="visually-hidden" for="rss-feed-icon-input" data-i18n="rss_modal.icon_label">Icono</label>
-                    <input type="text" id="rss-feed-icon-input" placeholder="Opcional" maxlength="8" style="width: 80px;" value="" data-i18n-placeholder="rss_modal.icon_placeholder">
+                    <input type="text" id="rss-feed-icon-input" class="rss-icon-input" placeholder="Opcional" maxlength="8" value="" data-i18n-placeholder="rss_modal.icon_placeholder">
                     <label class="visually-hidden" for="rss-feed-name-input" data-i18n="rss_modal.name_label">Nombre</label>
-                    <input type="text" id="rss-feed-name-input" placeholder="Nombre del Feed (ej. The Verge)" style="flex: 1;" data-i18n-placeholder="rss_modal.name_placeholder">
+                    <input type="text" id="rss-feed-name-input" class="rss-name-input" placeholder="Nombre del Feed (ej. The Verge)" data-i18n-placeholder="rss_modal.name_placeholder">
                 </div>
                 <label class="visually-hidden" for="rss-feed-url-input" data-i18n="rss_modal.url_label">URL</label>
-                <input type="url" id="rss-feed-url-input" placeholder="https://www.theverge.com/rss/index.xml" style="width: 100%; margin-bottom: 12px;" data-i18n-placeholder="rss_modal.url_placeholder">
+                <input type="url" id="rss-feed-url-input" class="rss-url-input" placeholder="https://www.theverge.com/rss/index.xml" data-i18n-placeholder="rss_modal.url_placeholder">
                 <button class="rss-save-btn" id="add-rss-feed-btn" data-i18n="rss_modal.add_btn">Añadir Feed al Radar</button>
             </div>
             <div class="rss-modal-presets">
@@ -581,17 +581,17 @@
                 <h3 data-i18n="calendar_modal.add_title">Añadir Evento a la Agenda</h3>
                 <button class="calendar-modal-close" id="close-event-modal" aria-label="Cerrar" data-i18n-aria="cmdk.tip_close">✕</button>
             </div>
-            <div class="calendar-form-body" style="margin-top: 14px;">
+            <div class="calendar-form-body">
                 <div class="macro-form-field">
                     <label for="event-form-title" data-i18n="calendar_modal.title_label">Título del Evento</label>
                     <input type="text" id="event-form-title" placeholder="Ej: Reunión de Diseño, Sprint Review..." data-i18n-placeholder="calendar_modal.title_placeholder" autocomplete="off">
                 </div>
                 <div class="macro-form-row">
-                    <div class="macro-form-field" style="flex: 1;">
+                    <div class="macro-form-field">
                         <label for="event-form-date" data-i18n="calendar_modal.date_label">Fecha</label>
                         <input type="date" id="event-form-date">
                     </div>
-                    <div class="macro-form-field" style="flex: 1;">
+                    <div class="macro-form-field">
                         <label for="event-form-time" data-i18n="calendar_modal.time_label">Hora</label>
                         <input type="time" id="event-form-time" value="09:30">
                     </div>
@@ -610,9 +610,9 @@
                     </select>
                 </div>
             </div>
-            <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px;">
-                <button class="settings-action-btn secondary" id="cancel-event-modal" data-i18n="calendar_modal.cancel_btn" style="padding: 8px 16px; font-size: 0.82rem;">Cancelar</button>
-                <button class="settings-action-btn primary" id="save-manual-event-btn" data-i18n="calendar_modal.save_btn" style="padding: 8px 18px; font-size: 0.82rem;">Guardar Evento</button>
+            <div class="modal-footer">
+                <button class="settings-action-btn secondary" id="cancel-event-modal" data-i18n="calendar_modal.cancel_btn">Cancelar</button>
+                <button class="settings-action-btn primary" id="save-manual-event-btn" data-i18n="calendar_modal.save_btn">Guardar Evento</button>
             </div>
         </div>
     </div>
@@ -664,7 +664,7 @@
             </div>
             <div class="modal-body">
                 <div class="macro-form-row">
-                    <div class="macro-form-field" style="flex: 1;">
+                    <div class="macro-form-field">
                         <label data-i18n="macros_studio.trigger_label">Comando Trigger</label>
                         <input type="text" id="macro-form-trigger" placeholder="!gaming" autocomplete="off">
                     </div>
@@ -674,7 +674,7 @@
                     <input type="text" id="macro-form-name" placeholder="Modo Gaming & Streaming" autocomplete="off">
                 </div>
                 <div class="macro-form-row">
-                    <div class="macro-form-field" style="flex: 1;">
+                    <div class="macro-form-field">
                         <label data-i18n="macros_studio.ambient_label">Audio Ambiental</label>
                         <select id="macro-form-ambient">
                             <option value="" data-i18n="macros_studio.ambient_none">Ninguno</option>
@@ -684,7 +684,7 @@
                             <option value="waves" data-i18n="macros_studio.ambient_waves">Olas</option>
                         </select>
                     </div>
-                    <div class="macro-form-field" style="flex: 1;">
+                    <div class="macro-form-field">
                         <label data-i18n="macros_studio.pomodoro_label">Acción Pomodoro</label>
                         <select id="macro-form-pomodoro">
                             <option value="" data-i18n="macros_studio.pomodoro_none">Sin cambios</option>
@@ -738,9 +738,9 @@
                 <!-- User Profile Section -->
                 <div class="settings-section">
                     <h4 data-i18n="settings_hub.profile.title" title="Personaliza tu nombre o alias para el Centro de Mando y saludos." data-i18n-title="settings_hub.profile.desc">Perfil de Usuario</h4>
-                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                    <div class="profile-name-row">
                         <label class="visually-hidden" for="drawer-user-name-input" data-i18n="user_modal.title">Nombre</label>
-                        <input type="text" id="drawer-user-name-input" class="settings-select" placeholder="Tu nombre..." maxlength="25" style="flex: 1;" data-i18n-placeholder="user_modal.input_placeholder">
+                        <input type="text" id="drawer-user-name-input" class="settings-select settings-select--grow" placeholder="Tu nombre..." maxlength="25" data-i18n-placeholder="user_modal.input_placeholder">
                         <button class="settings-action-btn primary" id="drawer-user-save-btn">Guardar</button>
                     </div>
                 </div>
@@ -791,13 +791,13 @@
 
                     <!-- Gradient/Color Subpanel -->
                     <div id="bg-panel-gradient" class="bg-subpanel hidden">
-                        <label class="settings-hint" data-i18n="bg_studio.gradient_preset_label" style="display: block; margin-bottom: 8px;">Presets de Color / Gradiente:</label>
+                        <label class="settings-hint settings-hint--block" data-i18n="bg_studio.gradient_preset_label">Presets de Color / Gradiente:</label>
                         <div class="bg-gradient-presets-row">
-                            <button class="bg-grad-btn" type="button" data-grad="linear-gradient(135deg, #0f172a 0%, #020617 100%)" style="background: linear-gradient(135deg, #0f172a, #020617);">Midnight</button>
-                            <button class="bg-grad-btn" type="button" data-grad="linear-gradient(135deg, #050811 0%, #001f3f 50%, #000000 100%)" style="background: linear-gradient(135deg, #050811, #001f3f);">Cyberpunk</button>
-                            <button class="bg-grad-btn" type="button" data-grad="linear-gradient(135deg, #18002e 0%, #090014 100%)" style="background: linear-gradient(135deg, #18002e, #090014);">Velvet</button>
-                            <button class="bg-grad-btn" type="button" data-grad="linear-gradient(135deg, #001a14 0%, #000a08 100%)" style="background: linear-gradient(135deg, #001a14, #000a08);">Emerald</button>
-                            <button class="bg-grad-btn" type="button" data-grad="#000000" style="background: #000000;">OLED Black</button>
+                            <button class="bg-grad-btn bg-grad-midnight" type="button" data-grad="linear-gradient(135deg, #0f172a 0%, #020617 100%)">Midnight</button>
+                            <button class="bg-grad-btn bg-grad-cyberpunk" type="button" data-grad="linear-gradient(135deg, #050811 0%, #001f3f 50%, #000000 100%)">Cyberpunk</button>
+                            <button class="bg-grad-btn bg-grad-velvet" type="button" data-grad="linear-gradient(135deg, #18002e 0%, #090014 100%)">Velvet</button>
+                            <button class="bg-grad-btn bg-grad-emerald" type="button" data-grad="linear-gradient(135deg, #001a14 0%, #000a08 100%)">Emerald</button>
+                            <button class="bg-grad-btn bg-grad-oled" type="button" data-grad="#000000">OLED Black</button>
                         </div>
                     </div>
 
@@ -812,32 +812,32 @@
                                 <option value="architecture" data-i18n="bg_studio.topic_arch">Arquitectura Minimalista</option>
                             </select>
                         </div>
-                        <div class="macro-form-row" style="margin-top: 10px; display: flex; gap: 10px;">
-                            <label class="settings-action-btn secondary" style="cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; flex: 1; margin: 0; padding: 8px 12px; font-size: 0.78rem;">
+                        <div class="macro-form-row macro-form-row--gap-10">
+                            <label class="settings-action-btn secondary bg-upload-btn">
                                 <span data-i18n="bg_studio.upload_local">Cargar Archivo Local</span>
-                                <input type="file" id="bg-file-upload-input" accept="image/*" style="display: none;">
+                                <input type="file" id="bg-file-upload-input" class="hidden" accept="image/*">
                             </label>
                             <button class="settings-action-btn secondary" type="button" id="bg-refresh-unsplash-btn" data-i18n="bg_studio.refresh_photo">Foto Aleatoria</button>
                         </div>
-                        <div class="macro-form-field" style="margin-top: 10px;">
+                        <div class="macro-form-field macro-form-field--spaced">
                             <label data-i18n="bg_studio.custom_url">URL de Imagen Personalizada</label>
                             <input type="url" id="bg-custom-url-input" class="settings-select" placeholder="https://images.unsplash.com/..." data-i18n-placeholder="bg_studio.custom_url_placeholder" autocomplete="off">
                         </div>
                         <!-- Blur & Dim Sliders -->
-                        <div class="macro-form-row" style="margin-top: 12px; display: flex; gap: 12px;">
-                            <div class="macro-form-field" style="flex: 1;">
-                                <label style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 4px;">
+                        <div class="macro-form-row macro-form-row--spaced">
+                            <div class="macro-form-field">
+                                <label class="slider-row-label">
                                     <span data-i18n="bg_studio.blur_label">Desenfoque (Blur):</span>
-                                    <span id="bg-blur-val-display" style="color: var(--accent-primary); font-weight: 700;">0px</span>
+                                    <span id="bg-blur-val-display" class="slider-row-value">0px</span>
                                 </label>
-                                <input type="range" id="bg-blur-slider" min="0" max="20" value="0" class="ambient-slider" style="width: 100%;">
+                                <input type="range" id="bg-blur-slider" min="0" max="20" value="0" class="ambient-slider">
                             </div>
-                            <div class="macro-form-field" style="flex: 1;">
-                                <label style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 4px;">
+                            <div class="macro-form-field">
+                                <label class="slider-row-label">
                                     <span data-i18n="bg_studio.dim_label">Oscurecimiento (Dim):</span>
-                                    <span id="bg-dim-val-display" style="color: var(--accent-primary); font-weight: 700;">20%</span>
+                                    <span id="bg-dim-val-display" class="slider-row-value">20%</span>
                                 </label>
-                                <input type="range" id="bg-dim-slider" min="0" max="80" value="20" class="ambient-slider" style="width: 100%;">
+                                <input type="range" id="bg-dim-slider" min="0" max="80" value="20" class="ambient-slider">
                             </div>
                         </div>
                     </div>
@@ -860,7 +860,7 @@
                             <option value="bubble" data-i18n="audio.preset_bubble">Burbuja Acústica</option>
                         </select>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 14px;">
+                    <div class="settings-toggle-row settings-toggle-row--gap-lg">
                         <div>
                             <span class="settings-toggle-title" data-i18n="settings_hub.appearance.glow_label" title="Brillo neón en acentos, marcos e iconos." data-i18n-title="settings_hub.appearance.glow_desc">Resplandor Ambiental</span>
                         </div>
@@ -869,14 +869,14 @@
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="settings_hub.appearance.aurora_toggle" title="Malla de aurora procedural que reacciona al cursor." data-i18n-title="settings_hub.appearance.aurora_desc">Efecto Malla Aurora Reactiva</span>
                         <label class="switch">
                             <input type="checkbox" id="setting-aurora-toggle" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <div>
                             <span class="settings-toggle-title" data-i18n="settings_hub.appearance.solar_label" title="Adapta el resplandor ambiental según la posición real del sol (Amanecer, Cenit, Crepúsculo, Noche)." data-i18n-title="settings_hub.appearance.solar_desc">Iluminación Solar Circadiana</span>
                         </div>
@@ -900,7 +900,7 @@
                             <input type="color" id="custom-theme-secondary" value="#4facfe">
                         </label>
                     </div>
-                    <button class="settings-action-btn secondary" id="reset-theme-colors-btn" data-i18n="theme_studio.reset_colors_btn" style="margin-top: 10px;">Restablecer Colores Predeterminados</button>
+                    <button class="settings-action-btn secondary" id="reset-theme-colors-btn" data-i18n="theme_studio.reset_colors_btn">Restablecer Colores Predeterminados</button>
                 </div>
             </div>
 
@@ -939,35 +939,35 @@
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="settings_hub.layout.chrome_bezel_toggle" title="Marcos plateados en las categorías de atajos." data-i18n-title="settings_hub.layout.chrome_bezel_desc">Marcos plateados</span>
                         <label class="switch">
                             <input type="checkbox" id="setting-chrome-bezel-toggle" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="settings_hub.layout.gold_bezel_toggle" title="Marcos dorados en los widgets y cajones del tablero." data-i18n-title="settings_hub.layout.gold_bezel_desc">Marcos dorados</span>
                         <label class="switch">
                             <input type="checkbox" id="setting-gold-bezel-toggle" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="settings_hub.layout.blue_bezel_toggle" title="Marcos azules en Perfiles, Agente IA y barra de búsqueda." data-i18n-title="settings_hub.layout.blue_bezel_desc">Marcos azules</span>
                         <label class="switch">
                             <input type="checkbox" id="setting-blue-bezel-toggle" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="settings_hub.layout.lilac_bezel_toggle" title="Marcos lila alrededor del cajón de Ajustes." data-i18n-title="settings_hub.layout.lilac_bezel_desc">Marcos lila</span>
                         <label class="switch">
                             <input type="checkbox" id="setting-lilac-bezel-toggle" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="settings_hub.layout.green_bezel_toggle" title="Marcos verdes en el reloj, telemetría, clima, Modo Focus y botón de Ajustes." data-i18n-title="settings_hub.layout.green_bezel_desc">Marcos verdes</span>
                         <label class="switch">
                             <input type="checkbox" id="setting-green-bezel-toggle">
@@ -985,28 +985,28 @@
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="widgets.toggle_calendar" title="Agenda con calendario y feed iCal." data-i18n-title="widgets.toggle_calendar_desc">Mostrar Agenda & Calendario</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-widget-calendar" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="widgets.toggle_ambient" title="Sonido ambiental procedural: lluvia, espacio, 432Hz y olas." data-i18n-title="widgets.toggle_ambient_desc">Mostrar Audio Ambiental</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-widget-ambient" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="widgets.toggle_pomodoro" title="Temporizador de enfoque tipo Pomodoro." data-i18n-title="widgets.toggle_pomodoro_desc">Mostrar Temporizador Focus</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-widget-pomodoro" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="widgets.toggle_radar" title="Titulares de tecnología y feeds RSS." data-i18n-title="widgets.toggle_radar_desc">Mostrar Tech Radar & RSS</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-widget-radar" checked>
@@ -1024,42 +1024,42 @@
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="widgets.toggle_ai" title="Cajón del Asistente IA contextual." data-i18n-title="widgets.toggle_ai_desc">Mostrar cajón de Agente IA</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-panel-ai" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="widgets.toggle_search" title="Barra de búsqueda omnibox con bangs y atajos." data-i18n-title="widgets.toggle_search_desc">Mostrar barra de búsqueda</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-panel-search" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="widgets.toggle_clock" title="Reloj con la hora actual." data-i18n-title="widgets.toggle_clock_desc">Mostrar reloj (Hora)</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-panel-clock" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="widgets.toggle_weather" title="Clima de tu ciudad." data-i18n-title="widgets.toggle_weather_desc">Mostrar Tiempo (clima)</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-panel-weather" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="widgets.toggle_brand" title="El encabezado 'HaDeS' Shortcuts'." data-i18n-title="widgets.toggle_brand_desc">Mostrar encabezado (HaDeS' Shortcuts)</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-panel-brand" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    <div class="settings-toggle-row" style="margin-top: 10px;">
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="widgets.toggle_telemetry" title="Telemetría en vivo: estado, ping, FPS y batería." data-i18n-title="widgets.toggle_telemetry_desc">Mostrar Telemetría del Sistema</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-widget-telemetry" checked>
@@ -1097,8 +1097,8 @@
             <!-- Tab: Macros & Contextual Routines -->
             <div class="settings-tab-pane" id="tab-pane-macros">
                 <div class="settings-section">
-                    <div class="macros-tab-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 12px;">
-                        <h4 data-i18n="settings_hub.macros.title" data-i18n-title="settings_hub.macros.desc" style="margin: 0;">Rutinas & Disparadores Rápidos</h4>
+                    <div class="macros-tab-header">
+                        <h4 data-i18n="settings_hub.macros.title" data-i18n-title="settings_hub.macros.desc">Rutinas & Disparadores Rápidos</h4>
                         <button class="create-macro-btn" id="create-macro-btn">
                             <svg class="create-macro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
                             <span data-i18n="macros_studio.create_btn">Nueva Macro</span>
@@ -1144,13 +1144,13 @@
             <div class="settings-tab-pane" id="tab-pane-analytics">
                 <div class="settings-section">
                     <h4 data-i18n="analytics.title" data-i18n-title="analytics.desc">Métricas de Uso y Hábitos (100% Local)</h4>
-                    <div class="analytics-stats-row" style="display:flex; gap:16px; flex-wrap:wrap; margin: 12px 0;">
+                    <div class="analytics-stats-row">
                         <div><strong id="analytics-total-launches">0</strong><div class="settings-hint" data-i18n="analytics.total_launches">Lanzamientos</div></div>
                         <div><strong id="analytics-streak-days">1</strong><div class="settings-hint" data-i18n="analytics.streak">Racha</div></div>
                         <div><strong id="analytics-peak-hour">10:00</strong><div class="settings-hint" data-i18n="analytics.peak_hour">Hora pico</div></div>
                     </div>
                     <div id="analytics-chart-box"></div>
-                    <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+                    <div class="analytics-actions-row">
                         <button class="settings-action-btn secondary" id="export-analytics-btn" type="button" data-i18n="analytics.export_btn">Exportar JSON</button>
                         <button class="settings-action-btn secondary" id="reset-analytics-btn" type="button" data-i18n="analytics.reset_btn">Borrar historial</button>
                     </div>
@@ -1188,7 +1188,7 @@
 
                 <div class="settings-section">
                     <h4 data-i18n="importer.title" data-i18n-title="importer.desc">Importar Marcadores de Navegador</h4>
-                    <input type="file" id="bookmark-file-input" accept=".html,.htm" style="display: none;">
+                    <input type="file" id="bookmark-file-input" class="hidden" accept=".html,.htm">
                     <button class="settings-action-btn primary" id="import-bookmarks-btn" data-i18n="importer.select_file_btn">Seleccionar Archivo HTML</button>
                     <button class="settings-action-btn secondary hidden" id="import-topsites-btn" type="button" data-i18n="importer.topsites_btn">Importar sitios frecuentes de Chrome</button>
                     <div id="import-bookmarks-status" class="import-status-msg"></div>
@@ -1288,8 +1288,8 @@
         <div class="floating-edit-content">
             <span class="floating-edit-badge" data-i18n="edit_bar.badge">✏️ Modo Edición Activo</span>
             <span class="floating-edit-hint" data-i18n="edit_bar.hint">Arrastra los módulos por sus tiradores ⠿ para reorganizarlos</span>
-            <button class="settings-action-btn secondary" id="reset-layout-btn-bar" data-i18n="edit_bar.reset" style="width: auto; padding: 6px 14px; margin-right: 8px;">🔄 Restablecer</button>
-            <button class="settings-action-btn primary" id="exit-edit-mode-btn" data-i18n="edit_bar.save" style="width: auto; padding: 6px 18px;">✓ Guardar y Salir</button>
+            <button class="settings-action-btn secondary" id="reset-layout-btn-bar" data-i18n="edit_bar.reset">🔄 Restablecer</button>
+            <button class="settings-action-btn primary" id="exit-edit-mode-btn" data-i18n="edit_bar.save">✓ Guardar y Salir</button>
         </div>
     </div>
 
@@ -1301,8 +1301,8 @@
     <div class="modal-overlay hidden" id="qr-modal" role="dialog" aria-modal="true">
         <div class="modal-glass-card qr-modal-card">
             <div class="modal-header">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 1.25rem;">📱</span>
+                <div class="qr-header-title">
+                    <span class="qr-header-icon">📱</span>
                     <h3 data-i18n="devtools.qr_title">Código QR Generado</h3>
                 </div>
                 <button class="modal-close-btn" id="close-qr-modal" aria-label="Cerrar" data-i18n-aria="cmdk.tip_close">✕</button>

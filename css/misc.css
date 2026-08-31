@@ -456,6 +456,19 @@
     color: var(--paper-ink-soft);
 }
 
+.calendar-form-body {
+    margin-top: 14px;
+}
+
+.calendar-modal-card .settings-action-btn {
+    padding: 8px 16px;
+    font-size: 0.82rem;
+}
+
+.calendar-modal-card .settings-action-btn.primary {
+    padding: 8px 18px;
+}
+
 .calendar-modal-card .macro-form-field label {
     color: var(--paper-ink);
 }
