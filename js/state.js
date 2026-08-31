@@ -387,8 +387,12 @@ export function normalizeTags(tags) {
 
 export function safeHttpUrl(url) {
     if (url === null || url === undefined || String(url).trim() === '') return '';
+    const str = String(url).trim();
+    // Solo URLs absolutas http(s): sin base, para que las relativas ('/x', 'nota')
+    // no se resuelvan contra el origen actual y pasen por válidas.
+    if (!/^https?:\/\//i.test(str)) return '';
     try {
-        const u = new URL(String(url), typeof location !== 'undefined' ? location.href : 'https://local.invalid');
+        const u = new URL(str);
         if (u.protocol === 'http:' || u.protocol === 'https:') return u.href;
     } catch (e) {}
     return '';

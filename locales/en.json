@@ -398,7 +398,12 @@
   "tech_radar": {
     "loading": "Loading headlines...",
     "pin_tooltip": "Pin to Post-it",
-    "empty": "Could not load articles. Press refresh to retry."
+    "empty": "Could not load articles. Press refresh to retry.",
+    "refresh_title": "Refresh headlines",
+    "config_title": "Manage RSS feeds",
+    "delete_feed": "Remove feed from the radar",
+    "fallback_offline": "No connection to the news source. Press refresh to retry.",
+    "fallback_cors": "Check your connection or the feed's CORS setup."
   },
   "neural": {
     "ai_answer_title": "Local AI Assistant",
@@ -547,7 +552,10 @@
     "url_placeholder": "https://www.theverge.com/rss/index.xml",
     "url_label": "Feed URL",
     "add_btn": "Add Feed to Radar",
-    "presets": "Quick presets:"
+    "presets": "Quick presets:",
+    "default_name": "Custom Feed",
+    "invalid_url": "Enter a valid http(s) URL.",
+    "duplicate_feed": "That feed is already on the radar."
   },
   "zen_shield": {
     "breathe": "Breathe",

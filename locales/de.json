@@ -398,7 +398,12 @@
   "tech_radar": {
     "loading": "Schlagzeilen laden...",
     "pin_tooltip": "Auf Post-it heften",
-    "empty": "Artikel konnten nicht geladen werden. Aktualisieren und erneut versuchen."
+    "empty": "Artikel konnten nicht geladen werden. Aktualisieren und erneut versuchen.",
+    "refresh_title": "Titel aktualisieren",
+    "config_title": "RSS-Feeds verwalten",
+    "delete_feed": "Feed aus dem Radar entfernen",
+    "fallback_offline": "Keine Verbindung zur Nachrichtenquelle. Aktualisieren und erneut versuchen.",
+    "fallback_cors": "Prüfe deine Verbindung oder die CORS-Einstellung des Feeds."
   },
   "neural": {
     "ai_answer_title": "Lokaler KI-Assistent",
@@ -547,7 +552,10 @@
     "url_placeholder": "https://www.theverge.com/rss/index.xml",
     "url_label": "Feed-URL",
     "add_btn": "Feed zum Radar hinzufügen",
-    "presets": "Schnellvorlagen:"
+    "presets": "Schnellvorlagen:",
+    "default_name": "Eigener Feed",
+    "invalid_url": "Gib eine gültige http(s)-URL ein.",
+    "duplicate_feed": "Dieser Feed ist bereits im Radar."
   },
   "zen_shield": {
     "breathe": "Atmen",

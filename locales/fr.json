@@ -398,7 +398,12 @@
   "tech_radar": {
     "loading": "Chargement des titres...",
     "pin_tooltip": "Épingler sur Post-it",
-    "empty": "Impossible de charger les articles. Appuyez sur actualiser pour réessayer."
+    "empty": "Impossible de charger les articles. Appuyez sur actualiser pour réessayer.",
+    "refresh_title": "Actualiser les titres",
+    "config_title": "Gérer les flux RSS",
+    "delete_feed": "Retirer le flux du radar",
+    "fallback_offline": "Aucune connexion à la source d'actualités. Appuyez sur actualiser pour réessayer.",
+    "fallback_cors": "Vérifiez votre connexion ou la configuration CORS du flux."
   },
   "neural": {
     "ai_answer_title": "Assistant IA Local",
@@ -547,7 +552,10 @@
     "url_placeholder": "https://www.theverge.com/rss/index.xml",
     "url_label": "URL du flux",
     "add_btn": "Ajouter le flux au Radar",
-    "presets": "Préréglages rapides :"
+    "presets": "Préréglages rapides :",
+    "default_name": "Flux personnalisé",
+    "invalid_url": "Saisissez une URL http(s) valide.",
+    "duplicate_feed": "Ce flux est déjà dans le radar."
   },
   "zen_shield": {
     "breathe": "Respirez",

@@ -398,7 +398,12 @@
   "tech_radar": {
     "loading": "Cargando titulares...",
     "pin_tooltip": "Fijar en Post-it",
-    "empty": "No se pudieron cargar artículos. Pulsa actualizar para reintentar."
+    "empty": "No se pudieron cargar artículos. Pulsa actualizar para reintentar.",
+    "refresh_title": "Actualizar titulares",
+    "config_title": "Gestionar feeds RSS",
+    "delete_feed": "Quitar feed del radar",
+    "fallback_offline": "Sin conexión con la fuente de noticias. Pulsa actualizar para reintentar.",
+    "fallback_cors": "Comprueba tu conexión o la configuración CORS del feed."
   },
   "neural": {
     "ai_answer_title": "Asistente IA Local",
@@ -547,7 +552,10 @@
     "url_placeholder": "https://www.theverge.com/rss/index.xml",
     "url_label": "URL del feed",
     "add_btn": "Añadir Feed al Radar",
-    "presets": "Presets rápidos:"
+    "presets": "Presets rápidos:",
+    "default_name": "Feed personalizado",
+    "invalid_url": "Introduce una URL http(s) válida.",
+    "duplicate_feed": "Ese feed ya está en el radar."
   },
   "zen_shield": {
     "breathe": "Respira",
