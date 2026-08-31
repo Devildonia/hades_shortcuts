@@ -22,3 +22,6 @@ dist/
 # Roadmaps internos (aparcados, solo local — no se suben)
 docs/roadmap-fase-1-galeria-temas.md
 docs/roadmap-fase-2-pwa-movil.md
+
+# Diagrama de arquitectura (artefacto de prueba, no se sube)
+arquitectura/
