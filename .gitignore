@@ -18,3 +18,7 @@ docs/screenshots/_demo_mobile_raw/
 
 # Build artifacts (T6.1: el .zip se distribuye como asset de GitHub Release)
 dist/
+
+# Roadmaps internos (aparcados, solo local — no se suben)
+docs/roadmap-fase-1-galeria-temas.md
+docs/roadmap-fase-2-pwa-movil.md
