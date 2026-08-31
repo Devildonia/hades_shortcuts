@@ -80,18 +80,20 @@ export class WeatherEngine {
         }
 
         // Localized Contextual Greeting
-        const t = i18nDictionaries[state.language] || i18nDictionaries.es;
-        const hour = now.getHours();
-        let greeting = t.brand_greeting;
-        const uName = state.userName || 'HaDeS';
-        if (hour >= 6 && hour < 13) {
-            greeting = t.greetings.morning.replace('HaDeS', uName);
-        } else if (hour >= 13 && hour < 21) {
-            greeting = t.greetings.afternoon.replace('HaDeS', uName);
-        } else {
-            greeting = t.greetings.night.replace('HaDeS', uName);
+        const t = i18nDictionaries[state.language] || i18nDictionaries.en;
+        if (t && t.brand_greeting) {
+            const hour = now.getHours();
+            let greeting = t.brand_greeting;
+            const uName = state.userName || 'HaDeS';
+            if (hour >= 6 && hour < 13) {
+                greeting = (t.greetings?.morning || greeting).replace('HaDeS', uName);
+            } else if (hour >= 13 && hour < 21) {
+                greeting = (t.greetings?.afternoon || greeting).replace('HaDeS', uName);
+            } else {
+                greeting = (t.greetings?.night || greeting).replace('HaDeS', uName);
+            }
+            if (this.greetingTextEl) this.greetingTextEl.textContent = greeting;
         }
-        if (this.greetingTextEl) this.greetingTextEl.textContent = greeting;
     }
 
     scheduleMinuteSync() {
@@ -105,7 +107,8 @@ export class WeatherEngine {
     }
 
     getWeatherInfo(code, isDay) {
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).weather.conditions;
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.en)?.weather?.conditions;
+        if (!t) return { desc: '', icon: isDay ? '☀️' : '🌙' };
         switch (code) {
             case 0: return { desc: t.clear, icon: isDay ? '☀️' : '🌙' };
             case 1: return { desc: t.mostly_clear, icon: isDay ? '🌤️' : '🌙' };

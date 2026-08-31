@@ -330,7 +330,7 @@ export class WidgetsManager {
     }
 
     getLabel(key) {
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).widgets || {};
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.en)?.widgets || {};
         return t[`pomodoro_${key}`] || key;
     }
 

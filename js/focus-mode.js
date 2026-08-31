@@ -150,7 +150,7 @@ export class FocusModeEngine {
         if (focusBtn) {
             focusBtn.classList.toggle('active', this.isActive);
             const lang = state.language || 'es';
-            const dict = i18nDictionaries[lang] || i18nDictionaries['es'] || {};
+            const dict = i18nDictionaries[lang] || i18nDictionaries["en"] || {};
             const label = this.isActive
                 ? (dict.nav?.focus_active || 'Focus Activo')
                 : (dict.nav?.focus_mode || 'Modo Focus');

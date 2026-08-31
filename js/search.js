@@ -92,7 +92,8 @@ export class SearchEngineManager {
 
     updatePlaceholders() {
         const engine = SEARCH_ENGINES[this.currentEngineKey];
-        const t = i18nDictionaries[state.language] || i18nDictionaries.es;
+        const t = i18nDictionaries[state.language] || i18nDictionaries.en;
+        if (!t || !t.search) return;
         if (this.searchInput) {
             this.searchInput.placeholder = t.search.placeholder.replace('{engine}', engine.name);
         }
@@ -149,7 +150,7 @@ export class SearchEngineManager {
             const calcResult = evaluateArithmetic(query);
             if (this.calcBanner) {
                 if (calcResult !== null) {
-                    const t = (i18nDictionaries[state.language] || i18nDictionaries.es).bangs || {};
+                    const t = (i18nDictionaries[state.language] || i18nDictionaries.en)?.bangs || {};
                     this.calcBanner.innerHTML = `<span>🔢 <strong>${t.calc_title || 'Resultado'}:</strong></span> <span class="calc-val">${calcResult}</span>`;
                     this.calcBanner.classList.remove('hidden');
                 } else {

@@ -51,7 +51,8 @@ export class ShortcutManager {
     populateCategorySelect() {
         if (!this.catSelect) return;
         this.catSelect.innerHTML = '';
-        const t = i18nDictionaries[state.language] || i18nDictionaries.es;
+        const t = i18nDictionaries[state.language] || i18nDictionaries.en;
+        if (!t || !t.categories) return;
         state.categories.forEach(cat => {
             const opt = document.createElement('option');
             opt.value = cat.id;
@@ -127,7 +128,7 @@ export class ShortcutManager {
         this.selectIcon('iconos/aliexpress.webp', 'aliexpress');
         this.closeDropdown();
         if (this.deleteBtn) this.deleteBtn.classList.add('hidden');
-        document.getElementById('sc-modal-title').textContent = (i18nDictionaries[state.language] || i18nDictionaries.es).shortcut_editor.add_title;
+        document.getElementById('sc-modal-title').textContent = (i18nDictionaries[state.language] || i18nDictionaries.en || {}).shortcut_editor.add_title;
         this.modal.classList.remove('hidden');
     }
 
@@ -155,7 +156,7 @@ export class ShortcutManager {
         }
 
         if (this.deleteBtn) this.deleteBtn.classList.remove('hidden');
-        document.getElementById('sc-modal-title').textContent = (i18nDictionaries[state.language] || i18nDictionaries.es).shortcut_editor.edit_title;
+        document.getElementById('sc-modal-title').textContent = (i18nDictionaries[state.language] || i18nDictionaries.en || {}).shortcut_editor.edit_title;
         this.modal.classList.remove('hidden');
     }
 
@@ -202,7 +203,7 @@ export class ShortcutManager {
     }
 
     deleteShortcut(id) {
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).shortcut_editor;
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.en || {}).shortcut_editor;
         const confirmMsg = t.delete_confirm || '¿Eliminar este acceso directo? Esta acción no se puede deshacer.';
         if (!confirm(confirmMsg)) return;
         const list = state.shortcuts.filter(s => s.id !== id);

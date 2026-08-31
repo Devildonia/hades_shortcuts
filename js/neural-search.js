@@ -65,7 +65,7 @@ export class NeuralSearchEngine {
     // primera letra escrita tras "!ai ").
     handleAICommands(query, bannerEl) {
         const trimmed = (query || '').trim();
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).neural || {};
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.en)?.neural || {};
 
         const aiMatch = trimmed.match(/^!(ai|ask)\s+(\S.*)$/i);
         if (aiMatch) {
@@ -93,7 +93,7 @@ export class NeuralSearchEngine {
     // consulta era un comando reconocido.
     executeAICommand(query, bannerEl) {
         const trimmed = (query || '').trim();
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).neural || {};
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.en)?.neural || {};
 
         const aiMatch = trimmed.match(/^!(ai|ask)\s+(\S.*)$/i);
         if (aiMatch) {

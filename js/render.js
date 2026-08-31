@@ -94,7 +94,8 @@ export class DashboardRenderer {
         }
         if (!this.gridContainer) return;
         this.gridContainer.innerHTML = '';
-        const t = i18nDictionaries[state.language] || i18nDictionaries.es;
+        const t = i18nDictionaries[state.language] || i18nDictionaries.en;
+        if (!t || !t.categories) return;
 
         const spaces = window.spacesManager;
         state.categories.forEach(cat => {
@@ -250,8 +251,8 @@ export class DashboardRenderer {
 
     showTooltip(card, shortcut) {
         if (!this.smartTooltip) return;
-        const t = i18nDictionaries[state.language] || i18nDictionaries.es;
-        const desc = t.shortcuts[shortcut.id] || shortcut.desc || card.getAttribute('data-desc') || '';
+        const t = i18nDictionaries[state.language] || i18nDictionaries.en;
+        const desc = (t && t.shortcuts && t.shortcuts[shortcut.id]) || shortcut.desc || card.getAttribute('data-desc') || '';
         let domain = '';
         try { domain = new URL(shortcut.url).hostname.replace('www.', ''); } catch (e) {}
 

@@ -55,7 +55,7 @@ export class BackupManager {
     importBackup(event) {
         const file = event.target.files?.[0];
         if (!file) return;
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).settings_hub.backup;
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.en || {}).settings_hub.backup;
 
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -121,7 +121,7 @@ export class BackupManager {
     }
 
     resetDefaults() {
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).settings_hub.backup;
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.en || {}).settings_hub.backup;
         if (confirm(t.reset_confirm)) {
             state.resetToDefaults();
             if (this.renderer && this.renderer.render) this.renderer.render();

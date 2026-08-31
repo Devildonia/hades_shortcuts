@@ -89,7 +89,7 @@ export class SolarEngine {
     }
 
     getPhaseLabel() {
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).solar || {};
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.en)?.solar || {};
         return t[this.currentPhase] || this.currentPhase;
     }
 }

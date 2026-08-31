@@ -144,7 +144,7 @@ export class BookmarksImporter {
     }
 
     getMsg(key) {
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).importer || {};
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.en)?.importer || {};
         return t[key] || key;
     }
 

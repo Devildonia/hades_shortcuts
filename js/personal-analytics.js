@@ -139,7 +139,7 @@ export class PersonalAnalyticsEngine {
             return;
         }
 
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).analytics || {};
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.en)?.analytics || {};
         const hourFmt = `${suggestion.hour.toString().padStart(2, '0')}:00`;
         const textPrompt = (t.suggestion_text || 'Sueles abrir {title} a las {hour}').replace('{title}', `<strong>${escapeHtml(suggestion.shortcut.title)}</strong>`).replace('{hour}', hourFmt);
 

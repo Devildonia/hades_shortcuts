@@ -35,7 +35,7 @@ export class RadialHUDEngine {
         if (!this.hudWheel) return;
         this.hudWheel.innerHTML = '';
         const radius = 160, total = this.actions.length;
-        const t = (i18nDictionaries[state.language] || i18nDictionaries.es).radial_hud || {};
+        const t = (i18nDictionaries[state.language] || i18nDictionaries.en)?.radial_hud || {};
 
         this.actions.forEach((act, idx) => {
             const angle = (idx * (360 / total) - 90) * (Math.PI / 180);
