@@ -90,7 +90,7 @@ Vanilla HTML / CSS / ES modules. `js/app.js` boots the page; `js/state.js` is th
 flowchart TB
   subgraph shell [Shell]
     HTML["index.html"]
-    CSS["style.css tokens + 6 themes"]
+    CSS["css/ 13 modules + 6 themes"]
     LOC["locales/ ES EN FR DE"]
     SW["sw.js PWA network-first"]
   end

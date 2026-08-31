@@ -1,0 +1,1213 @@
+/* css/widgets.css — Post-its, dropzone, ambient, macros, aurora */
+/* ==========================================================================
+   Bloc de Notas — Estilo Post-it Real
+   Papel de colores con pincha roja, franja adhesiva y paleta de papel.
+   El color elegido persiste y lo heredan los post-its flotantes al fijarlos.
+   ========================================================================== */
+.widget-scratchpad {
+    --paper-1: #FFF7B4;
+    --paper-2: #FFD94F;
+    --paper-ink: #55430A;
+    --paper-ink-soft: rgba(85, 67, 10, 0.55);
+    background: linear-gradient(168deg, var(--paper-1) 0%, var(--paper-2) 100%);
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.28),
+        0 14px 30px rgba(0, 0, 0, 0.38),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.widget-scratchpad.paper-pink   { --paper-1: #FFD6E2; --paper-2: #FF9FBE; --paper-ink: #6E1234; --paper-ink-soft: rgba(110, 18, 52, 0.55); }
+.widget-scratchpad.paper-green  { --paper-1: #DCF7CB; --paper-2: #A3E78E; --paper-ink: #1D5A22; --paper-ink-soft: rgba(29, 90, 34, 0.55); }
+.widget-scratchpad.paper-blue   { --paper-1: #D9F0FF; --paper-2: #9BD3FF; --paper-ink: #0B3E66; --paper-ink-soft: rgba(11, 62, 102, 0.55); }
+.widget-scratchpad.paper-orange { --paper-1: #FFE6C6; --paper-2: #FFB46B; --paper-ink: #63350A; --paper-ink-soft: rgba(99, 53, 10, 0.55); }
+.widget-scratchpad.paper-purple { --paper-1: #EBDEFF; --paper-2: #C8A7FF; --paper-ink: #40206E; --paper-ink-soft: rgba(64, 32, 110, 0.55); }
+
+/* Pincha roja centrada (la tarjeta es overflow:hidden → vive dentro) */
+.widget-scratchpad .postit-pin {
+    position: absolute;
+    top: 7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26px;
+    height: 30px;
+    z-index: 6;
+    pointer-events: none;
+}
+.widget-scratchpad .postit-pin::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #FF9A8E 0%, #E53935 48%, #7E1410 100%);
+    box-shadow:
+        0 4px 7px rgba(0, 0, 0, 0.4),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.35),
+        inset 0 2px 3px rgba(255, 255, 255, 0.4);
+}
+.widget-scratchpad .postit-pin::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 13px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    filter: blur(1.5px);
+}
+
+/* Tinta sobre el papel */
+.widget-scratchpad .widget-title-group h3 {
+    color: var(--paper-ink);
+}
+.widget-scratchpad .widget-icon {
+    color: var(--paper-ink-soft);
+}
+.widget-scratchpad .scratchpad-textarea {
+    background: transparent;
+    border-color: transparent;
+    color: var(--paper-ink);
+    font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', var(--font-body);
+    font-size: 0.92rem;
+    line-height: 1.45;
+}
+.widget-scratchpad .scratchpad-textarea:focus {
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 0 0 2px var(--paper-ink-soft);
+}
+.widget-scratchpad .scratchpad-textarea::placeholder {
+    color: var(--paper-ink-soft);
+}
+
+/* Botón de fijar adaptado al papel */
+.widget-scratchpad .scratchpad-pin-btn {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid var(--paper-ink-soft);
+    color: var(--paper-ink);
+}
+.widget-scratchpad .scratchpad-pin-btn:hover {
+    background: var(--paper-ink);
+    color: var(--paper-1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Paleta de colores de papel */
+.scratchpad-colors {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: -4px;
+}
+.scratchpad-swatch {
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.22);
+    padding: 0;
+    cursor: pointer;
+    box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.22), inset 0 2px 3px rgba(255, 255, 255, 0.5);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.scratchpad-swatch:hover {
+    transform: scale(1.18);
+}
+.scratchpad-swatch[aria-pressed="true"] {
+    box-shadow: 0 0 0 2.5px var(--paper-ink), inset 0 -3px 5px rgba(0, 0, 0, 0.22);
+    transform: scale(1.08);
+}
+.swatch-yellow { background: #FFDF6B; }
+.swatch-pink   { background: #FFA9C4; }
+.swatch-green  { background: #ABE89B; }
+.swatch-blue   { background: #A5D8FF; }
+.swatch-orange { background: #FFBE7A; }
+.swatch-purple { background: #D2B6FF; }
+
+/* Tema claro: el papel manda (no el blanco del tema) */
+[data-theme="light"] .widget-scratchpad .scratchpad-textarea {
+    background: transparent;
+    border-color: transparent;
+    color: var(--paper-ink);
+    box-shadow: none;
+}
+[data-theme="light"] .widget-scratchpad .scratchpad-textarea::placeholder {
+    color: var(--paper-ink-soft);
+}
+
+/* Pomodoro Widget */
+.pomodoro-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.pomodoro-ring-wrapper {
+    position: relative;
+    width: 76px;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pomodoro-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.pomodoro-bg-circle {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 6;
+}
+
+.pomodoro-progress-circle {
+    fill: none;
+    stroke: var(--accent-primary);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.pomodoro-time {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.pomodoro-badge {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+}
+
+.pomodoro-badge.focus {
+    background: rgba(0, 242, 254, 0.15);
+    color: var(--accent-primary);
+    border: 1px solid var(--accent-primary);
+}
+
+.pomodoro-badge.break {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid #10b981;
+}
+
+.pomodoro-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.pomodoro-btn {
+    padding: 8px 16px;
+    border-radius: var(--radius-pill);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: var(--transition-fast);
+}
+
+.pomodoro-btn.start {
+    background: var(--accent-primary);
+    color: #07090e;
+}
+
+.pomodoro-btn.start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.pomodoro-btn.reset {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    border-color: var(--card-border);
+}
+
+.pomodoro-btn.reset:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Settings Sound & Theme Studio Inputs */
+.settings-select-row {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.settings-select {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: var(--bg-primary);
+    border: 1px solid var(--card-border-hover);
+    color: var(--text-primary);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.theme-color-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.color-picker-label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+.color-picker-label input[type="color"] {
+    width: 100%;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--card-border-hover);
+    background: transparent;
+    cursor: pointer;
+}
+
+.import-status-msg {
+    margin-top: 8px;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+.import-status-msg.success { color: #10b981; }
+.import-status-msg.error { color: #ef4444; }
+
+
+/* ==========================================================================
+   Filter & Search Visibility Classes (Pills & Search Engine)
+   ========================================================================== */
+.categoria.hidden-by-pill,
+.categoria.hidden-by-search {
+    display: none !important;
+}
+
+.enlace-icono.hidden-by-filter,
+.enlace-icono.no-match {
+    display: none !important;
+}
+
+
+/* ==========================================================================
+   Modular Bento Layout & Universal Drag & Drop System
+   ========================================================================== */
+.modular-dropzone {
+    min-height: 48px;
+    transition: var(--transition-smooth);
+}
+
+.edit-mode-active .modular-dropzone {
+    outline: 1px dashed rgba(0, 242, 254, 0.35);
+    outline-offset: 4px;
+    border-radius: var(--radius-lg);
+    background: rgba(0, 242, 254, 0.02);
+}
+
+.modular-tile {
+    position: relative;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* En edit mode, los controles de formulario dentro de un tile conservan su cursor */
+.modular-tile input,
+.modular-tile textarea,
+.modular-tile select {
+    cursor: auto;
+}
+
+.modular-tile:active {
+    cursor: grabbing;
+}
+
+.edit-mode-active .modular-tile {
+    animation: gentleLevitate 3s ease-in-out infinite alternate;
+}
+
+@keyframes gentleLevitate {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-2px); }
+}
+
+.modular-drag-handle {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 26px;
+    height: 26px;
+    background: rgba(0, 242, 254, 0.18);
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    color: var(--accent-primary);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: grab;
+    z-index: 20;
+    transition: var(--transition-fast);
+    backdrop-filter: blur(8px);
+    /* Sin esto, en móvil el drag desde el tirador se cancela como scroll */
+    touch-action: none;
+    user-select: none;
+}
+
+.modular-drag-handle:hover {
+    background: var(--accent-primary);
+    color: #000000;
+    transform: scale(1.1);
+}
+
+.tile-is-dragging {
+    opacity: 0.4;
+    transform: scale(0.96) !important;
+    border: 2px dashed var(--accent-primary) !important;
+}
+
+.modular-drop-placeholder {
+    background: rgba(0, 242, 254, 0.12);
+    border: 2px dashed var(--accent-primary);
+    border-radius: var(--radius-xl);
+    min-height: 120px;
+    grid-column: span 4;
+    animation: pulsePlaceholder 1.5s infinite ease-in-out;
+}
+
+@keyframes pulsePlaceholder {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.85; }
+}
+
+.brand-tile-wrapper, .settings-btn-tile {
+    display: flex;
+    align-items: center;
+}
+
+
+/* Floating Edit Mode Bottom Bar */
+.floating-edit-bar {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(10, 15, 30, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--accent-primary);
+    box-shadow: 0 10px 35px var(--accent-glow), 0 0 15px rgba(0, 242, 254, 0.2);
+    border-radius: var(--radius-pill);
+    padding: 8px 18px;
+    animation: slideUpFloat 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpFloat {
+    from { opacity: 0; transform: translate(-50%, 20px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.floating-edit-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.floating-edit-badge {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.floating-edit-hint {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+
+/* ==========================================================================
+   Floating Glass Post-it Notes System
+   ========================================================================== */
+.scratchpad-pin-btn {
+    background: rgba(0, 242, 254, 0.12);
+    border: 1px solid rgba(0, 242, 254, 0.35);
+    color: var(--accent-primary);
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: var(--transition-fast);
+}
+
+.scratchpad-pin-btn:hover {
+    background: var(--accent-primary);
+    color: #000000;
+    transform: translateY(-1px);
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.scratchpad-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.scratchpad-tip {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+}
+
+.postits-canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 950;
+}
+
+/* Post-it flotante: mismo lenguaje que el widget (papel, tinta, pincha) */
+.glass-postit {
+    position: fixed;
+    width: 240px;
+    min-height: 150px;
+    padding: 24px 14px 14px; /* espacio superior para la pincha */
+    border-radius: 10px;
+    background: linear-gradient(168deg, var(--pp-1, #FFF7B4) 0%, var(--pp-2, #FFD94F) 100%);
+    color: var(--pp-ink, #55430A);
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', var(--font-body);
+    pointer-events: auto;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: box-shadow 0.2s ease;
+}
+
+/* Pincha roja (como el widget) */
+.glass-postit::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #FF9A8E 0%, #E53935 48%, #7E1410 100%);
+    box-shadow:
+        0 3px 6px rgba(0, 0, 0, 0.4),
+        inset 0 -3px 4px rgba(0, 0, 0, 0.35),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.glass-postit:hover {
+    box-shadow: var(--shadow-elevated), 0 18px 45px rgba(0, 0, 0, 0.6);
+}
+
+.glass-postit.is-dragging-postit {
+    cursor: grabbing !important;
+    transform: scale(1.04) rotate(0deg) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 25px var(--accent-glow) !important;
+    opacity: 0.95;
+}
+
+.glass-postit.postit-spawn-anim {
+    animation: spawnPostit 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes spawnPostit {
+    from { opacity: 0; transform: scale(0.6) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.glass-postit.postit-delete-anim {
+    animation: deletePostit 0.22s ease-in forwards;
+}
+
+@keyframes deletePostit {
+    to { opacity: 0; transform: scale(0.5) translateY(-20px); }
+}
+
+/* Paletas de papel (idénticas a las del widget) */
+.glass-postit.color-yellow  { --pp-1: #FFF7B4; --pp-2: #FFD94F; --pp-ink: #55430A; --pp-ink-soft: rgba(85, 67, 10, 0.55); }
+.glass-postit.color-cyan    { --pp-1: #D9F0FF; --pp-2: #9BD3FF; --pp-ink: #0B3E66; --pp-ink-soft: rgba(11, 62, 102, 0.55); }
+.glass-postit.color-magenta { --pp-1: #FFD6E2; --pp-2: #FF9FBE; --pp-ink: #6E1234; --pp-ink-soft: rgba(110, 18, 52, 0.55); }
+.glass-postit.color-emerald { --pp-1: #DCF7CB; --pp-2: #A3E78E; --pp-ink: #1D5A22; --pp-ink-soft: rgba(29, 90, 34, 0.55); }
+.glass-postit.color-orange  { --pp-1: #FFE6C6; --pp-2: #FFB46B; --pp-ink: #63350A; --pp-ink-soft: rgba(99, 53, 10, 0.55); }
+.glass-postit.color-purple  { --pp-1: #EBDEFF; --pp-2: #C8A7FF; --pp-ink: #40206E; --pp-ink-soft: rgba(64, 32, 110, 0.55); }
+
+.postit-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 2px;
+    border-bottom: none;
+    cursor: grab;
+    color: var(--pp-ink-soft, rgba(0, 0, 0, 0.5));
+}
+
+.postit-time {
+    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    color: var(--pp-ink-soft, rgba(0, 0, 0, 0.5));
+}
+
+.postit-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.postit-color-btn, .postit-delete-btn {
+    background: transparent;
+    border: none;
+    color: var(--pp-ink-soft, rgba(0, 0, 0, 0.5));
+    font-size: 0.82rem;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: var(--transition-fast);
+}
+
+.postit-color-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: var(--pp-ink, #333);
+}
+
+.postit-delete-btn:hover {
+    background: rgba(239, 68, 68, 0.25);
+    color: #b91c1c;
+}
+
+.postit-body {
+    flex: 1;
+    font-family: inherit;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--pp-ink, #55430A);
+    background: transparent;
+    outline: none;
+    word-break: break-word;
+    white-space: pre-wrap;
+    user-select: text;
+    cursor: text;
+    min-height: 80px;
+}
+
+/* Tirador de redimensión (esquina inferior derecha) */
+.postit-resize-handle {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: var(--pp-ink-soft, rgba(0, 0, 0, 0.5));
+    cursor: nwse-resize;
+    border-radius: 5px;
+    opacity: 0.65;
+    transition: opacity 0.15s ease, background 0.15s ease;
+    touch-action: none;
+    user-select: none;
+    z-index: 4;
+}
+.glass-postit:hover .postit-resize-handle,
+.postit-resize-handle.is-resizing {
+    opacity: 1;
+}
+.postit-resize-handle:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: var(--pp-ink, #333);
+}
+
+
+/* ==========================================================================
+   Freeform Canvas & Corner Resize Engine
+   ========================================================================== */
+.freeform-positioned {
+    position: absolute !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    max-width: none !important;
+}
+
+/* Solo en modo edición: touch-action:none evita que el SO interprete el drag
+   como scroll. Fuera de edición bloquearía el scroll táctil sobre los tiles
+   posicionados (regresión móvil). */
+.edit-mode-active .freeform-positioned {
+    touch-action: none !important;
+}
+
+.modular-resize-handle {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 22px;
+    height: 22px;
+    background: rgba(0, 242, 254, 0.25);
+    border: 1px solid rgba(0, 242, 254, 0.5);
+    color: var(--accent-primary);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    cursor: nwse-resize;
+    z-index: 25;
+    touch-action: none;
+    user-select: none;
+    transition: var(--transition-fast);
+}
+
+.modular-resize-handle:hover {
+    background: var(--accent-primary);
+    color: #000000;
+    transform: scale(1.15);
+}
+
+.tile-is-resizing {
+    outline: 2px dashed var(--accent-primary) !important;
+    opacity: 0.92;
+}
+
+
+/* ==========================================================================
+   DevTools Omnibox & Interactive QR Modal
+   ========================================================================== */
+.devtool-result-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 0.92rem;
+}
+
+.devtool-code {
+    font-family: var(--font-mono);
+    background: rgba(0, 242, 254, 0.12);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    color: var(--accent-primary);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.devtool-copy-btn, .devtool-action-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.devtool-copy-btn:hover, .devtool-action-btn:hover {
+    background: var(--accent-primary);
+    color: #000000;
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.color-preview-chip {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    display: inline-block;
+}
+
+/* QR Modal Styles */
+.qr-modal-card {
+    max-width: 360px;
+    text-align: center;
+}
+
+.qr-target-text {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 12px;
+}
+
+.qr-canvas-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.1);
+}
+
+.qr-canvas-wrapper canvas {
+    max-width: 100%;
+    border-radius: 6px;
+}
+
+.qr-hint {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 10px;
+}
+
+
+/* ==========================================================================
+   Ambient Audio Generator Widget (Phase 2)
+   ========================================================================== */
+.widget-ambient {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ambient-toggle-play-btn {
+    background: rgba(0, 242, 254, 0.15);
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    color: var(--accent-primary);
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition-fast);
+}
+
+.ambient-toggle-play-btn:hover {
+    background: var(--accent-primary);
+    color: #000000;
+    box-shadow: 0 0 12px var(--accent-glow);
+    transform: scale(1.04);
+}
+
+.widget-ambient.is-playing .ambient-toggle-play-btn {
+    background: var(--accent-primary);
+    color: #000000;
+    box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.ambient-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ambient-presets-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+}
+
+.ambient-chip {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 6px 4px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.ambient-chip:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.ambient-chip.active {
+    background: rgba(0, 242, 254, 0.2);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.25);
+}
+
+.ambient-volume-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ambient-vol-icon {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.ambient-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    outline: none;
+}
+
+.ambient-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    cursor: pointer;
+    box-shadow: 0 0 8px var(--accent-primary);
+    transition: transform var(--transition-fast);
+}
+
+.ambient-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+}
+
+.ambient-vol-val {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    min-width: 32px;
+    text-align: right;
+}
+
+
+/* ==========================================================================
+   Macros & Contextual Routines (Phase 3)
+   ========================================================================== */
+.macros-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.macro-item-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: var(--transition-fast);
+}
+
+.macro-item-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+}
+
+.macro-item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.macro-badge {
+    font-family: var(--font-mono);
+    background: rgba(0, 242, 254, 0.15);
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    color: var(--accent-primary);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.macro-item-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.macro-card-actions {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+    margin-top: 4px;
+}
+
+.macro-action-btn {
+    flex: 1 1 0;
+    width: 0;
+    min-width: 0;
+    height: 36px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    box-sizing: border-box;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--card-border);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: var(--btn3d-dark);
+}
+
+.macro-action-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+.macro-run-btn .macro-action-icon {
+    transform: translateX(1px);
+}
+
+.macro-action-btn.macro-run-btn,
+.macro-action-btn.macro-edit-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--card-border);
+    color: var(--text-primary);
+}
+
+.macro-action-btn.macro-run-btn:hover,
+.macro-action-btn.macro-edit-btn:hover {
+    background: color-mix(in srgb, var(--accent-primary) 14%, transparent);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    box-shadow: var(--btn3d-dark-hover);
+}
+
+.macro-action-btn.macro-del-btn {
+    color: #f87171;
+    border-color: rgba(248, 113, 113, 0.35);
+    background: rgba(248, 113, 113, 0.08);
+}
+
+.macro-action-btn.macro-del-btn:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: #fff;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 4px 0 rgba(0, 0, 0, 0.55),
+        0 12px 20px rgba(0, 0, 0, 0.5),
+        0 0 16px rgba(255, 75, 75, 0.4);
+}
+
+.macro-action-btn:active {
+    transform: translateY(4px);
+    box-shadow: var(--btn3d-dark-pressed);
+}
+
+
+/* ==========================================================================
+   E2EE Cloud Sync Styles (Phase 4)
+   ========================================================================== */
+.sync-form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.sync-actions-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.sync-status-msg {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    margin-top: 10px;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+}
+
+.sync-status-msg.success {
+    background: rgba(0, 242, 254, 0.1);
+    color: var(--accent-primary);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+}
+
+.sync-status-msg.error {
+    background: rgba(255, 75, 75, 0.1);
+    color: #ff5e5e;
+    border: 1px solid rgba(255, 75, 75, 0.3);
+}
+
+
+/* ==========================================================================
+   Aurora Canvas Mesh & Mini-HUD Launcher (Phase 5)
+   ========================================================================== */
+.aurora-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.hud-modal-card {
+    background: rgba(10, 15, 29, 0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(0, 242, 254, 0.35);
+    border-radius: var(--radius-xl);
+    width: 90%;
+    max-width: 580px;
+    padding: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 242, 254, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: zoomIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hud-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hud-logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--accent-primary);
+    letter-spacing: 0.5px;
+}
+
+.hud-badge {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.hud-search-row {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-lg);
+    padding: 10px 14px;
+    gap: 10px;
+}
+
+.hud-search-row:focus-within {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 14px var(--accent-glow);
+}
+
+.hud-search-row input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+}
+
+.hud-results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.hud-item-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: var(--transition-fast);
+}
+
+.hud-item-chip:hover {
+    background: rgba(0, 242, 254, 0.15);
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
+}
+
+.hud-item-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    object-fit: cover;
+}

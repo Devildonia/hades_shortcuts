@@ -1,6 +1,7 @@
 // js/backup.js - JSON Backup & Restore Engine
 
-import { state, readJsonStorage, showToast, APP_VERSION } from './state.js';
+import { state, APP_VERSION } from './state.js';
+import { readJsonStorage, showToast } from './utils.js';
 import { i18nDictionaries, getTranslation } from './i18n.js';
 import { soundFx } from './audio.js';
 

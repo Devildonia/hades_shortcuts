@@ -1,0 +1,852 @@
+/* css/misc.css — Pomodoro, bezels, profiles, responsive */
+/* ==========================================================================
+   Bento v2 (solo escritorio ≥1181px): columna de enfoque apilada + radar doble
+   Col 1: Bloc de Notas · Col 2: Agenda · Col 3: Audio + Temporizador apilados
+   Cols 4-5: Tech Radar a doble ancho (noticias más legibles)
+   Fila = 180px → tiles de doble fila = 180+20(gap)+180 = 380px (antes 360px)
+   ========================================================================== */
+@media (min-width: 1181px) {
+    .mini-widgets-section {
+        grid-auto-rows: 180px;
+    }
+    /* Numpad de perfiles: fila propia en Col 1, encima del Bloc de Notas */
+    .space-numpad-card {
+        grid-column: 1;
+        grid-row: 1 / 2;
+    }
+    /* Búsqueda: misma fila, Cols 2-4 → centrada entre perfiles (izq) y Agente IA (der) */
+    .search-section {
+        grid-column: 2 / 5;
+        grid-row: 1 / 2;
+        max-width: none;
+        margin: 0;
+        align-items: center;
+        justify-content: center;
+    }
+    .search-section .search-box-wrapper {
+        max-width: 840px;
+    }
+    /* Agente IA: Col 5, espejo del numpad en Col 1 → fila simétrica */
+    .ai-launcher-card {
+        grid-column: 5 / 6;
+        grid-row: 1 / 2;
+    }
+    .widget-scratchpad {
+        grid-column: 1;
+        grid-row: 2 / 4;
+    }
+    .widget-calendar {
+        grid-column: 2;
+        grid-row: 2 / 4;
+    }
+    .widget-ambient {
+        grid-column: 3;
+        grid-row: 2;
+    }
+    .widget-pomodoro {
+        grid-column: 3;
+        grid-row: 3;
+    }
+    .widget-tech-radar {
+        grid-column: 4 / 6;
+        grid-row: 2 / 4;
+    }
+
+    /* Ajuste compacto para que Audio + Temporizador quepan a media altura */
+    .widget-ambient .ambient-body {
+        gap: 10px;
+    }
+    .widget-ambient .ambient-chip {
+        padding: 5px 4px;
+    }
+    .widget-pomodoro .pomodoro-body {
+        gap: 10px;
+    }
+    .widget-pomodoro .pomodoro-ring-wrapper {
+        width: 58px;
+        height: 58px;
+    }
+    .widget-pomodoro .pomodoro-time {
+        font-size: 0.78rem;
+    }
+    .widget-pomodoro .pomodoro-btn {
+        padding: 6px 14px;
+    }
+}
+
+/* ==========================================================================
+   Audio Ambiental — Zen Sakura (customización)
+   Fondo de cerezos + tinta malva + acentos manuscritos (chips)
+   El título usa la misma fuente que los demás widgets (.widget-header h3)
+   → relax y tranquilidad
+   ========================================================================== */
+.widget-ambient {
+    --sakura-ink: #5A2E4A;
+    --sakura-ink-soft: rgba(90, 46, 74, 0.62);
+    --sakura-rose: #C93A6E;
+    position: relative;
+    background:
+        linear-gradient(180deg,
+            rgba(255, 240, 246, 0.6) 0%,
+            rgba(255, 229, 241, 0.32) 40%,
+            rgba(233, 205, 232, 0.66) 100%),
+        url('../img/ambient-sakura.webp') center 45% / cover no-repeat;
+}
+
+/* Sonando: halo rosa suave en toda la tarjeta */
+.widget-ambient.is-playing {
+    box-shadow: 0 0 0 1px rgba(201, 58, 110, 0.35), 0 6px 26px rgba(201, 58, 110, 0.35);
+}
+
+/* Título: hereda Outfit 0.95rem/700 de .widget-header h3 como el resto de
+   widgets; solo se ajusta el color para que sea legible sobre el fondo claro */
+.widget-ambient .widget-title-group h3 {
+    color: var(--sakura-ink);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.widget-ambient .widget-icon {
+    color: var(--sakura-ink-soft);
+}
+
+/* Reproducir / Pausar: botón-círculo (mini player) para no competir con el título */
+.widget-ambient .ambient-toggle-play-btn {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(90, 46, 74, 0.28);
+    color: var(--sakura-ink);
+    padding: 4px 8px;
+    box-shadow: 0 2px 8px rgba(90, 46, 74, 0.14);
+}
+
+/* El texto Pausar/Reproducir vive en el atributo title; el icono manda */
+.widget-ambient .ambient-toggle-play-btn #ambient-play-text {
+    display: none;
+}
+
+.widget-ambient .ambient-toggle-play-btn svg {
+    width: 15px;
+    height: 15px;
+}
+
+.widget-ambient .ambient-toggle-play-btn:hover {
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--sakura-ink);
+    box-shadow: 0 4px 14px rgba(201, 58, 110, 0.28);
+}
+
+.widget-ambient .ambient-toggle-play-btn.is-playing,
+.widget-ambient.is-playing .ambient-toggle-play-btn {
+    background: linear-gradient(135deg, #E4689B 0%, var(--sakura-rose) 100%);
+    border-color: rgba(255, 255, 255, 0.7);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(201, 58, 110, 0.45);
+}
+
+/* Presets: chips manuscritas sobre cristal */
+.widget-ambient .ambient-chip {
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(90, 46, 74, 0.22);
+    color: var(--sakura-ink);
+    font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', var(--font-body);
+    border-radius: 999px;
+}
+
+.widget-ambient .ambient-chip:hover {
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--sakura-ink);
+    border-color: rgba(201, 58, 110, 0.45);
+}
+
+.widget-ambient .ambient-chip.active {
+    background: linear-gradient(135deg, #E4689B 0%, var(--sakura-rose) 100%);
+    border-color: rgba(255, 255, 255, 0.75);
+    color: #ffffff;
+    box-shadow: 0 3px 12px rgba(201, 58, 110, 0.4);
+}
+
+/* Volumen: tinta malva + pomo rosa */
+.widget-ambient .ambient-vol-icon {
+    color: var(--sakura-ink-soft);
+}
+
+.widget-ambient .ambient-vol-val {
+    color: var(--sakura-ink);
+    font-size: 0.75rem;
+}
+
+.widget-ambient .ambient-slider {
+    background: rgba(90, 46, 74, 0.25);
+    min-width: 0; /* el range no debe desbordar la fila a media altura */
+}
+
+.widget-ambient .ambient-slider::-webkit-slider-thumb {
+    background: var(--sakura-rose);
+    border-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(201, 58, 110, 0.25);
+}
+
+.widget-ambient .ambient-slider::-moz-range-thumb {
+    background: var(--sakura-rose);
+    border-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(201, 58, 110, 0.25);
+}
+
+/* ==========================================================================
+   Tech Radar & RSS — Diario Antiguo (customización)
+   Papel envejecido + tinta marrón + serif clásica (Georgia): pestañas de
+   sección, byline en óxido y filete de cabecera de periódico.
+   El título sigue usando la fuente estándar de los widgets (.widget-header h3)
+   ========================================================================== */
+.widget-tech-radar {
+    --paper-ink: #3B2A1A;
+    --paper-ink-soft: rgba(59, 42, 26, 0.62);
+    --paper-accent: #8C3A2B;
+    --paper-font: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', 'Times New Roman', serif;
+    position: relative;
+    background:
+        linear-gradient(180deg,
+            rgba(248, 240, 226, 0.5) 0%,
+            rgba(242, 230, 210, 0.28) 45%,
+            rgba(234, 216, 190, 0.52) 100%),
+        url('../img/radar-newspaper.webp') center / cover no-repeat;
+}
+
+/* Título: hereda Outfit 0.95rem/700 de .widget-header h3 como el resto de
+   widgets; solo se ajusta el color para que sea legible sobre el papel */
+.widget-tech-radar .widget-title-group h3 {
+    color: var(--paper-ink);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+/* Cabecera de periódico: doble filete bajo el título */
+.widget-tech-radar .widget-header {
+    border-bottom: 1px solid rgba(59, 42, 26, 0.35);
+    box-shadow: 0 3px 0 -2px rgba(59, 42, 26, 0.25);
+    padding-bottom: 7px;
+    margin-bottom: 8px;
+}
+
+.widget-tech-radar .widget-icon {
+    color: var(--paper-ink-soft);
+}
+
+.widget-tech-radar .radar-tool-btn {
+    color: var(--paper-ink);
+}
+
+.widget-tech-radar .radar-tool-btn:hover {
+    background: rgba(59, 42, 26, 0.12);
+}
+
+/* Pestañas de sección, como los rótulos de portada de un diario */
+.widget-tech-radar .radar-channel-pill {
+    font-family: var(--paper-font);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(59, 42, 26, 0.28);
+    color: var(--paper-ink);
+}
+
+.widget-tech-radar .radar-channel-pill:hover {
+    background: rgba(255, 255, 255, 0.6);
+    color: var(--paper-ink);
+}
+
+.widget-tech-radar .radar-channel-pill.active {
+    background: var(--paper-ink);
+    border-color: var(--paper-ink);
+    color: #F3E9D8;
+    box-shadow: 0 2px 8px rgba(59, 42, 26, 0.35);
+}
+
+/* Titulares: tinta marrón sobre papel translúcido */
+.widget-tech-radar .tech-radar-list {
+    scrollbar-color: rgba(59, 42, 26, 0.3) transparent;
+}
+
+.widget-tech-radar .tech-radar-list::-webkit-scrollbar-thumb {
+    background: rgba(59, 42, 26, 0.3);
+}
+
+.widget-tech-radar .radar-item {
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(59, 42, 26, 0.16);
+    border-radius: 6px;
+}
+
+.widget-tech-radar .radar-item:hover {
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(59, 42, 26, 0.45);
+    box-shadow: 0 2px 10px rgba(59, 42, 26, 0.15);
+}
+
+.widget-tech-radar .radar-link {
+    font-family: var(--paper-font);
+    font-size: 0.84rem;
+    color: var(--paper-ink) !important; /* la base usa !important */
+}
+
+.widget-tech-radar .radar-bullet {
+    font-family: var(--paper-font);
+    color: var(--paper-accent);
+}
+
+.widget-tech-radar .radar-item:hover .radar-title {
+    color: var(--paper-accent) !important; /* la base usa !important */
+}
+
+/* Byline: la fuente en óxido, como firma de periódico */
+.widget-tech-radar .radar-source-tag {
+    font-family: var(--paper-font);
+    color: var(--paper-accent);
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(140, 58, 43, 0.4);
+}
+
+.widget-tech-radar .radar-pin-btn {
+    color: var(--paper-ink);
+}
+
+.widget-tech-radar .radar-pin-btn:hover {
+    background: rgba(59, 42, 26, 0.15);
+}
+
+/* Estados vacíos / carga: nota al margen en tinta suave */
+.widget-tech-radar .radar-empty,
+.widget-tech-radar .radar-loading {
+    font-family: var(--paper-font);
+    font-style: italic;
+    color: var(--paper-ink-soft);
+}
+
+/* Borrado de canal en tinta de periódico */
+.widget-tech-radar .radar-channel-del {
+    background: rgba(59, 42, 26, 0.14);
+    color: var(--paper-ink-soft);
+}
+
+.widget-tech-radar .radar-channel-del:hover {
+    background: rgba(164, 62, 42, 0.22);
+    color: #a43e2a;
+}
+
+/* ==========================================================================
+   Temporizador Focus — Zen Garden (customización)
+   Tinta malva sobre papel de washi cálido + anillo con gradiente
+   rosa-cerezo → malva, para que la columna 3 (Sakura + Temporizador)
+   lea como un solo jardín zen
+   ========================================================================== */
+.widget-pomodoro {
+    --zen-ink: #5A2E4A;
+    --zen-ink-soft: rgba(90, 46, 74, 0.6);
+    --zen-rose: #C93A6E;
+    position: relative;
+    background:
+        repeating-linear-gradient(90deg,
+            rgba(90, 46, 74, 0.028) 0px, rgba(90, 46, 74, 0.028) 1px,
+            transparent 1px, transparent 4px),
+        linear-gradient(165deg, #F7EDE7 0%, #F1E3D9 48%, #E9D6C9 100%);
+}
+
+/* Título: hereda Outfit 0.95rem/700 de .widget-header h3 como el resto de
+   widgets; solo se ajusta el color para que sea legible sobre el papel */
+.widget-pomodoro .widget-title-group h3 {
+    color: var(--zen-ink);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.widget-pomodoro .widget-icon {
+    color: var(--zen-ink-soft);
+}
+
+/* Badge Enfoque/Descanso: tinta malva-rosa y tinta verde sobre papel */
+.widget-pomodoro .pomodoro-badge.focus {
+    background: rgba(255, 255, 255, 0.55);
+    color: #8C3A5A;
+    border: 1px solid rgba(140, 58, 90, 0.4);
+}
+
+.widget-pomodoro .pomodoro-badge.break {
+    background: rgba(255, 255, 255, 0.55);
+    color: #3E7A4E;
+    border: 1px solid rgba(62, 122, 78, 0.4);
+}
+
+/* Anillo: pista en tinta malva + trazo con gradiente rosa → malva
+   (definido en <defs id="zen-ring-grad"> del SVG) */
+.widget-pomodoro .pomodoro-bg-circle {
+    stroke: rgba(90, 46, 74, 0.14);
+}
+
+.widget-pomodoro .pomodoro-progress-circle {
+    stroke: url(#zen-ring-grad);
+}
+
+.widget-pomodoro .pomodoro-time {
+    color: var(--zen-ink);
+    font-size: 1.5rem;
+    letter-spacing: 0.02em;
+}
+
+/* Botones: Iniciar como la chip activa de Sakura; Reiniciar en cristal tinta */
+.widget-pomodoro .pomodoro-btn.start {
+    background: linear-gradient(135deg, #E4689B 0%, var(--zen-rose) 100%);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 3px 10px rgba(201, 58, 110, 0.35);
+}
+
+.widget-pomodoro .pomodoro-btn.start:hover {
+    box-shadow: 0 5px 14px rgba(201, 58, 110, 0.45);
+}
+
+.widget-pomodoro .pomodoro-btn.reset {
+    background: rgba(255, 255, 255, 0.5);
+    color: var(--zen-ink);
+    border-color: rgba(90, 46, 74, 0.3);
+}
+
+.widget-pomodoro .pomodoro-btn.reset:hover {
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--zen-ink);
+}
+
+/* ============================================================
+   Calendario — modal "Añadir Evento" (papel, casado con la Agenda)
+   También aplica al modal de Feed iCal (misma familia agenda).
+   ============================================================ */
+.calendar-modal-card {
+    --paper-1: #FDFDF8;
+    --paper-2: #F1ECDD;
+    --paper-ink: #2B2B33;
+    --paper-ink-soft: rgba(43, 43, 51, 0.55);
+    background: linear-gradient(172deg, var(--paper-1) 0%, var(--paper-2) 100%);
+    color: var(--paper-ink);
+    border: none;
+    border-radius: 18px;
+    box-shadow:
+        0 30px 70px -12px rgba(0, 0, 0, 0.85),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    animation: agendaZoom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.calendar-modal-card h3 {
+    font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', var(--font-body);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--paper-ink);
+}
+
+.calendar-modal-card .calendar-modal-close {
+    color: var(--paper-ink-soft);
+    transition: background 0.15s ease, border-radius 0.15s ease;
+}
+
+.calendar-modal-card .calendar-modal-close:hover {
+    background: rgba(43, 43, 51, 0.1);
+    border-radius: 8px;
+}
+
+.calendar-modal-card .calendar-modal-desc,
+.calendar-modal-card .calendar-modal-hint {
+    color: var(--paper-ink-soft);
+}
+
+.calendar-modal-card .macro-form-field label {
+    color: var(--paper-ink);
+}
+
+.calendar-modal-card .macro-form-field input,
+.calendar-modal-card .macro-form-field select {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(43, 43, 51, 0.25);
+    color: var(--paper-ink);
+}
+
+.calendar-modal-card .macro-form-field input:focus,
+.calendar-modal-card .macro-form-field select:focus {
+    border-color: var(--paper-ink);
+}
+
+.calendar-modal-card .calendar-modal-input-wrapper input {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(43, 43, 51, 0.25);
+    color: var(--paper-ink);
+}
+
+.calendar-modal-card .settings-action-btn.secondary {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(43, 43, 51, 0.3);
+    color: var(--paper-ink);
+    /* El modal de calendario (estética papel) no usa el tratamiento 3D del drawer */
+    box-shadow: none;
+}
+
+.calendar-modal-card .settings-action-btn.secondary:hover {
+    box-shadow: none;
+}
+
+.calendar-modal-card .settings-action-btn.secondary:active {
+    transform: none;
+    box-shadow: none;
+}
+
+.calendar-modal-card .settings-action-btn.primary,
+.calendar-modal-card .calendar-save-btn {
+    background: var(--paper-ink);
+    color: #F5F2E8;
+    border: 1px solid transparent;
+    box-shadow: 0 3px 10px rgba(43, 43, 51, 0.3);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.calendar-modal-card .settings-action-btn.primary:hover,
+.calendar-modal-card .calendar-save-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(43, 43, 51, 0.4);
+}
+
+/* ==========================================================================
+   T5.2 (Fase 5) · Aviso sin JavaScript
+   La app es 100% JS: si JS está desactivado no se renderiza nada más, así que
+   el <noscript> ocupa toda la pantalla como única información visible.
+   ========================================================================== */
+.noscript-banner {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 32px 24px;
+    background: #0b1020;
+    color: #e6edf7;
+    text-align: center;
+    font-family: "Outfit", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.noscript-banner strong { font-size: 22px; font-weight: 700; color: #9fd0ff; letter-spacing: 0.2px; }
+.noscript-banner em { color: #8fa3c0; font-size: 13px; font-style: normal; }
+
+/* ==========================================================================
+   Marco azul desactivado — familia perfiles (Perfiles · Agente IA · Búsqueda)
+   Mantiene la sombra neutra de profundidad; retira aro, spotlight y bezel.
+   ========================================================================== */
+html.no-blue-bezel .space-numpad-card,
+html.no-blue-bezel .ai-launcher-card,
+html.no-blue-bezel .search-box-wrapper {
+    border-color: var(--card-border);
+    box-shadow: var(--shadow-subtle);
+}
+
+html.no-blue-bezel .space-numpad-card:hover,
+html.no-blue-bezel .ai-launcher-card:hover,
+html.no-blue-bezel .search-box-wrapper:hover {
+    border-color: var(--card-border-hover);
+    box-shadow: var(--shadow-elevated);
+}
+
+html.no-blue-bezel .space-numpad-card::before,
+html.no-blue-bezel .ai-launcher-card::before,
+html.no-blue-bezel .search-box-wrapper::before,
+html.no-blue-bezel .space-numpad-card::after,
+html.no-blue-bezel .ai-launcher-card::after,
+html.no-blue-bezel .search-box-wrapper::after {
+    display: none;
+}
+
+/* ==========================================================================
+   Marco lila desactivado — cajón de Settings
+   Mantiene la sombra neutra de profundidad; retira aro, spotlight y bezel.
+   ========================================================================== */
+html.no-lilac-bezel .settings-drawer-card {
+    border-color: var(--card-border);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), var(--shadow-subtle);
+}
+
+html.no-lilac-bezel .settings-drawer-card:hover {
+    border-color: var(--card-border-hover);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), var(--shadow-elevated);
+}
+
+html.no-lilac-bezel .settings-drawer-card::before,
+html.no-lilac-bezel .settings-drawer-card::after {
+    display: none;
+}
+
+/* ==========================================================================
+   Marco verde metálico — chips del encabezado (reloj · telemetría · clima ·
+   Modo Focus · botón Ajustes).
+   Mismo lenguaje cromo (conic-gradient + mask) que los marcos dorado/azul/lila,
+   en paleta esmeralda. Se desactiva con `html.no-green-bezel` (Ajustes).
+   ========================================================================== */
+/* Los chips del encabezado necesitan ser contenedor de posicionamiento para
+   que el aro cromo (position:absolute) se ancle a cada chip individualmente. */
+.widget-clock,
+.telemetry-capsule,
+.widget-weather,
+.focus-toggle-btn,
+.settings-main-btn {
+    position: relative;
+}
+
+.widget-clock::after,
+.telemetry-capsule::after,
+.widget-weather::after,
+.focus-toggle-btn::after,
+.settings-main-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 5px;
+    pointer-events: none;
+    z-index: 6;
+    background:
+        radial-gradient(
+            220px circle at var(--gold-lx, 30%) var(--gold-ly, 10%),
+            rgba(232, 255, 240, 0.95) 0%,
+            rgba(126, 226, 168, 0.55) 22%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from -40deg,
+            #04231a 0deg,
+            #1c7a5a 28deg,
+            #a6f0cd 50deg,
+            #0e523c 82deg,
+            #0a3626 122deg,
+            #37b07f 164deg,
+            #0a4630 204deg,
+            #8ff0b8 242deg,
+            #073222 284deg,
+            #2ea873 326deg,
+            #04231a 360deg
+        );
+    background-blend-mode: screen, normal;
+    -webkit-mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    -webkit-mask-origin: content-box, border-box;
+    -webkit-mask-clip: content-box, border-box;
+    mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    mask-origin: content-box, border-box;
+    mask-clip: content-box, border-box;
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .widget-clock::after,
+[data-theme="light"] .telemetry-capsule::after,
+[data-theme="light"] .widget-weather::after,
+[data-theme="light"] .focus-toggle-btn::after,
+[data-theme="light"] .settings-main-btn::after {
+    background:
+        radial-gradient(
+            220px circle at var(--gold-lx, 30%) var(--gold-ly, 10%),
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(126, 226, 168, 0.45) 22%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from -40deg,
+            #0f5238 0deg,
+            #34c08a 30deg,
+            #ffffff 50deg,
+            #1e8a5e 84deg,
+            #146a48 126deg,
+            #5fe0a8 168deg,
+            #1e7a52 206deg,
+            #b8f5d6 244deg,
+            #10523a 288deg,
+            #3ec08f 328deg,
+            #0f5238 360deg
+        );
+}
+
+/* Marco verde desactivado (Ajustes → Marco verde): retira el aro cromo de los
+   chips del encabezado; la sombra/neuma del chip se conserva. */
+html.no-green-bezel .widget-clock::after,
+html.no-green-bezel .telemetry-capsule::after,
+html.no-green-bezel .widget-weather::after,
+html.no-green-bezel .focus-toggle-btn::after,
+html.no-green-bezel .settings-main-btn::after {
+    display: none;
+}
+
+/* ==========================================================================
+   Editor de Perfiles (Ajustes → Perfiles)
+   Tarjetas por perfil: punto de acento, nombre, herramientas (color · subir ·
+   bajar · reset) y chips de categorías. Mismo lenguaje de vidrio y marcos que
+   el resto del tablero; cada tarjeta se pinta con el acento de su perfil.
+   ========================================================================== */
+#profiles-editor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.profile-card {
+    position: relative;
+    border: 1px solid var(--card-border);
+    border-left: 3px solid color-mix(in srgb, var(--space-accent, #3b82f6) 70%, transparent);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: var(--shadow-subtle);
+    padding: 12px 14px;
+    transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.profile-card:hover {
+    border-color: color-mix(in srgb, var(--space-accent, #3b82f6) 45%, var(--card-border));
+    box-shadow: var(--shadow-elevated);
+}
+
+.profile-card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-accent-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35), 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.profile-name-field {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.profile-name-input {
+    width: 100%;
+    max-width: 100%;
+}
+
+.profile-card-tools {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+}
+
+.profile-accent-input {
+    width: 30px;
+    height: 30px;
+    padding: 2px;
+    margin: 0;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.profile-tool-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary, #9fb0c8);
+    cursor: pointer;
+    transition: background 0.14s ease, color 0.14s ease, border-color 0.14s ease, transform 0.12s ease;
+}
+.profile-tool-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+    border-color: color-mix(in srgb, var(--space-accent, #3b82f6) 55%, var(--card-border));
+}
+.profile-tool-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+.profile-tool-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+.profile-tool-btn svg {
+    display: block;
+}
+
+.profile-cats {
+    margin-top: 12px;
+}
+
+.profile-cats-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text-tertiary, #6f82a0);
+    margin-bottom: 8px;
+}
+
+.profile-cats-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.profile-cat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid var(--card-border);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 0.78rem;
+    color: var(--text-secondary, #9fb0c8);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+}
+.profile-cat-chip:hover {
+    border-color: var(--card-border-hover);
+    color: var(--text-primary);
+}
+.profile-cat-chip input {
+    accent-color: var(--accent-primary, #00f2fe);
+    margin: 0;
+    width: 14px;
+    height: 14px;
+}
+.profile-cat-chip:has(input:checked) {
+    border-color: color-mix(in srgb, var(--space-accent, #3b82f6) 60%, var(--card-border));
+    background: color-mix(in srgb, var(--space-accent, #3b82f6) 12%, rgba(255, 255, 255, 0.02));
+    color: var(--text-primary);
+}
+
+.profile-cats-hint {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.72rem;
+    color: var(--text-tertiary, #6f82a0);
+    font-style: italic;
+}
+
+.profile-order-hint {
+    margin: 14px 0 0;
+    font-size: 0.78rem;
+    color: var(--text-tertiary, #6f82a0);
+}
+
+[data-theme="light"] .profile-card {
+    background: rgba(255, 255, 255, 0.5);
+}
+[data-theme="light"] .profile-cat-chip {
+    background: rgba(255, 255, 255, 0.6);
+}

@@ -9,7 +9,8 @@
 // El tema y el bloc de notas ya eran persistentes por perfil; ahora también lo son
 // el resto de campos. Todo se persiste en `hades_spaces_v1` y es 100% local.
 
-import { state, persistJson, escapeHtml } from './state.js';
+import { state, persistJson } from './state.js';
+import { escapeHtml } from './utils.js';
 import { soundFx } from './audio.js';
 import { getTranslation } from './i18n.js';
 

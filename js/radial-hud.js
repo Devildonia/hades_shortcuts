@@ -1,6 +1,7 @@
 // js/radial-hud.js - Radial HUD Action Wheel (360° Gestural Quick Access)
 
-import { state, escapeHtml, bindIconFallback, faviconForUrl, openSafeUrl } from './state.js';
+import { state } from './state.js';
+import { escapeHtml, bindIconFallback, faviconForUrl, openSafeUrl } from './utils.js';
 import { soundFx } from './audio.js';
 import { ambientAudio } from './ambient-audio.js';
 import { i18nDictionaries } from './i18n.js';

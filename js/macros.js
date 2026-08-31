@@ -1,6 +1,7 @@
 // js/macros.js - Contextual Multi-Action Macro & Routine Engine (Visual No-Code Studio)
 
-import { state, escapeHtml, persistJson, openSafeUrl } from './state.js';
+import { state, persistJson } from './state.js';
+import { escapeHtml, openSafeUrl } from './utils.js';
 import { soundFx } from './audio.js';
 import { ambientAudio } from './ambient-audio.js';
 import { focusMode } from './focus-mode.js';

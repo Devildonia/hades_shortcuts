@@ -1,0 +1,396 @@
+/* css/base.css — Reset, variables, themes */
+/* ==========================================================================
+   HaDeS' Shortcuts · Ultra-Code Design System (Diamond Standard 2026)
+   ========================================================================== */
+
+@font-face {
+    font-family: 'Audiowide';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/audiowide-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/outfit-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../fonts/outfit-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/outfit-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/plus-jakarta-sans-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../fonts/plus-jakarta-sans-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/plus-jakarta-sans-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('../fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2');
+}
+
+:root {
+    /* Base Font Stacks */
+    --font-brand: 'Audiowide', sans-serif;
+    --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Theme: Cyber Neon (Default) */
+    --bg-primary: #07090e;
+    --bg-secondary: #0c1017;
+    --card-bg: rgba(14, 20, 30, 0.55);
+    --card-bg-hover: rgba(20, 29, 44, 0.75);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-border-hover: rgba(0, 242, 254, 0.35);
+    --card-spotlight: rgba(0, 242, 254, 0.08);
+    
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+
+    --accent-primary: #00f2fe;
+    --accent-secondary: #4facfe;
+    --accent-glow: rgba(0, 242, 254, 0.25);
+    --accent-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    
+    --tag-cyan: #06b6d4;
+    --tag-purple: #a855f7;
+    --tag-pink: #ec4899;
+    --tag-amber: #f59e0b;
+    --tag-blue: #3b82f6;
+    --tag-emerald: #10b981;
+    --tag-violet: #8b5cf6;
+    --tag-orange: #f97316;
+    --tag-red: #ef4444;
+    --tag-magenta: #d946ef;
+    --tag-yellow: #eab308;
+
+    --glass-blur: 24px;
+    --radius-xl: 28px;
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-sm: 8px;
+    --radius-pill: 9999px;
+
+    --shadow-subtle: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    --shadow-elevated: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 242, 254, 0.08);
+
+    /* 3D depth treatment for controls (keycap-inspired: top highlight, side bevel,
+       extruded body lip, soft drop). Applied to settings/macro/segmented buttons. */
+    --btn3d-dark:
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        inset 0 -3px 5px rgba(0, 0, 0, 0.45),
+        inset 2px 0 4px rgba(255, 255, 255, 0.03),
+        inset -2px 0 4px rgba(0, 0, 0, 0.35),
+        0 4px 0 rgba(0, 0, 0, 0.55),
+        0 6px 2px rgba(0, 0, 0, 0.3),
+        0 10px 18px rgba(0, 0, 0, 0.45);
+    --btn3d-dark-hover:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        inset 0 -3px 5px rgba(0, 0, 0, 0.45),
+        inset 2px 0 4px rgba(255, 255, 255, 0.04),
+        inset -2px 0 4px rgba(0, 0, 0, 0.35),
+        0 4px 0 rgba(0, 0, 0, 0.55),
+        0 7px 3px rgba(0, 0, 0, 0.32),
+        0 12px 20px rgba(0, 0, 0, 0.5),
+        0 0 14px var(--accent-glow);
+    --btn3d-dark-pressed:
+        inset 0 3px 7px rgba(0, 0, 0, 0.65),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.05),
+        0 1px 0 rgba(0, 0, 0, 0.4),
+        0 2px 5px rgba(0, 0, 0, 0.35),
+        0 0 14px var(--accent-glow);
+    --btn3d-primary:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+        0 4px 0 color-mix(in srgb, var(--accent-primary) 62%, #000),
+        0 7px 3px rgba(0, 0, 0, 0.3),
+        0 12px 20px var(--accent-glow);
+    --btn3d-primary-hover:
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+        0 4px 0 color-mix(in srgb, var(--accent-primary) 62%, #000),
+        0 8px 4px rgba(0, 0, 0, 0.32),
+        0 14px 24px var(--accent-glow),
+        0 0 18px var(--accent-glow);
+    --btn3d-primary-pressed:
+        inset 0 3px 8px rgba(0, 0, 0, 0.4),
+        0 1px 0 color-mix(in srgb, var(--accent-primary) 62%, #000),
+        0 2px 6px var(--accent-glow);
+
+    --chrome-hairline: #141418;
+    --chrome-inset-hi: rgba(255, 255, 255, 0.22);
+    --chrome-inset-lo: rgba(0, 0, 0, 0.45);
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 24px;
+    --space-2xl: 32px;
+    --page-max: 1440px;
+    --page-gutter: 32px;
+    --control-h: 44px;
+    --chip-h: 48px;
+    --bento-gap: 20px;
+    --bento-min-h: 360px;
+}
+
+/* Theme: Deep Nebula */
+[data-theme="nebula"] {
+    --bg-primary: #090514;
+    --bg-secondary: #100a24;
+    --card-bg: rgba(22, 14, 46, 0.5);
+    --card-bg-hover: rgba(33, 21, 69, 0.7);
+    --card-border: rgba(217, 70, 239, 0.12);
+    --card-border-hover: rgba(217, 70, 239, 0.4);
+    --card-spotlight: rgba(217, 70, 239, 0.1);
+    
+    --text-primary: #faf5ff;
+    --text-secondary: #c084fc;
+    --text-muted: #7e22ce;
+
+    --accent-primary: #d946ef;
+    --accent-secondary: #8b5cf6;
+    --accent-glow: rgba(217, 70, 239, 0.3);
+    --accent-gradient: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
+}
+
+/* Theme: Sunset Amber */
+[data-theme="sunset"], [data-theme="amber"] {
+    --bg-primary: #0e0707;
+    --bg-secondary: #1a0d0d;
+    --card-bg: rgba(35, 16, 16, 0.5);
+    --card-bg-hover: rgba(50, 23, 23, 0.7);
+    --card-border: rgba(249, 115, 22, 0.12);
+    --card-border-hover: rgba(249, 115, 22, 0.4);
+    --card-spotlight: rgba(249, 115, 22, 0.1);
+    
+    --text-primary: #fff7ed;
+    --text-secondary: #fdba74;
+    --text-muted: #9a3412;
+
+    --accent-primary: #f97316;
+    --accent-secondary: #f43f5e;
+    --accent-glow: rgba(249, 115, 22, 0.3);
+    --accent-gradient: linear-gradient(135deg, #f97316 0%, #f43f5e 100%);
+}
+
+/* Theme: Crystal Light */
+[data-theme="light"] {
+    --bg-primary: #edf2f7;
+    --bg-secondary: #ffffff;
+    --card-bg: rgba(255, 255, 255, 0.82);
+    --card-bg-hover: #ffffff;
+    --card-border: rgba(0, 0, 0, 0.06);
+    --card-border-hover: rgba(2, 132, 199, 0.4);
+    --card-spotlight: rgba(2, 132, 199, 0.06);
+    
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+
+    --accent-primary: #0284c7;
+    --accent-secondary: #4f46e5;
+    --accent-glow: rgba(2, 132, 199, 0.25);
+    --accent-gradient: linear-gradient(135deg, #0284c7 0%, #3b82f6 100%);
+    
+    --shadow-subtle: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 4px 10px -2px rgba(0, 0, 0, 0.03);
+    --shadow-elevated: 0 20px 35px -10px rgba(0, 0, 0, 0.08), 0 0 20px rgba(2, 132, 199, 0.12);
+
+    /* 3D depth — light theme (softer, lighter extrusion lip) */
+    --btn3d-dark:
+        inset 0 1px 0 rgba(255, 255, 255, 0.75),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.08),
+        0 3px 0 rgba(15, 23, 42, 0.14),
+        0 5px 10px rgba(15, 23, 42, 0.12);
+    --btn3d-dark-hover:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.08),
+        0 3px 0 rgba(15, 23, 42, 0.14),
+        0 7px 14px rgba(15, 23, 42, 0.16),
+        0 0 12px var(--accent-glow);
+    --btn3d-dark-pressed:
+        inset 0 2px 5px rgba(0, 0, 0, 0.12),
+        0 1px 0 rgba(15, 23, 42, 0.12),
+        0 1px 3px rgba(15, 23, 42, 0.1);
+    --btn3d-primary:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 3px 0 color-mix(in srgb, var(--accent-primary) 68%, #000),
+        0 6px 12px var(--accent-glow);
+    --btn3d-primary-hover:
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 3px 0 color-mix(in srgb, var(--accent-primary) 68%, #000),
+        0 8px 16px var(--accent-glow);
+    --btn3d-primary-pressed:
+        inset 0 2px 5px rgba(0, 0, 0, 0.2),
+        0 1px 0 color-mix(in srgb, var(--accent-primary) 68%, #000);
+
+    --chrome-hairline: #6e6e76;
+    --chrome-inset-hi: rgba(255, 255, 255, 0.85);
+    --chrome-inset-lo: rgba(0, 0, 0, 0.12);
+}
+
+/* Theme: Abyss OLED */
+[data-theme="abyss"] {
+    --bg-primary: #050505;
+    --bg-secondary: #0a0a0c;
+    --card-bg: rgba(16, 16, 18, 0.72);
+    --card-bg-hover: rgba(28, 28, 32, 0.88);
+    --card-border: rgba(255, 255, 255, 0.06);
+    --card-border-hover: rgba(226, 232, 240, 0.28);
+    --card-spotlight: rgba(226, 232, 240, 0.04);
+
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+
+    --accent-primary: #e2e8f0;
+    --accent-secondary: #94a3b8;
+    --accent-glow: rgba(226, 232, 240, 0.16);
+    --accent-gradient: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%);
+}
+
+/* Theme: Jade Terminal */
+[data-theme="jade"] {
+    --bg-primary: #030807;
+    --bg-secondary: #071411;
+    --card-bg: rgba(8, 28, 22, 0.55);
+    --card-bg-hover: rgba(12, 42, 32, 0.75);
+    --card-border: rgba(16, 185, 129, 0.12);
+    --card-border-hover: rgba(52, 211, 153, 0.4);
+    --card-spotlight: rgba(16, 185, 129, 0.08);
+
+    --text-primary: #ecfdf5;
+    --text-secondary: #6ee7b7;
+    --text-muted: #047857;
+
+    --accent-primary: #34d399;
+    --accent-secondary: #10b981;
+    --accent-glow: rgba(52, 211, 153, 0.28);
+    --accent-gradient: linear-gradient(135deg, #34d399 0%, #059669 100%);
+}
+
+/* Base Reset & Smooth Scroll */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body.settings-open {
+    overflow: hidden;
+}
+
+/* Ambient Animated Glow */
+.ambient-glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: -2;
+    opacity: 0.4;
+    transition: all 1s ease;
+}
+
+.glow-1 {
+    width: 600px;
+    height: 600px;
+    top: -150px;
+    left: 10%;
+    background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+    animation: floatGlow 18s ease-in-out infinite alternate;
+}
+
+.glow-2 {
+    width: 700px;
+    height: 700px;
+    bottom: -150px;
+    right: 10%;
+    background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 70%);
+    animation: floatGlow 22s ease-in-out infinite alternate-reverse;
+}
+
+.glow-3 {
+    width: 450px;
+    height: 450px;
+    top: 40%;
+    left: 45%;
+    background: radial-gradient(circle, var(--tag-purple) 0%, transparent 70%);
+    opacity: 0.15;
+}
+
+@keyframes floatGlow {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(60px, 40px) scale(1.1); }
+    100% { transform: translate(-40px, 60px) scale(0.95); }
+}
+
+/* Texture Grain Overlay */
+.noise-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.6;
+}
+

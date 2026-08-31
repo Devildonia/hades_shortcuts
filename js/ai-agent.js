@@ -1,6 +1,7 @@
 // js/ai-agent.js - Contextual Dashboard AI Agent (Ground-Truth Context, Ollama & Claude API)
 
-import { state, escapeHtml, persistJson } from './state.js';
+import { state, persistJson } from './state.js';
+import { escapeHtml } from './utils.js';
 import { soundFx } from './audio.js';
 import { getTranslation } from './i18n.js';
 

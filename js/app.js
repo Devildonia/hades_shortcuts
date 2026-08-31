@@ -1,4 +1,7 @@
 // js/app.js - Master Orchestrator for HaDeS' Shortcuts Next-Gen
+// NB: modals.js debe permanecer como PRIMER import: materializa los <template data-modal>
+// antes de que los engines a nivel de módulo consulten sus modales en sus constructores.
+import { materializeAllModals } from './modals.js';
 import { macroEngine } from './macros.js';
 import { aiAgent } from './ai-agent.js';
 import { state, setStorageFullMsg } from './state.js';

@@ -1,5 +1,6 @@
 // js/search.js - Multi-Engine Omnibox, Category Filters, Bangs & DevTools
-import { state, escapeHtml, bindIconFallback, openSafeUrl } from './state.js';
+import { state } from './state.js';
+import { escapeHtml, bindIconFallback, openSafeUrl } from './utils.js';
 import { tagsFilter } from './tags-filter.js';
 import { neuralSearch } from './neural-search.js';
 import { macroEngine } from './macros.js';

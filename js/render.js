@@ -1,6 +1,7 @@
 import { tagsFilter } from './tags-filter.js';
 import { personalAnalytics } from './personal-analytics.js';
-import { state, escapeHtml, normalizeTags, safeHttpUrl, bindIconFallback, openSafeUrl } from './state.js';
+import { state } from './state.js';
+import { escapeHtml, normalizeTags, safeHttpUrl, bindIconFallback, openSafeUrl } from './utils.js';
 import { i18nDictionaries } from './i18n.js';
 import { soundFx } from './audio.js';
 import { focusMode } from './focus-mode.js';

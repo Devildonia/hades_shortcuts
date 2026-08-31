@@ -27,8 +27,21 @@
     <link rel="icon" type="image/png" href="iconos/pwa-192.png">
     <link rel="apple-touch-icon" href="iconos/pwa-192.png">
 
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=1.0.0-rc-1">
+    <!-- Stylesheet (13 módulos; el orden importa: base → layout → widgets → misc) -->
+    <!-- ?v=…-rc-1b: cache-bust de los 13 módulos (Brave mantiene caché heurística agresiva) -->
+    <link rel="stylesheet" href="css/base.css?v=1.0.0-rc-1b">
+    <link rel="stylesheet" href="css/layout.css?v=1.0.0-rc-1b">
+    <link rel="stylesheet" href="css/categories.css?v=1.0.0-rc-1b">
+    <link rel="stylesheet" href="css/overlays-base.css?v=1.0.0-rc-1b">
+    <link rel="stylesheet" href="css/weather.css?v=1.0.0-rc-1b">
+    <link rel="stylesheet" href="css/settings.css?v=1.0.0-rc-1b">
+    <link rel="stylesheet" href="css/search-extra.css?v=1.0.0-rc-1b">
+    <link rel="stylesheet" href="css/widgets.css?v=1.0.0-rc-1b">
+    <link rel="stylesheet" href="css/themes-pickers.css?v=1.0.0-rc-1b">
+    <link rel="stylesheet" href="css/hud.css?v=1.0.0-rc-1b">
+    <link rel="stylesheet" href="css/tech-radar.css?v=1.0.0-rc-1b">
+    <link rel="stylesheet" href="css/calendar.css?v=1.0.0-rc-1b">
+    <link rel="stylesheet" href="css/misc.css?v=1.0.0-rc-1b">
 
     <!-- Master Script Module -->
     <script type="module" src="js/app.js?v=1.0.0-rc-1"></script>
@@ -363,6 +376,8 @@
 
 
     <!-- Weather City Configuration Modal -->
+    <!-- Modal diferido: se materializa en <body> por js/modals.js -->
+    <template data-modal="weather-modal">
     <div class="weather-modal-backdrop hidden" id="weather-modal" role="dialog" aria-modal="true" aria-label="Configurar Ciudad del Clima" data-i18n-aria="weather.title">
         <div class="weather-modal-card">
             <div class="weather-modal-header">
@@ -383,9 +398,12 @@
             </div>
         </div>
     </div>
+    </template>
 
 
     <!-- Edit Username Modal -->
+    <!-- Modal diferido: se materializa en <body> por js/modals.js -->
+    <template data-modal="user-modal">
     <div class="user-modal-backdrop hidden" id="user-modal" role="dialog" aria-modal="true" aria-label="Cambiar Nombre de Usuario" data-i18n-aria="user_modal.title">
         <div class="user-modal-card">
             <div class="user-modal-header">
@@ -403,8 +421,11 @@
             </div>
         </div>
     </div>
+    </template>
 
         <!-- Calendar iCal Feed Configuration Modal -->
+    <!-- Modal diferido: se materializa en <body> por js/modals.js -->
+    <template data-modal="calendar-modal">
     <div class="calendar-modal-backdrop hidden" id="calendar-modal" role="dialog" aria-modal="true" aria-label="Configurar Feed de Calendario" data-i18n-aria="calendar_feed.title">
         <div class="calendar-modal-card">
             <div class="calendar-modal-header">
@@ -422,8 +443,11 @@
             </div>
         </div>
     </div>
+    </template>
 
         <!-- Custom RSS Feed Configuration Modal -->
+    <!-- Modal diferido: se materializa en <body> por js/modals.js -->
+    <template data-modal="rss-modal">
     <div class="rss-modal-backdrop hidden" id="rss-modal" role="dialog" aria-modal="true" aria-label="Añadir Feed RSS" data-i18n-aria="rss_modal.title">
         <div class="rss-modal-card">
             <div class="rss-modal-header">
@@ -449,9 +473,12 @@
             </div>
         </div>
     </div>
+    </template>
 
 
         <!-- Zen Shield Screen (Distraction-Free Breathing Space) -->
+    <!-- Modal diferido: se materializa en <body> por js/modals.js -->
+    <template data-modal="zen-shield-screen">
     <div class="zen-shield-backdrop hidden" id="zen-shield-screen" role="dialog" aria-modal="true" aria-label="Pantalla de Respiro Zen Shield" data-i18n-aria="zen_shield.title">
         <div class="zen-shield-card">
             <div class="zen-breathing-circle">
@@ -470,8 +497,11 @@
             </div>
         </div>
     </div>
+    </template>
 
         <!-- Contextual AI Agent — pantalla central (convención de modales del proyecto) -->
+    <!-- Modal diferido: se materializa en <body> por js/modals.js -->
+    <template data-modal="ai-agent-drawer">
     <div class="ai-agent-backdrop hidden" id="ai-agent-drawer" role="dialog" aria-modal="true" aria-labelledby="ai-agent-title" aria-label="Asistente IA Contextual" data-i18n-aria="ai_agent.title">
         <div class="ai-agent-panel">
             <div class="ai-agent-header">
@@ -540,8 +570,11 @@
             </div>
         </div>
     </div>
+    </template>
 
     <!-- Manual Calendar Event Modal -->
+    <!-- Modal diferido: se materializa en <body> por js/modals.js -->
+    <template data-modal="calendar-event-modal">
     <div class="calendar-modal-backdrop hidden" id="calendar-event-modal" role="dialog" aria-modal="true" aria-label="Añadir Evento" data-i18n-aria="calendar_full.add_event">
         <div class="calendar-modal-card">
             <div class="calendar-modal-header">
@@ -583,8 +616,11 @@
             </div>
         </div>
     </div>
+    </template>
 
     <!-- Full Calendar Modal (centrado con zoom, papel estilo cuaderno) -->
+    <!-- Modal diferido: se materializa en <body> por js/modals.js -->
+    <template data-modal="agenda-full-modal">
     <div class="agenda-full-backdrop hidden" id="agenda-full-modal" role="dialog" aria-modal="true" aria-label="Calendario completo" data-i18n-aria="ui.agenda_full_title">
         <div class="agenda-full-card" id="agenda-full-card">
             <div class="agenda-full-topbar">
@@ -615,8 +651,11 @@
             </div>
         </div>
     </div>
+    </template>
 
     <!-- Visual Macro Studio Modal -->
+    <!-- Modal diferido: se materializa en <body> por js/modals.js -->
+    <template data-modal="macro-editor-modal">
     <div class="modal-overlay hidden" id="macro-editor-modal" role="dialog" aria-modal="true" aria-label="Editor de Macro" data-i18n-aria="macros_studio.edit_title">
         <div class="modal-card macro-editor-card">
             <div class="modal-header">
@@ -665,8 +704,11 @@
             </div>
         </div>
     </div>
+    </template>
 
     <!-- Settings Slide-Over Glass Drawer -->
+    <!-- Modal diferido: se materializa en <body> por js/modals.js -->
+    <template data-modal="settings-drawer">
     <div class="settings-drawer-backdrop hidden" id="settings-drawer" role="dialog" aria-modal="true" aria-label="Ajustes" data-i18n-aria="ui.settings_aria">
         <div class="settings-drawer-card">
             <div class="settings-drawer-header">
@@ -1172,8 +1214,11 @@
             </div>
         </div>
     </div>
+    </template>
 
     <!-- Add / Edit Shortcut Modal -->
+    <!-- Modal diferido: se materializa en <body> por js/modals.js -->
+    <template data-modal="shortcut-modal">
     <div class="shortcut-modal-backdrop hidden" id="shortcut-modal" role="dialog" aria-modal="true" aria-label="Gestionar Atajo" data-i18n-aria="ui.sync_shortcut_aria">
         <div class="shortcut-modal-card">
             <div class="shortcut-modal-header">
@@ -1235,6 +1280,7 @@
             </div>
         </div>
     </div>
+    </template>
 
 
     <!-- Floating Edit Mode Control Bar -->
@@ -1250,6 +1296,8 @@
 <div id="postits-canvas" class="postits-canvas-container"></div>
 
     <!-- DevTools: Interactive QR Code Modal -->
+    <!-- Modal diferido: se materializa en <body> por js/modals.js -->
+    <template data-modal="qr-modal">
     <div class="modal-overlay hidden" id="qr-modal" role="dialog" aria-modal="true">
         <div class="modal-glass-card qr-modal-card">
             <div class="modal-header">
@@ -1272,9 +1320,12 @@
             </div>
         </div>
     </div>
+    </template>
 
 
     <!-- Mini HUD Launcher Overlay (Phase 5) -->
+    <!-- Modal diferido: se materializa en <body> por js/modals.js -->
+    <template data-modal="mini-hud-modal">
     <div id="mini-hud-modal" class="modal-overlay hidden" role="dialog" aria-labelledby="hud-title" aria-modal="true">
         <div class="hud-modal-card">
             <div class="hud-header">
@@ -1291,6 +1342,7 @@
             <div class="hud-results-grid" id="hud-results-grid"></div>
         </div>
     </div>
+    </template>
 
 
     <!-- Radial HUD Action Wheel Overlay -->

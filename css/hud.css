@@ -1,0 +1,481 @@
+/* css/hud.css — Radial HUD, solar, telemetry */
+.radial-hud-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10005;
+    background: radial-gradient(circle at center, rgba(5, 12, 28, 0.75) 0%, rgba(2, 6, 16, 0.9) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.radial-hud-overlay.hidden {
+    display: none !important;
+}
+
+.radial-hud-wheel {
+    position: absolute;
+    width: 0;
+    height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: radialSpring 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes radialSpring {
+    from {
+        transform: scale(0.5) rotate(-30deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.radial-hud-center-ring {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 2px dashed rgba(0, 242, 254, 0.4);
+    box-shadow: 0 0 35px rgba(0, 242, 254, 0.25), inset 0 0 35px rgba(0, 242, 254, 0.15);
+    pointer-events: none;
+    animation: spinSlow 40s linear infinite;
+}
+
+.radial-hud-center-btn {
+    position: absolute;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #00f2fe 0%, #0b132b 85%);
+    border: 2px solid #00f2fe;
+    box-shadow: 0 0 30px rgba(0, 242, 254, 0.6), inset 0 0 15px #00f2fe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.radial-hud-center-btn:hover {
+    transform: scale(1.15) rotate(90deg);
+    box-shadow: 0 0 45px rgba(0, 242, 254, 0.9);
+}
+
+.radial-hud-core-icon {
+    font-size: 1.45rem;
+    color: #ffffff;
+    filter: drop-shadow(0 0 8px #00f2fe);
+}
+
+.radial-node-btn {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(11, 19, 43, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    /* Sin anillo azul: el borde se queda transparente (solo conserva la
+       geometría de 2px) y el marco visible es el bezel dorado ::after,
+       idéntico en los 8 atajos rápidos (cromo del cajón de perfiles). */
+    border: 2px solid transparent;
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.28),
+        0 10px 25px rgba(0, 0, 0, 0.7),
+        0 0 22px rgba(234, 179, 8, 0.3),
+        inset 0 1px 0 rgba(255, 240, 180, 0.28);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    cursor: pointer;
+    margin-left: -50px;
+    margin-top: -50px;
+    transform: translate(var(--node-x, 0px), var(--node-y, 0px)) scale(1);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    user-select: none;
+    z-index: 5;
+}
+
+.radial-node-btn:hover {
+    transform: translate(var(--node-x, 0px), var(--node-y, 0px)) scale(1.18) !important;
+    background: radial-gradient(circle, rgba(234, 179, 8, 0.35) 0%, rgba(11, 19, 43, 0.95) 100%);
+    box-shadow:
+        0 0 0 1px rgba(245, 215, 127, 0.45),
+        0 0 30px rgba(234, 179, 8, 0.75),
+        0 12px 30px rgba(0, 0, 0, 0.8),
+        inset 0 1px 0 rgba(255, 245, 200, 0.4);
+}
+
+/* Marco dorado cromo compartido por atajos rápidos y sub-favoritos:
+   mismo bezel (mask + conic-gradient) que el cajón de perfiles. */
+.radial-node-btn::after,
+.radial-sub-fav-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    padding: 4px;
+    pointer-events: none;
+    z-index: 4;
+    background:
+        radial-gradient(
+            140px circle at 28% 12%,
+            rgba(255, 252, 230, 0.98) 0%,
+            rgba(235, 195, 95, 0.6) 20%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from -38deg,
+            #2a1c07 0deg,
+            #c4972a 30deg,
+            #fff5cc 50deg,
+            #996e14 84deg,
+            #38240a 126deg,
+            #d8a838 168deg,
+            #6e4c0d 206deg,
+            #fae29c 244deg,
+            #422909 288deg,
+            #e0b445 328deg,
+            #2a1c07 360deg
+        );
+    background-blend-mode: screen, normal;
+    -webkit-mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    -webkit-mask-origin: content-box, border-box;
+    -webkit-mask-clip: content-box, border-box;
+    mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    mask-origin: content-box, border-box;
+    mask-clip: content-box, border-box;
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.55);
+}
+
+/* Ajuste visible de teclado en el HUD: el anillo global cian no encaja con
+   el bezel dorado — mismo lenguaje para nodos y sub-favoritos. */
+.radial-node-btn:focus-visible,
+.radial-sub-fav-item:focus-visible {
+    outline: 2px solid #f5d77f !important;
+    outline-offset: 2px !important;
+    box-shadow:
+        0 0 0 1px rgba(245, 215, 127, 0.45) !important,
+        0 10px 25px rgba(0, 0, 0, 0.7) !important,
+        0 0 30px rgba(234, 179, 8, 0.75) !important;
+}
+
+/* Icono del HUD: reutiliza el cristal de las categorías (.icon-img-wrapper);
+   solo se ajusta el tamaño para la burbuja ampliada. */
+.radial-node-icon {
+    width: 54px;
+    height: 54px;
+    margin-bottom: 0;
+}
+
+.radial-node-icon img {
+    width: 80%;
+    height: 80%;
+    border-radius: 24%;
+}
+
+.radial-node-label {
+    font-size: 0.5625rem; /* 9px: base legible donde quepan las 4 locales */
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    text-shadow: 0 0 6px rgba(245, 215, 127, 0.8);
+    /* Red de seguridad: ninguna etiqueta puede salirse de la burbuja
+       (en ningún locale). Con los tamaños actuales nunca debería dispararse. */
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 8px;
+}
+
+/* El nodo FAVORITOS es visualmente idéntico al resto de atajos rápidos
+   (mismo diámetro, bezel dorado, hover y etiqueta). La clase
+   .radial-node-favs se conserva solo para la lógica JS: muestra la
+   sub-órbita de favoritos más usados al hover / clic. */
+
+/* Telemetry Capsule 4-Indicator System */
+.telemetry-capsule {
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--card-border);
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    user-select: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+    z-index: 5;
+}
+
+.telemetry-capsule:hover {
+    border-color: var(--accent-primary);
+    background: var(--card-bg-hover);
+    box-shadow: 0 0 16px var(--accent-glow);
+    transform: translateY(-1px);
+    color: var(--text-primary);
+}
+
+.telemetry-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 700;
+    font-size: 0.68rem;
+    padding: 2px 6px;
+    border-radius: var(--radius-pill);
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+}
+
+.telemetry-status-badge.offline {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+.telemetry-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.telemetry-dot.online {
+    background: #10b981;
+    box-shadow: 0 0 6px #10b981;
+}
+
+.telemetry-dot.offline {
+    background: #ef4444;
+    box-shadow: 0 0 6px #ef4444;
+}
+
+.telemetry-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.telemetry-icon {
+    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.telemetry-icon svg {
+    width: 12px;
+    height: 12px;
+    display: block;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.radial-hud-core-icon svg,
+.hud-search-icon svg {
+    display: block;
+}
+
+
+/* Light Theme Radial HUD */
+[data-theme="light"] .radial-node-btn {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.35),
+        0 8px 20px rgba(0, 0, 0, 0.1),
+        0 0 15px rgba(218, 165, 32, 0.25);
+}
+
+[data-theme="light"] .radial-node-btn:hover {
+    background: #fffbeb;
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.55),
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 0 22px rgba(218, 165, 32, 0.55);
+}
+
+/* En tema light la burbuja es blanca: la etiqueta blanca sería invisible. */
+[data-theme="light"] .radial-node-label {
+    color: #0f172a;
+    text-shadow: 0 0 6px rgba(212, 175, 55, 0.55);
+}
+
+/* Sub-favoritos en tema light: burbuja clara + halo dorado (uniforme). */
+[data-theme="light"] .radial-sub-fav-item {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.35),
+        0 6px 14px rgba(0, 0, 0, 0.12),
+        0 0 15px rgba(218, 165, 32, 0.3);
+}
+
+/* Bezel dorado en tono claro para tema light (mismo patrón que perfiles). */
+[data-theme="light"] .radial-node-btn::after,
+[data-theme="light"] .radial-sub-fav-item::after {
+    background:
+        radial-gradient(
+            140px circle at 28% 12%,
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(235, 195, 95, 0.5) 20%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from -38deg,
+            #785317 0deg,
+            #d4af37 30deg,
+            #ffffff 50deg,
+            #b38728 84deg,
+            #8c621c 126deg,
+            #e6c35c 168deg,
+            #996e1b 206deg,
+            #fff0b3 244deg,
+            #7d5516 288deg,
+            #dfb743 328deg,
+            #785317 360deg
+        );
+}
+
+[data-theme="light"] .radial-hud-center-btn {
+    background: #ffffff;
+    border-color: #0284c7;
+    box-shadow: 0 0 20px rgba(2, 132, 199, 0.25);
+}
+
+[data-theme="light"] .radial-hud-center-ring {
+    border-color: rgba(2, 132, 199, 0.4);
+    box-shadow: 0 0 20px rgba(2, 132, 199, 0.1);
+}
+
+
+/* ==========================================================================
+   Phase 2: Dynamic Solar Lighting & Circadian Rhythm Engine
+   ========================================================================== */
+[data-solar-phase="dawn"] {
+    --accent-glow: rgba(245, 158, 11, 0.35);
+    --card-border-hover: rgba(245, 158, 11, 0.45);
+}
+
+[data-solar-phase="dawn"] .ambient-glow {
+    background: radial-gradient(circle at 20% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.12) 0%, transparent 60%);
+}
+
+[data-solar-phase="noon"] {
+    --accent-glow: rgba(0, 242, 254, 0.35);
+}
+
+[data-solar-phase="twilight"] {
+    --accent-glow: rgba(217, 70, 239, 0.35);
+    --card-border-hover: rgba(217, 70, 239, 0.45);
+}
+
+[data-solar-phase="twilight"] .ambient-glow {
+    background: radial-gradient(circle at 50% 10%, rgba(217, 70, 239, 0.18) 0%, transparent 60%),
+                radial-gradient(circle at 90% 90%, rgba(249, 115, 22, 0.15) 0%, transparent 60%);
+}
+
+[data-solar-phase="midnight"] {
+    --accent-glow: rgba(99, 102, 241, 0.25);
+    --card-border-hover: rgba(99, 102, 241, 0.35);
+}
+
+[data-solar-phase="midnight"] .ambient-glow {
+    background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.2) 0%, transparent 70%),
+                radial-gradient(circle at 80% 80%, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
+}
+
+
+/* ==========================================================================
+   Phase 3: Cyberpunk System Telemetry & Network Health Capsule
+   ========================================================================== */
+.telemetry-capsule {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--card-border);
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    user-select: none;
+}
+
+.telemetry-capsule:hover {
+    border-color: var(--accent-primary);
+    background: var(--card-bg-hover);
+    box-shadow: 0 0 14px var(--accent-glow);
+    transform: translateY(-1px);
+    color: var(--text-primary);
+}
+
+.telemetry-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.telemetry-dot.online {
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+}
+
+.telemetry-dot.offline {
+    background: #ef4444;
+    box-shadow: 0 0 8px #ef4444;
+}
+
+.telemetry-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.telemetry-icon {
+    font-size: 0.72rem;
+}
+
+[data-theme="light"] .telemetry-capsule {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: #475569;
+}
+
+

@@ -1,0 +1,332 @@
+/* css/weather.css — Weather widget + modal */
+/* ==========================================================================
+   Weather City Modal Styles
+   ========================================================================== */
+.weather-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+}
+
+.weather-modal-card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--card-border-hover);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.8), 0 0 30px var(--accent-glow);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.weather-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.weather-modal-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.weather-modal-icon {
+    font-size: 1.2rem;
+}
+
+.weather-modal-header h3 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.weather-modal-close {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: var(--transition-fast);
+}
+
+.weather-modal-close:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--accent-primary);
+}
+
+.weather-modal-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin: 0;
+}
+
+.weather-modal-input-wrapper {
+    display: flex;
+    gap: 8px;
+}
+
+#weather-city-input {
+    flex-grow: 1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    color: var(--text-primary);
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+#weather-city-input:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 15px var(--accent-glow);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.weather-search-btn {
+    background: var(--accent-primary);
+    color: #000;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0 16px;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.weather-search-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+.weather-city-results {
+    max-height: 180px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 6px;
+}
+
+.weather-city-item {
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition-fast);
+}
+
+.weather-city-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent-primary);
+}
+
+.weather-city-country {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.weather-modal-footer {
+    border-top: 1px solid var(--card-border);
+    padding-top: 12px;
+    display: flex;
+    justify-content: center;
+}
+
+.weather-auto-btn {
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.weather-auto-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Interactive User Name */
+.brand-user-name {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    transition: var(--transition-smooth);
+    outline: none;
+}
+
+.brand-user-name:hover,
+.brand-user-name:focus-visible {
+    color: var(--accent-primary);
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* User Name Modal */
+.user-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+}
+
+.user-modal-card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--card-border-hover);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.8), 0 0 30px var(--accent-glow);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.user-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-modal-header h3 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.user-modal-close {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: var(--transition-fast);
+}
+
+.user-modal-close:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--accent-primary);
+}
+
+.user-modal-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin: 0;
+}
+
+.user-modal-input-wrapper {
+    display: flex;
+    gap: 8px;
+}
+
+#user-name-input {
+    flex-grow: 1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+#user-name-input:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 15px var(--accent-glow);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.user-save-btn {
+    background: var(--accent-primary);
+    color: #000;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0 18px;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.user-save-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+.user-modal-preview {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+}
+
+.user-modal-preview strong {
+    color: var(--accent-primary);
+    font-family: var(--font-display);
+}
+
+

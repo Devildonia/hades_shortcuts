@@ -1,6 +1,7 @@
 // js/crypto-sync.js - Zero-Knowledge E2EE Multi-Device Cloud Sync (AES-256-GCM + GitHub Gist)
 
-import { state, showToast, readJsonStorage, APP_VERSION } from './state.js';
+import { state, APP_VERSION } from './state.js';
+import { showToast, readJsonStorage } from './utils.js';
 import { soundFx } from './audio.js';
 import { getTranslation } from './i18n.js';
 

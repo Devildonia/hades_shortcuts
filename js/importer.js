@@ -1,6 +1,7 @@
 // js/importer.js - Universal Bookmarks.html Parser & Importer
 
-import { state, faviconForUrl, showToast } from './state.js';
+import { state } from './state.js';
+import { faviconForUrl, showToast } from './utils.js';
 import { i18nDictionaries } from './i18n.js';
 
 export function normalizeBookmarkUrl(rawUrl) {

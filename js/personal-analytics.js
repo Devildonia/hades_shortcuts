@@ -1,6 +1,7 @@
 // js/personal-analytics.js - 100% Local Personal Analytics & Predictive Context Engine
 
-import { state, escapeHtml, persistJson, openSafeUrl } from './state.js';
+import { state, persistJson } from './state.js';
+import { escapeHtml, openSafeUrl } from './utils.js';
 import { soundFx } from './audio.js';
 import { i18nDictionaries } from './i18n.js';
 

@@ -1,7 +1,8 @@
 // js/extension-api.js - Native Extension Integrations (TopSites Onboarding & Context Menu Sync)
 
 import { platform } from './platform.js';
-import { state, showToast, safeHttpUrl } from './state.js';
+import { state } from './state.js';
+import { showToast, safeHttpUrl } from './utils.js';
 import { soundFx } from './audio.js';
 import { getTranslation } from './i18n.js';
 

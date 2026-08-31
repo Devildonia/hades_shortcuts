@@ -1,6 +1,7 @@
 // js/aurora-canvas.js - Interactive Aurora Fluid Canvas Mesh & Mini-HUD Launcher (Phase 5)
 
-import { state, escapeHtml, safeHttpUrl, normalizeTags } from './state.js';
+import { state } from './state.js';
+import { escapeHtml, safeHttpUrl, normalizeTags } from './utils.js';
 import { soundFx } from './audio.js';
 
 export class AuroraCanvasEngine {

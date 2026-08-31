@@ -1,7 +1,8 @@
 // js/postits.js - Floating Glass Post-it System
 
 import { soundFx } from './audio.js';
-import { escapeHtml, persistJson, showToast } from './state.js';
+import { persistJson } from './state.js';
+import { escapeHtml, showToast } from './utils.js';
 import { getTranslation } from './i18n.js';
 
 // Paleta de papel del Bloc de Notas (colores de post-it real).

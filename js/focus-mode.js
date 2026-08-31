@@ -1,7 +1,8 @@
 import { i18nDictionaries, getTranslation } from './i18n.js';
 // js/focus-mode.js - Deep Work Focus Mode & Zen Distraction Shield
 
-import { state, persistJson, showToast, openSafeUrl, setUrlGuard } from './state.js';
+import { state, persistJson } from './state.js';
+import { showToast, openSafeUrl, setUrlGuard } from './utils.js';
 import { soundFx } from './audio.js';
 
 export class FocusModeEngine {

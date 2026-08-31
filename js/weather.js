@@ -1,6 +1,7 @@
 // js/weather.js - Clock & Weather Engine
 
-import { state, escapeHtml, showToast } from './state.js';
+import { state } from './state.js';
+import { escapeHtml, showToast } from './utils.js';
 import { i18nDictionaries, getTranslation } from './i18n.js';
 
 const WEATHER_TIMEOUT_MS = 10000;

@@ -1,7 +1,8 @@
 // js/tech-radar.js - Multi-Channel Tech Radar & Native RSS/Atom Feed Reader (DOMParser 0 KB)
 
 import { soundFx } from './audio.js';
-import { state, escapeHtml, fetchTextMaybeProxy, safeHttpUrl, persistJson, sanitizeIconUrl, showToast } from './state.js';
+import { state, persistJson } from './state.js';
+import { escapeHtml, fetchTextMaybeProxy, safeHttpUrl, sanitizeIconUrl, showToast } from './utils.js';
 import { focusMode } from './focus-mode.js';
 import { getTranslation } from './i18n.js';
 

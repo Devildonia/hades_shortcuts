@@ -1,6 +1,7 @@
 // js/calendar-agenda.js - Bento Calendar & Agenda Engine (RFC 5545 iCal Parser & Manual Event Creator)
 
-import { state, escapeHtml, fetchTextMaybeProxy, safeHttpUrl, persistJson, showToast } from './state.js';
+import { state, persistJson } from './state.js';
+import { escapeHtml, fetchTextMaybeProxy, safeHttpUrl, showToast } from './utils.js';
 import { soundFx } from './audio.js';
 import { getTranslation } from './i18n.js';
 

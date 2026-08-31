@@ -1,6 +1,6 @@
 // js/tags-filter.js - Advanced Multi-Tag Query Engine (Linear-style CMDK)
 
-import { normalizeTags } from './state.js';
+import { normalizeTags } from './utils.js';
 import { personalAnalytics } from './personal-analytics.js';
 
 export class TagsFilterEngine {

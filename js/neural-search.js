@@ -1,7 +1,8 @@
 // js/neural-search.js - Token-overlap semantic search, live AI answers & translator
 
 import { aiAgent } from './ai-agent.js';
-import { state, escapeHtml, showToast } from './state.js';
+import { state } from './state.js';
+import { escapeHtml, showToast } from './utils.js';
 import { i18nDictionaries, getTranslation } from './i18n.js';
 
 export class NeuralSearchEngine {

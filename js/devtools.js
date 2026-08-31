@@ -1,7 +1,7 @@
 // js/devtools.js - Built-in DevTools Omnibox Engine & QR Code Visualizer
 
 import { soundFx } from './audio.js';
-import { escapeHtml } from './state.js';
+import { escapeHtml } from './utils.js';
 import { renderQrToCanvas } from './qrcode.js';
 import { getTranslation } from './i18n.js';
 
