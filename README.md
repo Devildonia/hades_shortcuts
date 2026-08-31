@@ -10,7 +10,7 @@
 [![Pure Vanilla](https://img.shields.io/badge/Stack-Vanilla%20HTML%20%2F%20CSS%20%2F%20JS-yellow.svg)](https://developer.mozilla.org/en-US/)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20Zero-brightgreen.svg)]()
 [![i18n](https://img.shields.io/badge/i18n-ES%20%7C%20EN%20%7C%20FR%20%7C%20DE-purple.svg)]()
-[![Tests](https://img.shields.io/badge/Tests-167%20in--browser%2C%200%20dependencies-brightgreen)](tests/index.html)
+[![Tests](https://img.shields.io/badge/Tests-168%20in--browser%2C%200%20dependencies-brightgreen)](tests/index.html)
 
 <br />
 
@@ -329,13 +329,13 @@ python -m http.server 8080
 # → open http://localhost:8080/tests/
 ```
 
-**167 tests across 22 modules** cover the bangs math evaluator (zero-`eval`), the drag/resize editing engine, i18n anti-divergence (`locales/*.json` ↔ embedded dict, all four languages), E2EE Gist crypto, PWA, layout, accessibility, and more. Machine-readable results are exposed at `window.__testResults` (JSON) for future CI.
+**168 tests across 22 modules** cover the bangs math evaluator (zero-`eval`), the drag/resize editing engine, i18n anti-divergence (`locales/*.json` ↔ embedded dict, all four languages), E2EE Gist crypto, PWA, layout, accessibility, and more. Machine-readable results are exposed at `window.__testResults` (JSON) for future CI.
 
 Headless one-liner (no GUI):
 
 ```bash
 msedge --headless --virtual-time-budget=30000 --dump-dom http://localhost:8080/tests/ 2>/dev/null | grep -o "<title>[^<]*</title>"
-# → ✅ Tests: 167/167 pasaron
+# → ✅ Tests: 168/168 pasaron
 ```
 
 ---

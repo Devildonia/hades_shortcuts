@@ -5,16 +5,16 @@
 export const APP_VERSION = '1.0.0-rc-1';
 
 export const DEFAULT_CATEGORIES = [
-    { id: 'cat_3d', group: 'ia-creativa', color: 'tag-cyan', defaultTitle: '3D Modeling & AI' },
+    { id: 'cat_3d', group: 'ia-creativa', color: 'tag-cyan', defaultTitle: 'Modelado 3D' },
     { id: 'cat_ai', group: 'ia-creativa', color: 'tag-magenta', defaultTitle: 'Inteligencia Artificial' },
-    { id: 'cat_art', group: 'arte-media', color: 'tag-purple', defaultTitle: 'Arte Digital & Modelos' },
+    { id: 'cat_art', group: 'arte-media', color: 'tag-purple', defaultTitle: 'Arte Digital' },
     { id: 'cat_audio', group: 'arte-media', color: 'tag-yellow', defaultTitle: 'Generación de Audio' },
-    { id: 'cat_google', group: 'productividad', color: 'tag-blue', defaultTitle: 'Google Workspace & AI' },
-    { id: 'cat_tools', group: 'productividad', color: 'tag-emerald', defaultTitle: 'Herramientas & Dev' },
-    { id: 'cat_social', group: 'social-compras', color: 'tag-cyan', defaultTitle: 'Comunidad & Redes' },
+    { id: 'cat_google', group: 'productividad', color: 'tag-blue', defaultTitle: 'Google' },
+    { id: 'cat_tools', group: 'productividad', color: 'tag-emerald', defaultTitle: 'Herramientas' },
+    { id: 'cat_social', group: 'social-compras', color: 'tag-cyan', defaultTitle: 'Redes Sociales' },
     { id: 'cat_messaging', group: 'social-compras', color: 'tag-emerald', defaultTitle: 'Mensajería' },
     { id: 'cat_shopping', group: 'social-compras', color: 'tag-orange', defaultTitle: 'Compras & Pagos' },
-    { id: 'cat_video', group: 'ia-creativa', color: 'tag-red', defaultTitle: 'Vídeo & Generación IA' },
+    { id: 'cat_video', group: 'ia-creativa', color: 'tag-red', defaultTitle: 'Vídeo' },
     { id: 'cat_gaming', group: 'social-compras', color: 'tag-purple', defaultTitle: 'Gaming' }
 ];
 
@@ -59,7 +59,7 @@ export const DEFAULT_SHORTCUTS = [
     // Social
     { id: 'instagram', title: 'Instagram', url: 'https://www.instagram.com/', icon: 'iconos/instagram.webp', category: 'cat_social', tags: 'social, fotos, meta, feed' },
     { id: 'facebook', title: 'Facebook', url: 'https://www.facebook.com/', icon: 'iconos/facebook.webp', category: 'cat_social', tags: 'social, amigos, meta' },
-    { id: 'x', title: 'X (Twitter)', url: 'https://x.com/', icon: 'iconos/x.webp', category: 'cat_social', tags: 'social, noticias, feed, microblogging' },
+    { id: 'x', title: 'X', url: 'https://x.com/', icon: 'iconos/x.webp', category: 'cat_social', tags: 'social, noticias, feed, microblogging' },
     { id: 'tiktok', title: 'TikTok', url: 'https://www.tiktok.com/', icon: 'iconos/tiktok.webp', category: 'cat_social', tags: 'social, video, short, reels' },
     { id: 'threads', title: 'Threads', url: 'https://www.threads.net/', icon: 'iconos/threads.webp', category: 'cat_social', tags: 'social, meta, microblogging, feed' },
     { id: 'patreon', title: 'Patreon', url: 'https://www.patreon.com/', icon: 'iconos/patreon.webp', category: 'cat_social', tags: 'creadores, suscripcion, crowdfunding' },
@@ -148,6 +148,10 @@ export class AppState {
                     list.forEach(existing => {
                         if (existing && (existing.id === 'itchio' || existing.id === 'exophase') && existing.category !== 'cat_gaming') {
                             existing.category = 'cat_gaming';
+                        }
+                        // Migración de nombre: 'X (Twitter)' → 'X' (solo la entrada por defecto)
+                        if (existing && existing.id === 'x' && existing.title === 'X (Twitter)') {
+                            existing.title = 'X';
                         }
                     });
                     return list;

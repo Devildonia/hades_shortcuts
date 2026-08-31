@@ -17,17 +17,17 @@
     "clear": "Suche löschen"
   },
   "categories": {
-    "cat_3d": "3D-Modellierung & KI",
+    "cat_3d": "3D-Modellierung",
     "cat_ai": "Künstliche Intelligenz",
-    "cat_art": "Digitale Kunst & Modelle",
+    "cat_art": "Digitale Kunst",
     "cat_audio": "Audio-Generierung",
-    "cat_google": "Google Workspace & KI",
-    "cat_tools": "Tools & Entwickler",
-    "cat_social": "Community & Soziales",
+    "cat_google": "Google",
+    "cat_tools": "Tools",
+    "cat_social": "Soziale Medien",
     "cat_messaging": "Messaging",
     "cat_shopping": "Shopping & Bezahlen",
-    "cat_video": "Video & KI-Generierung",
-    "cat_gaming": "Gaming & Plattformen"
+    "cat_video": "Video",
+    "cat_gaming": "Gaming"
   },
   "badges": {
     "apps": "Apps"

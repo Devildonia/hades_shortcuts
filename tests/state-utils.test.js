@@ -1,6 +1,6 @@
 // tests/state-utils.test.js — Utilidades de seguridad y estado (escapeHtml, safeHttpUrl, normalizeTags, openSafeUrl).
 import { test, expect } from './harness.js';
-import { escapeHtml, safeHttpUrl, normalizeTags, openSafeUrl, sanitizeIconUrl } from '../js/state.js';
+import { escapeHtml, safeHttpUrl, normalizeTags, openSafeUrl, sanitizeIconUrl, state } from '../js/state.js';
 
 test('escapeHtml: neutraliza HTML y atributos (XSS básico)', () => {
     const out = escapeHtml('<img src=x onerror=alert(1)>');
@@ -108,4 +108,23 @@ test('sanitizeIconUrl: entrada null/undefined/vacío devuelve ""', () => {
     expect(sanitizeIconUrl(undefined)).toBe('');
     expect(sanitizeIconUrl('')).toBe('');
     expect(sanitizeIconUrl('   ')).toBe('');
+});
+
+test('loadShortcuts: migra el título guardado "X (Twitter)" a "X"', () => {
+    // Simula un localStorage con la entrada antigua ya persistida.
+    const saved = [
+        { id: 'x', title: 'X (Twitter)', url: 'https://x.com/', icon: 'iconos/x.webp', category: 'cat_social', tags: 'social' },
+        { id: 'instagram', title: 'Instagram', url: 'https://www.instagram.com/', icon: 'iconos/instagram.webp', category: 'cat_social', tags: 'social' }
+    ];
+    localStorage.setItem('custom_shortcuts_v2', JSON.stringify(saved));
+    const list = state.loadShortcuts();
+    const x = list.find(s => s.id === 'x');
+    expect(x.title).toBe('X');
+    // El resto de la lista no se toca.
+    expect(list.find(s => s.id === 'instagram').title).toBe('Instagram');
+    // Un título personalizado distinto no se sobreescribe.
+    localStorage.setItem('custom_shortcuts_v2', JSON.stringify([
+        { id: 'x', title: 'Mi X personal', url: 'https://x.com/', icon: '', category: 'cat_social', tags: '' }
+    ]));
+    expect(state.loadShortcuts().find(s => s.id === 'x').title).toBe('Mi X personal');
 });

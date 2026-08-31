@@ -17,17 +17,17 @@
     "clear": "Clear search"
   },
   "categories": {
-    "cat_3d": "3D Modeling & AI",
+    "cat_3d": "3D Modeling",
     "cat_ai": "Artificial Intelligence",
-    "cat_art": "Digital Art & Models",
+    "cat_art": "Digital Art",
     "cat_audio": "Audio Generation",
-    "cat_google": "Google Workspace & AI",
-    "cat_tools": "Tools & Dev",
-    "cat_social": "Community & Social",
+    "cat_google": "Google",
+    "cat_tools": "Tools",
+    "cat_social": "Social Media",
     "cat_messaging": "Messaging",
     "cat_shopping": "Shopping & Payments",
-    "cat_video": "Video & AI Generation",
-    "cat_gaming": "Gaming & Platforms"
+    "cat_video": "Video",
+    "cat_gaming": "Gaming"
   },
   "badges": {
     "apps": "apps"

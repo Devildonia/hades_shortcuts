@@ -17,17 +17,17 @@
     "clear": "Effacer la recherche"
   },
   "categories": {
-    "cat_3d": "Modélisation 3D & IA",
+    "cat_3d": "Modélisation 3D",
     "cat_ai": "Intelligence Artificielle",
-    "cat_art": "Art Numérique & Modèles",
+    "cat_art": "Art Numérique",
     "cat_audio": "Génération Audio",
-    "cat_google": "Google Workspace & IA",
-    "cat_tools": "Outils & Développeur",
-    "cat_social": "Communauté & Réseaux",
+    "cat_google": "Google",
+    "cat_tools": "Outils",
+    "cat_social": "Réseaux Sociaux",
     "cat_messaging": "Messagerie",
     "cat_shopping": "Achats & Paiements",
-    "cat_video": "Vidéo & Génération IA",
-    "cat_gaming": "Gaming & Plateformes"
+    "cat_video": "Vidéo",
+    "cat_gaming": "Gaming"
   },
   "badges": {
     "apps": "apps"
