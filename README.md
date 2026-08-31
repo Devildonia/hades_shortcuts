@@ -313,10 +313,11 @@ locales/
 ├── es.json   # Español
 ├── en.json   # English
 ├── fr.json   # Français
-└── de.json   # Deutsch
+├── de.json   # Deutsch
+└── it.json   # Italiano
 ```
 
-UI chrome, greetings, widget copy, settings, and shortcut tooltips stay in parity across the four dictionaries.
+UI chrome, greetings, widget copy, settings, and shortcut tooltips stay in parity across all five dictionaries.
 
 ---
 

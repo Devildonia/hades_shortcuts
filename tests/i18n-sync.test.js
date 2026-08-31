@@ -1,11 +1,11 @@
 // tests/i18n-sync.test.js — T4.3: test de paridad entre idiomas (locales/*.json)
 // Los locales/*.json son la única fuente de verdad de las traducciones.
 // Este test garantiza:
-//   (a) Los 4 idiomas existen, son válidos y no están vacíos.
-//   (b) PARIDAD: los 4 idiomas comparten exactamente el mismo conjunto de claves.
+//   (a) Los 5 idiomas existen, son válidos y no están vacíos.
+//   (b) PARIDAD: los 5 idiomas comparten exactamente el mismo conjunto de claves.
 import { test, expect } from './harness.js';
 
-const LANGS = ['es', 'en', 'fr', 'de'];
+const LANGS = ['es', 'en', 'fr', 'de', 'it'];
 
 // Aplana recursivamente un objeto a { 'a.b.c': valor } conservando solo las hojas.
 const flatten = (obj, pre = '', out = {}) => {
@@ -18,7 +18,7 @@ const flatten = (obj, pre = '', out = {}) => {
     return out;
 };
 
-test('i18n: los 4 archivos locales/*.json existen, son válidos y no están vacíos', async () => {
+test('i18n: los 5 archivos locales/*.json existen, son válidos y no están vacíos', async () => {
     for (const l of LANGS) {
         const res = await fetch(`../locales/${l}.json`);
         expect(res.ok).toBe(true);
@@ -28,7 +28,7 @@ test('i18n: los 4 archivos locales/*.json existen, son válidos y no están vac�
     }
 });
 
-test('i18n: los 4 idiomas comparten EXACTAMENTE el mismo conjunto de claves (nada falta en ningún idioma)', async () => {
+test('i18n: los 5 idiomas comparten EXACTAMENTE el mismo conjunto de claves (nada falta en ningún idioma)', async () => {
     const keysByLang = {};
     for (const l of LANGS) {
         const res = await fetch(`../locales/${l}.json`);
