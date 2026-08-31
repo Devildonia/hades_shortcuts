@@ -192,12 +192,15 @@ export class AppState {
 
     detectLanguage() {
         const saved = this.getItem('app_language', null);
-        if (saved && ['es', 'en', 'fr', 'de', 'it'].includes(saved)) return saved;
+        if (saved && ['es', 'en', 'fr', 'de', 'it', 'pt', 'nl', 'ja'].includes(saved)) return saved;
         if (typeof navigator !== 'undefined') {
             const navLang = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
             if (navLang.startsWith('fr')) return 'fr';
             if (navLang.startsWith('de')) return 'de';
             if (navLang.startsWith('it')) return 'it';
+            if (navLang.startsWith('pt')) return 'pt';
+            if (navLang.startsWith('nl')) return 'nl';
+            if (navLang.startsWith('ja')) return 'ja';
             if (navLang.startsWith('en')) return 'en';
         }
         return 'es';
@@ -222,7 +225,7 @@ export class AppState {
     }
 
     setLanguage(langCode) {
-        if (!['es', 'en', 'fr', 'de', 'it'].includes(langCode)) langCode = 'es';
+        if (!['es', 'en', 'fr', 'de', 'it', 'pt', 'nl', 'ja'].includes(langCode)) langCode = 'es';
         this.language = langCode;
         this.setItem('app_language', langCode);
         if (typeof document !== 'undefined') document.documentElement.lang = langCode;

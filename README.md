@@ -44,7 +44,7 @@
 First release candidate of 1.0. Chrome MV3 `version` stays numeric (`1.0.0`); the human tag is `1.0.0-rc-1` (`version_name`, cache-bust and zip).
 
 - **Audit hardening**: single ESM graph (no duplicate engines), `openSafeUrl` on every live `window.open`, iCal `TZID` parsing, Focus/Pomodoro share remaining time, `alert()` replaced with toasts on Focus and iCal sync.
-- **i18n parity**: embedded dictionaries match `locales/` (ES / EN / FR / DE); weather, user, iCal, RSS, smart-view, zen and AI modals use `data-i18n`.
+- **i18n parity**: embedded dictionaries match `locales/` (ES / EN / FR / DE / IT / PT / NL / JA); weather, user, iCal, RSS, smart-view, zen and AI modals use `data-i18n`.
 - **PWA cache** `hades-shortcuts-v1.0.0-cache`; startpage loads `js/app.js` (stale `js/bundle.js` removed).
 - **Six visual themes**: Cyber Neon, Deep Nebula, Sunset Amber, **Abyss OLED**, **Jade Terminal**, Crystal Light.
 - **Contained Command Center settings** (max 620px) with six tabs, including Habits & Analytics.
@@ -314,10 +314,13 @@ locales/
 ├── en.json   # English
 ├── fr.json   # Français
 ├── de.json   # Deutsch
-└── it.json   # Italiano
+├── it.json   # Italiano
+├── pt.json   # Português
+├── nl.json   # Nederlands
+└── ja.json   # 日本語
 ```
 
-UI chrome, greetings, widget copy, settings, and shortcut tooltips stay in parity across all five dictionaries.
+UI chrome, greetings, widget copy, settings, and shortcut tooltips stay in parity across all eight dictionaries.
 
 ---
 
@@ -330,7 +333,7 @@ python -m http.server 8080
 # → open http://localhost:8080/tests/
 ```
 
-**169 tests across 22 modules** cover the bangs math evaluator (zero-`eval`), the drag/resize editing engine, i18n anti-divergence (`locales/*.json` ↔ embedded dict, all four languages) **plus cross-language key parity** (no key missing in any language), E2EE Gist crypto, PWA, layout, accessibility, and more. Machine-readable results are exposed at `window.__testResults` (JSON) for future CI.
+**169 tests across 22 modules** cover the bangs math evaluator (zero-`eval`), the drag/resize editing engine, i18n anti-divergence (`locales/*.json` ↔ embedded dict, all eight languages) **plus cross-language key parity** (no key missing in any language), E2EE Gist crypto, PWA, layout, accessibility, and more. Machine-readable results are exposed at `window.__testResults` (JSON) for future CI.
 
 Headless one-liner (no GUI):
 
