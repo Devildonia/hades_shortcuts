@@ -9174,3 +9174,174 @@ html.no-green-bezel .focus-toggle-btn::after,
 html.no-green-bezel .settings-main-btn::after {
     display: none;
 }
+
+/* ==========================================================================
+   Editor de Perfiles (Ajustes → Perfiles)
+   Tarjetas por perfil: punto de acento, nombre, herramientas (color · subir ·
+   bajar · reset) y chips de categorías. Mismo lenguaje de vidrio y marcos que
+   el resto del tablero; cada tarjeta se pinta con el acento de su perfil.
+   ========================================================================== */
+#profiles-editor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.profile-card {
+    position: relative;
+    border: 1px solid var(--card-border);
+    border-left: 3px solid color-mix(in srgb, var(--space-accent, #3b82f6) 70%, transparent);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: var(--shadow-subtle);
+    padding: 12px 14px;
+    transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.profile-card:hover {
+    border-color: color-mix(in srgb, var(--space-accent, #3b82f6) 45%, var(--card-border));
+    box-shadow: var(--shadow-elevated);
+}
+
+.profile-card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-accent-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35), 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.profile-name-field {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.profile-name-input {
+    width: 100%;
+    max-width: 100%;
+}
+
+.profile-card-tools {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+}
+
+.profile-accent-input {
+    width: 30px;
+    height: 30px;
+    padding: 2px;
+    margin: 0;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.profile-tool-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary, #9fb0c8);
+    cursor: pointer;
+    transition: background 0.14s ease, color 0.14s ease, border-color 0.14s ease, transform 0.12s ease;
+}
+.profile-tool-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+    border-color: color-mix(in srgb, var(--space-accent, #3b82f6) 55%, var(--card-border));
+}
+.profile-tool-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+.profile-tool-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+.profile-tool-btn svg {
+    display: block;
+}
+
+.profile-cats {
+    margin-top: 12px;
+}
+
+.profile-cats-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text-tertiary, #6f82a0);
+    margin-bottom: 8px;
+}
+
+.profile-cats-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.profile-cat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid var(--card-border);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 0.78rem;
+    color: var(--text-secondary, #9fb0c8);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+}
+.profile-cat-chip:hover {
+    border-color: var(--card-border-hover);
+    color: var(--text-primary);
+}
+.profile-cat-chip input {
+    accent-color: var(--accent-primary, #00f2fe);
+    margin: 0;
+    width: 14px;
+    height: 14px;
+}
+.profile-cat-chip:has(input:checked) {
+    border-color: color-mix(in srgb, var(--space-accent, #3b82f6) 60%, var(--card-border));
+    background: color-mix(in srgb, var(--space-accent, #3b82f6) 12%, rgba(255, 255, 255, 0.02));
+    color: var(--text-primary);
+}
+
+.profile-cats-hint {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.72rem;
+    color: var(--text-tertiary, #6f82a0);
+    font-style: italic;
+}
+
+.profile-order-hint {
+    margin: 14px 0 0;
+    font-size: 0.78rem;
+    color: var(--text-tertiary, #6f82a0);
+}
+
+[data-theme="light"] .profile-card {
+    background: rgba(255, 255, 255, 0.5);
+}
+[data-theme="light"] .profile-cat-chip {
+    background: rgba(255, 255, 255, 0.6);
+}

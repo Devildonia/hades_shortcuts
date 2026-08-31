@@ -38,6 +38,7 @@ export class BackupManager {
             postits: readJsonStorage('glass_postits_v1', []),
             canvasPositions: readJsonStorage('canvas_positions_v1', {}),
             customMacros: readJsonStorage('custom_macros_v1', {}),
+            spaces: readJsonStorage('hades_spaces_v1', null),
             shortcuts: state.shortcuts
         };
 
@@ -61,7 +62,7 @@ export class BackupManager {
             try {
                 const data = JSON.parse(e.target.result);
                 if (data.shortcuts && Array.isArray(data.shortcuts)) {
-                    const confirmMsg = t.import_confirm || '¿Importar este backup? Se reemplazarán los atajos, post-its, macros y ajustes actuales.';
+                    const confirmMsg = t.import_confirm || '¿Importar este backup? Se reemplazarán los atajos, post-its, macros, perfiles y ajustes actuales.';
                     if (!confirm(confirmMsg)) return;
                     state.saveShortcuts(data.shortcuts);
                     if (data.categoriesOrder && Array.isArray(data.categoriesOrder)) {
@@ -83,6 +84,11 @@ export class BackupManager {
                         localStorage.setItem('custom_macros_v1', JSON.stringify(data.customMacros));
                         if (window.macroEngine && typeof window.macroEngine.setCustomMacros === 'function') {
                             window.macroEngine.setCustomMacros(data.customMacros);
+                        }
+                    }
+                    if (data.spaces) {
+                        if (window.spacesManager && typeof window.spacesManager.importSpaces === 'function') {
+                            window.spacesManager.importSpaces(data.spaces);
                         }
                     }
                     if (data.layoutMatrix) {

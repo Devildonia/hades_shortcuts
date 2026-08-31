@@ -242,6 +242,14 @@ export function initApp() {
         search.filterShortcuts();
         search.updatePillCounts();
     });
+    // Edición de perfiles (nombre/acento/categorías/orden): re-renderiza el tablero
+    // para aplicar las categorías del espacio activo y refrescar el numpad.
+    state.on('spaces:updated', () => {
+        renderer.render();
+        layoutManager.applyPositions();
+        search.filterShortcuts();
+        search.updatePillCounts();
+    });
     state.on('editmode:changed', () => {
         renderer.render();
         layoutManager.applyPositions();

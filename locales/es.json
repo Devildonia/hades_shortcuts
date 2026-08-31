@@ -188,7 +188,23 @@
       "layout": "Diseño & Atajos",
       "backup": "Copia de Seguridad",
       "macros": "Macros & Rutinas",
-      "analytics": "Hábitos & Analytics"
+      "analytics": "Hábitos & Analytics",
+      "profiles": "Perfiles"
+    },
+    "profiles": {
+      "title": "Editar Perfiles",
+      "desc": "Personaliza el nombre, el color de acento, las categorías y el orden de tus 6 perfiles.",
+      "name_label": "Nombre",
+      "name_placeholder": "Nombre del perfil",
+      "accent_label": "Color de acento",
+      "categories_label": "Categorías visibles",
+      "all_hint": "Sin selección: se muestran todas las categorías.",
+      "move_up": "Subir perfil (tecla anterior)",
+      "move_down": "Bajar perfil (tecla siguiente)",
+      "reset_one": "Restablecer este perfil a sus valores de fábrica",
+      "reset_all": "Restablecer todos los perfiles",
+      "reset_all_confirm": "¿Restablecer los 6 perfiles a sus valores de fábrica? Se perderán tus cambios de nombre, color, categorías y orden.",
+      "order_hint": "El orden define la tecla de acceso (Alt+1…Alt+6)."
     },
     "appearance": {
       "themes_label": "Tema Visual",
@@ -260,7 +276,7 @@
       "reset_desc": "Restaura los 52 accesos directos originales predeterminados.",
       "reset_btn": "Restablecer Valores",
       "reset_confirm": "¿Estás seguro de que deseas restablecer los valores de fábrica? Se perderán las personalizaciones.",
-      "import_confirm": "¿Importar este backup? Se reemplazarán los atajos, post-its, macros y ajustes actuales.",
+      "import_confirm": "¿Importar este backup? Se reemplazarán los atajos, post-its, macros, perfiles y ajustes actuales.",
       "import_success": "¡Copia de seguridad restaurada con éxito!",
       "import_error": "El archivo de respaldo no es válido o está dañado."
     },

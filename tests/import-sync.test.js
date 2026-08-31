@@ -7,6 +7,7 @@ import { PostItManager } from '../js/postits.js';
 import { MacroEngine } from '../js/macros.js';
 import { CryptoSyncEngine } from '../js/crypto-sync.js';
 import { BackupManager } from '../js/backup.js';
+import { SpacesEngine } from '../js/spaces.js';
 
 // Mock de confirm() para headless browser (evita bloqueo del event loop)
 window.confirm = () => true;
@@ -16,6 +17,7 @@ function installManagers() {
     window.layoutManager = new LayoutManager();
     window.postitsManager = new PostItManager();
     window.macroEngine = new MacroEngine();
+    window.spacesManager = new SpacesEngine();
 }
 
 const SHARED_PAYLOAD = {
@@ -24,6 +26,14 @@ const SHARED_PAYLOAD = {
     customMacros: {
         '!prueba': { name: 'Macro Prueba', desc: '', shortcuts: ['github'], ambient: null, pomodoro: null, icon: '🧪' }
     }
+};
+
+const SPACES_PAYLOAD = {
+    activeSpaceId: 'space_art',
+    spaces: [
+        { id: 'space_art', name: 'Arte Custom', customName: true, accent: '#123abc', theme: 'jade', categoryIds: ['cat_art', 'cat_ai'], scratchpad: 'notas' },
+        { id: 'space_fun' }
+    ]
 };
 
 test('crypto-sync: applyPackagePayload actualiza memoria Y localStorage', () => {
@@ -43,6 +53,48 @@ test('crypto-sync: applyPackagePayload actualiza memoria Y localStorage', () => 
     expect(JSON.parse(localStorage.getItem('canvas_positions_v1'))).toEqual(SHARED_PAYLOAD.canvasPositions);
     expect(JSON.parse(localStorage.getItem('glass_postits_v1'))).toEqual(SHARED_PAYLOAD.postits);
     expect(JSON.parse(localStorage.getItem('custom_macros_v1'))['!prueba']).toBeTruthy();
+});
+
+test('crypto-sync: applyPackagePayload sincroniza los perfiles (memoria Y storage)', () => {
+    state.soundEnabled = false;
+    installManagers();
+    const sync = new CryptoSyncEngine({ render() {} });
+
+    sync.applyPackagePayload({ spaces: SPACES_PAYLOAD });
+
+    // Memoria (lo que ve la UI)
+    const sp = window.spacesManager.getSpace('space_art');
+    expect(sp.customName).toBe(true);
+    expect(sp.name).toBe('Arte Custom');
+    expect(sp.accent).toBe('#123abc');
+    expect(sp.categoryIds).toEqual(['cat_art', 'cat_ai']);
+    expect(window.spacesManager.data.spaces.length).toBe(6); // los 4 ausentes se completan
+    expect(window.spacesManager.data.activeSpaceId).toBe('space_art');
+
+    // Storage
+    expect(JSON.parse(localStorage.getItem('hades_spaces_v1')).activeSpaceId).toBe('space_art');
+    expect(JSON.parse(localStorage.getItem('hades_spaces_v1')).spaces.length).toBe(6);
+});
+
+test('backup: importBackup aplica los perfiles incluidos en el archivo', async () => {
+    state.soundEnabled = false;
+    installManagers();
+
+    const backup = {
+        version: '1.0.0-rc-1',
+        shortcuts: [{ id: 'sc_1', title: 'GitHub', url: 'https://github.com', category: 'cat_dev' }],
+        spaces: SPACES_PAYLOAD
+    };
+
+    const file = new File([JSON.stringify(backup)], 'backup.json', { type: 'application/json' });
+    const bm = new BackupManager({ render() {} });
+    bm.importBackup({ target: { files: [file] } }); // simula <input type=file> change
+    await delay(80); // deja correr FileReader.onload
+
+    const sp = window.spacesManager.getSpace('space_art');
+    expect(sp.name).toBe('Arte Custom');
+    expect(sp.customName).toBe(true);
+    expect(JSON.parse(localStorage.getItem('hades_spaces_v1')).activeSpaceId).toBe('space_art');
 });
 
 test('crypto-sync: payload corrupto no corrompe los managers', () => {

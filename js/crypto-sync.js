@@ -107,6 +107,7 @@ export class CryptoSyncEngine {
             canvasPositions: readJsonStorage('canvas_positions_v1', {}),
             postits: readJsonStorage('glass_postits_v1', []),
             customMacros: readJsonStorage('custom_macros_v1', {}),
+            spaces: readJsonStorage('hades_spaces_v1', null),
             userName: state.userName,
             theme: state.theme,
             soundEnabled: state.soundEnabled,
@@ -138,6 +139,9 @@ export class CryptoSyncEngine {
             if (window.macroEngine && typeof window.macroEngine.setCustomMacros === 'function') {
                 window.macroEngine.setCustomMacros(data.customMacros);
             }
+        }
+        if (data.spaces && window.spacesManager && typeof window.spacesManager.importSpaces === 'function') {
+            window.spacesManager.importSpaces(data.spaces);
         }
         if (data.userName) state.setUserName(data.userName);
         if (data.theme) state.setTheme(data.theme);

@@ -188,7 +188,23 @@
       "layout": "Mise en page & Raccourcis",
       "backup": "Sauvegarde",
       "macros": "Macros & Routines",
-      "analytics": "Habitudes & Analytics"
+      "analytics": "Habitudes & Analytics",
+      "profiles": "Profils"
+    },
+    "profiles": {
+      "title": "Modifier les profils",
+      "desc": "Personnalisez le nom, la couleur d'accent, les catégories et l'ordre de vos 6 profils.",
+      "name_label": "Nom",
+      "name_placeholder": "Nom du profil",
+      "accent_label": "Couleur d'accent",
+      "categories_label": "Catégories visibles",
+      "all_hint": "Aucune sélection : toutes les catégories sont affichées.",
+      "move_up": "Monter le profil (touche précédente)",
+      "move_down": "Descendre le profil (touche suivante)",
+      "reset_one": "Réinitialiser ce profil aux valeurs d'origine",
+      "reset_all": "Réinitialiser tous les profils",
+      "reset_all_confirm": "Réinitialiser les 6 profils aux valeurs d'origine ? Vos modifications de nom, couleur, catégories et d'ordre seront perdues.",
+      "order_hint": "L'ordre définit la touche d'accès (Alt+1…Alt+6)."
     },
     "appearance": {
       "themes_label": "Thème Visuel",
@@ -260,7 +276,7 @@
       "reset_desc": "Restaure les 52 raccourcis originaux par défaut.",
       "reset_btn": "Réinitialiser par Défaut",
       "reset_confirm": "Êtes-vous sûr de vouloir réinitialiser ? Les personnalisations seront perdues.",
-      "import_confirm": "Importer ce backup ? Vos raccourcis, post-its, macros et réglages actuels seront remplacés.",
+      "import_confirm": "Importer ce backup ? Vos raccourcis, post-its, macros, profils et réglages actuels seront remplacés.",
       "import_success": "Sauvegarde restaurée avec succès !",
       "import_error": "Le fichier de sauvegarde est invalide ou corrompu."
     },

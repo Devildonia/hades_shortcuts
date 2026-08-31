@@ -188,7 +188,23 @@
       "layout": "Layout & Shortcuts",
       "backup": "Backup & Restore",
       "macros": "Macros & Routines",
-      "analytics": "Habits & Analytics"
+      "analytics": "Habits & Analytics",
+      "profiles": "Profiles"
+    },
+    "profiles": {
+      "title": "Edit Profiles",
+      "desc": "Customize the name, accent color, categories and order of your 6 profiles.",
+      "name_label": "Name",
+      "name_placeholder": "Profile name",
+      "accent_label": "Accent color",
+      "categories_label": "Visible categories",
+      "all_hint": "None selected: all categories are shown.",
+      "move_up": "Move profile up (previous key)",
+      "move_down": "Move profile down (next key)",
+      "reset_one": "Reset this profile to factory defaults",
+      "reset_all": "Reset all profiles",
+      "reset_all_confirm": "Reset all 6 profiles to factory defaults? Your name, color, category and order changes will be lost.",
+      "order_hint": "Order defines the access key (Alt+1…Alt+6)."
     },
     "appearance": {
       "themes_label": "Visual Theme",
@@ -260,7 +276,7 @@
       "reset_desc": "Reset dashboard back to the original 52 default shortcuts.",
       "reset_btn": "Reset to Default",
       "reset_confirm": "Are you sure you want to restore factory defaults? Customizations will be lost.",
-      "import_confirm": "Import this backup? Your current shortcuts, post-its, macros and settings will be replaced.",
+      "import_confirm": "Import this backup? Your current shortcuts, post-its, macros, profiles and settings will be replaced.",
       "import_success": "Backup successfully restored!",
       "import_error": "The backup file is invalid or corrupted."
     },

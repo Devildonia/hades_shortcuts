@@ -6,6 +6,7 @@ import { macroEngine } from './macros.js';
 import { state } from './state.js';
 import { updateDocumentLocalization, loadLocaleAsync, getTranslation, i18nDictionaries } from './i18n.js';
 import { soundFx } from './audio.js';
+import { spacesManager } from './spaces.js';
 
 export class SettingsHub {
     constructor(renderer, shortcutManager, backupManager, importer, themeStudio) {
@@ -98,6 +99,21 @@ export class SettingsHub {
                 }
             };
         }
+
+        // Editor de Perfiles: botón de reset total + render inicial del contenedor.
+        const resetAllProfilesBtn = document.getElementById('profiles-reset-all-btn');
+        if (resetAllProfilesBtn) {
+            resetAllProfilesBtn.addEventListener('click', () => {
+                soundFx.play('click');
+                const msg = getTranslation('settings_hub.profiles.reset_all_confirm') || '¿Restablecer los 6 perfiles a sus valores de fábrica?';
+                if (confirm(msg)) {
+                    spacesManager.resetAllSpaces();
+                    this.renderProfilesEditor();
+                }
+            });
+        }
+        this.renderProfilesEditor();
+
         if (this.importer) this.importer.init();
     }
 
@@ -108,6 +124,7 @@ export class SettingsHub {
         this.drawer.classList.remove('hidden');
         document.body.classList.add('settings-open');
         this.renderAnalyticsTab();
+        this.renderProfilesEditor();
     }
 
     close() {
@@ -160,6 +177,7 @@ export class SettingsHub {
                 this.tabPanes.forEach(pane => {
                     pane.classList.toggle('active', pane.id === `tab-pane-${targetTab}`);
                     if (targetTab === 'analytics') this.renderAnalyticsTab();
+                    if (targetTab === 'profiles') this.renderProfilesEditor();
                 });
             });
         });
@@ -243,6 +261,7 @@ export class SettingsHub {
         state.on('language:changed', () => {
             this.buildCategoryToggles();
             this.syncCategoryToggles();
+            this.renderProfilesEditor();
         });
 
         if (this.layoutResetBtn) {
@@ -404,5 +423,175 @@ export class SettingsHub {
                 });
             }
         });
+    }
+
+    // ==================== Editor de Perfiles (6 espacios totalmente editables) ====================
+
+    getCategoryList() {
+        const t = (typeof i18nDictionaries !== 'undefined' && i18nDictionaries[state.language]) || {};
+        return state.categories.map((cat) => ({
+            catId: cat.id,
+            label: (t.categories && t.categories[cat.id]) || cat.defaultTitle || cat.id
+        }));
+    }
+
+    _profileIcon(kind) {
+        const icons = {
+            up: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>',
+            down: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>',
+            reset: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3.2-6.9"/><path d="M3 4v5h5"/></svg>'
+        };
+        return icons[kind] || '';
+    }
+
+    renderProfilesEditor() {
+        const container = document.getElementById('profiles-editor-container');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const t = (key) => getTranslation(key) || '';
+        const cats = this.getCategoryList();
+        const spaces = spacesManager.data.spaces;
+
+        spaces.forEach((sp, idx) => {
+            const card = document.createElement('div');
+            card.className = 'profile-card';
+            card.setAttribute('data-space-id', sp.id);
+            card.style.setProperty('--space-accent', sp.accent || '#3b82f6');
+
+            // Cabecera: punto de acento, nombre y herramientas (color, subir, bajar, reset)
+            const head = document.createElement('div');
+            head.className = 'profile-card-head';
+
+            const dot = document.createElement('span');
+            dot.className = 'profile-accent-dot';
+            dot.style.background = sp.accent || '#8892b0';
+            dot.setAttribute('aria-hidden', 'true');
+            head.appendChild(dot);
+
+            const nameField = document.createElement('div');
+            nameField.className = 'profile-name-field';
+            const nameInput = document.createElement('input');
+            nameInput.type = 'text';
+            nameInput.className = 'settings-select profile-name-input';
+            nameInput.id = `pf-name-${sp.id}`;
+            nameInput.maxLength = 24;
+            nameInput.value = sp.customName ? sp.name : (getTranslation(`spaces.${sp.id}`) || sp.name);
+            nameInput.placeholder = t('settings_hub.profiles.name_placeholder');
+            nameInput.setAttribute('aria-label', t('settings_hub.profiles.name_label') || 'Nombre');
+            nameInput.addEventListener('change', (e) => {
+                soundFx.play('click');
+                spacesManager.renameSpace(sp.id, e.target.value);
+                this.renderProfilesEditor();
+            });
+            nameField.appendChild(nameInput);
+            head.appendChild(nameField);
+
+            const tools = document.createElement('div');
+            tools.className = 'profile-card-tools';
+
+            const accentInput = document.createElement('input');
+            accentInput.type = 'color';
+            accentInput.className = 'profile-accent-input';
+            accentInput.id = `pf-accent-${sp.id}`;
+            accentInput.value = sp.accent || '#00f2fe';
+            const accentLabel = t('settings_hub.profiles.accent_label') || 'Color de acento';
+            accentInput.setAttribute('aria-label', accentLabel);
+            accentInput.title = accentLabel;
+            accentInput.addEventListener('input', (e) => {
+                spacesManager.setSpaceAccent(sp.id, e.target.value);
+                const d = card.querySelector('.profile-accent-dot');
+                if (d) d.style.background = e.target.value;
+            });
+            tools.appendChild(accentInput);
+
+            const mkBtn = (action, kind, labelKey, disabled) => {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'profile-tool-btn';
+                b.setAttribute('data-action', action);
+                b.setAttribute('data-space-id', sp.id);
+                b.innerHTML = this._profileIcon(kind);
+                const label = t(labelKey);
+                b.setAttribute('aria-label', label);
+                b.title = label;
+                if (disabled) b.disabled = true;
+                b.addEventListener('click', () => {
+                    soundFx.play('click');
+                    if (action === 'up') spacesManager.moveSpace(sp.id, -1);
+                    else if (action === 'down') spacesManager.moveSpace(sp.id, 1);
+                    else if (action === 'reset') spacesManager.resetSpace(sp.id);
+                    this.renderProfilesEditor();
+                });
+                return b;
+            };
+
+            tools.appendChild(mkBtn('up', 'up', 'settings_hub.profiles.move_up', idx === 0));
+            tools.appendChild(mkBtn('down', 'down', 'settings_hub.profiles.move_down', idx === spaces.length - 1));
+            tools.appendChild(mkBtn('reset', 'reset', 'settings_hub.profiles.reset_one', false));
+            head.appendChild(tools);
+            card.appendChild(head);
+
+            // Categorías visibles (ninguna marcada = se muestran todas)
+            const catsBox = document.createElement('div');
+            catsBox.className = 'profile-cats';
+            const catsLabel = document.createElement('span');
+            catsLabel.className = 'profile-cats-label';
+            catsLabel.textContent = t('settings_hub.profiles.categories_label');
+            catsBox.appendChild(catsLabel);
+
+            const selected = Array.isArray(sp.categoryIds) ? sp.categoryIds : [];
+            const grid = document.createElement('div');
+            grid.className = 'profile-cats-grid';
+
+            cats.forEach((c) => {
+                const chip = document.createElement('label');
+                chip.className = 'profile-cat-chip';
+                const cb = document.createElement('input');
+                cb.type = 'checkbox';
+                cb.setAttribute('data-space-id', sp.id);
+                cb.setAttribute('data-cat', c.catId);
+                cb.checked = selected.includes(c.catId);
+                cb.addEventListener('change', () => {
+                    soundFx.play('click');
+                    const checked = [...card.querySelectorAll('.profile-cat-chip input:checked')].map((el) => el.getAttribute('data-cat'));
+                    spacesManager.setSpaceCategories(sp.id, checked.length ? checked : null);
+                    this._updateProfileHint(card);
+                });
+                const span = document.createElement('span');
+                span.textContent = c.label;
+                chip.appendChild(cb);
+                chip.appendChild(span);
+                grid.appendChild(chip);
+            });
+            catsBox.appendChild(grid);
+
+            const hint = document.createElement('span');
+            hint.className = 'profile-cats-hint';
+            catsBox.appendChild(hint);
+            this._setProfileHint(hint, selected.length === 0);
+
+            card.appendChild(catsBox);
+            container.appendChild(card);
+        });
+
+        const orderHint = t('settings_hub.profiles.order_hint');
+        if (orderHint) {
+            const hint = document.createElement('p');
+            hint.className = 'settings-hint profile-order-hint';
+            hint.textContent = orderHint;
+            container.appendChild(hint);
+        }
+    }
+
+    _setProfileHint(hintEl, allShown) {
+        if (!hintEl) return;
+        hintEl.textContent = allShown ? (getTranslation('settings_hub.profiles.all_hint') || '') : '';
+    }
+
+    _updateProfileHint(card) {
+        const hint = card.querySelector('.profile-cats-hint');
+        const checked = card.querySelectorAll('.profile-cat-chip input:checked');
+        this._setProfileHint(hint, checked.length === 0);
     }
 }

@@ -188,7 +188,23 @@
       "layout": "Layout & Verknüpfungen",
       "backup": "Sicherung & Wiederherstellung",
       "macros": "Makros & Routinen",
-      "analytics": "Gewohnheiten & Analytics"
+      "analytics": "Gewohnheiten & Analytics",
+      "profiles": "Profile"
+    },
+    "profiles": {
+      "title": "Profile bearbeiten",
+      "desc": "Passen Sie Name, Akzentfarbe, Kategorien und Reihenfolge Ihrer 6 Profile an.",
+      "name_label": "Name",
+      "name_placeholder": "Profilname",
+      "accent_label": "Akzentfarbe",
+      "categories_label": "Sichtbare Kategorien",
+      "all_hint": "Keine Auswahl: Alle Kategorien werden angezeigt.",
+      "move_up": "Profil nach oben (vorherige Taste)",
+      "move_down": "Profil nach unten (nächste Taste)",
+      "reset_one": "Dieses Profil auf Werkseinstellungen zurücksetzen",
+      "reset_all": "Alle Profile zurücksetzen",
+      "reset_all_confirm": "Alle 6 Profile auf Werkseinstellungen zurücksetzen? Ihre Änderungen an Name, Farbe, Kategorien und Reihenfolge gehen verloren.",
+      "order_hint": "Die Reihenfolge bestimmt die Zugriffstaste (Alt+1…Alt+6)."
     },
     "appearance": {
       "themes_label": "Visuelles Design",
@@ -260,7 +276,7 @@
       "reset_desc": "Stellt die ursprünglichen 52 Standard-Verknüpfungen wieder her.",
       "reset_btn": "Auf Standard zurücksetzen",
       "reset_confirm": "Möchten Sie wirklich die Werkseinstellungen wiederherstellen?",
-      "import_confirm": "Dieses Backup importieren? Ihre aktuellen Shortcuts, Post-its, Macros und Einstellungen werden ersetzt.",
+      "import_confirm": "Dieses Backup importieren? Ihre aktuellen Shortcuts, Post-its, Macros, Profile und Einstellungen werden ersetzt.",
       "import_success": "Sicherung erfolgreich wiederhergestellt!",
       "import_error": "Die Sicherungsdatei ist ungültig oder beschädigt."
     },

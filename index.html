@@ -685,6 +685,7 @@
                 <button class="settings-tab-btn active" data-tab="appearance" data-i18n="settings_hub.tabs.appearance">Apariencia</button>
                 <button class="settings-tab-btn" data-tab="language" data-i18n="settings_hub.tabs.language">Idioma</button>
                 <button class="settings-tab-btn" data-tab="layout" data-i18n="settings_hub.tabs.layout">Diseño & Atajos</button>
+                <button class="settings-tab-btn" data-tab="profiles" data-i18n="settings_hub.tabs.profiles">Perfiles</button>
                 <button class="settings-tab-btn" data-tab="macros" data-i18n="settings_hub.tabs.macros">Macros & Rutinas</button>
                 <button class="settings-tab-btn" data-tab="analytics" data-i18n="settings_hub.tabs.analytics">Hábitos & Analytics</button>
                 <button class="settings-tab-btn" data-tab="backup" data-i18n="settings_hub.tabs.backup">Copia de Seguridad</button>
@@ -1037,6 +1038,17 @@
                     <h4 data-i18n="settings_hub.layout.reset_layout_title">Restablecer Diseño Original</h4>
                     <p class="settings-hint" data-i18n="settings_hub.layout.reset_layout_desc">¿Has modificado mucho el tablero? Vuelve a empezar de cero con la disposición y accesos directos originales de fábrica.</p>
                     <button class="settings-action-btn secondary" id="layout-reset-defaults-btn" data-i18n="settings_hub.layout.reset_layout_btn">🔄 Restaurar Diseño de Fábrica</button>
+                </div>
+            </div>
+
+            <!-- Tab: Perfiles (6 espacios totalmente editables) -->
+            <div class="settings-tab-pane" id="tab-pane-profiles">
+                <div class="settings-section">
+                    <h4 data-i18n="settings_hub.profiles.title" data-i18n-title="settings_hub.profiles.desc">Editar Perfiles</h4>
+                    <div id="profiles-editor-container"></div>
+                </div>
+                <div class="settings-section">
+                    <button class="settings-action-btn secondary" id="profiles-reset-all-btn" data-i18n="settings_hub.profiles.reset_all">Restablecer todos los perfiles</button>
                 </div>
             </div>
 
