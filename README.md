@@ -9,7 +9,7 @@
 [![PWA Ready](https://img.shields.io/badge/PWA-Installable%20Desktop-orange?logo=pwa)](https://devildonia.github.io/hades_shortcuts/)
 [![Pure Vanilla](https://img.shields.io/badge/Stack-Vanilla%20HTML%20%2F%20CSS%20%2F%20JS-yellow.svg)](https://developer.mozilla.org/en-US/)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20Zero-brightgreen.svg)]()
-[![i18n](https://img.shields.io/badge/i18n-ES%20%7C%20EN%20%7C%20FR%20%7C%20DE-purple.svg)]()
+[![i18n](https://img.shields.io/badge/i18n-ES%20%7C%20EN%20%7C%20FR%20%7C%20DE%20%7C%20IT%20%7C%20PT%20%7C%20NL%20%7C%20JA-purple.svg)]()
 [![Tests](https://img.shields.io/badge/Tests-169%20in--browser%2C%200%20dependencies-brightgreen)](tests/index.html)
 
 <br />
@@ -91,7 +91,7 @@ flowchart TB
   subgraph shell [Shell]
     HTML["index.html"]
     CSS["css/ 13 modules + 6 themes"]
-    LOC["locales/ ES EN FR DE"]
+    LOC["locales/ 8 languages"]
     SW["sw.js PWA network-first"]
   end
 
@@ -276,7 +276,7 @@ Web Audio API: Cyber Rain, Deep Space brown noise, 432 Hz binaural alpha, Cosmic
 | <kbd>Alt</kbd> + <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd> | Switch spaces |
 | <kbd>Alt</kbd> + <kbd>F</kbd> | Toggle Deep Focus |
 | <kbd>Alt</kbd> + <kbd>C</kbd> / <kbd>Middle-Click</kbd> | Radial HUD |
-| <kbd>Alt</kbd> + <kbd>Space</kbd> / <kbd>Ctrl</kbd> + <kbd>Space</kbd> | Mini-HUD launcher |
+| <kbd>Alt</kbd> + <kbd>Space</kbd> / <kbd>Ctrl</kbd> + <kbd>Space</kbd> | HUD Launcher |
 | <kbd>Ctrl</kbd> + <kbd>K</kbd> / <kbd>Cmd</kbd> + <kbd>K</kbd> | Focus search |
 | <kbd>/</kbd> | Focus search (when not typing) |
 | <kbd>Ctrl</kbd> + <kbd>,</kbd> | Open settings |
