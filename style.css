@@ -543,7 +543,7 @@ body.settings-open {
    normal junto al resto del nombre. */
 .brand-logo {
     display: none;
-    height: 1.45em;
+    height: 1.58em;
     width: auto;
     /* .brand-title tiene gap: 4px; el -20px hace que "aDeS" se monte "a caballo"
        sobre el canal alfa (transparencia) de la H, sin que se note, de modo que
