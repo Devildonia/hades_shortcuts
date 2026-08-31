@@ -262,7 +262,9 @@
       "blue_bezel_desc": "Blaue Ränder um Profile, KI-Agent und Suchleiste.",
       "lilac_bezel_desc": "Lilafarbener Rahmen um das Einstellungen-Feld.",
       "green_bezel_toggle": "Grüne Ränder",
+      "hud_bezel_toggle": "Lilafarbener HUD-Rahmen",
       "green_bezel_desc": "Grüne Ränder um Uhr, Telemetrie, Wetter, Fokus-Modus und Einstellungs-Button.",
+      "hud_bezel_desc": "Lilafarbener Rahmen um das HUD-Launcher-Fenster.",
       "edit_mode_toggle_desc": "Ermöglicht Ziehen, Neuordnen, Bearbeiten oder Löschen von Icons und Panels."
     },
     "backup": {

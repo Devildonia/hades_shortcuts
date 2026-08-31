@@ -1136,25 +1136,123 @@
 }
 
 .hud-modal-card {
+    --gold-lx: 28%;
+    --gold-ly: 12%;
+    --gold-angle: -38deg;
     background: rgba(10, 15, 29, 0.85);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(0, 242, 254, 0.35);
+    border: 1px solid transparent;
     border-radius: var(--radius-xl);
     width: 90%;
     max-width: 580px;
     padding: 24px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 242, 254, 0.2);
+    box-shadow:
+        0 0 0 1px rgba(167, 139, 250, 0.35),
+        inset 0 1px 0 rgba(221, 214, 254, 0.3),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.35),
+        0 25px 60px rgba(0, 0, 0, 0.75),
+        var(--shadow-subtle);
     display: flex;
     flex-direction: column;
     gap: 16px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     animation: zoomIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Spotlight de cursor reactivo — lila (mismo lenguaje que .settings-drawer-card) */
+.hud-modal-card::before {
+    content: '';
+    position: absolute;
+    top: var(--mouse-y, -1000px);
+    left: var(--mouse-x, -1000px);
+    transform: translate(-50%, -50%);
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.16) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.hud-modal-card:hover::before {
+    opacity: 1;
+}
+
+/* Bezel cromo-lila — anillo metálico con brillo que sigue al cursor (familia Settings) */
+.hud-modal-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 6px;
+    pointer-events: none;
+    z-index: 4;
+    background:
+        radial-gradient(
+            280px circle at var(--gold-lx) var(--gold-ly),
+            rgba(237, 233, 254, 0.98) 0%,
+            rgba(167, 139, 250, 0.6) 20%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from var(--gold-angle),
+            #140b2e 0deg,
+            #6d4dd3 30deg,
+            #c4b5fd 50deg,
+            #4c2fa8 84deg,
+            #1e1050 126deg,
+            #8b5cf6 168deg,
+            #37247a 206deg,
+            #a78bfa 244deg,
+            #241260 288deg,
+            #7c5fd6 328deg,
+            #140b2e 360deg
+        );
+    background-blend-mode: screen, normal;
+    -webkit-mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    -webkit-mask-origin: content-box, border-box;
+    -webkit-mask-clip: content-box, border-box;
+    mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    mask-origin: content-box, border-box;
+    mask-clip: content-box, border-box;
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="light"] .hud-modal-card::after {
+    background:
+        radial-gradient(
+            280px circle at var(--gold-lx) var(--gold-ly),
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(167, 139, 250, 0.55) 20%,
+            transparent 55%
+        ),
+        conic-gradient(
+            from var(--gold-angle),
+            #6d4dd3 0deg,
+            #a78bfa 30deg,
+            #ffffff 50deg,
+            #8b5cf6 84deg,
+            #7c5fd6 126deg,
+            #c4b5fd 168deg,
+            #8b6ce0 206deg,
+            #ddd6fe 244deg,
+            #7c5fd6 288deg,
+            #a78bfa 328deg,
+            #6d4dd3 360deg
+        );
+}
+
 .hud-header {
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .hud-logo {
@@ -1163,15 +1261,15 @@
     font-size: 0.95rem;
     color: var(--accent-primary);
     letter-spacing: 0.5px;
+    text-align: center;
 }
 
-.hud-badge {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--text-muted);
-    padding: 2px 8px;
-    border-radius: 4px;
+/* Botón de cierre — convención estándar .modal-close-btn (era .close-btn sin estilos) */
+.hud-header .modal-close-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .hud-search-row {
@@ -1207,26 +1305,95 @@
     overflow-y: auto;
 }
 
+/* Keycap 3D — paleta cálida dorada (mismo lenguaje que .ai-launcher-btn / .space-key) */
 .hud-item-chip {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius-md);
+    min-height: 48px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    border-top-color: rgba(255, 240, 180, 0.30);
+    background:
+        radial-gradient(150% 100% at 50% -10%, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.05) 42%, transparent 68%),
+        linear-gradient(180deg, rgba(234, 179, 8, 0.14) 0%, rgba(0, 0, 0, 0.10) 55%, rgba(0, 0, 0, 0.30) 100%),
+        rgba(10, 15, 29, 0.85);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 240, 180, 0.22),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.5),
+        inset 3px 0 6px rgba(255, 255, 255, 0.04),
+        inset -3px 0 6px rgba(0, 0, 0, 0.4),
+        0 5px 0 rgba(0, 0, 0, 0.6),
+        0 7px 2px rgba(0, 0, 0, 0.35),
+        0 12px 20px rgba(0, 0, 0, 0.5);
     padding: 10px 12px;
     color: var(--text-primary);
     text-decoration: none;
     font-size: 0.85rem;
     font-weight: 600;
-    transition: var(--transition-fast);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    transition: transform 0.12s ease, box-shadow 0.16s ease, border-color 0.16s ease, background 0.16s ease;
 }
 
 .hud-item-chip:hover {
-    background: rgba(0, 242, 254, 0.15);
-    border-color: var(--accent-primary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
+    border-color: color-mix(in srgb, #eab308 55%, rgba(0, 0, 0, 0.6));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 240, 180, 0.32),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.5),
+        inset 3px 0 6px rgba(255, 255, 255, 0.05),
+        inset -3px 0 6px rgba(0, 0, 0, 0.4),
+        0 5px 0 rgba(0, 0, 0, 0.6),
+        0 7px 2px rgba(0, 0, 0, 0.35),
+        0 12px 22px rgba(0, 0, 0, 0.55),
+        0 0 16px rgba(234, 179, 8, 0.26);
+}
+
+/* Tecla pulsada: el keycap hunde sobre su base (la extrusión desaparece) y brilla en dorado */
+.hud-item-chip:active {
+    transform: translateY(5px);
+    background:
+        radial-gradient(150% 100% at 50% -10%, rgba(255, 255, 255, 0.08) 0%, transparent 55%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.08) 100%),
+        rgba(234, 179, 8, 0.16);
+    border-color: rgba(234, 179, 8, 0.55);
+    border-top-color: rgba(255, 240, 180, 0.30);
+    box-shadow:
+        inset 0 3px 8px rgba(0, 0, 0, 0.75),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.06),
+        0 1px 0 rgba(0, 0, 0, 0.55),
+        0 2px 5px rgba(0, 0, 0, 0.45),
+        0 0 22px rgba(234, 179, 8, 0.35);
+}
+
+.hud-item-chip:focus-visible {
+    outline: 2px solid color-mix(in srgb, #eab308 70%, #ffffff);
+    outline-offset: 2px;
+}
+
+[data-theme="light"] .hud-item-chip {
+    background:
+        radial-gradient(150% 100% at 50% -10%, rgba(255, 255, 255, 0.55) 0%, transparent 65%),
+        linear-gradient(180deg, rgba(180, 130, 10, 0.18) 0%, rgba(0, 0, 0, 0.06) 55%, rgba(0, 0, 0, 0.18) 100%),
+        rgba(255, 255, 255, 0.75);
+    border-color: rgba(150, 110, 20, 0.45);
+    border-top-color: rgba(255, 255, 255, 0.8);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.12),
+        inset 3px 0 6px rgba(255, 255, 255, 0.2),
+        inset -3px 0 6px rgba(0, 0, 0, 0.1),
+        0 5px 0 rgba(80, 55, 10, 0.35),
+        0 8px 16px rgba(80, 55, 10, 0.25);
+}
+
+[data-theme="light"] .hud-item-chip:active {
+    box-shadow:
+        inset 0 3px 8px rgba(0, 0, 0, 0.35),
+        0 1px 0 rgba(80, 55, 10, 0.4),
+        0 2px 5px rgba(80, 55, 10, 0.3),
+        0 0 22px rgba(234, 179, 8, 0.4);
 }
 
 .hud-item-icon {
@@ -1234,4 +1401,5 @@
     height: 24px;
     border-radius: 6px;
     object-fit: cover;
+    flex-shrink: 0;
 }

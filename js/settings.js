@@ -28,6 +28,7 @@ export class SettingsHub {
         this.tagsToggle = document.getElementById('setting-show-tags-toggle');
         this.chromeBezelToggle = document.getElementById('setting-chrome-bezel-toggle');
         this.goldBezelToggle = document.getElementById('setting-gold-bezel-toggle');
+        this.hudBezelToggle = document.getElementById('setting-hud-bezel-toggle');
         this.blueBezelToggle = document.getElementById('setting-blue-bezel-toggle');
         this.lilacBezelToggle = document.getElementById('setting-lilac-bezel-toggle');
         this.greenBezelToggle = document.getElementById('setting-green-bezel-toggle');
@@ -152,6 +153,7 @@ export class SettingsHub {
         if (this.tagsToggle) this.tagsToggle.checked = state.showShortcutTags;
         if (this.chromeBezelToggle) this.chromeBezelToggle.checked = state.showChromeBezel !== false;
         if (this.goldBezelToggle) this.goldBezelToggle.checked = state.showGoldBezel !== false;
+        if (this.hudBezelToggle) this.hudBezelToggle.checked = state.showHudBezel !== false;
         if (this.blueBezelToggle) this.blueBezelToggle.checked = state.showBlueBezel !== false;
         if (this.lilacBezelToggle) this.lilacBezelToggle.checked = state.showLilacBezel !== false;
         if (this.greenBezelToggle) this.greenBezelToggle.checked = state.showGreenBezel !== false;
@@ -228,6 +230,13 @@ export class SettingsHub {
             this.goldBezelToggle.addEventListener('change', (e) => {
                 soundFx.play('click');
                 state.setShowGoldBezel(e.target.checked);
+            });
+        }
+
+        if (this.hudBezelToggle) {
+            this.hudBezelToggle.addEventListener('change', (e) => {
+                soundFx.play('click');
+                state.setShowHudBezel(e.target.checked);
             });
         }
 

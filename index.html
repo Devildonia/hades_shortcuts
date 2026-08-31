@@ -28,20 +28,20 @@
     <link rel="apple-touch-icon" href="iconos/pwa-192.png">
 
     <!-- Stylesheet (13 módulos; el orden importa: base → layout → widgets → misc) -->
-    <!-- ?v=…-rc-1c: cache-bust de los 13 módulos (Brave mantiene caché heurística agresiva) -->
-    <link rel="stylesheet" href="css/base.css?v=1.0.0-rc-1c">
-    <link rel="stylesheet" href="css/layout.css?v=1.0.0-rc-1c">
-    <link rel="stylesheet" href="css/categories.css?v=1.0.0-rc-1c">
-    <link rel="stylesheet" href="css/overlays-base.css?v=1.0.0-rc-1c">
-    <link rel="stylesheet" href="css/weather.css?v=1.0.0-rc-1c">
-    <link rel="stylesheet" href="css/settings.css?v=1.0.0-rc-1c">
-    <link rel="stylesheet" href="css/search-extra.css?v=1.0.0-rc-1c">
-    <link rel="stylesheet" href="css/widgets.css?v=1.0.0-rc-1c">
-    <link rel="stylesheet" href="css/themes-pickers.css?v=1.0.0-rc-1c">
-    <link rel="stylesheet" href="css/hud.css?v=1.0.0-rc-1c">
-    <link rel="stylesheet" href="css/tech-radar.css?v=1.0.0-rc-1c">
-    <link rel="stylesheet" href="css/calendar.css?v=1.0.0-rc-1c">
-    <link rel="stylesheet" href="css/misc.css?v=1.0.0-rc-1c">
+    <!-- ?v=…-rc-1e: cache-bust de los 13 módulos (Brave mantiene caché heurística agresiva) -->
+    <link rel="stylesheet" href="css/base.css?v=1.0.0-rc-1e">
+    <link rel="stylesheet" href="css/layout.css?v=1.0.0-rc-1e">
+    <link rel="stylesheet" href="css/categories.css?v=1.0.0-rc-1e">
+    <link rel="stylesheet" href="css/overlays-base.css?v=1.0.0-rc-1e">
+    <link rel="stylesheet" href="css/weather.css?v=1.0.0-rc-1e">
+    <link rel="stylesheet" href="css/settings.css?v=1.0.0-rc-1e">
+    <link rel="stylesheet" href="css/search-extra.css?v=1.0.0-rc-1e">
+    <link rel="stylesheet" href="css/widgets.css?v=1.0.0-rc-1e">
+    <link rel="stylesheet" href="css/themes-pickers.css?v=1.0.0-rc-1e">
+    <link rel="stylesheet" href="css/hud.css?v=1.0.0-rc-1e">
+    <link rel="stylesheet" href="css/tech-radar.css?v=1.0.0-rc-1e">
+    <link rel="stylesheet" href="css/calendar.css?v=1.0.0-rc-1e">
+    <link rel="stylesheet" href="css/misc.css?v=1.0.0-rc-1e">
 
     <!-- Master Script Module -->
     <script type="module" src="js/app.js?v=1.0.0-rc-1"></script>
@@ -954,6 +954,13 @@
                         </label>
                     </div>
                     <div class="settings-toggle-row">
+                        <span class="settings-toggle-title" data-i18n="settings_hub.layout.hud_bezel_toggle" title="Marco lila alrededor de la ventana HUD Launcher." data-i18n-title="settings_hub.layout.hud_bezel_desc">Marco lila HUD</span>
+                        <label class="switch">
+                            <input type="checkbox" id="setting-hud-bezel-toggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle-row">
                         <span class="settings-toggle-title" data-i18n="settings_hub.layout.blue_bezel_toggle" title="Marcos azules en Perfiles, Agente IA y barra de búsqueda." data-i18n-title="settings_hub.layout.blue_bezel_desc">Marcos azules</span>
                         <label class="switch">
                             <input type="checkbox" id="setting-blue-bezel-toggle" checked>
@@ -1329,9 +1336,8 @@
     <div id="mini-hud-modal" class="modal-overlay hidden" role="dialog" aria-labelledby="hud-title" aria-modal="true">
         <div class="hud-modal-card">
             <div class="hud-header">
-                <span class="hud-logo">HaDeS HUD Launcher</span>
-                <span class="hud-badge">Alt + Space</span>
-                <button class="close-btn" id="close-hud-modal" aria-label="Cerrar HUD" data-i18n-aria="ui.hud_close">&times;</button>
+                <span class="hud-logo" id="hud-title">HUD Launcher</span>
+                <button class="modal-close-btn" id="close-hud-modal" aria-label="Cerrar HUD" data-i18n-aria="ui.hud_close">✕</button>
             </div>
             <div class="hud-search-row">
                 <span class="hud-search-icon" aria-hidden="true">

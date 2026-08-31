@@ -595,6 +595,20 @@ html.no-lilac-bezel .settings-drawer-card::after {
 }
 
 /* ==========================================================================
+   Marco dorado desactivado — HUD Launcher
+   Mantiene la sombra de profundidad; retira aro cromo, bezel y spotlight.
+   ========================================================================== */
+html.no-hud-bezel .hud-modal-card {
+    border-color: var(--card-border);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), var(--shadow-subtle);
+}
+
+html.no-hud-bezel .hud-modal-card::before,
+html.no-hud-bezel .hud-modal-card::after {
+    display: none;
+}
+
+/* ==========================================================================
    Marco verde metálico — chips del encabezado (reloj · telemetría · clima ·
    Modo Focus · botón Ajustes).
    Mismo lenguaje cromo (conic-gradient + mask) que los marcos dorado/azul/lila,

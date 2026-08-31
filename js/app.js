@@ -179,6 +179,7 @@ export function initApp() {
     state.applyShortcutTagsVisibility();
     state.applyChromeBezel();
     state.applyGoldBezel();
+    state.applyHudBezel();
     state.applyBlueBezel();
     state.applyLilacBezel();
     state.applyGreenBezel();

@@ -108,6 +108,7 @@ export class AppState {
         this.showShortcutTags = this.getItem('show_shortcut_tags', 'false') === 'true';
         this.showChromeBezel = this.getItem('show_chrome_bezel', 'true') !== 'false';
         this.showGoldBezel = this.getItem('show_gold_bezel', 'true') !== 'false';
+        this.showHudBezel = this.getItem('show_hud_bezel', 'true') !== 'false';
         this.showBlueBezel = this.getItem('show_blue_bezel', 'true') !== 'false';
         this.showLilacBezel = this.getItem('show_lilac_bezel', 'true') !== 'false';
         this.showGreenBezel = this.getItem('show_green_bezel', 'false') === 'true';
@@ -266,6 +267,18 @@ export class AppState {
         this.setItem('show_gold_bezel', this.showGoldBezel ? 'true' : 'false');
         this.applyGoldBezel();
         this.emit('gold:visibility', this.showGoldBezel);
+    }
+
+    applyHudBezel() {
+        if (typeof document === 'undefined') return;
+        document.documentElement.classList.toggle('no-hud-bezel', !this.showHudBezel);
+    }
+
+    setShowHudBezel(enabled) {
+        this.showHudBezel = !!enabled;
+        this.setItem('show_hud_bezel', this.showHudBezel ? 'true' : 'false');
+        this.applyHudBezel();
+        this.emit('hud:visibility', this.showHudBezel);
     }
 
     applyBlueBezel() {

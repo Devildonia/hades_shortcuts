@@ -262,7 +262,9 @@
       "blue_bezel_desc": "Cadres bleus sur Profils, Agent IA et barre de recherche.",
       "lilac_bezel_desc": "Cadre lilas autour du panneau Paramètres.",
       "green_bezel_toggle": "Cadres verts",
+      "hud_bezel_toggle": "Cadre lilas HUD",
       "green_bezel_desc": "Cadres verts sur horloge, télémétrie, météo, Mode Focus et bouton Paramètres.",
+      "hud_bezel_desc": "Cadre lilas autour de la fenêtre HUD Launcher.",
       "edit_mode_toggle_desc": "Permet de glisser, réorganiser, modifier ou supprimer icônes et panneaux."
     },
     "backup": {

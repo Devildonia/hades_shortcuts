@@ -262,7 +262,9 @@
       "blue_bezel_desc": "Blue frames on Profiles, AI Agent and search bar.",
       "lilac_bezel_desc": "Lilac frame around the Settings drawer.",
       "green_bezel_toggle": "Green frames",
+      "hud_bezel_toggle": "Lilac HUD frame",
       "green_bezel_desc": "Green frames on clock, telemetry, weather, Focus Mode and Settings button.",
+      "hud_bezel_desc": "Lilac frame around the HUD Launcher window.",
       "edit_mode_toggle_desc": "Allows dragging, reordering, editing or deleting icons and panels."
     },
     "backup": {

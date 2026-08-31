@@ -262,7 +262,9 @@
       "blue_bezel_desc": "Marcos azules en Perfiles, Agente IA y barra de búsqueda.",
       "lilac_bezel_desc": "Marco lila alrededor del cajón de Ajustes.",
       "green_bezel_toggle": "Marcos verdes",
+      "hud_bezel_toggle": "Marco lila HUD",
       "green_bezel_desc": "Marcos verdes en el reloj, telemetría, clima, Modo Focus y botón de Ajustes.",
+      "hud_bezel_desc": "Marco lila alrededor de la ventana HUD Launcher.",
       "edit_mode_toggle_desc": "Permite arrastrar, reordenar, editar o eliminar iconos y cajones."
     },
     "backup": {
