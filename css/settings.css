@@ -28,7 +28,9 @@
     min-width: 0;
     max-height: 88vh;
     height: auto;
-    background: var(--bg-secondary);
+    background: color-mix(in srgb, var(--bg-secondary) 68%, transparent);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border: 1px solid transparent;
     border-radius: var(--radius-xl);
     padding: 28px;

@@ -1139,7 +1139,7 @@
     --gold-lx: 28%;
     --gold-ly: 12%;
     --gold-angle: -38deg;
-    background: rgba(10, 15, 29, 0.85);
+    background: rgba(10, 15, 29, 0.55);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid transparent;
